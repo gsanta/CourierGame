@@ -11,8 +11,22 @@ public class DeliveryService
     {
         packageMap.Add(player, package);
         reversePackageMap.Add(package, player);
+    }
 
+    public void RemovePackageFromPlayer(DeliveryPackage package)
+    {
+        PlayerController player;
+        if (reversePackageMap.TryGetValue(package, out player))
+        {
+            packageMap.Remove(player);
+        }
+        reversePackageMap.Remove(package);
 
+    }
+
+    public bool GetPackage(PlayerController player, out DeliveryPackage package)
+    {
+        return packageMap.TryGetValue(player, out package);
     }
 
     public PlayerController GetPlayerForPackage(DeliveryPackage package)

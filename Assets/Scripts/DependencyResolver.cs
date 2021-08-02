@@ -20,7 +20,10 @@ public class DependencyResolver : MonoBehaviour
         timeProvider = new DefaultTimeProvider();
         dayMeasurer = new DayMeasurer(timeProvider);
         playerController.playerService = playerService;
+        playerController.packageService = deliveryPackageController;
+        playerController.deliveryService = deliveryService;
         deliveryPackageController.deliveryService = deliveryService;
+        deliveryPackageController.playerService = playerService;
         dayMeasurerBehaviour.dayMeasurer = dayMeasurer;
         dayMeasurerSlider.dayMeasurer = dayMeasurer;
         startDayPanel.dayMeasurer = dayMeasurer;

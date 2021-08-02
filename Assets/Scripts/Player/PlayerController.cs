@@ -5,7 +5,11 @@ public class PlayerController : MonoBehaviour
     private Camera cam;
     public Transform viewPoint;
     public CharacterController charController;
+
     [HideInInspector] public PlayerService playerService;
+    [HideInInspector] public DeliveryPackageController packageService;
+    [HideInInspector] public DeliveryService deliveryService;
+    
     public float moveSpeed = 5f, runSpeed = 8f;
     public int id = 0;
     private float activeMoveSpeed;
@@ -21,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        HandleInput();
         if (playerService.GetActivePlayer() == this)
         {
             Move();
@@ -44,6 +49,22 @@ public class PlayerController : MonoBehaviour
     {
         cam.transform.position = viewPoint.position;
         cam.transform.rotation = viewPoint.rotation;
+    }
+
+    private void HandleInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            DeliveryPackage deliveryPackage;
+            Debug.Log(deliveryService);
+            if (deliveryService.GetPackage(this, out deliveryPackage))
+            {
+                deliveryPackage.ReleasePackage();
+            } else if (packageService.GetPackageWithinPickupRange(this, out deliveryPackage))
+            {
+                deliveryPackage.PickupBy(this);
+            }
+        }
     }
 
     private void Move()
