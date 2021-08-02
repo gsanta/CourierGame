@@ -7,6 +7,7 @@ public class DependencyResolver : MonoBehaviour
     [SerializeField] private DayMeasurerBehaviour dayMeasurerBehaviour;
     [SerializeField] private DayMeasurerSlider dayMeasurerSlider;
     [SerializeField] private StartDayPanel startDayPanel;
+    [SerializeField] private DeliveryPanel deliveryPanel;
 
     private PlayerService playerService;
     private DeliveryService deliveryService;
@@ -27,6 +28,6 @@ public class DependencyResolver : MonoBehaviour
         dayMeasurerBehaviour.dayMeasurer = dayMeasurer;
         dayMeasurerSlider.dayMeasurer = dayMeasurer;
         startDayPanel.dayMeasurer = dayMeasurer;
-
+        deliveryPanel.deliveryService = deliveryService;
     }
 }

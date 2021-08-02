@@ -7,6 +7,7 @@ public class DeliveryPackageController : MonoBehaviour
     [SerializeField] private GameObject deliveryPackageTemplate;
     [SerializeField] private GameObject deliveryPackageMinimapTemplate;
     [SerializeField] private GameObject[] spawnPoints;
+    [SerializeField] private GameObject[] targetPoints;
     
     [HideInInspector] public DeliveryService deliveryService;
     [HideInInspector] public PlayerService playerService;
@@ -43,18 +44,29 @@ public class DeliveryPackageController : MonoBehaviour
 
     public void SpawnPackage()
     {
-        Transform spawnPointPosition = spawnPoints[Random.Range(0, spawnPoints.Length)].transform;
+        Transform spawnPointPosition = GetSpawnPosition();
+        GameObject targetObject = GetTargetPoint();
         DeliveryPackage newPackage = Instantiate(deliveryPackageTemplate.GetComponent<DeliveryPackage>(), deliveryPackageTemplate.transform.parent);
         newPackage.deliveryService = deliveryService;
         newPackage.transform.position = spawnPointPosition.position;
+        newPackage.targetObject = targetObject;
         newPackage.gameObject.SetActive(true);
-        //newPackage.transform.SetParent(gameObject.transform);
         packages.Add(newPackage);
 
         MinimapDeliveryPackage newMinimapPackage = Instantiate(deliveryPackageMinimapTemplate.GetComponent<MinimapDeliveryPackage>(), deliveryPackageMinimapTemplate.transform.parent);
         newMinimapPackage.transform.position = spawnPointPosition.position;
         newMinimapPackage.gameObject.SetActive(true);
         newMinimapPackage.transform.SetParent(gameObject.transform);
+    }
+
+    public Transform GetSpawnPosition()
+    {
+        return spawnPoints[Random.Range(0, spawnPoints.Length)].transform;
+    }
+
+    public GameObject GetTargetPoint()
+    {
+        return targetPoints[Random.Range(0, targetPoints.Length)];
     }
 
     // Update is called once per frame
