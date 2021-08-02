@@ -40,11 +40,6 @@ public class DeliveryService
         return packageMap.TryGetValue(player, out package);
     }
 
-    //public List<DeliveryPackage> Packages
-    //{
-    //    get => packages;
-    //}
-
     public List<DeliveryPackage> AssignedPackages
     {
         get => packages.FindAll(package => GetPlayerForPackage(package) != null);

@@ -16,11 +16,6 @@ public class PlayerService
     {
         activePlayer = player;
     }
-    
-    public PlayerController GetPlayerById(int id)
-    {
-        return players.Find(player => player.id == id);
-    }
 
     public PlayerController GetActivePlayer()
     {

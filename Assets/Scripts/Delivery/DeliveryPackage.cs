@@ -8,6 +8,8 @@ public class DeliveryPackage : MonoBehaviour
 
     private Transform origParent;
 
+    public string Name { get; set; }
+
     public void PickupBy(PlayerController player)
     {
         gameObject.transform.SetParent(player.transform);

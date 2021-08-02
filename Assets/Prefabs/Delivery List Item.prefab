@@ -280,8 +280,9 @@ GameObject:
   - component: {fileID: 4925988685423607314}
   - component: {fileID: 4757107871305652666}
   - component: {fileID: 1260489060821166692}
+  - component: {fileID: 2199236592793603896}
   m_Layer: 5
-  m_Name: Delivery Status Row
+  m_Name: Delivery List Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,3 +373,17 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2199236592793603896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4337184491330642125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa9da682e61558408569d821a58f691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  packageNameText: {fileID: 461021888}
+  playerNameText: {fileID: 8842675262814841125}

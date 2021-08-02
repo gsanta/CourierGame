@@ -2,18 +2,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Camera cam;
-    public Transform viewPoint;
-    public CharacterController charController;
-
     [HideInInspector] public PlayerService playerService;
     [HideInInspector] public DeliveryPackageController packageService;
     [HideInInspector] public DeliveryService deliveryService;
+
+    [SerializeField] private Transform viewPoint;
+    [SerializeField] private CharacterController charController;
+    [SerializeField] private float moveSpeed = 5f, runSpeed = 8f;
+    [SerializeField] private string playerName;
     
-    public float moveSpeed = 5f, runSpeed = 8f;
-    public int id = 0;
+    private Camera cam;   
     private float activeMoveSpeed;
     private Vector3 moveDir, movement;
+    public string Name { get => playerName; }
 
     void Start()
     {
