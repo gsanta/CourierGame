@@ -28,7 +28,7 @@ public class DeliveryPackageController : MonoBehaviour
         SpawnPackage();
     }
 
-    public bool GetPackageWithinPickupRange(PlayerController playerController, out DeliveryPackage deliveryPackage)
+    public bool GetPackageWithinPickupRange(Player playerController, out DeliveryPackage deliveryPackage)
     {
         foreach (var package in packages)
         {

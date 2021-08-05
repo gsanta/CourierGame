@@ -2,12 +2,13 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class DeliveryService
 {
     private List<DeliveryPackage> packages = new List<DeliveryPackage>();
-    private Dictionary<PlayerController, DeliveryPackage> packageMap = new Dictionary<PlayerController, DeliveryPackage>();
-    private Dictionary<DeliveryPackage, PlayerController> reversePackageMap = new Dictionary<DeliveryPackage, PlayerController>();
+    private Dictionary<Player, DeliveryPackage> packageMap = new Dictionary<Player, DeliveryPackage>();
+    private Dictionary<DeliveryPackage, Player> reversePackageMap = new Dictionary<DeliveryPackage, Player>();
 
     public void AddPackage(DeliveryPackage package)
     {
@@ -15,7 +16,7 @@ public class DeliveryService
         OnPackageAdded?.Invoke(this, EventArgs.Empty);
     }
 
-    public void AssignPackageToPlayer(PlayerController player, DeliveryPackage package)
+    public void AssignPackageToPlayer(Player player, DeliveryPackage package)
     {
         packageMap.Add(player, package);
         reversePackageMap.Add(package, player);
@@ -23,19 +24,27 @@ public class DeliveryService
         OnPackageAssigned?.Invoke(this, EventArgs.Empty);
     }
 
-    public void RemovePackageFromPlayer(DeliveryPackage package)
+    public void DropPackage(DeliveryPackage package)
     {
-        PlayerController player;
+        Player player;
         if (reversePackageMap.TryGetValue(package, out player))
         {
             packageMap.Remove(player);
         }
         reversePackageMap.Remove(package);
-        packages.Remove(package);
-        OnPackageDelivered?.Invoke(this, EventArgs.Empty);
+
+        if (Vector3.Distance(package.transform.position, package.targetObject.transform.position) < 1)
+        {
+            packages.Remove(package);
+            package.DestroyPackage();
+            OnPackageDelivered?.Invoke(this, EventArgs.Empty);
+        } else
+        {
+            OnPackageAssigned?.Invoke(this, EventArgs.Empty);
+        }
     }
 
-    public bool GetPackage(PlayerController player, out DeliveryPackage package)
+    public bool GetPackage(Player player, out DeliveryPackage package)
     {
         return packageMap.TryGetValue(player, out package);
     }
@@ -50,9 +59,9 @@ public class DeliveryService
         get => packages.FindAll(package => GetPlayerForPackage(package) == null);
     }
 
-    public PlayerController GetPlayerForPackage(DeliveryPackage package)
+    public Player GetPlayerForPackage(DeliveryPackage package)
     {
-        PlayerController player;
+        Player player;
 
         reversePackageMap.TryGetValue(package, out player);
 

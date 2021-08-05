@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [HideInInspector] public PlayerService playerService;
     [HideInInspector] public DeliveryPackageController packageService;
@@ -14,14 +14,14 @@ public class PlayerController : MonoBehaviour
     private Camera cam;   
     private float activeMoveSpeed;
     private Vector3 moveDir, movement;
-    public string Name { get => playerName; }
+    public string Name { get => playerName; set => playerName = value; }
 
     void Start()
     {
         cam = Camera.main;
 
         playerService.AddPlayer(this);
-        playerService.ActivatePlayer(this);
+        playerService.SetActivePlayer(this);
     }
 
     void Update()
@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             DeliveryPackage deliveryPackage;
-            Debug.Log(deliveryService);
             if (deliveryService.GetPackage(this, out deliveryPackage))
             {
                 deliveryPackage.ReleasePackage();

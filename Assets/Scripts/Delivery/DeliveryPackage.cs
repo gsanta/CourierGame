@@ -6,11 +6,9 @@ public class DeliveryPackage : MonoBehaviour
     [HideInInspector] public DeliveryService deliveryService;
     [HideInInspector] public GameObject targetObject;
 
-    private Transform origParent;
-
     public string Name { get; set; }
 
-    public void PickupBy(PlayerController player)
+    public void PickupBy(Player player)
     {
         gameObject.transform.SetParent(player.transform);
         deliveryService.AssignPackageToPlayer(player, this);
@@ -19,8 +17,13 @@ public class DeliveryPackage : MonoBehaviour
 
     public void ReleasePackage()
     {
-        transform.SetParent(origParent);
-        deliveryService.RemovePackageFromPlayer(this);
+        deliveryService.DropPackage(this);
         targetObject.SetActive(false);
+    }
+
+    public void DestroyPackage()
+    {
+        Destroy(gameObject);
+        Destroy(targetObject);
     }
 }
