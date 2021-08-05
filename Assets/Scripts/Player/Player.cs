@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerService playerService;
     [HideInInspector] public DeliveryPackageController packageService;
     [HideInInspector] public DeliveryService deliveryService;
+    [HideInInspector] public ITimeProvider timeProvider;
 
     [SerializeField] private Transform viewPoint;
     [SerializeField] private CharacterController charController;
@@ -14,11 +15,19 @@ public class Player : MonoBehaviour
     private Camera cam;   
     private float activeMoveSpeed;
     private Vector3 moveDir, movement;
+    private GameObject timelineImage;
+    private Timer timer;
+    
     public string Name { get => playerName; set => playerName = value; }
+
+    public GameObject TimelineImage { get => timelineImage; set => timelineImage = value; }
+
+    public Timer Timer { get => timer; }
 
     void Start()
     {
         cam = Camera.main;
+        timer = new Timer(timeProvider);
 
         playerService.AddPlayer(this);
         playerService.SetActivePlayer(this);
@@ -30,6 +39,10 @@ public class Player : MonoBehaviour
         if (playerService.GetActivePlayer() == this)
         {
             Move();
+            if (WorldProperties.Instance().isMeasuring)
+            {
+                timer.Tick();
+            }
         }
     }
 

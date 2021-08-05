@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class StartDayPanel : MonoBehaviour
 {
-    [HideInInspector] public DayMeasurer dayMeasurer;
     public void OnStart()
     {
-        dayMeasurer.StartMeasure();
+        WorldProperties.Instance().isMeasuring = true;
         gameObject.SetActive(false);
 
-        dayMeasurer.OnDayPassed += HandleDayPassed;
+        //dayMeasurer.OnDayPassed += HandleDayPassed;
     }
 
     private void HandleDayPassed(object sender, EventArgs e)

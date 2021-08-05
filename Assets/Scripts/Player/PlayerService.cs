@@ -11,6 +11,8 @@ public class PlayerService : MonoBehaviour
     [HideInInspector] public DeliveryPackageController deliveryPackageController;
     [HideInInspector] public DeliveryService deliveryService;
     [HideInInspector] public InputHandler inputHandler;
+    [HideInInspector] public TimelineController timelineController;
+    [HideInInspector] public ITimeProvider timeProvider;
 
     private List<Player> players = new List<Player>();
     private Player activePlayer;
@@ -84,12 +86,17 @@ public class PlayerService : MonoBehaviour
     public Player CreatePlayer(GameObject spawnPoint, string name)
     {
         Player newPlayer = Instantiate(playerTemplate, playerTemplate.transform.parent);
+        newPlayer.timeProvider = timeProvider;
         newPlayer.playerService = this;
         newPlayer.packageService = deliveryPackageController;
         newPlayer.deliveryService = deliveryService;
         newPlayer.transform.position = spawnPoint.transform.position;
         newPlayer.Name = name;
         newPlayer.gameObject.SetActive(true);
+
+        GameObject timeLineImage = timelineController.GetNextUnusedPlayerImage();
+        timeLineImage.SetActive(true);
+        newPlayer.TimelineImage = timeLineImage;
 
         return newPlayer;
     }
