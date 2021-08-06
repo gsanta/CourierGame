@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [HideInInspector] public PlayerService playerService;
-    [HideInInspector] public DeliveryPackageController packageService;
-    [HideInInspector] public DeliveryService deliveryService;
-    [HideInInspector] public ITimeProvider timeProvider;
+    private PlayerService playerService;
+    private DeliveryPackageController packageService;
+    private DeliveryService deliveryService;
+    private ITimeProvider timeProvider;
+    private WorldState worldState;
 
     [SerializeField] private Transform viewPoint;
     [SerializeField] private CharacterController charController;
@@ -24,10 +25,19 @@ public class Player : MonoBehaviour
 
     public Timer Timer { get => timer; }
 
+    public void SetDependencies(PlayerService playerService, DeliveryPackageController packageService, DeliveryService deliveryService, ITimeProvider timeProvider, WorldState worldState)
+    {
+        this.playerService = playerService;
+        this.packageService = packageService;
+        this.deliveryService = deliveryService;
+        this.timeProvider = timeProvider;
+        this.worldState = worldState;
+    }
+
     void Start()
     {
         cam = Camera.main;
-        timer = new Timer(timeProvider);
+        timer = new Timer(timeProvider, worldState);
 
         playerService.AddPlayer(this);
         playerService.SetActivePlayer(this);
@@ -39,7 +49,7 @@ public class Player : MonoBehaviour
         if (playerService.GetActivePlayer() == this)
         {
             Move();
-            if (WorldProperties.Instance().isMeasuring)
+            if (worldState.isMeasuring)
             {
                 timer.Tick();
             }

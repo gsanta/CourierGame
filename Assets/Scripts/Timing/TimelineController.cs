@@ -5,11 +5,18 @@ public class TimelineController : MonoBehaviour
 {
     [SerializeField] private List<GameObject> playerImages = new List<GameObject>();
     [SerializeField] private TimelineSlider slider;
-    [HideInInspector] public PlayerService playerService;
+    private PlayerService playerService;
+    private WorldState worldState;
 
     private MarkerHandler markerHandler;
 
     private HashSet<GameObject> usedPlayerImages = new HashSet<GameObject>();
+
+    public void SetDependencies(PlayerService playerService, WorldState worldState)
+    {
+        this.playerService = playerService;
+        this.worldState = worldState;
+    }
 
     void Start()
     {
@@ -31,7 +38,7 @@ public class TimelineController : MonoBehaviour
 
     void Update()
     {
-        if (WorldProperties.Instance().isMeasuring)
+        if (worldState.isMeasuring)
         {
             Player player = playerService.GetActivePlayer();
             if (player)

@@ -10,6 +10,7 @@ public class DependencyResolver : MonoBehaviour
     [SerializeField] private DeliveryPanel deliveryPanel;
     [SerializeField] private PlayerService playerService;
     [SerializeField] private InputHandler inputHandler;
+    [SerializeField] private WorldState worldState;
 
     private DeliveryService deliveryService;
     private ITimeProvider timeProvider;
@@ -18,14 +19,11 @@ public class DependencyResolver : MonoBehaviour
     {
         deliveryService = new DeliveryService();
         timeProvider = new DefaultTimeProvider();
-        playerService.deliveryService = deliveryService;
-        playerService.deliveryPackageController = deliveryPackageController;
-        playerService.inputHandler = inputHandler;
-        playerService.timelineController = timelineController;
-        playerService.timeProvider = timeProvider;
         deliveryPackageController.deliveryService = deliveryService;
         deliveryPackageController.playerService = playerService;
-        timelineController.playerService = playerService;
         deliveryPanel.deliveryService = deliveryService;
+        playerService.SetDependencies(deliveryPackageController, deliveryService, inputHandler, timelineController, timeProvider, worldState);
+        timelineController.SetDependencies(playerService, worldState);
+        startDayPanel.SetDependencies(worldState);
     }
 }

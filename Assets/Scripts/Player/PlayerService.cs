@@ -8,15 +8,27 @@ public class PlayerService : MonoBehaviour
     [SerializeField] private GameObject[] spawnPoints;
     [SerializeField] private Player playerTemplate;
     [SerializeField] private int playerNum = 2;
-    [HideInInspector] public DeliveryPackageController deliveryPackageController;
-    [HideInInspector] public DeliveryService deliveryService;
-    [HideInInspector] public InputHandler inputHandler;
-    [HideInInspector] public TimelineController timelineController;
-    [HideInInspector] public ITimeProvider timeProvider;
+    
+    private DeliveryPackageController deliveryPackageController;
+    private DeliveryService deliveryService;
+    private InputHandler inputHandler;
+    private TimelineController timelineController;
+    private ITimeProvider timeProvider;
+    private WorldState worldState;
 
     private List<Player> players = new List<Player>();
     private Player activePlayer;
     private HashSet<GameObject> occupiedSpawnPoints = new HashSet<GameObject>();
+
+    public void SetDependencies(DeliveryPackageController deliveryPackageController, DeliveryService deliveryService, InputHandler inputHandler, TimelineController timelineController, ITimeProvider timeProvider, WorldState worldState)
+    {
+        this.deliveryPackageController = deliveryPackageController;
+        this.deliveryService = deliveryService;
+        this.inputHandler = inputHandler;
+        this.timelineController = timelineController;
+        this.timeProvider = timeProvider;
+        this.worldState = worldState;
+    }
 
     void Start()
     {
@@ -86,10 +98,7 @@ public class PlayerService : MonoBehaviour
     public Player CreatePlayer(GameObject spawnPoint, string name)
     {
         Player newPlayer = Instantiate(playerTemplate, playerTemplate.transform.parent);
-        newPlayer.timeProvider = timeProvider;
-        newPlayer.playerService = this;
-        newPlayer.packageService = deliveryPackageController;
-        newPlayer.deliveryService = deliveryService;
+        newPlayer.SetDependencies(this, deliveryPackageController, deliveryService, timeProvider, worldState);
         newPlayer.transform.position = spawnPoint.transform.position;
         newPlayer.Name = name;
         newPlayer.gameObject.SetActive(true);

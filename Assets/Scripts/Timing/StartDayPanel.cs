@@ -3,9 +3,16 @@ using UnityEngine;
 
 public class StartDayPanel : MonoBehaviour
 {
+    private WorldState worldState;
+
+    public void SetDependencies(WorldState worldState)
+    {
+        this.worldState = worldState;
+    }
+
     public void OnStart()
     {
-        WorldProperties.Instance().isMeasuring = true;
+        worldState.isMeasuring = true;
         gameObject.SetActive(false);
 
         //dayMeasurer.OnDayPassed += HandleDayPassed;
