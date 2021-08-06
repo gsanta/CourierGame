@@ -3,13 +3,13 @@
 public class Timer
 {
     private ITimeProvider timeProvider;
-    private WorldState worldState;
+    private int secondsPerDay;
     private DateTime prev = DateTime.MinValue;
 
-    public Timer(ITimeProvider timeProvider, WorldState worldState)
+    public Timer(ITimeProvider timeProvider, int secondsPerDay)
     {
         this.timeProvider = timeProvider;
-        this.worldState = worldState;
+        this.secondsPerDay = secondsPerDay;
         Accum = 0;
     }
 
@@ -36,7 +36,7 @@ public class Timer
     public float GetDayPercentage()
     {
         // Cast is not redundant, otherwise the division is zero if less than one
-        return (float) ElapsedSeconds / (float) worldState.SecondsPerDay();
+        return (float)ElapsedSeconds / (float) secondsPerDay;
     }
 
     public int ElapsedSeconds

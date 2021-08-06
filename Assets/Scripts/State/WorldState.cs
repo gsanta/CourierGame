@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class WorldState : MonoBehaviour, IWorldState
 {
-    public int secondsPerDay = 100;
-    public bool isMeasuring = false;
+    public int secondsPerDay;
+    public bool isMeasuring;
+
+    void Start()
+    {
+        isMeasuring = false;
+        secondsPerDay = 100;
+    }
 
     public int SecondsPerDay()
     {
@@ -13,5 +19,10 @@ public class WorldState : MonoBehaviour, IWorldState
     public bool IsMeasuring()
     {
         return isMeasuring;
+    }
+
+    public void SetMeasuring(bool isMeasuring)
+    {
+        this.isMeasuring = isMeasuring;
     }
 }

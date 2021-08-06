@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class MarkerHandler
 {
-    private PlayerService playerService;
+    private PlayerStore playerStore;
     private TimelineSlider timelineSlider;
 
-    public MarkerHandler(PlayerService playerService, TimelineSlider timelineSlider)
+    public MarkerHandler(PlayerStore playerStore, TimelineSlider timelineSlider)
     {
-        this.playerService = playerService;
+        this.playerStore = playerStore;
         this.timelineSlider = timelineSlider;
     }
     
     public void UpdateMarker()
     {
-        if (playerService.GetActivePlayer())
+        if (playerStore.GetActivePlayer())
         {
-            Player player = playerService.GetActivePlayer();
+            Player player = playerStore.GetActivePlayer();
 
             float x = timelineSlider.GetWidth() * player.Timer.GetDayPercentage();
             RectTransform rectTransform = player.TimelineImage.GetComponent<RectTransform>();

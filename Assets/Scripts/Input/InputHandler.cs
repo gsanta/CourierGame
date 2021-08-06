@@ -11,6 +11,14 @@ public class InputHandler : MonoBehaviour
         HandleKeys();
     }
 
+    private void HandleMouse()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnLeftMouseButtonDown?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
     private void HandleKeys()
     {
         foreach(string key in keys)
@@ -33,6 +41,7 @@ public class InputHandler : MonoBehaviour
     }
 
     public event EventHandler<KeyDownEventArgs> OnKeyDown;
+    public event EventHandler OnLeftMouseButtonDown;
 }
 
 public class KeyDownEventArgs : EventArgs

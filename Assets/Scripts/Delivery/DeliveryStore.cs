@@ -4,19 +4,18 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeliveryService
+public class DeliveryStore
 {
-    private List<DeliveryPackage> packages = new List<DeliveryPackage>();
-    private Dictionary<Player, DeliveryPackage> packageMap = new Dictionary<Player, DeliveryPackage>();
-    private Dictionary<DeliveryPackage, Player> reversePackageMap = new Dictionary<DeliveryPackage, Player>();
+    private Dictionary<Player, Package> packageMap = new Dictionary<Player, Package>();
+    private Dictionary<Package, Player> reversePackageMap = new Dictionary<Package, Player>();
+    private PackageStore packageStore;
 
-    public void AddPackage(DeliveryPackage package)
+    public DeliveryStore(PackageStore packageStore)
     {
-        packages.Add(package);
-        OnPackageAdded?.Invoke(this, EventArgs.Empty);
+        this.packageStore = packageStore;
     }
 
-    public void AssignPackageToPlayer(Player player, DeliveryPackage package)
+    public void AssignPackageToPlayer(Player player, Package package)
     {
         packageMap.Add(player, package);
         reversePackageMap.Add(package, player);
@@ -24,7 +23,7 @@ public class DeliveryService
         OnPackageAssigned?.Invoke(this, EventArgs.Empty);
     }
 
-    public void DropPackage(DeliveryPackage package)
+    public void DropPackage(Package package)
     {
         Player player;
         if (reversePackageMap.TryGetValue(package, out player))
@@ -35,7 +34,7 @@ public class DeliveryService
 
         if (Vector3.Distance(package.transform.position, package.targetObject.transform.position) < 1)
         {
-            packages.Remove(package);
+            packageStore.Remove(package);
             package.DestroyPackage();
             OnPackageDelivered?.Invoke(this, EventArgs.Empty);
         } else
@@ -44,22 +43,22 @@ public class DeliveryService
         }
     }
 
-    public bool GetPackage(Player player, out DeliveryPackage package)
+    public bool GetPackage(Player player, out Package package)
     {
         return packageMap.TryGetValue(player, out package);
     }
 
-    public List<DeliveryPackage> AssignedPackages
+    public List<Package> AssignedPackages
     {
-        get => packages.FindAll(package => GetPlayerForPackage(package) != null);
+        get => packageStore.GetAll().FindAll(package => GetPlayerForPackage(package) != null);
     }
 
-    public List<DeliveryPackage> UnAssignedPackages
+    public List<Package> UnAssignedPackages
     {
-        get => packages.FindAll(package => GetPlayerForPackage(package) == null);
+        get => packageStore.GetAll().FindAll(package => GetPlayerForPackage(package) == null);
     }
 
-    public Player GetPlayerForPackage(DeliveryPackage package)
+    public Player GetPlayerForPackage(Package package)
     {
         Player player;
 
@@ -68,7 +67,6 @@ public class DeliveryService
         return player;
     }
 
-    public event EventHandler OnPackageAdded;
     public event EventHandler OnPackageAssigned;
     public event EventHandler OnPackageDelivered;
 }

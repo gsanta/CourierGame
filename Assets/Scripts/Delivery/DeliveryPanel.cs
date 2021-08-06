@@ -6,18 +6,25 @@ public class DeliveryPanel : MonoBehaviour
 {
     [SerializeField] private DeliveryListItem deliveryListItemTemplate;
     [SerializeField] private WaitingDeliveryListItem waitingDeliveryListItemTemplate;
-    [HideInInspector] public DeliveryService deliveryService;
+    private DeliveryStore deliveryService;
+    private PackageStore packageStore;
 
     private List<DeliveryListItem> activeDeliveryItems = new List<DeliveryListItem>();
     private List<WaitingDeliveryListItem> waitingDeliveryItems = new List<WaitingDeliveryListItem>();
 
+    public void SetDependencies(DeliveryStore deliveryService, PackageStore packageStore)
+    {
+        this.deliveryService = deliveryService;
+        this.packageStore = packageStore;
+    }
+
     void Start()
     {
-        deliveryService.OnPackageAdded += RefreshActiveDeliveryList;
+        packageStore.OnPackageAdded += RefreshActiveDeliveryList;
         deliveryService.OnPackageAssigned += RefreshActiveDeliveryList;
         deliveryService.OnPackageDelivered += RefreshActiveDeliveryList;
 
-        deliveryService.OnPackageAdded += RefreshWaitingDeliveryList;
+        packageStore.OnPackageAdded += RefreshWaitingDeliveryList;
         deliveryService.OnPackageAssigned += RefreshWaitingDeliveryList;
         deliveryService.OnPackageDelivered += RefreshWaitingDeliveryList;
     }
@@ -31,7 +38,7 @@ public class DeliveryPanel : MonoBehaviour
 
         activeDeliveryItems.Clear();
 
-        foreach (DeliveryPackage package in deliveryService.AssignedPackages)
+        foreach (Package package in deliveryService.AssignedPackages)
         {
             DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
             deliveryListItem.packageNameText.text = package.Name;
@@ -50,7 +57,7 @@ public class DeliveryPanel : MonoBehaviour
 
         waitingDeliveryItems.Clear();
 
-        foreach (DeliveryPackage package in deliveryService.UnAssignedPackages)
+        foreach (Package package in deliveryService.UnAssignedPackages)
         {
             WaitingDeliveryListItem deliveryListItem = Instantiate(waitingDeliveryListItemTemplate, waitingDeliveryListItemTemplate.transform.parent);
             deliveryListItem.packageNameText.text = package.Name;

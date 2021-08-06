@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class DeliveryPackage : MonoBehaviour
+public class Package : MonoBehaviour
 {
-    [HideInInspector] public PlayerService playerService;
-    [HideInInspector] public DeliveryService deliveryService;
+    [HideInInspector] public PlayerFactory playerFactory;
+    [HideInInspector] public DeliveryStore deliveryService;
     [HideInInspector] public GameObject targetObject;
 
     public string Name { get; set; }

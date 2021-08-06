@@ -5,22 +5,22 @@ public class TimelineController : MonoBehaviour
 {
     [SerializeField] private List<GameObject> playerImages = new List<GameObject>();
     [SerializeField] private TimelineSlider slider;
-    private PlayerService playerService;
-    private WorldState worldState;
+    private PlayerStore playerStore;
+    private IWorldState worldState;
 
     private MarkerHandler markerHandler;
 
     private HashSet<GameObject> usedPlayerImages = new HashSet<GameObject>();
 
-    public void SetDependencies(PlayerService playerService, WorldState worldState)
+    public void SetDependencies(PlayerStore playerStore, IWorldState worldState)
     {
-        this.playerService = playerService;
+        this.playerStore = playerStore;
         this.worldState = worldState;
     }
 
     void Start()
     {
-        markerHandler = new MarkerHandler(playerService, slider);
+        markerHandler = new MarkerHandler(playerStore, slider);
     }
     
     public GameObject GetNextUnusedPlayerImage()
@@ -38,9 +38,9 @@ public class TimelineController : MonoBehaviour
 
     void Update()
     {
-        if (worldState.isMeasuring)
+        if (worldState.IsMeasuring())
         {
-            Player player = playerService.GetActivePlayer();
+            Player player = playerStore.GetActivePlayer();
             if (player)
             {
                 slider.SetSliderVal(player.Timer.GetDayPercentage());

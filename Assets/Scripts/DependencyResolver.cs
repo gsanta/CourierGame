@@ -3,27 +3,45 @@ using UnityEngine;
 public class DependencyResolver : MonoBehaviour
 {
     [SerializeField] private Player player;
-    [SerializeField] private DeliveryPackageController deliveryPackageController;
     [SerializeField] private TimelineController timelineController;
-    [SerializeField] private TimelineSlider timelineSlider;
     [SerializeField] private StartDayPanel startDayPanel;
     [SerializeField] private DeliveryPanel deliveryPanel;
-    [SerializeField] private PlayerService playerService;
     [SerializeField] private InputHandler inputHandler;
     [SerializeField] private WorldState worldState;
 
-    private DeliveryService deliveryService;
+    [SerializeField]
+    private PlayerFactory playerFactory;
+    [SerializeField]
+    private PlayerPool playerPool;
+    [SerializeField]
+    private SpawnPointHandler playerSpawnPointHandler;
+    private PlayerStore playerStore;
+    private PlayerSetup playerSetup;
+
+    [SerializeField]
+    private PackageFactory packageFactory;
+    private PackageStore packageStore;
+
+    private DeliveryStore deliveryService;
     private ITimeProvider timeProvider;
 
     void Awake()
     {
-        deliveryService = new DeliveryService();
+        packageStore = new PackageStore();
+        deliveryService = new DeliveryStore(packageStore);
         timeProvider = new DefaultTimeProvider();
-        deliveryPackageController.deliveryService = deliveryService;
-        deliveryPackageController.playerService = playerService;
-        deliveryPanel.deliveryService = deliveryService;
-        playerService.SetDependencies(deliveryPackageController, deliveryService, inputHandler, timelineController, timeProvider, worldState);
-        timelineController.SetDependencies(playerService, worldState);
+
+        playerStore = new PlayerStore();
+        playerSetup = new PlayerSetup(playerPool, playerSpawnPointHandler, playerFactory, playerStore);
+
+        packageFactory.deliveryService = deliveryService;
+        packageFactory.playerFactory = playerFactory;
+        deliveryPanel.SetDependencies(deliveryService, packageStore);
+        playerFactory.SetDependencies(packageStore, deliveryService, timelineController, timeProvider, worldState, playerStore, inputHandler);
+        timelineController.SetDependencies(playerStore, worldState);
         startDayPanel.SetDependencies(worldState);
+        playerPool.SetDependencies(playerSpawnPointHandler);
+
+        playerSetup.Setup();
     }
 }

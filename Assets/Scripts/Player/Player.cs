@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private PlayerService playerService;
-    private DeliveryPackageController packageService;
-    private DeliveryService deliveryService;
+    public GameObject minimapObject;
+
+    private PlayerStore playerStore;
     private ITimeProvider timeProvider;
-    private WorldState worldState;
+    private IWorldState worldState;
+    private PlayerInputComponent playerInputComponent;
 
     [SerializeField] private Transform viewPoint;
     [SerializeField] private CharacterController charController;
@@ -25,31 +26,37 @@ public class Player : MonoBehaviour
 
     public Timer Timer { get => timer; }
 
-    public void SetDependencies(PlayerService playerService, DeliveryPackageController packageService, DeliveryService deliveryService, ITimeProvider timeProvider, WorldState worldState)
+    public void SetDependencies(PlayerInputComponent playerInputComponent, PlayerStore playerStore, ITimeProvider timeProvider, IWorldState worldState)
     {
-        this.playerService = playerService;
-        this.packageService = packageService;
-        this.deliveryService = deliveryService;
+        this.playerInputComponent = playerInputComponent;
+        this.playerStore = playerStore;
         this.timeProvider = timeProvider;
         this.worldState = worldState;
+    }
+
+    public void ActivatePlayer()
+    {
+        playerInputComponent.ActivateComponent();
+    }
+
+    public void DeactivatePlayer()
+    {
+        playerInputComponent.DeactivateComnponent();
     }
 
     void Start()
     {
         cam = Camera.main;
-        timer = new Timer(timeProvider, worldState);
-
-        playerService.AddPlayer(this);
-        playerService.SetActivePlayer(this);
+        timer = new Timer(timeProvider, worldState.SecondsPerDay());
     }
 
     void Update()
     {
-        HandleInput();
-        if (playerService.GetActivePlayer() == this)
+        //HandleInput();
+        if (playerStore.GetActivePlayer() == this)
         {
             Move();
-            if (worldState.isMeasuring)
+            if (worldState.IsMeasuring())
             {
                 timer.Tick();
             }
@@ -63,9 +70,10 @@ public class Player : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (playerService.GetActivePlayer() == this)
+        if (playerStore.GetActivePlayer() == this)
         {
             SetCameraPosition();
+            SetMinimapPosition();
         }
     }
 
@@ -75,20 +83,26 @@ public class Player : MonoBehaviour
         cam.transform.rotation = viewPoint.rotation;
     }
 
-    private void HandleInput()
+    private void SetMinimapPosition()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            DeliveryPackage deliveryPackage;
-            if (deliveryService.GetPackage(this, out deliveryPackage))
-            {
-                deliveryPackage.ReleasePackage();
-            } else if (packageService.GetPackageWithinPickupRange(this, out deliveryPackage))
-            {
-                deliveryPackage.PickupBy(this);
-            }
-        }
+        minimapObject.transform.position = transform.position;
+        minimapObject.transform.rotation = transform.rotation;
     }
+
+    //private void HandleInput()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        DeliveryPackage deliveryPackage;
+    //        if (deliveryService.GetPackage(this, out deliveryPackage))
+    //        {
+    //            deliveryPackage.ReleasePackage();
+    //        } else if (packageService.GetPackageWithinPickupRange(this, out deliveryPackage))
+    //        {
+    //            deliveryPackage.PickupBy(this);
+    //        }
+    //    }
+    //}
 
     private void Move()
     {

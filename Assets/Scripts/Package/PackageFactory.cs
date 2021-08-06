@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DeliveryPackageController : MonoBehaviour
+public class PackageFactory : MonoBehaviour
 {
 
     [SerializeField] private GameObject deliveryPackageTemplate;
@@ -9,10 +8,9 @@ public class DeliveryPackageController : MonoBehaviour
     [SerializeField] private GameObject[] spawnPoints;
     [SerializeField] private GameObject[] targetPoints;
     
-    [HideInInspector] public DeliveryService deliveryService;
-    [HideInInspector] public PlayerService playerService;
+    [HideInInspector] public DeliveryStore deliveryService;
+    [HideInInspector] public PlayerFactory playerFactory;
 
-    private List<DeliveryPackage> packages = new List<DeliveryPackage>();
     private int packageCounter = 0;
 
     public void Start()
@@ -24,42 +22,25 @@ public class DeliveryPackageController : MonoBehaviour
         {
             spawnPoint.SetActive(false);
         }
-
-        SpawnPackage();
     }
 
-    public bool GetPackageWithinPickupRange(Player playerController, out DeliveryPackage deliveryPackage)
-    {
-        foreach (var package in packages)
-        {
-            if (Vector3.Distance(playerController.transform.position, package.transform.position) < 2)
-            {
-                deliveryPackage = package;
-                return true;
-            }
-        }
-
-        deliveryPackage = null;
-        return false;
-    }
-
-    public void SpawnPackage()
+    public Package CreatePackage()
     {
         Transform spawnPointPosition = GetSpawnPosition();
         GameObject targetObject = GetTargetPoint();
-        DeliveryPackage newPackage = Instantiate(deliveryPackageTemplate.GetComponent<DeliveryPackage>(), deliveryPackageTemplate.transform.parent);
+        Package newPackage = Instantiate(deliveryPackageTemplate.GetComponent<Package>(), deliveryPackageTemplate.transform.parent);
         newPackage.deliveryService = deliveryService;
         newPackage.transform.position = spawnPointPosition.position;
         newPackage.targetObject = targetObject;
         newPackage.Name = "package-" + packageCounter++;
         newPackage.gameObject.SetActive(true);
-        packages.Add(newPackage);
-        deliveryService.AddPackage(newPackage);
 
-        MinimapDeliveryPackage newMinimapPackage = Instantiate(deliveryPackageMinimapTemplate.GetComponent<MinimapDeliveryPackage>(), deliveryPackageMinimapTemplate.transform.parent);
+        GameObject newMinimapPackage = Instantiate(deliveryPackageMinimapTemplate, deliveryPackageMinimapTemplate.transform.parent);
         newMinimapPackage.transform.position = spawnPointPosition.position;
         newMinimapPackage.gameObject.SetActive(true);
         newMinimapPackage.transform.SetParent(gameObject.transform);
+
+        return newPackage;
     }
 
     public Transform GetSpawnPosition()
@@ -70,11 +51,5 @@ public class DeliveryPackageController : MonoBehaviour
     public GameObject GetTargetPoint()
     {
         return targetPoints[Random.Range(0, targetPoints.Length)];
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
