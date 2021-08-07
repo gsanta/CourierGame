@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public class StartDayPanel : MonoBehaviour
 {
     private IWorldState worldState;
 
-    public void SetDependencies(IWorldState worldState)
+    [Inject]
+    public void Construct(IWorldState worldState)
     {
         this.worldState = worldState;
     }

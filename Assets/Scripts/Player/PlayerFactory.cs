@@ -6,38 +6,20 @@ public class PlayerFactory : MonoBehaviour
     [SerializeField] private Player playerTemplate;
     [SerializeField] private GameObject minimapPlayerTemplate;
     
-    private PackageStore packageStore;
-    private DeliveryStore deliveryService;
     private TimelineController timelineController;
-    private ITimeProvider timeProvider;
-    private IWorldState worldState;
-    private PlayerStore playerStore;
-    private InputHandler inputHandler;
+    private Player.Factory instanceFactory;
 
     [Inject]
-    public void Construct(PackageStore packageStore)
+    public void Construct(Player.Factory instanceFactory, TimelineController timelineController)
     {
-        this.packageStore = packageStore;
-    }
-
-    public void SetDependencies(PackageStore packageStore, DeliveryStore deliveryService, TimelineController timelineController, ITimeProvider timeProvider, IWorldState worldState, PlayerStore playerStore, InputHandler inputHandler)
-    {
-        this.packageStore = packageStore;
-        this.deliveryService = deliveryService;
+        this.instanceFactory = instanceFactory;
         this.timelineController = timelineController;
-        this.timeProvider = timeProvider;
-        this.worldState = worldState;
-        this.playerStore = playerStore;
-        this.inputHandler = inputHandler;
     }
 
     public Player CreatePlayer(PlayerConfig config)
     {
-        Player newPlayer = Instantiate(playerTemplate, playerTemplate.transform.parent);
+        Player newPlayer = instanceFactory.Create(playerTemplate);
 
-        PlayerInputComponent playerInputComponent = new PlayerInputComponent(newPlayer, deliveryService, packageStore, inputHandler, playerStore);
-
-        newPlayer.SetDependencies(playerInputComponent, playerStore, timeProvider, worldState);
         newPlayer.transform.position = config.spawnPoint.transform.position;
         newPlayer.Name = config.name;
         newPlayer.gameObject.SetActive(true);

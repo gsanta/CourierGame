@@ -1,20 +1,26 @@
 using UnityEngine;
+using Zenject;
 
 public class PackageFactory : MonoBehaviour
 {
-    [SerializeField] private GameObject deliveryPackageTemplate;
+    [SerializeField] private Package packageTemplate;
     [SerializeField] private GameObject deliveryPackageMinimapTemplate;
     [SerializeField] private GameObject[] spawnPoints;
     [SerializeField] private GameObject[] targetPoints;
     
-    [HideInInspector] public DeliveryStore deliveryService;
-    [HideInInspector] public PlayerFactory playerFactory;
+    private Package.Factory instanceFactory;
 
     private int packageCounter = 0;
 
+    [Inject]
+    public void Construct(Package.Factory instanceFactory)
+    {
+        this.instanceFactory = instanceFactory;
+    }
+
     public void Start()
     {
-        deliveryPackageTemplate.SetActive(false);
+        packageTemplate.gameObject.SetActive(false);
         deliveryPackageMinimapTemplate.SetActive(false);
 
         foreach (GameObject spawnPoint in spawnPoints)
@@ -26,10 +32,9 @@ public class PackageFactory : MonoBehaviour
     public Package CreatePackage(PackageConfig packageConfig)
     {
         GameObject targetObject = GetTargetPoint();
-        Package newPackage = Instantiate(deliveryPackageTemplate.GetComponent<Package>(), deliveryPackageTemplate.transform.parent);
-        newPackage.deliveryService = deliveryService;
+        Package newPackage = instanceFactory.Create(packageTemplate);
         newPackage.transform.position = packageConfig.spawnPoint.transform.position;
-        newPackage.targetObject = targetObject;
+        newPackage.Target = targetObject;
         newPackage.Name = "package-" + packageCounter++;
         newPackage.gameObject.SetActive(true);
 

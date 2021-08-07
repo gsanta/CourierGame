@@ -1,20 +1,25 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public class PlayerSpawner : MonoBehaviour 
 {
     [SerializeField]
     private GameObject[] spawnPoints;
-    private SpawnPointHandler spawnPointHandler;
+    private ISpawnPointHandler spawnPointHandler;
+
     private int Counter = 0;
     private PlayerColor[] colors = new PlayerColor[] { PlayerColor.Blue, PlayerColor.Green, PlayerColor.Yellow };
 
-    public PlayerConfig Spawn()
+    [Inject]
+    public void Construct(ISpawnPointHandler spawnPointHandler)
     {
-        if (spawnPointHandler == null) { 
-            spawnPointHandler = new SpawnPointHandler(spawnPoints);
-        }
+        this.spawnPointHandler = spawnPointHandler;
+        this.spawnPointHandler.SetSpawnPoints(spawnPoints);
+    }
 
-        PlayerConfig playerConfig = new PlayerConfig("Player-" + Counter, colors[Counter % colors.Length], spawnPointHandler.GetAndReserveRandomSpawnPoint());
+        public PlayerConfig Spawn()
+    {
+        PlayerConfig playerConfig = new PlayerConfig("Player-" + Counter, colors[Counter % colors.Length], spawnPointHandler.GetAndReserveSpawnPoint());
         Counter++;
 
         return playerConfig;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class DeliveryPanel : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class DeliveryPanel : MonoBehaviour
     private List<DeliveryListItem> activeDeliveryItems = new List<DeliveryListItem>();
     private List<WaitingDeliveryListItem> waitingDeliveryItems = new List<WaitingDeliveryListItem>();
 
-    public void SetDependencies(DeliveryStore deliveryService, PackageStore packageStore)
+    [Inject]
+    public void Construct(DeliveryStore deliveryService, PackageStore packageStore)
     {
         this.deliveryService = deliveryService;
         this.packageStore = packageStore;

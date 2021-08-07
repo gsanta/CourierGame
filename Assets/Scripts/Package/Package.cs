@@ -1,26 +1,38 @@
 using UnityEngine;
+using Zenject;
 
 public class Package : MonoBehaviour
 {
-    [HideInInspector] public PlayerFactory playerFactory;
-    [HideInInspector] public DeliveryStore deliveryService;
-    [HideInInspector] public GameObject targetObject;
-
+    private DeliveryStore deliveryStore;
+    
+    private GameObject targetObject;
     private Transform origParent;
 
+    [Inject]
+    public void Construct(DeliveryStore deliveryStore)
+    {
+        this.deliveryStore = deliveryStore;
+    }
+
     public string Name { get; set; }
+
+    public GameObject Target
+    {
+        set => targetObject = value;
+        get => targetObject;
+    }
 
     public void PickupBy(Player player)
     {
         origParent = gameObject.transform.parent;
         gameObject.transform.SetParent(player.transform);
-        deliveryService.AssignPackageToPlayer(player, this);
+        deliveryStore.AssignPackageToPlayer(player, this);
         targetObject.SetActive(true);
     }
 
     public void ReleasePackage()
     {
-        deliveryService.DropPackage(this);
+        deliveryStore.DropPackage(this);
         gameObject.transform.SetParent(origParent);
         targetObject.SetActive(false);
     }
@@ -29,5 +41,9 @@ public class Package : MonoBehaviour
     {
         Destroy(gameObject);
         Destroy(targetObject);
+    }
+
+    public class Factory : PlaceholderFactory<Object, Package>
+    {
     }
 }

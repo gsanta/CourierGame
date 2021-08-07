@@ -32,7 +32,7 @@ public class DeliveryStore
         }
         reversePackageMap.Remove(package);
 
-        if (Vector3.Distance(package.transform.position, package.targetObject.transform.position) < 1)
+        if (Vector3.Distance(package.transform.position, package.Target.transform.position) < 1)
         {
             packageStore.Remove(package);
             package.DestroyPackage();

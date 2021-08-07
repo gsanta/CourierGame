@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 public class Player : MonoBehaviour
 {
@@ -26,17 +27,23 @@ public class Player : MonoBehaviour
 
     public Timer Timer { get => timer; }
 
-    public void SetDependencies(PlayerInputComponent playerInputComponent, PlayerStore playerStore, ITimeProvider timeProvider, IWorldState worldState)
+    [Inject]
+    public void Construct(PlayerInputComponent playerInputComponent, ITimeProvider timeProvider, IWorldState worldState, PlayerStore playerStore)
     {
         this.playerInputComponent = playerInputComponent;
-        this.playerStore = playerStore;
+        playerInputComponent.SetPlayer(this);
+
         this.timeProvider = timeProvider;
         this.worldState = worldState;
+        this.playerStore = playerStore;
     }
 
     public void ActivatePlayer()
     {
-        playerInputComponent.ActivateComponent();
+        if (playerInputComponent != null)
+        {
+            playerInputComponent.ActivateComponent();
+        }
     }
 
     public void DeactivatePlayer()
@@ -125,5 +132,9 @@ public class Player : MonoBehaviour
         movement.y = yVal;
 
         charController.Move(movement * Time.deltaTime);
+    }
+
+    public class Factory : PlaceholderFactory<Object, Player>
+    {
     }
 }

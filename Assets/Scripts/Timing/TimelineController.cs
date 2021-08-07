@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class TimelineController : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class TimelineController : MonoBehaviour
 
     private HashSet<GameObject> usedPlayerImages = new HashSet<GameObject>();
 
-    public void SetDependencies(PlayerStore playerStore, IWorldState worldState)
+    [Inject]
+    public void Construct(PlayerStore playerStore, IWorldState worldState)
     {
         this.playerStore = playerStore;
         this.worldState = worldState;

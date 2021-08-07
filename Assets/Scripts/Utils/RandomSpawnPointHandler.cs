@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnPointHandler
+public class RandomSpawnPointHandler : ISpawnPointHandler
 {
     private GameObject[] spawnPoints;
     private HashSet<GameObject> reservedSpawnPoints = new HashSet<GameObject>();
 
-    public SpawnPointHandler(GameObject[] spawnPoints)
+    public void SetSpawnPoints(GameObject[] spawnPoints)
     {
         this.spawnPoints = spawnPoints;
     }
 
-    public GameObject GetAndReserveRandomSpawnPoint()
+    public GameObject GetAndReserveSpawnPoint()
     {
         if (reservedSpawnPoints.Count == spawnPoints.Length)
         {

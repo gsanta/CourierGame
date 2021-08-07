@@ -6,16 +6,20 @@ public class PlayerInputComponent
     private Player player;
     private InputHandler inputHandler;
     private PlayerStore playerStore;
-    private DeliveryStore deliveryService;
+    private DeliveryStore deliveryStore;
     private PackageStore packageStore;
 
-    public PlayerInputComponent(Player player, DeliveryStore deliveryService, PackageStore packageStore, InputHandler inputHandler, PlayerStore playerStore)
+    public PlayerInputComponent(DeliveryStore deliveryStore, PackageStore packageStore, InputHandler inputHandler, PlayerStore playerStore)
     {
-        this.player = player;
-        this.deliveryService = deliveryService;
+        this.deliveryStore = deliveryStore;
         this.packageStore = packageStore;
         this.inputHandler = inputHandler;
         this.playerStore = playerStore;
+    }
+
+    public void SetPlayer(Player player)
+    {
+        this.player = player;
     }
 
     public void ActivateComponent()
@@ -33,7 +37,7 @@ public class PlayerInputComponent
     private void OnLeftMouseButtonDown(object sender, EventArgs e)
     {
         Package deliveryPackage;
-        if (deliveryService.GetPackage(player, out deliveryPackage))
+        if (deliveryStore.GetPackage(player, out deliveryPackage))
         {
             deliveryPackage.ReleasePackage();
         }
