@@ -21,12 +21,10 @@ public class DeliveryPanel : MonoBehaviour
     void Start()
     {
         packageStore.OnPackageAdded += RefreshActiveDeliveryList;
-        deliveryService.OnPackageAssigned += RefreshActiveDeliveryList;
-        deliveryService.OnPackageDelivered += RefreshActiveDeliveryList;
+        deliveryService.OnDeliveryStatusChanged += RefreshActiveDeliveryList;
 
         packageStore.OnPackageAdded += RefreshWaitingDeliveryList;
-        deliveryService.OnPackageAssigned += RefreshWaitingDeliveryList;
-        deliveryService.OnPackageDelivered += RefreshWaitingDeliveryList;
+        deliveryService.OnDeliveryStatusChanged += RefreshWaitingDeliveryList;
     }
 
     private void RefreshActiveDeliveryList(object sender, EventArgs e)

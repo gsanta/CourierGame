@@ -13,7 +13,7 @@ public class PackageSetup
     public void Setup()
     {
         // TODO this should be done by some package creation strategy
-        Package package = packageFactory.CreatePackage();
-        packageStore.Add(package);
+        //Package package = packageFactory.CreatePackage();
+        //packageStore.Add(package);
     }
 }

@@ -20,7 +20,7 @@ public class DeliveryStore
         packageMap.Add(player, package);
         reversePackageMap.Add(package, player);
 
-        OnPackageAssigned?.Invoke(this, EventArgs.Empty);
+        OnDeliveryStatusChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void DropPackage(Package package)
@@ -36,11 +36,9 @@ public class DeliveryStore
         {
             packageStore.Remove(package);
             package.DestroyPackage();
-            OnPackageDelivered?.Invoke(this, EventArgs.Empty);
-        } else
-        {
-            OnPackageAssigned?.Invoke(this, EventArgs.Empty);
-        }
+        } 
+        
+        OnDeliveryStatusChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public bool GetPackage(Player player, out Package package)
@@ -67,6 +65,5 @@ public class DeliveryStore
         return player;
     }
 
-    public event EventHandler OnPackageAssigned;
-    public event EventHandler OnPackageDelivered;
+    public event EventHandler OnDeliveryStatusChanged;
 }

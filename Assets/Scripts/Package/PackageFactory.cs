@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PackageFactory : MonoBehaviour
 {
-
     [SerializeField] private GameObject deliveryPackageTemplate;
     [SerializeField] private GameObject deliveryPackageMinimapTemplate;
     [SerializeField] private GameObject[] spawnPoints;
@@ -24,19 +23,18 @@ public class PackageFactory : MonoBehaviour
         }
     }
 
-    public Package CreatePackage()
+    public Package CreatePackage(PackageConfig packageConfig)
     {
-        Transform spawnPointPosition = GetSpawnPosition();
         GameObject targetObject = GetTargetPoint();
         Package newPackage = Instantiate(deliveryPackageTemplate.GetComponent<Package>(), deliveryPackageTemplate.transform.parent);
         newPackage.deliveryService = deliveryService;
-        newPackage.transform.position = spawnPointPosition.position;
+        newPackage.transform.position = packageConfig.spawnPoint.transform.position;
         newPackage.targetObject = targetObject;
         newPackage.Name = "package-" + packageCounter++;
         newPackage.gameObject.SetActive(true);
 
         GameObject newMinimapPackage = Instantiate(deliveryPackageMinimapTemplate, deliveryPackageMinimapTemplate.transform.parent);
-        newMinimapPackage.transform.position = spawnPointPosition.position;
+        newMinimapPackage.transform.position = packageConfig.spawnPoint.transform.position;
         newMinimapPackage.gameObject.SetActive(true);
         newMinimapPackage.transform.SetParent(gameObject.transform);
 

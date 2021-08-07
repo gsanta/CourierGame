@@ -3,24 +3,24 @@ public class PlayerSetup
 {
     private PlayerFactory playerFactory;
     private PlayerPool playerPool;
-    private SpawnPointHandler spawnPointHandler;
+    private PlayerSpawner playerSpawner;
     private PlayerStore playerStore;
 
-    public PlayerSetup(PlayerPool playerPool, SpawnPointHandler spawnPointHandler, PlayerFactory playerFactory, PlayerStore playerStore)
+    public PlayerSetup(PlayerPool playerPool, PlayerSpawner playerSpawner, PlayerFactory playerFactory, PlayerStore playerStore)
     {
         this.playerPool = playerPool;
-        this.spawnPointHandler = spawnPointHandler;
+        this.playerSpawner = playerSpawner;
         this.playerFactory = playerFactory;
         this.playerStore = playerStore;
     }
 
     public void Setup()
     {
-        playerPool.AddPlayerConfig(new PlayerConfig("Player-0", PlayerColor.Blue, spawnPointHandler.GetAndReserveRandomSpawnPoint()));
-        playerPool.AddPlayerConfig(new PlayerConfig("Player-1", PlayerColor.Green, spawnPointHandler.GetAndReserveRandomSpawnPoint()));
-        playerPool.AddPlayerConfig(new PlayerConfig("Player-2", PlayerColor.Yellow, spawnPointHandler.GetAndReserveRandomSpawnPoint()));
+        playerPool.AddPlayerConfig(playerSpawner.Spawn());
+        playerPool.AddPlayerConfig(playerSpawner.Spawn());
+        playerPool.AddPlayerConfig(playerSpawner.Spawn());
 
-        spawnPointHandler.ReleaseAllSpawnPoints();
+        playerSpawner.ReleaseAllSpawnPoints();
 
         foreach(PlayerConfig playerConfig in playerPool.GetAll())
         {

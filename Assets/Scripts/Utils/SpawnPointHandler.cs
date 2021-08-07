@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnPointHandler : MonoBehaviour
+public class SpawnPointHandler
 {
-
-    [SerializeField] private GameObject[] spawnPoints;
+    private GameObject[] spawnPoints;
     private HashSet<GameObject> reservedSpawnPoints = new HashSet<GameObject>();
+
+    public SpawnPointHandler(GameObject[] spawnPoints)
+    {
+        this.spawnPoints = spawnPoints;
+    }
 
     public GameObject GetAndReserveRandomSpawnPoint()
     {

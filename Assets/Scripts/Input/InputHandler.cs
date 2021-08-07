@@ -9,6 +9,7 @@ public class InputHandler : MonoBehaviour
     void Update()
     {
         HandleKeys();
+        HandleMouse();
     }
 
     private void HandleMouse()

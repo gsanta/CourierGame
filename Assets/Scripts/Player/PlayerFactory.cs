@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 public class PlayerFactory : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class PlayerFactory : MonoBehaviour
     private IWorldState worldState;
     private PlayerStore playerStore;
     private InputHandler inputHandler;
+
+    [Inject]
+    public void Construct(PackageStore packageStore)
+    {
+        this.packageStore = packageStore;
+    }
 
     public void SetDependencies(PackageStore packageStore, DeliveryStore deliveryService, TimelineController timelineController, ITimeProvider timeProvider, IWorldState worldState, PlayerStore playerStore, InputHandler inputHandler)
     {

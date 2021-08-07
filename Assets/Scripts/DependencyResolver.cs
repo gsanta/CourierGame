@@ -14,13 +14,14 @@ public class DependencyResolver : MonoBehaviour
     [SerializeField]
     private PlayerPool playerPool;
     [SerializeField]
-    private SpawnPointHandler playerSpawnPointHandler;
+    private PlayerSpawner playerSpawner;
     private PlayerStore playerStore;
     private PlayerSetup playerSetup;
 
     [SerializeField]
     private PackageFactory packageFactory;
     private PackageStore packageStore;
+    private PackageSetup packageSetup;
 
     private DeliveryStore deliveryService;
     private ITimeProvider timeProvider;
@@ -30,9 +31,10 @@ public class DependencyResolver : MonoBehaviour
         packageStore = new PackageStore();
         deliveryService = new DeliveryStore(packageStore);
         timeProvider = new DefaultTimeProvider();
+        packageSetup = new PackageSetup(packageStore, packageFactory);
 
         playerStore = new PlayerStore();
-        playerSetup = new PlayerSetup(playerPool, playerSpawnPointHandler, playerFactory, playerStore);
+        playerSetup = new PlayerSetup(playerPool, playerSpawner, playerFactory, playerStore);
 
         packageFactory.deliveryService = deliveryService;
         packageFactory.playerFactory = playerFactory;
@@ -40,8 +42,11 @@ public class DependencyResolver : MonoBehaviour
         playerFactory.SetDependencies(packageStore, deliveryService, timelineController, timeProvider, worldState, playerStore, inputHandler);
         timelineController.SetDependencies(playerStore, worldState);
         startDayPanel.SetDependencies(worldState);
-        playerPool.SetDependencies(playerSpawnPointHandler);
+    }
 
+    void Start()
+    {
+        packageSetup.Setup();
         playerSetup.Setup();
     }
 }
