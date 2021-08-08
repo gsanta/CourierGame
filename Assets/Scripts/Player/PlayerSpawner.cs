@@ -25,7 +25,7 @@ public class PlayerSpawner : MonoBehaviour
         return playerConfig;
     }
 
-    public void ReleaseAllSpawnPoints()
+     public void ReleaseAllSpawnPoints()
     {
         spawnPointHandler.ReleaseAllSpawnPoints();
     }

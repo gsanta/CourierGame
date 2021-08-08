@@ -31,7 +31,6 @@ public class MainInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-
         Container.Bind<InputHandler>().FromInstance(inputHandler).AsSingle();
         Container.Bind<TimelineController>().FromInstance(timelineController).AsSingle();
         Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
