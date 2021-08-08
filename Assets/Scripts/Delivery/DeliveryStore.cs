@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +15,7 @@ public class DeliveryStore
 
     public void AssignPackageToPlayer(Player player, Package package)
     {
+        package.Status = Package.DeliveryStatus.ASSIGNED;
         packageMap.Add(player, package);
         reversePackageMap.Add(package, player);
 
@@ -32,11 +31,17 @@ public class DeliveryStore
         }
         reversePackageMap.Remove(package);
 
-        if (Vector3.Distance(package.transform.position, package.Target.transform.position) < 1)
+        Vector2 packagePos = new Vector2(package.transform.position.x, package.transform.position.z);
+        Vector2 targetPos = new Vector2(package.Target.transform.position.x, package.Target.transform.position.z);
+        if (Vector2.Distance(packagePos, targetPos) < 1)
         {
             packageStore.Remove(package);
             package.DestroyPackage();
-        } 
+            package.Status = Package.DeliveryStatus.DELIVERED;
+        } else
+        {
+            package.Status = Package.DeliveryStatus.UNASSIGNED;
+        }
         
         OnDeliveryStatusChanged?.Invoke(this, EventArgs.Empty);
     }

@@ -35,6 +35,11 @@ public class PlayerStore
         activePlayer.ActivatePlayer();
     }
 
+    public bool IsActivePlayer(Player player)
+    {
+        return activePlayer == player;
+    }
+
     public Player GetActivePlayer()
     {
         return activePlayer;

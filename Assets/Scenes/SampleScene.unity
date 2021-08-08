@@ -2087,6 +2087,7 @@ Transform:
   - {fileID: 1228494188}
   - {fileID: 814958786}
   - {fileID: 31159347}
+  - {fileID: 287602605}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2234,6 +2235,49 @@ Transform:
   m_Father: {fileID: 1700037788}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &287602604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 287602605}
+  - component: {fileID: 287602606}
+  m_Layer: 0
+  m_Name: Timer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &287602605
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287602604}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 259627175}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &287602606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287602604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e791ec753c858a149ab0701a2daaff1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &305088546
 GameObject:
   m_ObjectHideFlags: 0
@@ -10181,6 +10225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1606aae09b7f9e5468dbfb2c1544ece8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timer: {fileID: 287602606}
   player: {fileID: 714780211}
   timelineController: {fileID: 917485730}
   startDayPanel: {fileID: 1453620629}
@@ -10191,7 +10236,7 @@ MonoBehaviour:
   playerPool: {fileID: 1179623257}
   playerSpawner: {fileID: 1986261820}
   packageFactory: {fileID: 1778988336}
-  packageSpawner: {fileID: 1700037789}
+  packageSpawnController: {fileID: 1700037789}
 --- !u!114 &1596121763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10813,7 +10858,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1700037787}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f6bb2b7dd7c5fc43a890a54def63ba8, type: 3}
+  m_Script: {fileID: 11500000, guid: dbf5a0577c0fa0e4baff9473959da1c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoints:

@@ -36,19 +36,25 @@ public class PlayerInputComponent
 
     private void OnLeftMouseButtonDown(object sender, EventArgs e)
     {
-        Package deliveryPackage;
-        if (deliveryStore.GetPackage(player, out deliveryPackage))
+        if (playerStore.IsActivePlayer(player))
         {
-            deliveryPackage.ReleasePackage();
-        }
-        else if (packageStore.GetPackageWithinPickupRange(player, out deliveryPackage))
-        {
-            deliveryPackage.PickupBy(player);
+            Package deliveryPackage;
+            if (deliveryStore.GetPackage(player, out deliveryPackage))
+            {
+                deliveryPackage.ReleasePackage();
+            }
+            else if (packageStore.GetPackageWithinPickupRange(player, out deliveryPackage))
+            {
+                deliveryPackage.PickupBy(player);
+            }
         }
     }
 
     private void OnKeyDown(object sender, KeyDownEventArgs args)
     {
-        playerStore.SetNextPlayerAsActive();
+        if (playerStore.IsActivePlayer(player))
+        {
+            playerStore.SetNextPlayerAsActive();
+        }
     }
 }

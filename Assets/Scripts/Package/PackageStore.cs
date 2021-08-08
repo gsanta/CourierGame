@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PackageStore
 {
@@ -21,6 +22,15 @@ public class PackageStore
     public List<Package> GetAll()
     {
         return packages;
+    }
+
+    public List<Package> GetPackagesOfStatus(Package.DeliveryStatus status, params Package.DeliveryStatus[] rest)
+    {
+        Package.DeliveryStatus[] statuses = new Package.DeliveryStatus[rest.Length + 1];
+        statuses[0] = status;
+        rest.CopyTo(statuses, 1);
+
+        return packages.FindAll(package => statuses.Contains(package.Status));
     }
 
     public bool GetPackageWithinPickupRange(Player playerController, out Package deliveryPackage)

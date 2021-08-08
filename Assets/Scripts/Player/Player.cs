@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -6,7 +7,6 @@ public class Player : MonoBehaviour
     public GameObject minimapObject;
 
     private PlayerStore playerStore;
-    private ITimeProvider timeProvider;
     private IWorldState worldState;
     private PlayerInputComponent playerInputComponent;
 
@@ -14,26 +14,27 @@ public class Player : MonoBehaviour
     [SerializeField] private CharacterController charController;
     [SerializeField] private float moveSpeed = 5f, runSpeed = 8f;
     [SerializeField] private string playerName;
-    
-    private Camera cam;   
+
+    private Camera cam;
     private float activeMoveSpeed;
     private Vector3 moveDir, movement;
     private GameObject timelineImage;
     private Timer timer;
-    
+
+    private int elapsedTime;
+    public int ElapsedTime { get => elapsedTime; }
+
     public string Name { get => playerName; set => playerName = value; }
 
     public GameObject TimelineImage { get => timelineImage; set => timelineImage = value; }
 
-    public Timer Timer { get => timer; }
-
     [Inject]
-    public void Construct(PlayerInputComponent playerInputComponent, ITimeProvider timeProvider, IWorldState worldState, PlayerStore playerStore)
+    public void Construct(PlayerInputComponent playerInputComponent, Timer timer, IWorldState worldState, PlayerStore playerStore)
     {
         this.playerInputComponent = playerInputComponent;
         playerInputComponent.SetPlayer(this);
 
-        this.timeProvider = timeProvider;
+        this.timer = timer;
         this.worldState = worldState;
         this.playerStore = playerStore;
     }
@@ -54,25 +55,15 @@ public class Player : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        timer = new Timer(timeProvider, worldState.SecondsPerDay());
     }
 
     void Update()
     {
-        //HandleInput();
         if (playerStore.GetActivePlayer() == this)
         {
             Move();
-            if (worldState.IsMeasuring())
-            {
-                timer.Tick();
-            }
+            elapsedTime = timer.Elapsed;
         }
-    }
-
-    private void FixedUpdate()
-    {
-        //rigidBody.velocity = inputVector;
     }
 
     private void LateUpdate()
@@ -95,21 +86,6 @@ public class Player : MonoBehaviour
         minimapObject.transform.position = transform.position;
         minimapObject.transform.rotation = transform.rotation;
     }
-
-    //private void HandleInput()
-    //{
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        DeliveryPackage deliveryPackage;
-    //        if (deliveryService.GetPackage(this, out deliveryPackage))
-    //        {
-    //            deliveryPackage.ReleasePackage();
-    //        } else if (packageService.GetPackageWithinPickupRange(this, out deliveryPackage))
-    //        {
-    //            deliveryPackage.PickupBy(this);
-    //        }
-    //    }
-    //}
 
     private void Move()
     {
@@ -134,7 +110,7 @@ public class Player : MonoBehaviour
         charController.Move(movement * Time.deltaTime);
     }
 
-    public class Factory : PlaceholderFactory<Object, Player>
+    public class Factory : PlaceholderFactory<UnityEngine.Object, Player>
     {
     }
 }

@@ -1,46 +1,68 @@
 ﻿using System;
+using UnityEngine;
+using Zenject;
 
-public class Timer
+public class Timer : MonoBehaviour
 {
     private ITimeProvider timeProvider;
-    private int secondsPerDay;
-    private DateTime prev = DateTime.MinValue;
+    private IWorldState worldState;
+    private DateTime time = DateTime.MinValue;
+    private int secondAccum = 0;
 
-    public Timer(ITimeProvider timeProvider, int secondsPerDay)
+    [Inject]
+    public void Construct(ITimeProvider timeProvider, IWorldState worldState)
     {
         this.timeProvider = timeProvider;
-        this.secondsPerDay = secondsPerDay;
-        Accum = 0;
+        this.worldState = worldState;
+        Elapsed = 0;
     }
 
-    public int Accum { get; set; }
+    public int Elapsed { get; set; }
+
+    void Update()
+    {
+        if (worldState.IsMeasuring())
+        {
+            Tick();
+        }
+    }
 
     public void Pause()
     {
-        prev = DateTime.MinValue;
+        time = DateTime.MinValue;
     }
 
-    public void Tick()
+    private void Tick()
     {
         DateTime curr = timeProvider.UtcNow();
 
-        if (prev != DateTime.MinValue)
+        if (time != DateTime.MinValue)
         {
-            TimeSpan delta = curr.Subtract(prev);
-            Accum += delta.Milliseconds;
+            TimeSpan delta = curr.Subtract(time);
+            Elapsed += delta.Milliseconds;
+
+            HandleSecondPassed(delta);
         }
 
-        prev = curr;
+        time = curr;
     }
 
-    public float GetDayPercentage()
+    private void HandleSecondPassed(TimeSpan delta)
+    {
+        secondAccum += delta.Milliseconds;
+
+        if (secondAccum >= 1000)
+        {
+            OnSecondPassed?.Invoke(this, EventArgs.Empty);
+            secondAccum = secondAccum - 1000;
+        }
+    }
+
+    public float GetDayPercentageAt(int elapsedTime)
     {
         // Cast is not redundant, otherwise the division is zero if less than one
-        return (float)ElapsedSeconds / (float) secondsPerDay;
+        return (float) (elapsedTime / 1000) / (float) worldState.SecondsPerDay();
     }
 
-    public int ElapsedSeconds
-    {
-        get => Accum / 1000;
-    }
+    public event EventHandler OnSecondPassed;
 }

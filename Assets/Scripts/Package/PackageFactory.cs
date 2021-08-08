@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class PackageFactory : MonoBehaviour
+public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
 {
     [SerializeField] private Package packageTemplate;
     [SerializeField] private GameObject deliveryPackageMinimapTemplate;
@@ -29,7 +29,7 @@ public class PackageFactory : MonoBehaviour
         }
     }
 
-    public Package CreatePackage(PackageConfig packageConfig)
+    public Package Create(PackageConfig packageConfig)
     {
         GameObject targetObject = GetTargetPoint();
         Package newPackage = instanceFactory.Create(packageTemplate);
@@ -42,6 +42,8 @@ public class PackageFactory : MonoBehaviour
         newMinimapPackage.transform.position = packageConfig.spawnPoint.transform.position;
         newMinimapPackage.gameObject.SetActive(true);
         newMinimapPackage.transform.SetParent(gameObject.transform);
+
+        newPackage.MinimapGameObject = newMinimapPackage;
 
         return newPackage;
     }
