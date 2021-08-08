@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-public class PackageSpawnController : MonoBehaviour, ISpawnPointsProvider
+public class PackageSpawnController : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] spawnPoints;
