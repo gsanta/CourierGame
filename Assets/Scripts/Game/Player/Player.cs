@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform viewPoint;
     [SerializeField] private CharacterController charController;
     [SerializeField] private float moveSpeed = 5f, runSpeed = 8f;
+    [SerializeField] private float gravityMod = 2.5f;
+
     [SerializeField] private string playerName;
 
     private Camera cam;
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
         if (playerInputComponent != null)
         {
             playerInputComponent.ActivateComponent();
+            timer.Elapsed = elapsedTime;
         }
     }
 
@@ -103,10 +106,8 @@ public class Player : MonoBehaviour
             activeMoveSpeed = moveSpeed;
         }
 
-        float yVal = movement.y;
         movement = ((transform.forward * moveDir.z) + (transform.right * moveDir.x)).normalized * activeMoveSpeed;
-        movement.y = yVal;
-
+        movement.y += Physics.gravity.y * Time.deltaTime * gravityMod;
         charController.Move(movement * Time.deltaTime);
     }
 

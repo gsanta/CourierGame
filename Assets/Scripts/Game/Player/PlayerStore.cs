@@ -12,7 +12,7 @@ public class PlayerStore
         {
             int activePlayerIndex = players.IndexOf(activePlayer);
             int nextPlayerIndex = (activePlayerIndex + 1) % players.Count;
-            activePlayer = players[nextPlayerIndex];
+            SetActivePlayer(players[nextPlayerIndex]);
         }
     }
 
