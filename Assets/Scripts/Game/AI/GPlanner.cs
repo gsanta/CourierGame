@@ -89,41 +89,42 @@ namespace AI
 
         private bool BuildGraph(Node parent, List<Node> leaves, List<GAction> usableActions, Dictionary<string, int> goal)
         {
-            bool foundPath = false;
+            //bool foundPath = false;
 
-            foreach (GAction action in usableActions)
-            {
-                if (action.IsAchievableGiven(parent.state))
-                {
-                    Dictionary<string, int> currentState = new Dictionary<string, int>(parent.state);
-                    foreach (KeyValuePair<string, int> eff in action.effectsDict)
-                    {
-                        if (!currentState.ContainsKey(eff.Key))
-                        {
-                            currentState.Add(eff.Key, eff.Value);
-                        }
-                    }
+            //foreach (GAction action in usableActions)
+            //{
+            //    if (action.IsAchievableGiven(parent.state))
+            //    {
+            //        Dictionary<string, int> currentState = new Dictionary<string, int>(parent.state);
+            //        foreach (KeyValuePair<string, int> eff in action.effectsDict)
+            //        {
+            //            if (!currentState.ContainsKey(eff.Key))
+            //            {
+            //                currentState.Add(eff.Key, eff.Value);
+            //            }
+            //        }
 
-                    Node node = new Node(parent, parent.cost + action.cost, currentState, action);
+            //        Node node = new Node(parent, parent.cost + action.cost, currentState, action);
 
-                    if (GoalAchieved(goal, currentState))
-                    {
-                        leaves.Add(node);
-                        foundPath = true;
-                    } else
-                    {
-                        List<GAction> subset = ActionSubset(usableActions, action);
-                        bool found = BuildGraph(node, leaves, subset, goal);
-                    
-                        if (found)
-                        {
-                            foundPath = true;
-                        }
-                    }
-                }
+            //        if (GoalAchieved(goal, currentState))
+            //        {
+            //            leaves.Add(node);
+            //            foundPath = true;
+            //        } else
+            //        {
+            //            List<GAction> subset = ActionSubset(usableActions, action);
+            //            bool found = BuildGraph(node, leaves, subset, goal);
 
-                return foundPath;
-            }
+            //            if (found)
+            //            {
+            //                foundPath = true;
+            //            }
+            //        }
+            //    }
+
+            //    return foundPath;
+            //}
+            return false;
         }
     }
 }
