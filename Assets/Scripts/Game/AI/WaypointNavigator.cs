@@ -1,27 +1,48 @@
 using AI;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 
 namespace AI
 {
+
+    public class NewWayPointCreatedEventArgs
+    {
+        public WaypointInfo waypointInfo;
+
+        NewWayPointCreatedEventArgs(WaypointInfo waypointInfo)
+        {
+            this.waypointInfo = waypointInfo;
+        }
+    }
+
     public class WaypointNavigator : MonoBehaviour
     {
 
+        public IWaypointProvider newWaypointProvider;
+        public IWaypointProvider recordedWaypointProvider;
+        public IWaypointProvider activeWaypointProvider;
+
         CharacterNavigationController controller;
         public Waypoint currentWaypoint;
-
-        int direction;
+        public int direction;
 
         private void Awake()
         {
             controller = GetComponent<CharacterNavigationController>();
+
+            IWaypointProvider[] waypointProviders = GetComponents<IWaypointProvider>();
+
+            newWaypointProvider = Array.Find(waypointProviders, (IWaypointProvider provider) => provider.IsRecordingProvider() == false);
+            recordedWaypointProvider = Array.Find(waypointProviders, (IWaypointProvider provider) => provider.IsRecordingProvider() == true);
+            activeWaypointProvider = newWaypointProvider;
         }
 
         void Start()
         {
-            direction = Mathf.RoundToInt(Random.Range(0f, 1f));
+            direction = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
             controller.SetDestination(currentWaypoint.GetPosition());
         }
 
@@ -30,44 +51,14 @@ namespace AI
             if (controller.reachedDestination)
             {
 
-                bool shouldBranch = false;
-
-                if (currentWaypoint.branches != null && currentWaypoint.branches.Count > 0)
-                {
-                    shouldBranch = Random.Range(0f, 1f) <= currentWaypoint.branchRatio ? true : false;
-                }
-
-                if (shouldBranch)
-                {
-                    currentWaypoint = currentWaypoint.branches[Random.Range(0, currentWaypoint.branches.Count - 1)];
-                } else
-                {
-                    if (direction == 0)
-                    {
-                        if (currentWaypoint.nextWaypoint != null)
-                        {
-                            currentWaypoint = currentWaypoint.nextWaypoint;
-                        } else
-                        {
-                            currentWaypoint = currentWaypoint.previousWaypoint;
-                            direction = 1;
-                        }
-                    } 
-                    else if (direction == 1)
-                    {
-                        if (currentWaypoint.previousWaypoint != null)
-                        {
-                            currentWaypoint = currentWaypoint.previousWaypoint;
-                        } else
-                        {
-                            currentWaypoint = currentWaypoint.nextWaypoint;
-                            direction = 0;
-                        }
-                    }
-                }
+                WaypointInfo waypointInfo = activeWaypointProvider.GetNextWaypoint();
+                currentWaypoint = waypointInfo.waypoint;
+                direction = waypointInfo.direction;
 
                 controller.SetDestination(currentWaypoint.GetPosition());
             }
         }
+
+        event EventHandler<NewWayPointCreatedEventArgs> OnNewWaypointCreated;
     }
 }
