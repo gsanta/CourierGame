@@ -107,8 +107,9 @@ public class Player : MonoBehaviour
         }
 
         movement = ((transform.forward * moveDir.z) + (transform.right * moveDir.x)).normalized * activeMoveSpeed;
-        movement.y += Physics.gravity.y * Time.deltaTime * gravityMod;
+        movement.y += Physics.gravity.y * gravityMod;
         charController.Move(movement * Time.deltaTime);
+        Debug.Log("y: " + transform.position.y);
     }
 
     public class Factory : PlaceholderFactory<UnityEngine.Object, Player>

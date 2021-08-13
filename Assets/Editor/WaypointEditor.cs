@@ -13,7 +13,7 @@ class WaypointEditor
     [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected | GizmoType.Pickable)]
     public static void OnDrawSceneGizmo(Waypoint waypoint, GizmoType gizmoType)
     {
-        if ((gizmoType & GizmoType.Selected) != null)
+        if ((gizmoType & GizmoType.Selected) != 0)
         {
             Gizmos.color = Color.yellow;
         } else
@@ -33,7 +33,7 @@ class WaypointEditor
         {
             Gizmos.color = Color.red;
             Vector3 offset = waypoint.transform.right * waypoint.width / 2f;
-            Vector3 offsetTo = waypoint.previousWaypoint.transform.right * waypoint.width / 2f;
+            Vector3 offsetTo = waypoint.previousWaypoint.transform.right * waypoint.previousWaypoint.width / 2f;
 
             Gizmos.DrawLine(waypoint.transform.position + offset, waypoint.previousWaypoint.transform.position + offsetTo);
         }
@@ -42,9 +42,18 @@ class WaypointEditor
         {
             Gizmos.color = Color.green;
             Vector3 offset = - waypoint.transform.right * waypoint.width / 2f;
-            Vector3 offsetTo = -waypoint.nextWaypoint.transform.right * waypoint.width / 2;
+            Vector3 offsetTo = -waypoint.nextWaypoint.transform.right * waypoint.nextWaypoint.width / 2;
 
             Gizmos.DrawLine(waypoint.transform.position + offset, waypoint.nextWaypoint.transform.position + offsetTo);
+        }
+
+        if (waypoint.branches != null)
+        {
+            foreach(Waypoint branch in waypoint.branches)
+            {
+                Gizmos.color = Color.blue;
+                Gizmos.DrawLine(waypoint.transform.position, branch.transform.position);
+            }
         }
     }
 }

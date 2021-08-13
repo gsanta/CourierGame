@@ -17,7 +17,7 @@ public class PlayerSpawner : MonoBehaviour
         this.spawnPointHandler.SetSpawnPoints(spawnPoints);
     }
 
-        public PlayerConfig Spawn()
+    public PlayerConfig Spawn()
     {
         PlayerConfig playerConfig = new PlayerConfig("Player-" + Counter, colors[Counter % colors.Length], spawnPointHandler.GetAndReserveSpawnPoint());
         Counter++;

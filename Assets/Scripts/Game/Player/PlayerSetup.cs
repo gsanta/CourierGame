@@ -17,8 +17,8 @@ public class PlayerSetup
     public void Setup()
     {
         playerPool.AddPlayerConfig(playerSpawner.Spawn());
-        playerPool.AddPlayerConfig(playerSpawner.Spawn());
-        playerPool.AddPlayerConfig(playerSpawner.Spawn());
+        //playerPool.AddPlayerConfig(playerSpawner.Spawn());
+        //playerPool.AddPlayerConfig(playerSpawner.Spawn());
 
         playerSpawner.ReleaseAllSpawnPoints();
 
