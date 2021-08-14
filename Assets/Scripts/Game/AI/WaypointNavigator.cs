@@ -21,9 +21,7 @@ namespace AI
     public class WaypointNavigator : MonoBehaviour
     {
 
-        public IWaypointProvider newWaypointProvider;
-        public IWaypointProvider recordedWaypointProvider;
-        public IWaypointProvider activeWaypointProvider;
+        public IWaypointProvider waypointProvider;
 
         CharacterNavigationController controller;
         public Waypoint currentWaypoint;
@@ -32,12 +30,7 @@ namespace AI
         private void Awake()
         {
             controller = GetComponent<CharacterNavigationController>();
-
-            IWaypointProvider[] waypointProviders = GetComponents<IWaypointProvider>();
-
-            newWaypointProvider = Array.Find(waypointProviders, (IWaypointProvider provider) => provider.IsRecordingProvider() == false);
-            recordedWaypointProvider = Array.Find(waypointProviders, (IWaypointProvider provider) => provider.IsRecordingProvider() == true);
-            activeWaypointProvider = newWaypointProvider;
+            waypointProvider = GetComponent<IWaypointProvider>();
         }
 
         void Start()
@@ -51,7 +44,7 @@ namespace AI
             if (controller.reachedDestination)
             {
 
-                WaypointInfo waypointInfo = activeWaypointProvider.GetNextWaypoint();
+                WaypointInfo waypointInfo = waypointProvider.GetNextWaypoint();
                 currentWaypoint = waypointInfo.waypoint;
                 direction = waypointInfo.direction;
 
