@@ -13,6 +13,7 @@ public class Package : MonoBehaviour
     private DeliveryStore deliveryStore;
     private GameObject targetObject;
     private Transform origParent;
+    public GameObject SpawnPoint { get; set; }
 
     public GameObject MinimapGameObject { get; set; }
 

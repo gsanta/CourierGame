@@ -1,40 +1,67 @@
 ﻿
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PackageSpawner : BaseSpawner<PackageConfig>
 {
 
     private Timer timer;
     private PackageStore packageStore;
+    private ItemFactory<PackageConfig, Package> packageFactory;
 
-    public PackageSpawner(Timer timer, PackageStore packageStore)
+    public PackageSpawner(Timer timer, PackageStore packageStore, ItemFactory<PackageConfig, Package> packageFactory)
     {
         this.timer = timer;
         this.packageStore = packageStore;
+        this.packageFactory = packageFactory;
+        StartSpawning();
     }
 
     override public void StartSpawning()
     {
         base.StartSpawning();
 
-        timer.OnSecondPassed += SpawnIfNeeded;
+        timer.OnSecondPassed += Spawn;
     }
 
-    private void SpawnIfNeeded(object sender, EventArgs e)
+    private void Spawn(object sender, EventArgs e)
     {
-        if (packageStore.GetPackagesOfStatus(Package.DeliveryStatus.UNASSIGNED, Package.DeliveryStatus.ASSIGNED).Count == 0)
+        int spawnCount = 5 - packageStore.GetPackagesOfStatus(Package.DeliveryStatus.UNASSIGNED, Package.DeliveryStatus.ASSIGNED).Count;
+
+        if (spawnCount <= 0)
         {
-            Spawn();
+            return;
+        }
+
+        List<GameObject> freeSpawnPoints = GetFreeSpawnPoints();
+
+        while (spawnCount > 0)
+        {
+
+            int index = UnityEngine.Random.Range(0, freeSpawnPoints.Count);
+            GameObject spawnPoint = freeSpawnPoints[index];
+            
+            freeSpawnPoints.RemoveAt(index);
+
+            PackageConfig config = new PackageConfig(spawnPoint);
+            Package package = packageFactory.Create(config);
+
+            packageStore.Add(package);
+
+            spawnCount--;
         }
     }
 
-    private void Spawn()
+    private List<GameObject> GetFreeSpawnPoints()
     {
-        GameObject spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-        PackageConfig config = new PackageConfig(spawnPoint);
+        List<Package> occupiedPackages = packageStore.GetPackagesOfStatus(Package.DeliveryStatus.UNASSIGNED, Package.DeliveryStatus.ASSIGNED);
+        List<GameObject> occupiedSpawnPoints = occupiedPackages.Select(package => package.SpawnPoint).ToList();
 
-        TriggerSpawn(new SpawnEventArgs<PackageConfig>(config));
+        GameObject[] freeSpawnPoints = Array.FindAll(packageStore.PackageSpawnPoints, spawnPoint => !occupiedSpawnPoints.Contains(spawnPoint));
+
+        return new List<GameObject>(freeSpawnPoints);
     }
 }

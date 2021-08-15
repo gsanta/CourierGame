@@ -7,8 +7,6 @@ public class MainInstaller : MonoInstaller
     [SerializeField]
     private Timer timer;
     [SerializeField]
-    private Player player;
-    [SerializeField]
     private TimelineController timelineController;
     [SerializeField]
     private StartDayPanel startDayPanel;
@@ -27,9 +25,9 @@ public class MainInstaller : MonoInstaller
     private PlayerSpawner playerSpawner;
 
     [SerializeField]
-    private PackageFactory packageFactory;
+    private PackageStore packageStore;
     [SerializeField]
-    private PackageSpawnController packageSpawnController;
+    private PackageFactory packageFactory;
 
     public override void InstallBindings()
     {
@@ -50,9 +48,8 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PlayerInputComponent>().AsTransient();
         Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();
 
-        Container.Bind<PackageStore>().AsSingle();
-        Container.Bind<PackageSpawnController>().FromInstance(packageSpawnController).AsSingle();
-        Container.Bind<ISpawner<PackageConfig>>().To<PackageSpawner>().AsSingle();
+        Container.Bind<PackageStore>().FromInstance(packageStore).AsSingle();
+        Container.Bind<ISpawner<PackageConfig>>().To<PackageSpawner>().AsSingle().NonLazy();
         Container.Bind<ItemFactory<PackageConfig, Package>>().To<PackageFactory>().FromInstance(packageFactory).AsSingle();
         Container.BindFactory<Object, Package, Package.Factory>().FromFactory<PrefabFactory<Package>>();
 

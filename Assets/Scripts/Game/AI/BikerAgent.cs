@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace AI
 {
-    public class Patient : GAgent
+    public class BikerAgent : GAgent
     {
 
         public new void Start()
         {
             base.Start();
-            SubGoal s1 = new SubGoal("isWaiting", 1, true);
+            SubGoal s1 = new SubGoal("isPackagePickedUp", 1, true);
             goals.Add(s1, 3);
         }
     }

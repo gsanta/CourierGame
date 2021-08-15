@@ -4,9 +4,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class PackageStore
+public class PackageStore : MonoBehaviour
 {
     private List<Package> packages = new List<Package>();
+
+    [SerializeField] private GameObject[] packageSpawnPoints;
+    [SerializeField] private GameObject[] packageTargetPoints;
+    [SerializeField] private Package packageTemplate;
+    [SerializeField] private GameObject deliveryPackageMinimapTemplate;
+
+    public GameObject[] PackageSpawnPoints
+    {
+        get => packageSpawnPoints;
+    }
+
+    public GameObject[] PackageTargetPoints
+    {
+        get => packageTargetPoints;
+    }
+
+    public Package PackageTemplate
+    {
+        get => packageTemplate;
+    }
+
+    public GameObject DeliveryPackageMinimapTemplate
+    {
+        get => deliveryPackageMinimapTemplate;
+    }
 
     public void Add(Package package)
     {
@@ -49,4 +74,15 @@ public class PackageStore
     }
 
     public event EventHandler OnPackageAdded;
+
+    public void Start()
+    {
+        PackageTemplate.gameObject.SetActive(false);
+        DeliveryPackageMinimapTemplate.SetActive(false);
+
+        foreach (GameObject spawnPoint in PackageSpawnPoints)
+        {
+            spawnPoint.SetActive(false);
+        }
+    }
 }

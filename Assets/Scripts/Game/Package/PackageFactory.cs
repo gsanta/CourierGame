@@ -3,42 +3,30 @@ using Zenject;
 
 public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
 {
-    [SerializeField] private Package packageTemplate;
-    [SerializeField] private GameObject deliveryPackageMinimapTemplate;
-    [SerializeField] private GameObject[] spawnPoints;
-    [SerializeField] private GameObject[] targetPoints;
     
     private Package.Factory instanceFactory;
+    private PackageStore packageStore;
 
     private int packageCounter = 0;
 
     [Inject]
-    public void Construct(Package.Factory instanceFactory)
+    public void Construct(Package.Factory instanceFactory, PackageStore packageStore)
     {
         this.instanceFactory = instanceFactory;
-    }
-
-    public void Start()
-    {
-        packageTemplate.gameObject.SetActive(false);
-        deliveryPackageMinimapTemplate.SetActive(false);
-
-        foreach (GameObject spawnPoint in spawnPoints)
-        {
-            spawnPoint.SetActive(false);
-        }
+        this.packageStore = packageStore;
     }
 
     public Package Create(PackageConfig packageConfig)
     {
         GameObject targetObject = GetTargetPoint();
-        Package newPackage = instanceFactory.Create(packageTemplate);
+        Package newPackage = instanceFactory.Create(packageStore.PackageTemplate);
         newPackage.transform.position = packageConfig.spawnPoint.transform.position;
         newPackage.Target = targetObject;
         newPackage.Name = "package-" + packageCounter++;
         newPackage.gameObject.SetActive(true);
+        newPackage.SpawnPoint = packageConfig.spawnPoint;
 
-        GameObject newMinimapPackage = Instantiate(deliveryPackageMinimapTemplate, deliveryPackageMinimapTemplate.transform.parent);
+        GameObject newMinimapPackage = Instantiate(packageStore.DeliveryPackageMinimapTemplate, packageStore.DeliveryPackageMinimapTemplate.transform.parent);
         newMinimapPackage.transform.position = packageConfig.spawnPoint.transform.position;
         newMinimapPackage.gameObject.SetActive(true);
         newMinimapPackage.transform.SetParent(gameObject.transform);
@@ -50,11 +38,11 @@ public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
 
     public Transform GetSpawnPosition()
     {
-        return spawnPoints[Random.Range(0, spawnPoints.Length)].transform;
+        return packageStore.PackageSpawnPoints[Random.Range(0, packageStore.PackageSpawnPoints.Length)].transform;
     }
 
     public GameObject GetTargetPoint()
     {
-        return targetPoints[Random.Range(0, targetPoints.Length)];
+        return packageStore.PackageTargetPoints[Random.Range(0, packageStore.PackageTargetPoints.Length)];
     }
 }

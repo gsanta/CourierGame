@@ -8,6 +8,7 @@ using UnityEngine;
 namespace AI
 {
 
+    [System.Serializable]
     public class WorldState
     {
         public string key;

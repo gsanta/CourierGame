@@ -68,8 +68,8 @@ namespace AI
                 if (n.action != null)
                 {
                     result.Insert(0, n.action);
-                    n = n.parent;
                 }
+                n = n.parent;
             }
 
             Queue<GAction> queue = new Queue<GAction>();
