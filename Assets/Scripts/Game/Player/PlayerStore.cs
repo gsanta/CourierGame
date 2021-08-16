@@ -1,10 +1,29 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStore
+public class PlayerStore : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject[] spawnPoints;
+    [SerializeField]
+    private Player playerTemplate;
+    [SerializeField]
+    private GameObject minimapPlayerTemplate;
+
     private List<Player> players = new List<Player>();
     private Player activePlayer;
+
+    public GameObject[] SpawnPoints { get => spawnPoints; }
+    public Player PlayerTemplate { get => playerTemplate; }
+    public GameObject MinimapPlayerTemplate { get => minimapPlayerTemplate; }
+
+    void Awake()
+    {
+        foreach(GameObject spawnPoint in spawnPoints)
+        {
+            spawnPoint.SetActive(false);
+        }
+    }
 
     public void SetNextPlayerAsActive()
     {

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ICourier
 {
     public GameObject minimapObject;
 
@@ -110,6 +110,21 @@ public class Player : MonoBehaviour
         movement.y += Physics.gravity.y * gravityMod;
         charController.Move(movement * Time.deltaTime);
         Debug.Log("y: " + transform.position.y);
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public string GetId()
+    {
+        return Name;
+    }
+
+    public string GetName()
+    {
+        return Name;
     }
 
     public class Factory : PlaceholderFactory<UnityEngine.Object, Player>

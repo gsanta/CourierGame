@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class PlayerSpawner : MonoBehaviour 
+public class PlayerSpawner 
 {
-    [SerializeField]
-    private GameObject[] spawnPoints;
     private ISpawnPointHandler spawnPointHandler;
 
     private int Counter = 0;
@@ -14,7 +12,6 @@ public class PlayerSpawner : MonoBehaviour
     public void Construct(ISpawnPointHandler spawnPointHandler)
     {
         this.spawnPointHandler = spawnPointHandler;
-        this.spawnPointHandler.SetSpawnPoints(spawnPoints);
     }
 
     public PlayerConfig Spawn()

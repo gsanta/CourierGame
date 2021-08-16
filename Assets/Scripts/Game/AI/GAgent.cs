@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace AI
 {
-
     public class SubGoal {
         public Dictionary<string, int> sgoals;
         public bool remove;
@@ -24,8 +23,11 @@ namespace AI
     {
         public List<GAction> actions = new List<GAction>();
         public Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
-
         public GAction currentAction;
+
+        [SerializeField]
+        protected string agentId;
+
         private GPlanner planner;
         private Queue<GAction> actionQueue;
         private SubGoal currentGoal;

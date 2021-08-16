@@ -44,11 +44,11 @@ public class Package : MonoBehaviour
         get => targetObject;
     }
 
-    public void PickupBy(Player player)
+    public void PickupBy(ICourier courier)
     {
         origParent = gameObject.transform.parent;
-        gameObject.transform.SetParent(player.transform);
-        deliveryStore.AssignPackageToPlayer(player, this);
+        gameObject.transform.SetParent(courier.GetGameObject().transform);
+        deliveryStore.AssignPackageToPlayer(courier, this);
         targetObject.SetActive(true);
     }
 

@@ -18,11 +18,9 @@ public class MainInstaller : MonoInstaller
     private WorldState worldState;
 
     [SerializeField]
+    private PlayerStore playerStore;
+    [SerializeField]
     private PlayerFactory playerFactory;
-    [SerializeField]
-    private PlayerPool playerPool;
-    [SerializeField]
-    private PlayerSpawner playerSpawner;
 
     [SerializeField]
     private PackageStore packageStore;
@@ -40,10 +38,9 @@ public class MainInstaller : MonoInstaller
         Container.Bind<ISpawnPointHandler>().To<RandomSpawnPointHandler>().AsTransient();
         Container.Bind<MarkerHandler>().AsSingle();
 
-        Container.Bind<PlayerStore>().AsSingle();
-        Container.Bind<PlayerPool>().FromInstance(playerPool).AsSingle();
-        Container.Bind<PlayerSpawner>().FromInstance(playerSpawner).AsSingle();
+        Container.Bind<PlayerStore>().FromInstance(playerStore).AsSingle();
         Container.Bind<PlayerFactory>().FromInstance(playerFactory).AsSingle();
+        Container.Bind<PlayerSpawner>().AsSingle();
         Container.Bind<PlayerSetup>().AsSingle();
         Container.Bind<PlayerInputComponent>().AsTransient();
         Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();

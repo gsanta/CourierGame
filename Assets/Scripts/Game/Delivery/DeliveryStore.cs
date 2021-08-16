@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DeliveryStore
 {
-    private Dictionary<Player, Package> packageMap = new Dictionary<Player, Package>();
-    private Dictionary<Package, Player> reversePackageMap = new Dictionary<Package, Player>();
+    private Dictionary<ICourier, Package> packageMap = new Dictionary<ICourier, Package>();
+    private Dictionary<Package, ICourier> reversePackageMap = new Dictionary<Package, ICourier>();
     private PackageStore packageStore;
 
     public DeliveryStore(PackageStore packageStore)
@@ -13,21 +13,21 @@ public class DeliveryStore
         this.packageStore = packageStore;
     }
 
-    public void AssignPackageToPlayer(Player player, Package package)
+    public void AssignPackageToPlayer(ICourier courier, Package package)
     {
         package.Status = Package.DeliveryStatus.ASSIGNED;
-        packageMap.Add(player, package);
-        reversePackageMap.Add(package, player);
+        packageMap.Add(courier, package);
+        reversePackageMap.Add(package, courier);
 
         OnDeliveryStatusChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void DropPackage(Package package)
     {
-        Player player;
-        if (reversePackageMap.TryGetValue(package, out player))
+        ICourier courier;
+        if (reversePackageMap.TryGetValue(package, out courier))
         {
-            packageMap.Remove(player);
+            packageMap.Remove(courier);
         }
         reversePackageMap.Remove(package);
 
@@ -46,9 +46,9 @@ public class DeliveryStore
         OnDeliveryStatusChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public bool GetPackage(Player player, out Package package)
+    public bool GetPackage(ICourier courier, out Package package)
     {
-        return packageMap.TryGetValue(player, out package);
+        return packageMap.TryGetValue(courier, out package);
     }
 
     public List<Package> AssignedPackages
@@ -61,13 +61,13 @@ public class DeliveryStore
         get => packageStore.GetAll().FindAll(package => GetPlayerForPackage(package) == null);
     }
 
-    public Player GetPlayerForPackage(Package package)
+    public ICourier GetPlayerForPackage(Package package)
     {
-        Player player;
+        ICourier courier;
 
-        reversePackageMap.TryGetValue(package, out player);
+        reversePackageMap.TryGetValue(package, out courier);
 
-        return player;
+        return courier;
     }
 
     public event EventHandler OnDeliveryStatusChanged;

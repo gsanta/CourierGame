@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 namespace AI
 {
@@ -24,6 +25,14 @@ namespace AI
         public WorldStates agentBeliefs;
 
         public bool running = false;
+
+        protected PackageStore packageStore;
+
+        [Inject]
+        public void Construct(PackageStore packageStore)
+        {
+            this.packageStore = packageStore;
+        }
 
         public GAction()
         {

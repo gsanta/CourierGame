@@ -42,7 +42,7 @@ public class DeliveryPanel : MonoBehaviour
         {
             DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
             deliveryListItem.packageNameText.text = package.Name;
-            deliveryListItem.playerNameText.text = deliveryService.GetPlayerForPackage(package).Name;
+            deliveryListItem.playerNameText.text = deliveryService.GetPlayerForPackage(package).GetName();
             deliveryListItem.gameObject.SetActive(true);
             activeDeliveryItems.Add(deliveryListItem);
         }

@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class RandomSpawnPointHandler : ISpawnPointHandler
 {
-    private GameObject[] spawnPoints;
+    private PlayerStore playerStore;
     private HashSet<GameObject> reservedSpawnPoints = new HashSet<GameObject>();
 
-    public void SetSpawnPoints(GameObject[] spawnPoints)
+    public RandomSpawnPointHandler(PlayerStore playerStore)
     {
-        this.spawnPoints = spawnPoints;
+        this.playerStore = playerStore;
     }
 
     public GameObject GetAndReserveSpawnPoint()
     {
-        if (reservedSpawnPoints.Count == spawnPoints.Length)
+        if (reservedSpawnPoints.Count == playerStore.SpawnPoints.Length)
         {
             return null;
         }
 
         while (true)
         {
-            GameObject spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            GameObject spawnPoint = playerStore.SpawnPoints[Random.Range(0, playerStore.SpawnPoints.Length)];
             if (!reservedSpawnPoints.Contains(spawnPoint))
             {
                 reservedSpawnPoints.Add(spawnPoint);

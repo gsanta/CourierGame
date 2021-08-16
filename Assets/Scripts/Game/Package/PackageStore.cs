@@ -49,6 +49,11 @@ public class PackageStore : MonoBehaviour
         return packages;
     }
 
+    public List<Package> GetAllPickable()
+    {
+        return GetPackagesOfStatus(Package.DeliveryStatus.UNASSIGNED);
+    }
+
     public List<Package> GetPackagesOfStatus(Package.DeliveryStatus status, params Package.DeliveryStatus[] rest)
     {
         Package.DeliveryStatus[] statuses = new Package.DeliveryStatus[rest.Length + 1];
