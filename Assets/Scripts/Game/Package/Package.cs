@@ -1,16 +1,10 @@
+using System;
 using UnityEngine;
 using Zenject;
 
 public class Package : MonoBehaviour
 {
-    public enum DeliveryStatus
-    {
-        UNASSIGNED,
-        ASSIGNED,
-        DELIVERED
-    }
-
-    private DeliveryStore deliveryStore;
+    private PackageStore packageStore;
     private GameObject targetObject;
     private Transform origParent;
     public GameObject SpawnPoint { get; set; }
@@ -31,9 +25,9 @@ public class Package : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(DeliveryStore deliveryStore)
+    public void Construct(PackageStore packageStore)
     {
-        this.deliveryStore = deliveryStore;
+        this.packageStore = packageStore;
     }
 
     public string Name { get; set; }
@@ -48,15 +42,16 @@ public class Package : MonoBehaviour
     {
         origParent = gameObject.transform.parent;
         gameObject.transform.SetParent(courier.GetGameObject().transform);
-        deliveryStore.AssignPackageToPlayer(courier, this);
+        Status = DeliveryStatus.ASSIGNED;
         targetObject.SetActive(true);
+        HandleStatusChanged();
     }
 
-    public void ReleasePackage()
+    public void ReservePackage(ICourier courier)
     {
-        deliveryStore.DropPackage(this);
-        gameObject.transform.SetParent(origParent);
-        targetObject.SetActive(false);
+        Status = DeliveryStatus.RESERVED;
+        courier.SetPackage(this);
+        HandleStatusChanged();
     }
 
     public void DestroyPackage()
@@ -66,6 +61,27 @@ public class Package : MonoBehaviour
         MinimapGameObject.SetActive(false);
         Destroy(gameObject);
         Destroy(MinimapGameObject);
+    }
+
+    public void DropPackage(Package package)
+    {
+        Status = DeliveryStatus.DELIVERED;
+
+        gameObject.transform.SetParent(origParent);
+        targetObject.SetActive(false);
+
+        Vector2 packagePos = new Vector2(package.transform.position.x, package.transform.position.z);
+        Vector2 targetPos = new Vector2(package.Target.transform.position.x, package.Target.transform.position.z);
+        if (Vector2.Distance(packagePos, targetPos) < 1)
+        {
+            packageStore.Remove(package);
+            package.DestroyPackage();
+            package.Status = DeliveryStatus.DELIVERED;
+        }
+        else
+        {
+            package.Status = DeliveryStatus.UNASSIGNED;
+        }
     }
 
     private void HandleStatusChanged()
@@ -79,9 +95,14 @@ public class Package : MonoBehaviour
                 MinimapGameObject.SetActive(true);
                 break;
         }
+
+        OnStatusChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public class Factory : PlaceholderFactory<Object, Package>
+    public event EventHandler OnStatusChanged;
+
+
+    public class Factory : PlaceholderFactory<UnityEngine.Object, Package>
     {
 
 

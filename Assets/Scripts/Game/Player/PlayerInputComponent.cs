@@ -41,7 +41,7 @@ public class PlayerInputComponent
             Package deliveryPackage;
             if (deliveryStore.GetPackage(player, out deliveryPackage))
             {
-                deliveryPackage.ReleasePackage();
+                //deliveryPackage.ReleasePackage();
             }
             else if (packageStore.GetPackageWithinPickupRange(player, out deliveryPackage))
             {

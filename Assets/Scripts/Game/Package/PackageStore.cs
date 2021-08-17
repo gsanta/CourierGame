@@ -36,7 +36,7 @@ public class PackageStore : MonoBehaviour
     public void Add(Package package)
     {
         packages.Add(package);
-        OnPackageAdded?.Invoke(this, EventArgs.Empty);
+        TriggerPackageAdded(new PackageAddedEventArgs(package));
     }
 
     public void Remove(Package package)
@@ -51,12 +51,12 @@ public class PackageStore : MonoBehaviour
 
     public List<Package> GetAllPickable()
     {
-        return GetPackagesOfStatus(Package.DeliveryStatus.UNASSIGNED);
+        return GetPackagesOfStatus(DeliveryStatus.UNASSIGNED);
     }
 
-    public List<Package> GetPackagesOfStatus(Package.DeliveryStatus status, params Package.DeliveryStatus[] rest)
+    public List<Package> GetPackagesOfStatus(DeliveryStatus status, params DeliveryStatus[] rest)
     {
-        Package.DeliveryStatus[] statuses = new Package.DeliveryStatus[rest.Length + 1];
+        DeliveryStatus[] statuses = new DeliveryStatus[rest.Length + 1];
         statuses[0] = status;
         rest.CopyTo(statuses, 1);
 
@@ -78,7 +78,16 @@ public class PackageStore : MonoBehaviour
         return false;
     }
 
-    public event EventHandler OnPackageAdded;
+    public event EventHandler<PackageAddedEventArgs> OnPackageAdded;
+
+    private void TriggerPackageAdded(PackageAddedEventArgs e)
+    {
+        EventHandler<PackageAddedEventArgs> handler = OnPackageAdded;
+        if (handler != null)
+        {
+            handler(this, e);
+        }
+    }
 
     public void Start()
     {
@@ -91,3 +100,15 @@ public class PackageStore : MonoBehaviour
         }
     }
 }
+
+public class PackageAddedEventArgs : EventArgs
+{
+    private Package package;
+
+    internal PackageAddedEventArgs(Package package)
+    {
+        this.package = package;
+    }
+    public Package Package { get => package; }
+}
+

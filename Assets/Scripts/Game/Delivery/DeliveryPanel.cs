@@ -22,11 +22,34 @@ public class DeliveryPanel : MonoBehaviour
 
     void Start()
     {
-        packageStore.OnPackageAdded += RefreshActiveDeliveryList;
+        packageStore.OnPackageAdded += HandlePackageAdded;
         deliveryService.OnDeliveryStatusChanged += RefreshActiveDeliveryList;
 
-        packageStore.OnPackageAdded += RefreshWaitingDeliveryList;
-        deliveryService.OnDeliveryStatusChanged += RefreshWaitingDeliveryList;
+        //packageStore.OnPackageAdded += RefreshWaitingDeliveryList;
+        //deliveryService.OnDeliveryStatusChanged += RefreshWaitingDeliveryList;
+    }
+
+    private void HandlePackageAdded(object sender, PackageAddedEventArgs args)
+    {
+        Package package = args.Package;
+
+        package.OnStatusChanged += HandlePackageStatusChanged;
+
+        DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
+        deliveryListItem.packageNameText.text = package.Name;
+        //deliveryListItem.playerNameText.text = packagedeliveryService.GetPlayerForPackage(package).GetName();
+        deliveryListItem.packageStatus.text = package.Status.GetDescription();
+        deliveryListItem.package = package;
+        deliveryListItem.gameObject.SetActive(true);
+        activeDeliveryItems.Add(deliveryListItem);
+
+    }
+
+    private void HandlePackageStatusChanged(object sender, EventArgs e)
+    {
+        Package package = (Package)sender;
+        DeliveryListItem deliveryListItem = activeDeliveryItems.Find(item => item.package == package);
+        deliveryListItem.packageStatus.text = package.Status.GetDescription();
     }
 
     private void RefreshActiveDeliveryList(object sender, EventArgs e)
@@ -38,11 +61,12 @@ public class DeliveryPanel : MonoBehaviour
 
         activeDeliveryItems.Clear();
 
-        foreach (Package package in deliveryService.AssignedPackages)
+        foreach (Package package in packageStore.GetAll())
         {
             DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
             deliveryListItem.packageNameText.text = package.Name;
-            deliveryListItem.playerNameText.text = deliveryService.GetPlayerForPackage(package).GetName();
+            //deliveryListItem.playerNameText.text = packagedeliveryService.GetPlayerForPackage(package).GetName();
+            deliveryListItem.packageStatus.text = package.Status.GetDescription();
             deliveryListItem.gameObject.SetActive(true);
             activeDeliveryItems.Add(deliveryListItem);
         }

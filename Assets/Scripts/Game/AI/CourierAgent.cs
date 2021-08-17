@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace AI
 {
     class CourierAgent : GAgent, ICourier
     {
+        private Package package;
 
         public new void Start()
         {
@@ -30,6 +26,16 @@ namespace AI
         public string GetName()
         {
             return agentId;
+        }
+
+        public void SetPackage(Package package)
+        {
+            this.package = package;
+        }
+
+        public Package GetPackage()
+        {
+            return package;
         }
     }
 }

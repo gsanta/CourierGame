@@ -10,4 +10,7 @@ public interface ICourier
     GameObject GetGameObject();
     string GetId();
     string GetName();
+
+    void SetPackage(Package package);
+    Package GetPackage();
 }

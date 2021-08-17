@@ -26,6 +26,8 @@ public class Player : MonoBehaviour, ICourier
     private int elapsedTime;
     public int ElapsedTime { get => elapsedTime; }
 
+    private Package package;
+
     public string Name { get => playerName; set => playerName = value; }
 
     public GameObject TimelineImage { get => timelineImage; set => timelineImage = value; }
@@ -80,8 +82,8 @@ public class Player : MonoBehaviour, ICourier
 
     private void SetCameraPosition()
     {
-        cam.transform.position = viewPoint.position;
-        cam.transform.rotation = viewPoint.rotation;
+        //cam.transform.position = viewPoint.position;
+        //cam.transform.rotation = viewPoint.rotation;
     }
 
     private void SetMinimapPosition()
@@ -125,6 +127,16 @@ public class Player : MonoBehaviour, ICourier
     public string GetName()
     {
         return Name;
+    }
+
+    public void SetPackage(Package package)
+    {
+        this.package = package;
+    }
+
+    public Package GetPackage()
+    {
+        return package;
     }
 
     public class Factory : PlaceholderFactory<UnityEngine.Object, Player>

@@ -15,7 +15,7 @@ public class DeliveryStore
 
     public void AssignPackageToPlayer(ICourier courier, Package package)
     {
-        package.Status = Package.DeliveryStatus.ASSIGNED;
+        package.Status = DeliveryStatus.ASSIGNED;
         packageMap.Add(courier, package);
         reversePackageMap.Add(package, courier);
 
@@ -37,10 +37,10 @@ public class DeliveryStore
         {
             packageStore.Remove(package);
             package.DestroyPackage();
-            package.Status = Package.DeliveryStatus.DELIVERED;
+            package.Status = DeliveryStatus.DELIVERED;
         } else
         {
-            package.Status = Package.DeliveryStatus.UNASSIGNED;
+            package.Status = DeliveryStatus.UNASSIGNED;
         }
         
         OnDeliveryStatusChanged?.Invoke(this, EventArgs.Empty);

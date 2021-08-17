@@ -29,35 +29,48 @@ public class PackageSpawner : BaseSpawner<PackageConfig>
 
     private void Spawn(object sender, EventArgs e)
     {
-        int spawnCount = 5 - packageStore.GetPackagesOfStatus(Package.DeliveryStatus.UNASSIGNED, Package.DeliveryStatus.ASSIGNED).Count;
+        //int spawnCount = 5 - packageStore.GetPackagesOfStatus(DeliveryStatus.UNASSIGNED, DeliveryStatus.ASSIGNED).Count;
 
-        if (spawnCount <= 0)
+        //if (spawnCount <= 0)
+        //{
+        //    return;
+        //}
+
+        if (packageStore.GetAll().Count > 0)
         {
             return;
         }
 
         List<GameObject> freeSpawnPoints = GetFreeSpawnPoints();
 
-        while (spawnCount > 0)
-        {
+        GameObject spawnPoint = freeSpawnPoints[0];
 
-            int index = UnityEngine.Random.Range(0, freeSpawnPoints.Count);
-            GameObject spawnPoint = freeSpawnPoints[index];
+
+        PackageConfig config = new PackageConfig(spawnPoint);
+        Package package = packageFactory.Create(config);
+
+        packageStore.Add(package);
+
+        //while (spawnCount > 0)
+        //{
+
+        //    int index = UnityEngine.Random.Range(0, freeSpawnPoints.Count);
+        //    GameObject spawnPoint = freeSpawnPoints[index];
             
-            freeSpawnPoints.RemoveAt(index);
+        //    freeSpawnPoints.RemoveAt(index);
 
-            PackageConfig config = new PackageConfig(spawnPoint);
-            Package package = packageFactory.Create(config);
+        //    PackageConfig config = new PackageConfig(spawnPoint);
+        //    Package package = packageFactory.Create(config);
 
-            packageStore.Add(package);
+        //    packageStore.Add(package);
 
-            spawnCount--;
-        }
+        //    spawnCount--;
+        //}
     }
 
     private List<GameObject> GetFreeSpawnPoints()
     {
-        List<Package> occupiedPackages = packageStore.GetPackagesOfStatus(Package.DeliveryStatus.UNASSIGNED, Package.DeliveryStatus.ASSIGNED);
+        List<Package> occupiedPackages = packageStore.GetPackagesOfStatus(DeliveryStatus.UNASSIGNED, DeliveryStatus.ASSIGNED);
         List<GameObject> occupiedSpawnPoints = occupiedPackages.Select(package => package.SpawnPoint).ToList();
 
         GameObject[] freeSpawnPoints = Array.FindAll(packageStore.PackageSpawnPoints, spawnPoint => !occupiedSpawnPoints.Contains(spawnPoint));
