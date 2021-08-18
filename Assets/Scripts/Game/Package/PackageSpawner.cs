@@ -29,12 +29,7 @@ public class PackageSpawner : BaseSpawner<PackageConfig>
 
     private void Spawn(object sender, EventArgs e)
     {
-        //int spawnCount = 5 - packageStore.GetPackagesOfStatus(DeliveryStatus.UNASSIGNED, DeliveryStatus.ASSIGNED).Count;
-
-        //if (spawnCount <= 0)
-        //{
-        //    return;
-        //}
+        int spawnCount = 5 - packageStore.GetPackagesOfStatus(DeliveryStatus.UNASSIGNED, DeliveryStatus.ASSIGNED).Count;
 
         if (packageStore.GetAll().Count > 0)
         {
@@ -43,29 +38,22 @@ public class PackageSpawner : BaseSpawner<PackageConfig>
 
         List<GameObject> freeSpawnPoints = GetFreeSpawnPoints();
 
-        GameObject spawnPoint = freeSpawnPoints[0];
 
+        while (spawnCount > 0)
+        {
 
-        PackageConfig config = new PackageConfig(spawnPoint);
-        Package package = packageFactory.Create(config);
+            int index = UnityEngine.Random.Range(0, freeSpawnPoints.Count);
+            GameObject spawnPoint = freeSpawnPoints[index];
 
-        packageStore.Add(package);
+            freeSpawnPoints.RemoveAt(index);
 
-        //while (spawnCount > 0)
-        //{
+            PackageConfig config = new PackageConfig(spawnPoint);
+            Package package = packageFactory.Create(config);
 
-        //    int index = UnityEngine.Random.Range(0, freeSpawnPoints.Count);
-        //    GameObject spawnPoint = freeSpawnPoints[index];
-            
-        //    freeSpawnPoints.RemoveAt(index);
+            packageStore.Add(package);
 
-        //    PackageConfig config = new PackageConfig(spawnPoint);
-        //    Package package = packageFactory.Create(config);
-
-        //    packageStore.Add(package);
-
-        //    spawnCount--;
-        //}
+            spawnCount--;
+        }
     }
 
     private List<GameObject> GetFreeSpawnPoints()

@@ -27,6 +27,9 @@ public class MainInstaller : MonoInstaller
     [SerializeField]
     private PackageFactory packageFactory;
 
+    [SerializeField]
+    private CourierStore courierStore;
+
     public override void InstallBindings()
     {
         Container.Bind<InputHandler>().FromInstance(inputHandler).AsSingle();

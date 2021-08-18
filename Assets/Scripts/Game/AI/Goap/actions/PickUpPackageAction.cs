@@ -26,7 +26,6 @@ namespace AI
             selectedPackage.ReservePackage(agent);
 
             target = selectedPackage.gameObject;
-            Debug.Log(target.transform.position);
 
             return true;
         }

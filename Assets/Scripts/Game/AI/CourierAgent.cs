@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace AI
 {
-    class CourierAgent : GAgent, ICourier
+    public class CourierAgent : GAgent, ICourier
     {
         private Package package;
 
-        public new void Start()
-        {
-            base.Start();
-            SubGoal s1 = new SubGoal("isPackagePickedUp", 1, true);
-            goals.Add(s1, 3);
-        }
+        //public new void Start()
+        //{
+        //    base.Start();
+        //    SubGoal s1 = new SubGoal("isPackageDropped", 1, true);
+        //    goals.Add(s1, 3);
+        //}
 
         public GameObject GetGameObject()
         {
@@ -36,6 +37,10 @@ namespace AI
         public Package GetPackage()
         {
             return package;
+        }
+
+        public class Factory : PlaceholderFactory<Object, CourierAgent>
+        {
         }
     }
 }

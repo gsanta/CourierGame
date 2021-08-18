@@ -63,25 +63,25 @@ public class Package : MonoBehaviour
         Destroy(MinimapGameObject);
     }
 
-    public void DropPackage(Package package)
+    public void DropPackage()
     {
         Status = DeliveryStatus.DELIVERED;
 
         gameObject.transform.SetParent(origParent);
         targetObject.SetActive(false);
 
-        Vector2 packagePos = new Vector2(package.transform.position.x, package.transform.position.z);
-        Vector2 targetPos = new Vector2(package.Target.transform.position.x, package.Target.transform.position.z);
-        if (Vector2.Distance(packagePos, targetPos) < 1)
-        {
-            packageStore.Remove(package);
-            package.DestroyPackage();
-            package.Status = DeliveryStatus.DELIVERED;
-        }
-        else
-        {
-            package.Status = DeliveryStatus.UNASSIGNED;
-        }
+        Vector2 packagePos = new Vector2(transform.position.x, transform.position.z);
+        Vector2 targetPos = new Vector2(Target.transform.position.x, Target.transform.position.z);
+            packageStore.Remove(this);
+            DestroyPackage();
+            Status = DeliveryStatus.DELIVERED;
+        //if (Vector2.Distance(packagePos, targetPos) < 1)
+        //{
+        //}
+        //else
+        //{
+        //    Status = DeliveryStatus.UNASSIGNED;
+        //}
     }
 
     private void HandleStatusChanged()
@@ -104,7 +104,5 @@ public class Package : MonoBehaviour
 
     public class Factory : PlaceholderFactory<UnityEngine.Object, Package>
     {
-
-
     }
 }
