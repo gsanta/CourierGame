@@ -1,4 +1,5 @@
 
+using AI;
 using UnityEngine;
 using Zenject;
 
@@ -29,6 +30,10 @@ public class MainInstaller : MonoInstaller
 
     [SerializeField]
     private CourierStore courierStore;
+    [SerializeField]
+    private CourierFactory courierFactory;
+    //[SerializeField]
+    //private CourierAgent courierAgnet;
 
     public override void InstallBindings()
     {
@@ -48,6 +53,14 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PlayerInputComponent>().AsTransient();
         Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();
 
+        Container.Bind<CourierStore>().FromInstance(courierStore).AsSingle();
+        Container.Bind<ItemFactory<CourierConfig, CourierAgent>>().To<CourierFactory>().FromInstance(courierFactory).AsSingle();
+        Container.Bind<CourierSpawner>().AsSingle();
+        Container.Bind<CourierSetup>().AsSingle();
+        //Container.Bind<CourierAgent>().FromComponentInNewPrefab(courierAgnet);
+        Container.BindFactory<Object, CourierAgent, CourierAgent.Factory>().FromFactory<PrefabFactory<CourierAgent>>();
+
+
         Container.Bind<PackageStore>().FromInstance(packageStore).AsSingle();
         Container.Bind<ISpawner<PackageConfig>>().To<PackageSpawner>().AsSingle().NonLazy();
         Container.Bind<ItemFactory<PackageConfig, Package>>().To<PackageFactory>().FromInstance(packageFactory).AsSingle();
@@ -61,5 +74,8 @@ public class MainInstaller : MonoInstaller
 
         PlayerSetup playerSetup = Container.Resolve<PlayerSetup>();
         playerSetup.Setup();
+        CourierSetup courierSetup = Container.Resolve<CourierSetup>();
+        courierSetup.Setup();
+
     }
 }

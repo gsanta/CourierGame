@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class CourierStore
+public class CourierStore : MonoBehaviour
 {
     private List<ICourier> couriers = new List<ICourier>();
 
