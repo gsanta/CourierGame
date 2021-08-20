@@ -3,16 +3,14 @@ using Zenject;
 
 public class PlayerFactory: MonoBehaviour
 {    
-    private TimelineController timelineController;
     private Player.Factory instanceFactory;
     private PlayerStore playerStore;
 
 
     [Inject]
-    public void Construct(Player.Factory instanceFactory, TimelineController timelineController, PlayerStore playerStore)
+    public void Construct(Player.Factory instanceFactory, PlayerStore playerStore)
     {
         this.instanceFactory = instanceFactory;
-        this.timelineController = timelineController;
         this.playerStore = playerStore;
     }
 
@@ -27,10 +25,6 @@ public class PlayerFactory: MonoBehaviour
         GameObject newMinimapPlayer = Instantiate(playerStore.MinimapPlayerTemplate, playerStore.PlayerTemplate.transform.parent);
         newMinimapPlayer.SetActive(true);
         newPlayer.minimapObject = newMinimapPlayer;
-
-        GameObject timeLineImage = timelineController.GetNextUnusedPlayerImage();
-        timeLineImage.SetActive(true);
-        newPlayer.TimelineImage = timeLineImage;
 
         playerStore.AddPlayer(newPlayer);
 

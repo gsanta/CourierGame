@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-class CourierFactory : MonoBehaviour, ItemFactory<CourierConfig, CourierAgent>
+public class CourierFactory : MonoBehaviour, ItemFactory<CourierConfig, CourierAgent>
 {
     private CourierAgent.Factory instanceFactory;
     private CourierStore courierStore;
@@ -23,6 +23,7 @@ class CourierFactory : MonoBehaviour, ItemFactory<CourierConfig, CourierAgent>
     public CourierAgent Create(CourierConfig config)
     {
         CourierAgent newCourier = instanceFactory.Create(courierStore.CourierTemplate);
+        newCourier.transform.position = config.spawnPoint.transform.position;
         newCourier.goals.Add(config.goal, 3);
 
         return newCourier;

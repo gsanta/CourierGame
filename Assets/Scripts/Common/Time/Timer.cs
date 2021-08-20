@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using Zenject;
-
 public class Timer : MonoBehaviour
 {
     private ITimeProvider timeProvider;

@@ -11,18 +11,16 @@ public class TimelineController : MonoBehaviour
 
     private PlayerStore playerStore;
     private IWorldState worldState;
-    private MarkerHandler markerHandler;
     private Timer timer;
 
     private HashSet<GameObject> usedPlayerImages = new HashSet<GameObject>();
 
     [Inject]
-    public void Construct(PlayerStore playerStore, IWorldState worldState, Timer timer, MarkerHandler markerHandler)
+    public void Construct(PlayerStore playerStore, IWorldState worldState, Timer timer)
     {
         this.playerStore = playerStore;
         this.worldState = worldState;
         this.timer = timer;
-        this.markerHandler = markerHandler;
     }
 
     public GameObject GetNextUnusedPlayerImage()
@@ -46,7 +44,6 @@ public class TimelineController : MonoBehaviour
             if (player)
             {
                 slider.SetSliderVal(timer.GetDayPercentageAt(player.ElapsedTime));
-                markerHandler.UpdateMarker();
             }
         }
     }

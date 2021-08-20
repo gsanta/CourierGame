@@ -44,7 +44,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<TimelineSlider>().FromInstance(timelineController.slider).AsSingle();
         Container.Bind<IWorldState>().To<WorldState>().FromInstance(worldState).AsSingle();
         Container.Bind<ISpawnPointHandler>().To<RandomSpawnPointHandler>().AsTransient();
-        Container.Bind<MarkerHandler>().AsSingle();
 
         Container.Bind<PlayerStore>().FromInstance(playerStore).AsSingle();
         Container.Bind<PlayerFactory>().FromInstance(playerFactory).AsSingle();
