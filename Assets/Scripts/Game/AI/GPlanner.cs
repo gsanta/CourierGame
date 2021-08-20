@@ -23,7 +23,7 @@ namespace AI
         }
     }
 
-    class GPlanner
+    public class GPlanner
     {
         public Queue<GAction> plan(List<GAction> actions, Dictionary<string, int> goal, WorldStates states)
         {

@@ -153,6 +153,21 @@ public class Player : MonoBehaviour, ICourier
         return false;
     }
 
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+
+    public void SetPlayer(bool isPlayer)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool IsPlayer()
+    {
+        throw new NotImplementedException();
+    }
+
     public class Factory : PlaceholderFactory<UnityEngine.Object, Player>
     {
     }

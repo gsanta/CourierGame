@@ -32,8 +32,9 @@ public class MainInstaller : MonoInstaller
     private CourierStore courierStore;
     [SerializeField]
     private CourierFactory courierFactory;
-    //[SerializeField]
-    //private CourierAgent courierAgnet;
+
+    [SerializeField]
+    private MainCamera mainCamera;
 
     public override void InstallBindings()
     {
@@ -66,6 +67,8 @@ public class MainInstaller : MonoInstaller
         Container.BindFactory<Object, Package, Package.Factory>().FromFactory<PrefabFactory<Package>>();
 
         Container.Bind<DeliveryStore>().AsSingle();
+
+        Container.Bind<MainCamera>().FromInstance(mainCamera).AsSingle();
     }
     override public void Start()
     {

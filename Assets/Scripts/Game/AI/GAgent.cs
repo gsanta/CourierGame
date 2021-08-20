@@ -28,7 +28,7 @@ namespace AI
         [SerializeField]
         protected string agentId;
 
-        private GPlanner planner;
+        protected GPlanner planner;
         private Queue<GAction> actionQueue;
         private SubGoal currentGoal;
 

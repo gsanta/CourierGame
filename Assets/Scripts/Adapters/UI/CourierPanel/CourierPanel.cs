@@ -15,11 +15,13 @@ namespace UI
         private List<CourierListItem> courierList = new List<CourierListItem>();
 
         private CourierStore courierStore;
+        private MainCamera mainCamera;
 
         [Inject]
-        public void Construct(CourierStore courierStore)
+        public void Construct(CourierStore courierStore, MainCamera mainCamera)
         {
             this.courierStore = courierStore;
+            this.mainCamera = mainCamera;
         }
 
         void Start()
@@ -32,11 +34,17 @@ namespace UI
             ICourier courier = args.Courier;
 
             CourierListItem courierListItem = Instantiate(courierListItemTemplate, courierListItemTemplate.transform.parent);
-            courierListItem.courierButtonText.text = courier.GetName();
+            courierListItem.courierNameText.text = courier.GetName();
             courierListItem.gameObject.SetActive(true);
             courierListItem.CourierStore = courierStore;
             courierListItem.Courier = args.Courier;
+            courierListItem.MainCamera = mainCamera;
             courierList.Add(courierListItem);
+        }
+
+        public void ResetListItemsToggleButtons()
+        {
+            courierList.ForEach(item => item.ResetToggleButtons());
         }
     }
 }

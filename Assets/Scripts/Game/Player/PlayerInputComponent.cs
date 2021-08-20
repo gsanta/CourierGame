@@ -3,7 +3,7 @@ using System;
 
 public class PlayerInputComponent
 {
-    private Player player;
+    private ICourier courier;
     private InputHandler inputHandler;
     private PlayerStore playerStore;
     private DeliveryStore deliveryStore;
@@ -17,44 +17,31 @@ public class PlayerInputComponent
         this.playerStore = playerStore;
     }
 
-    public void SetPlayer(Player player)
+    public void SetPlayer(ICourier courier)
     {
-        this.player = player;
+        this.courier = courier;
     }
 
     public void ActivateComponent()
     {
-        inputHandler.OnKeyDown += OnKeyDown;
         inputHandler.OnLeftMouseButtonDown += OnLeftMouseButtonDown;
     }
 
     public void DeactivateComnponent()
     {
-        inputHandler.OnKeyDown -= OnKeyDown;
         inputHandler.OnLeftMouseButtonDown -= OnLeftMouseButtonDown;
     }
 
     private void OnLeftMouseButtonDown(object sender, EventArgs e)
     {
-        if (playerStore.IsActivePlayer(player))
+        Package deliveryPackage;
+        if (deliveryStore.GetPackage(courier, out deliveryPackage))
         {
-            Package deliveryPackage;
-            if (deliveryStore.GetPackage(player, out deliveryPackage))
-            {
-                //deliveryPackage.ReleasePackage();
-            }
-            else if (packageStore.GetPackageWithinPickupRange(player, out deliveryPackage))
-            {
-                deliveryPackage.PickupBy(player);
-            }
+            //deliveryPackage.ReleasePackage();
         }
-    }
-
-    private void OnKeyDown(object sender, KeyDownEventArgs args)
-    {
-        if (playerStore.IsActivePlayer(player))
+        else if (packageStore.GetPackageWithinPickupRange(courier, out deliveryPackage))
         {
-            playerStore.SetNextPlayerAsActive();
+            deliveryPackage.PickupBy(courier);
         }
     }
 }
