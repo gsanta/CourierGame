@@ -32,7 +32,7 @@ namespace AI
         private Queue<GAction> actionQueue;
         private SubGoal currentGoal;
 
-        public void Start()
+        public virtual void Start()
         {
             GAction[] acts = GetComponents<GAction>();
             foreach (GAction a in acts)
@@ -50,7 +50,7 @@ namespace AI
             invoked = false;
         }
 
-        void LateUpdate()
+        protected virtual void LateUpdate()
         {
             if (currentAction != null && currentAction.running)
             {

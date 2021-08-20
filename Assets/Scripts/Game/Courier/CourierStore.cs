@@ -27,10 +27,34 @@ public class CourierStore : MonoBehaviour
     public void Add(ICourier courier)
     {
         couriers.Add(courier);
+        TriggerCourierAdded(courier);
     }
 
     public List<ICourier> GetAll()
     {
         return couriers;
     }
+
+    public event EventHandler<CourierAddedEventArgs> OnCourierAdded;
+
+    private void TriggerCourierAdded(ICourier courier)
+    {
+        EventHandler<CourierAddedEventArgs> handler = OnCourierAdded;
+        if (handler != null)
+        {
+            handler(this, new CourierAddedEventArgs(courier));
+        }
+    }
 }
+
+public class CourierAddedEventArgs : EventArgs
+{
+    private readonly ICourier courier;
+
+    internal CourierAddedEventArgs(ICourier courier)
+    {
+        this.courier = courier;
+    }
+    public ICourier Courier { get => courier; }
+}
+

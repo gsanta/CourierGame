@@ -9,11 +9,13 @@ using UnityEngine;
 public struct CourierConfig
 {
     public readonly GameObject spawnPoint;
-    public SubGoal goal;
+    public readonly SubGoal goal;
+    public readonly string name;
 
-    public CourierConfig(GameObject spawnPoint, SubGoal goal)
+    public CourierConfig(GameObject spawnPoint, SubGoal goal, string name)
     {
         this.spawnPoint = spawnPoint;
         this.goal = goal;
+        this.name = name;
     }
 }

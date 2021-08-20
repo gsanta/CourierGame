@@ -129,6 +129,11 @@ public class Player : MonoBehaviour, ICourier
         return Name;
     }
 
+    public void SetName(string name)
+    {
+        this.name = name;
+    }
+
     public void SetPackage(Package package)
     {
         this.package = package;
@@ -137,6 +142,15 @@ public class Player : MonoBehaviour, ICourier
     public Package GetPackage()
     {
         return package;
+    }
+
+    public void SetActive(bool isActive)
+    {
+    }
+
+    public bool IsActive()
+    {
+        return false;
     }
 
     public class Factory : PlaceholderFactory<UnityEngine.Object, Player>

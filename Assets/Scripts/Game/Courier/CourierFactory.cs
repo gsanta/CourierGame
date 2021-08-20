@@ -25,6 +25,7 @@ public class CourierFactory : MonoBehaviour, ItemFactory<CourierConfig, CourierA
         CourierAgent newCourier = instanceFactory.Create(courierStore.CourierTemplate);
         newCourier.transform.position = config.spawnPoint.transform.position;
         newCourier.goals.Add(config.goal, 3);
+        newCourier.SetName(config.name);
 
         return newCourier;
     }

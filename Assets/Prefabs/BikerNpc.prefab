@@ -185,6 +185,7 @@ MonoBehaviour:
   actions: []
   currentAction: {fileID: 0}
   agentId: abcd
+  viewPoint: {fileID: 954592314089168290}
 --- !u!1 &954592314089168289
 GameObject:
   m_ObjectHideFlags: 0

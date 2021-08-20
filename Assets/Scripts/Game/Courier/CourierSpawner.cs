@@ -29,8 +29,9 @@ public class CourierSpawner : BaseSpawner<CourierConfig>
         for (int i = 0; i < 3; i++)
         {
             GameObject spawnPoint = ChooseSpawnPoint(usedSpawnPoints);
-            CourierConfig config = new CourierConfig(spawnPoint, new SubGoal("isPackageDropped", 1, true));
+            CourierConfig config = new CourierConfig(spawnPoint, new SubGoal("isPackageDropped", 1, true), $"Courier-{i}");
             CourierAgent courier = courierFactory.Create(config);
+            courierStore.Add(courier);
         }
     }
 
