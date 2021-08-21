@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 954592312787651774}
   - component: {fileID: 954592312787651773}
   - component: {fileID: -358788667383095460}
-  - component: {fileID: 8156818972352075916}
-  - component: {fileID: -7163775778474650420}
   - component: {fileID: 1321874488}
   - component: {fileID: 5175631968212648827}
   m_Layer: 7
@@ -123,54 +121,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8156818972352075916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954592312787651769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01651ff8b0106d9458fce2eb3c5abec5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Pickup package
-  cost: 1
-  target: {fileID: 0}
-  targetTag: 
-  duration: 0
-  preConditions: []
-  afterEffects:
-  - key: isPackagePickedUp
-    value: 1
-  agent: {fileID: -358788667383095460}
-  running: 0
---- !u!114 &-7163775778474650420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954592312787651769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83833059d5f33514ea04b455432470f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Action
-  cost: 1
-  target: {fileID: 0}
-  targetTag: 
-  duration: 0
-  preConditions:
-  - key: isPackagePickedUp
-    value: 1
-  afterEffects:
-  - key: isPackageDropped
-    value: 1
-  agent: {fileID: 0}
-  running: 0
 --- !u!114 &1321874488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,8 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926a9681d6645cd49a57da679bb90d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actions: []
-  currentAction: {fileID: 0}
   agentId: abcd
   viewPoint: {fileID: 954592314089168290}
   charController: {fileID: 5175631968212648827}

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
+using Zenject;
 
 namespace AI
 {
@@ -19,7 +21,7 @@ namespace AI
         }
     }
 
-    public class GAgent : MonoBehaviour
+    public abstract class GAgent : MonoBehaviour
     {
         public List<GAction> actions = new List<GAction>();
         public Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
@@ -32,34 +34,77 @@ namespace AI
         private Queue<GAction> actionQueue;
         private SubGoal currentGoal;
 
-        public virtual void Start()
+        private bool isRunning = true;
+
+        protected abstract WorldStates GetWorldStates();
+        private IWorldState worldState;
+
+        [Inject]
+        public void Construct(IWorldState worldState)
         {
-            GAction[] acts = GetComponents<GAction>();
-            foreach (GAction a in acts)
-            {
-                actions.Add(a);
-            }
+            this.worldState = worldState;
+        }
+
+        public void SetRunning(bool isRunning)
+        {
+            this.isRunning = isRunning;
+            planner = null;
+            currentAction = null;
         }
 
         bool invoked = false;
 
+        protected virtual void Start()
+        {
+            actions.ForEach(action => action.Init());
+        }
+
         void CompleteAction()
         {
             currentAction.running = false;
-            currentAction.PostPerform();
+            if (currentAction.PostPerform())
+            {
+                currentAction = null;
+            }
             invoked = false;
         }
 
         protected virtual void LateUpdate()
         {
-            if (currentAction != null && currentAction.running)
+            if (!isRunning || !worldState.IsDayStarted())
             {
-                if (currentAction.agent.hasPath && currentAction.agent.remainingDistance < 1f)
+                return;
+            }
+
+            if (currentAction != null)
+            {
+                if (currentAction.running == false)
                 {
-                    if (!invoked)
+                    if (currentAction.PrePerform())
                     {
-                        Invoke("CompleteAction", currentAction.duration);
-                        invoked = true;
+                        currentAction.running = true;
+
+                        if (currentAction.target != null)
+                        {
+                            var navMeshAgent = GetComponent<NavMeshAgent>();
+                            navMeshAgent.SetDestination(currentAction.target.transform.position);
+                        }
+                    }
+                    else
+                    {
+                        currentAction = null;
+                        actionQueue = null;
+                    }
+                }
+                else
+                {
+                    if (currentAction.IsDestinationReached())
+                    {
+                        if (!invoked)
+                        {
+                            Invoke("CompleteAction", currentAction.duration);
+                            invoked = true;
+                        }
                     }
                 }
 
@@ -74,7 +119,7 @@ namespace AI
            
                 foreach(KeyValuePair<SubGoal, int> sg in sortedGoals)
                 {
-                    actionQueue = planner.plan(actions, sg.Key.sgoals, null);
+                    actionQueue = planner.plan(actions, sg.Key.sgoals, GetWorldStates());
 
                     if (actionQueue != null)
                     {
@@ -96,22 +141,6 @@ namespace AI
             if (actionQueue != null && actionQueue.Count > 0)
             {
                 currentAction = actionQueue.Dequeue();
-                if (currentAction.PrePerform())
-                {
-                    if (currentAction.target == null && currentAction.targetTag != "")
-                    {
-                        currentAction.target = GameObject.FindWithTag(currentAction.targetTag);
-                    }
-
-                    if (currentAction.target != null)
-                    {
-                        currentAction.running = true;
-                        currentAction.agent.SetDestination(currentAction.target.transform.position);
-                    }
-                } else
-                {
-                    actionQueue = null;
-                }
             }
         }
     }

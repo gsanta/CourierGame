@@ -27,10 +27,14 @@ namespace AI
         private PlayerInputComponent playerInputComponent;
 
         [Inject]
-        public void Construct(PlayerInputComponent playerInputComponent, Timer timer, IWorldState worldState, PlayerStore playerStore)
+        public void Construct(PlayerInputComponent playerInputComponent, PackageStore packageStore)
         {
             this.playerInputComponent = playerInputComponent;
             playerInputComponent.SetPlayer(this);
+
+            actions.Add(new AssignPackageAction(this, packageStore));
+            actions.Add(new DeliverPackageAction(this));
+            actions.Add(new PickUpPackageAction(this));
         }
 
         private void Move()
@@ -68,10 +72,9 @@ namespace AI
             playerInputComponent.DeactivateComnponent();
         }
 
-        public override void Start()
+        protected override void Start()
         {
             base.Start();
-
             cam = Camera.main;
         }
 
@@ -127,7 +130,10 @@ namespace AI
 
         protected override void LateUpdate()
         {
-            base.LateUpdate();
+            if (!isPlayer)
+            {
+                base.LateUpdate();
+            }
             SetCameraPosition();
         }
 
@@ -140,32 +146,50 @@ namespace AI
             }
         }
 
-        public void SetActive(bool isActive)
+        public void SetFollow(bool isActive)
         {
             this.isActive = isActive;
         }
 
-        public bool IsActive()
+        public bool IsFollow()
         {
             return isActive;
         }
 
         public void SetPlayer(bool isPlayer)
         {
-            this.isPlayer = isPlayer;
-            if (isPlayer)
+            if (this.isPlayer != isPlayer)
             {
-                planner = null; 
-                gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            } else
-            {
-                gameObject.GetComponent<NavMeshAgent>().enabled = true;
+                this.isPlayer = isPlayer;
+                gameObject.GetComponent<NavMeshAgent>().enabled = !isPlayer;
+                
+                if (isPlayer)
+                {
+                    SetRunning(false);
+                } else
+                {
+                    SetRunning(true);
+                }
             }
         }
 
         public bool IsPlayer()
         {
             return isPlayer;
+        }
+
+        protected override WorldStates GetWorldStates()
+        {
+            //var package = GetPackage();
+            //if (package)
+            //{
+            //    switch (package.Status)
+            //    {
+            //        case DeliveryStatus.ASSIGNED:
+            //    }
+            //    if (package.Status)
+            //}
+            return null;
         }
 
         public class Factory : PlaceholderFactory<Object, CourierAgent>

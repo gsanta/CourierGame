@@ -11,8 +11,14 @@ namespace AI
     [System.Serializable]
     public class WorldState
     {
-        public string key;
-        public int value;
+        public readonly string key;
+        public readonly int value;
+
+        public WorldState(string key, int value)
+        {
+            this.key = key;
+            this.value = value;
+        }
     }
 
     public class WorldStates
@@ -29,7 +35,7 @@ namespace AI
             return states.ContainsKey(key);
         }
 
-        void AddState(string key, int value)
+        public void AddState(string key, int value)
         {
             states.Add(key, value);
         }

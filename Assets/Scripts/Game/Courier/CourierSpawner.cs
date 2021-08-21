@@ -26,7 +26,7 @@ public class CourierSpawner : BaseSpawner<CourierConfig>
     {
         List<GameObject> usedSpawnPoints = new List<GameObject>(); 
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 1; i++)
         {
             GameObject spawnPoint = ChooseSpawnPoint(usedSpawnPoints);
             CourierConfig config = new CourierConfig(spawnPoint, new SubGoal("isPackageDropped", 1, true), $"Courier-{i}");

@@ -38,7 +38,7 @@ public class TimelineController : MonoBehaviour
 
     void Update()
     {
-        if (worldState.IsMeasuring())
+        if (worldState.IsDayStarted())
         {
             Player player = playerStore.GetActivePlayer();
             if (player)

@@ -9,55 +9,37 @@ using Zenject;
 
 namespace AI
 {
-    public abstract class GAction : MonoBehaviour
+    public abstract class GAction
     {
         public string actionName = "Action";
         public float cost = 1.0f;
         public GameObject target;
         public string targetTag;
-        public float duration;
-        public WorldState[] preConditions;
-        public WorldState[] afterEffects;
-        public NavMeshAgent agent;
+        public float duration = 1;
         public Dictionary<string, int> preConditionsDict;
         public Dictionary<string, int> effectsDict;
-
         public WorldStates agentBeliefs;
-
         public bool running = false;
 
-        protected PackageStore packageStore;
+        protected GAgent agent;
 
-        [Inject]
-        public void Construct(PackageStore packageStore)
+        public GAction(GAgent agent)
         {
-            this.packageStore = packageStore;
-        }
-
-        public GAction()
-        {
+            this.agent = agent;
             preConditionsDict = new Dictionary<string, int>();
             effectsDict = new Dictionary<string, int>();
         }
 
-        public void Awake()
+        public void Init()
         {
-            agent = gameObject.GetComponent<NavMeshAgent>();
-
-            if (preConditions != null)
+            foreach (WorldState w in GetPreConditions())
             {
-                foreach (WorldState w in preConditions)
-                {
-                    preConditionsDict.Add(w.key, w.value);
-                }
+                preConditionsDict.Add(w.key, w.value);
             }
 
-            if (afterEffects != null)
+            foreach (WorldState w in GetAfterEffects())
             {
-                foreach (WorldState w in afterEffects)
-                {
-                    effectsDict.Add(w.key, w.value);
-                }
+                effectsDict.Add(w.key, w.value);
             }
         }
 
@@ -78,7 +60,10 @@ namespace AI
             return true;
         }
 
+        protected abstract WorldState[] GetPreConditions();
+        protected abstract WorldState[] GetAfterEffects();
         public abstract bool PrePerform();
         public abstract bool PostPerform();
+        public abstract bool IsDestinationReached();
     }
 }

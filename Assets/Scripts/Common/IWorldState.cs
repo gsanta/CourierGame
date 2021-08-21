@@ -3,6 +3,7 @@
 public interface IWorldState
 {
     public int SecondsPerDay();
-    public bool IsMeasuring();
-    public void SetMeasuring(bool isMeasuring);
+    public bool IsDayStarted();
+    public void StartDay();
+    public void EndDay();
 }

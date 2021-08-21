@@ -14,7 +14,7 @@ public class StartDayPanel : MonoBehaviour
 
     public void OnStart()
     {
-        worldState.SetMeasuring(true);
+        worldState.StartDay();
         gameObject.SetActive(false);
 
         //dayMeasurer.OnDayPassed += HandleDayPassed;

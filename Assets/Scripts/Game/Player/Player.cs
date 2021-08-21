@@ -144,11 +144,11 @@ public class Player : MonoBehaviour, ICourier
         return package;
     }
 
-    public void SetActive(bool isActive)
+    public void SetFollow(bool isActive)
     {
     }
 
-    public bool IsActive()
+    public bool IsFollow()
     {
         return false;
     }

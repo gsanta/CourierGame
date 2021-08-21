@@ -4,38 +4,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace AI
 {
     class PickUpPackageAction : GAction
     {
+        public PickUpPackageAction(GAgent agent) : base(agent)
+        {
+        }
+
         public override bool PrePerform()
         {
-            List<Package> packages = packageStore.GetAllPickable();
-
-            if (packages.Count == 0)
-            {
-                return false;
-            }
-
-            int selectedIndex = UnityEngine.Random.Range(0, packages.Count);
-            Package selectedPackage = packages[0];
-
-            CourierAgent agent = GetComponent<CourierAgent>();
-
-            selectedPackage.ReservePackage(agent);
-
-            target = selectedPackage.gameObject;
+            CourierAgent courierAgent = (CourierAgent)agent;
+            target = courierAgent.GetPackage().gameObject;
 
             return true;
         }
         public override bool PostPerform()
         {
-            CourierAgent agent = GetComponent<CourierAgent>();
+            CourierAgent courierAgent = (CourierAgent)agent;
 
-            Package package = agent.GetPackage();
-            package.PickupBy(agent);
+            Package package = courierAgent.GetPackage();
+            package.PickupBy(courierAgent);
             return true;
+        }
+
+        public override bool IsDestinationReached()
+        {
+            var navMeshAgent = agent.GetComponent<NavMeshAgent>();
+            return navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
+        }
+
+        protected override WorldState[] GetPreConditions()
+        {
+            return new WorldState[] { new WorldState("isPackageAssigned", 3) };
+        }
+
+        protected override WorldState[] GetAfterEffects()
+        {
+            return new WorldState[] { new WorldState("isPackagePickedUp", 3) };
         }
     }
 }

@@ -31,40 +31,54 @@ namespace UI
             bool isOn = !followButton.IsOn;
 
             GetComponentInParent<CourierPanel>().ResetListItemsToggleButtons();
-
-            ICourier activeCourier = courierStore.GetAll().Find(courier => courier.IsActive());
+            ResetCourierStates();
 
             if (isOn)
             {
-                if (activeCourier != null && activeCourier != courier)
-                {
-                    activeCourier.SetActive(false);
-                }
-
-                courier.SetActive(true);
-            } else
-            {
-                courier.SetActive(false);
-                mainCamera.ResetPosition();
+                SetCourierState(courier, false, true);
             }
-
+            
             followButton.SetToggleState(isOn);
-
-            //courier.SetPlayer(true);
         }
 
         public void HandleClickPlay()
         {
+            bool isOn = !playButton.IsOn;
+
             GetComponentInParent<CourierPanel>().ResetListItemsToggleButtons();
 
+            ResetCourierStates();
+            
+            if (isOn)
+            {
+                SetCourierState(courier, true, true);
+            }
+
+            playButton.SetToggleState(isOn);
+        }
+
+        private void ResetCourierStates()
+        {
             ICourier activeCourier = courierStore.GetAll().Find(courier => courier.IsPlayer());
-            if (activeCourier != null && activeCourier != courier)
+            ICourier followedCourier = courierStore.GetAll().Find(courier => courier.IsFollow());
+
+            if (activeCourier != null)
             {
                 activeCourier.SetPlayer(false);
             }
 
-            courier.SetPlayer(true);
-            playButton.SetToggleState(true);
+            if (followedCourier != null)
+            {
+                followedCourier.SetFollow(false);
+            }
+
+            mainCamera.ResetPosition();
+        }
+
+        private void SetCourierState(ICourier courier, bool isPlayer, bool isFollow)
+        {
+            courier.SetPlayer(isPlayer);
+            courier.SetFollow(isFollow);
         }
 
         public void ResetToggleButtons()

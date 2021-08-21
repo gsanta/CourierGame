@@ -16,13 +16,18 @@ public class WorldState : MonoBehaviour, IWorldState
         return secondsPerDay;
     }
 
-    public bool IsMeasuring()
+    public bool IsDayStarted()
     {
         return isMeasuring;
     }
 
-    public void SetMeasuring(bool isMeasuring)
+    public void StartDay()
     {
-        this.isMeasuring = isMeasuring;
+        this.isMeasuring = true;
+    }
+
+    public void EndDay()
+    {
+        this.isMeasuring = false;
     }
 }
