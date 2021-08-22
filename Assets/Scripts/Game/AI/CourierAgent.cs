@@ -16,10 +16,10 @@ namespace AI
         private float gravityMod = 2.5f;
 
         private Camera cam;
-        private Package package;
+        public Package package;
         private string courierName;
-        private bool isActive = false;
-        private bool isPlayer = false;
+
+        private CurrentRole currentRole = CurrentRole.NONE;
 
         private float activeMoveSpeed;
         private Vector3 moveDir, movement;
@@ -31,6 +31,7 @@ namespace AI
         {
             this.playerInputComponent = playerInputComponent;
             playerInputComponent.SetPlayer(this);
+            playerInputComponent.ActivateComponent();
 
             actions.Add(new AssignPackageAction(this, packageStore));
             actions.Add(new DeliverPackageAction(this));
@@ -56,7 +57,6 @@ namespace AI
             movement = ((transform.forward * moveDir.z) + (transform.right * moveDir.x)).normalized * activeMoveSpeed;
             movement.y += Physics.gravity.y * gravityMod;
             charController.Move(movement * Time.deltaTime);
-            Debug.Log("y: " + transform.position.y);
         }
 
         public void ActivatePlayer()
@@ -122,7 +122,7 @@ namespace AI
 
         protected void Update()
         {
-            if (isPlayer)
+            if (currentRole == CurrentRole.PLAY)
             {
                 Move();
             }
@@ -130,7 +130,7 @@ namespace AI
 
         protected override void LateUpdate()
         {
-            if (!isPlayer)
+            if (currentRole != CurrentRole.PLAY)
             {
                 base.LateUpdate();
             }
@@ -139,57 +139,63 @@ namespace AI
 
         private void SetCameraPosition()
         {
-            if (isActive)
+            if (currentRole != CurrentRole.NONE)
             {
                 cam.transform.position = viewPoint.position;
                 cam.transform.rotation = viewPoint.rotation;
             }
         }
 
-        public void SetFollow(bool isActive)
+        public void SetCurrentRole(CurrentRole currentRole)
         {
-            this.isActive = isActive;
-        }
-
-        public bool IsFollow()
-        {
-            return isActive;
-        }
-
-        public void SetPlayer(bool isPlayer)
-        {
-            if (this.isPlayer != isPlayer)
+            if (this.currentRole != currentRole)
             {
-                this.isPlayer = isPlayer;
-                gameObject.GetComponent<NavMeshAgent>().enabled = !isPlayer;
-                
-                if (isPlayer)
+                this.currentRole = currentRole;
+
+                if (currentRole == CurrentRole.PLAY)
                 {
-                    SetRunning(false);
+                    InitPlayRole();
                 } else
                 {
-                    SetRunning(true);
+                    FinishPlayRole();
                 }
             }
         }
 
-        public bool IsPlayer()
+        public CurrentRole GetCurrentRole()
         {
-            return isPlayer;
+            return currentRole;
+        }
+
+        private void FinishPlayRole()
+        {
+            gameObject.GetComponent<NavMeshAgent>().enabled = true;
+            SetRunning(true);
+        }
+
+        private void InitPlayRole()
+        {
+            gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            SetRunning(false);
         }
 
         protected override WorldStates GetWorldStates()
         {
-            //var package = GetPackage();
-            //if (package)
-            //{
-            //    switch (package.Status)
-            //    {
-            //        case DeliveryStatus.ASSIGNED:
-            //    }
-            //    if (package.Status)
-            //}
-            return null;
+            var worldStates = new WorldStates();
+
+            var package = GetPackage();
+            if (package)
+            {
+                if (package.Status == DeliveryStatus.ASSIGNED)
+                {
+                    worldStates.AddState("isPackageReserved", 3);
+                    worldStates.AddState("isPackagePickedUp", 3);
+                } else if (package.Status == DeliveryStatus.RESERVED)
+                {
+                    worldStates.AddState("isPackageReserved", 3);
+                }
+            }
+            return worldStates;
         }
 
         public class Factory : PlaceholderFactory<Object, CourierAgent>

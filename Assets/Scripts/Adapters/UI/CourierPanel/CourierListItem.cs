@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace UI
 {
+    // TODO: Create controller
     public class CourierListItem : MonoBehaviour
     {
         public TMP_Text courierNameText;
@@ -17,12 +18,12 @@ namespace UI
         private ToggleButton playButton;
 
         private ICourier courier;
-        private CourierStore courierStore;
+        private CourierService courierService;
         private MainCamera mainCamera;
 
         public ICourier Courier { set => courier = value;  }
 
-        public CourierStore CourierStore { set => courierStore = value; }
+        public CourierService CourierService { set => courierService = value; }
 
         public MainCamera MainCamera { set => mainCamera = value; }
 
@@ -59,26 +60,25 @@ namespace UI
 
         private void ResetCourierStates()
         {
-            ICourier activeCourier = courierStore.GetAll().Find(courier => courier.IsPlayer());
-            ICourier followedCourier = courierStore.GetAll().Find(courier => courier.IsFollow());
-
-            if (activeCourier != null)
-            {
-                activeCourier.SetPlayer(false);
-            }
-
-            if (followedCourier != null)
-            {
-                followedCourier.SetFollow(false);
-            }
+            ICourier courier = courierService.FindPlayOrFollowRole();
+            courier.SetCurrentRole(CurrentRole.NONE);
 
             mainCamera.ResetPosition();
         }
 
         private void SetCourierState(ICourier courier, bool isPlayer, bool isFollow)
         {
-            courier.SetPlayer(isPlayer);
-            courier.SetFollow(isFollow);
+            // TODO maybe the role should come as a parameter and no need for the ifs
+            if (isPlayer)
+            {
+                courier.SetCurrentRole(CurrentRole.PLAY);
+            } else if (isFollow)
+            {
+                courier.SetCurrentRole(CurrentRole.FOLLOW);
+            } else
+            {
+                courier.SetCurrentRole(CurrentRole.NONE);
+            }
         }
 
         public void ResetToggleButtons()

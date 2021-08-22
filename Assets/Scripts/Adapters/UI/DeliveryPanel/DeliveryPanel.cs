@@ -2,26 +2,28 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using UI;
 
 public class DeliveryPanel : MonoBehaviour
 {
     [SerializeField] private DeliveryListItem deliveryListItemTemplate;
-    private DeliveryStore deliveryService;
+    private DeliveryStore deliveryStore;
     private PackageStore packageStore;
+    private CourierService courierService;
 
     private List<DeliveryListItem> activeDeliveryItems = new List<DeliveryListItem>();
 
     [Inject]
-    public void Construct(DeliveryStore deliveryService, PackageStore packageStore)
+    public void Construct(DeliveryStore deliveryStore, PackageStore packageStore, CourierService courierService)
     {
-        this.deliveryService = deliveryService;
+        this.deliveryStore = deliveryStore;
         this.packageStore = packageStore;
+        this.courierService = courierService;
     }
 
     void Start()
     {
         packageStore.OnPackageAdded += HandlePackageAdded;
-        deliveryService.OnDeliveryStatusChanged += RefreshActiveDeliveryList;
 
         //packageStore.OnPackageAdded += RefreshWaitingDeliveryList;
         //deliveryService.OnDeliveryStatusChanged += RefreshWaitingDeliveryList;
@@ -34,11 +36,12 @@ public class DeliveryPanel : MonoBehaviour
         package.OnStatusChanged += HandlePackageStatusChanged;
 
         DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
-        deliveryListItem.packageNameText.text = package.Name;
-        //deliveryListItem.playerNameText.text = packagedeliveryService.GetPlayerForPackage(package).GetName();
-        deliveryListItem.packageStatus.text = package.Status.GetDescription();
-        deliveryListItem.package = package;
         deliveryListItem.gameObject.SetActive(true);
+        
+        var controller = new DeliveryListItemController(deliveryListItem, courierService, deliveryStore);
+        deliveryListItem.controller = controller;
+        deliveryListItem.packageNameText.text = package.Name;
+        controller.Package = package;
         activeDeliveryItems.Add(deliveryListItem);
 
     }
@@ -46,27 +49,12 @@ public class DeliveryPanel : MonoBehaviour
     private void HandlePackageStatusChanged(object sender, EventArgs e)
     {
         Package package = (Package)sender;
-        DeliveryListItem deliveryListItem = activeDeliveryItems.Find(item => item.package == package);
-        deliveryListItem.packageStatus.text = package.Status.GetDescription();
+        DeliveryListItem deliveryListItem = activeDeliveryItems.Find(item => item.controller.Package == package);
+        deliveryListItem.controller.UpdateStatus();
     }
 
-    private void RefreshActiveDeliveryList(object sender, EventArgs e)
+    public void HandleReserve()
     {
-        foreach (DeliveryListItem item in activeDeliveryItems)
-        {
-            Destroy(item.gameObject);
-        }
 
-        activeDeliveryItems.Clear();
-
-        foreach (Package package in packageStore.GetAll())
-        {
-            DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
-            deliveryListItem.packageNameText.text = package.Name;
-            //deliveryListItem.playerNameText.text = packagedeliveryService.GetPlayerForPackage(package).GetName();
-            deliveryListItem.packageStatus.text = package.Status.GetDescription();
-            deliveryListItem.gameObject.SetActive(true);
-            activeDeliveryItems.Add(deliveryListItem);
-        }
     }
 }

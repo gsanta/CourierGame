@@ -3,5 +3,6 @@ using TMPro;
 
 public class WaitingDeliveryListItem : MonoBehaviour
 {
-    [SerializeField] public TMP_Text packageNameText;
+    [SerializeField]
+    public TMP_Text packageNameText;
 }

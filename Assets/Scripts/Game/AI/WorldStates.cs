@@ -23,7 +23,7 @@ namespace AI
 
     public class WorldStates
     {
-        public Dictionary<string, int> states;
+        private Dictionary<string, int> states;
 
         public WorldStates()
         {
@@ -68,7 +68,7 @@ namespace AI
             }
         }
 
-        public Dictionary<string, int> GetStates()
+        public Dictionary<string, int> ToDictionary()
         {
             return states;
         }

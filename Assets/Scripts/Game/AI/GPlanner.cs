@@ -37,7 +37,7 @@ namespace AI
             }
 
             List<Node> leaves = new List<Node>();
-            Node start = new Node(null, 0, GWorld.Instance.GetWorld().GetStates(), null);
+            Node start = new Node(null, 0, states.ToDictionary(), null);
 
             bool success = BuildGraph(start, leaves, usableActions, goal);
 

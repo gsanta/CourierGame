@@ -4,24 +4,27 @@ using Zenject;
 
 public class StartDayPanel : MonoBehaviour
 {
-    private IWorldState worldState;
+    private Timer timer;
 
     [Inject]
-    public void Construct(IWorldState worldState)
+    public void Construct(Timer timer)
     {
-        this.worldState = worldState;
+        this.timer = timer;
+
+        timer.OnDayPassed += HandleDayPassed;
     }
 
     public void OnStart()
     {
-        worldState.StartDay();
+        timer.IsDayStarted = true;
         gameObject.SetActive(false);
-
+        timer.Reset();
         //dayMeasurer.OnDayPassed += HandleDayPassed;
     }
 
     private void HandleDayPassed(object sender, EventArgs e)
     {
+        timer.IsDayStarted = false;
         gameObject.SetActive(true);
     }
 }

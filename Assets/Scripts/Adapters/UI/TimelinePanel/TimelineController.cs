@@ -10,16 +10,14 @@ public class TimelineController : MonoBehaviour
     public TimelineSlider slider;
 
     private PlayerStore playerStore;
-    private IWorldState worldState;
     private Timer timer;
 
     private HashSet<GameObject> usedPlayerImages = new HashSet<GameObject>();
 
     [Inject]
-    public void Construct(PlayerStore playerStore, IWorldState worldState, Timer timer)
+    public void Construct(PlayerStore playerStore, Timer timer)
     {
         this.playerStore = playerStore;
-        this.worldState = worldState;
         this.timer = timer;
     }
 
@@ -38,7 +36,7 @@ public class TimelineController : MonoBehaviour
 
     void Update()
     {
-        if (worldState.IsDayStarted())
+        if (timer.IsDayStarted)
         {
             Player player = playerStore.GetActivePlayer();
             if (player)

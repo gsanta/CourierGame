@@ -1,12 +1,8 @@
 {
-    "name": "Adapters",
+    "name": "Domains",
     "rootNamespace": "",
     "references": [
-        "GUID:066164ba3fd981444bb820e2cc1a9a6a",
-        "GUID:ed4a8b0274ec8074abc16e2bde2eb112",
-        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:ab920b68d477173488c9571c6a729049"
+        "GUID:066164ba3fd981444bb820e2cc1a9a6a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

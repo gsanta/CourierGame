@@ -15,8 +15,6 @@ public class MainInstaller : MonoInstaller
     private DeliveryPanel deliveryPanel;
     [SerializeField]
     private InputHandler inputHandler;
-    [SerializeField]
-    private WorldState worldState;
 
     [SerializeField]
     private PlayerStore playerStore;
@@ -32,6 +30,8 @@ public class MainInstaller : MonoInstaller
     private CourierStore courierStore;
     [SerializeField]
     private CourierFactory courierFactory;
+    [SerializeField]
+    private CourierService courierService;
 
     [SerializeField]
     private MainCamera mainCamera;
@@ -43,7 +43,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
         Container.Bind<Timer>().FromInstance(timer).AsSingle();
         Container.Bind<TimelineSlider>().FromInstance(timelineController.slider).AsSingle();
-        Container.Bind<IWorldState>().To<WorldState>().FromInstance(worldState).AsSingle();
         Container.Bind<ISpawnPointHandler>().To<RandomSpawnPointHandler>().AsTransient();
 
         Container.Bind<PlayerStore>().FromInstance(playerStore).AsSingle();
@@ -53,6 +52,7 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PlayerInputComponent>().AsTransient();
         Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();
 
+        Container.Bind<CourierService>().FromInstance(courierService).AsSingle();
         Container.Bind<CourierStore>().FromInstance(courierStore).AsSingle();
         Container.Bind<ItemFactory<CourierConfig, CourierAgent>>().To<CourierFactory>().FromInstance(courierFactory).AsSingle();
         Container.Bind<CourierSpawner>().AsSingle();

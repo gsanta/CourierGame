@@ -9,7 +9,7 @@ public class PackageStore : MonoBehaviour
     private List<Package> packages = new List<Package>();
 
     [SerializeField] private GameObject[] packageSpawnPoints;
-    [SerializeField] private GameObject[] packageTargetPoints;
+    [SerializeField] private PackageTarget[] packageTargetPoints;
     [SerializeField] private Package packageTemplate;
     [SerializeField] private GameObject deliveryPackageMinimapTemplate;
 
@@ -18,7 +18,7 @@ public class PackageStore : MonoBehaviour
         get => packageSpawnPoints;
     }
 
-    public GameObject[] PackageTargetPoints
+    public PackageTarget[] PackageTargetPoints
     {
         get => packageTargetPoints;
     }
@@ -97,6 +97,11 @@ public class PackageStore : MonoBehaviour
         foreach (GameObject spawnPoint in PackageSpawnPoints)
         {
             spawnPoint.SetActive(false);
+        }
+
+        foreach (PackageTarget target in packageTargetPoints)
+        {
+            target.SetMeshVisibility(false);
         }
     }
 }

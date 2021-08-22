@@ -5,8 +5,9 @@ using Zenject;
 public class Package : MonoBehaviour
 {
     private PackageStore packageStore;
-    private GameObject targetObject;
-    private Transform origParent;
+    private PackageTarget targetObject;
+    private ICourier courier;
+
     public GameObject SpawnPoint { get; set; }
 
     public GameObject MinimapGameObject { get; set; }
@@ -32,7 +33,7 @@ public class Package : MonoBehaviour
 
     public string Name { get; set; }
 
-    public GameObject Target
+    public PackageTarget Target
     {
         set => targetObject = value;
         get => targetObject;
@@ -40,48 +41,51 @@ public class Package : MonoBehaviour
 
     public void PickupBy(ICourier courier)
     {
-        origParent = gameObject.transform.parent;
-        gameObject.transform.SetParent(courier.GetGameObject().transform);
-        Status = DeliveryStatus.ASSIGNED;
-        targetObject.SetActive(true);
-        HandleStatusChanged();
+        if (this.courier == courier)
+        {
+            gameObject.transform.SetParent(courier.GetGameObject().transform);
+            Status = DeliveryStatus.ASSIGNED;
+            targetObject.SetMeshVisibility(true);
+            HandleStatusChanged();
+        }
     }
 
     public void ReservePackage(ICourier courier)
     {
-        Status = DeliveryStatus.RESERVED;
-        courier.SetPackage(this);
-        HandleStatusChanged();
+        if (this.courier == null)
+        {
+            this.courier = courier;
+            Status = DeliveryStatus.RESERVED;
+            courier.SetPackage(this);
+            HandleStatusChanged();
+        }
     }
 
     public void DestroyPackage()
     {
         gameObject.SetActive(false);
-        targetObject.SetActive(false);
+        targetObject.SetMeshVisibility(false);
         MinimapGameObject.SetActive(false);
         Destroy(gameObject);
         Destroy(MinimapGameObject);
     }
 
-    public void DropPackage()
+    public void DeliverPackage()
     {
-        Status = DeliveryStatus.DELIVERED;
-
-        gameObject.transform.SetParent(origParent);
-        targetObject.SetActive(false);
-
         Vector2 packagePos = new Vector2(transform.position.x, transform.position.z);
         Vector2 targetPos = new Vector2(Target.transform.position.x, Target.transform.position.z);
-            packageStore.Remove(this);
-            DestroyPackage();
+
+        if (Vector2.Distance(packagePos, targetPos) < 1)
+        {
             Status = DeliveryStatus.DELIVERED;
-        //if (Vector2.Distance(packagePos, targetPos) < 1)
-        //{
-        //}
-        //else
-        //{
-        //    Status = DeliveryStatus.UNASSIGNED;
-        //}
+
+            targetObject.SetMeshVisibility(false);
+            packageStore.Remove(this);
+            courier.SetPackage(null);
+            courier = null;
+
+            DestroyPackage();
+        }
     }
 
     private void HandleStatusChanged()

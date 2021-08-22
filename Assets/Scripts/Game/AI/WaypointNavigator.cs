@@ -35,6 +35,7 @@ namespace AI
 
         void Start()
         {
+            Debug.Log("layer: " + gameObject.layer);
             direction = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
             controller.SetDestination(currentWaypoint.GetPosition());
         }

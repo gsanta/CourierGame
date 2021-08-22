@@ -1,20 +1,19 @@
 ﻿
 using System;
+using UnityEngine;
 
 public class PlayerInputComponent
 {
     private ICourier courier;
     private InputHandler inputHandler;
-    private PlayerStore playerStore;
     private DeliveryStore deliveryStore;
     private PackageStore packageStore;
 
-    public PlayerInputComponent(DeliveryStore deliveryStore, PackageStore packageStore, InputHandler inputHandler, PlayerStore playerStore)
+    public PlayerInputComponent(DeliveryStore deliveryStore, PackageStore packageStore, InputHandler inputHandler)
     {
         this.deliveryStore = deliveryStore;
         this.packageStore = packageStore;
         this.inputHandler = inputHandler;
-        this.playerStore = playerStore;
     }
 
     public void SetPlayer(ICourier courier)
@@ -24,24 +23,27 @@ public class PlayerInputComponent
 
     public void ActivateComponent()
     {
-        inputHandler.OnLeftMouseButtonDown += OnLeftMouseButtonDown;
+        inputHandler.OnKeyDown += OnKeyDown;
     }
 
     public void DeactivateComnponent()
     {
-        inputHandler.OnLeftMouseButtonDown -= OnLeftMouseButtonDown;
+        inputHandler.OnKeyDown -= OnKeyDown;
     }
 
-    private void OnLeftMouseButtonDown(object sender, EventArgs e)
+    private void OnKeyDown(object sender, KeyDownEventArgs e)
     {
-        Package deliveryPackage;
-        if (deliveryStore.GetPackage(courier, out deliveryPackage))
+        if (e.Key == "e")
         {
-            //deliveryPackage.ReleasePackage();
-        }
-        else if (packageStore.GetPackageWithinPickupRange(courier, out deliveryPackage))
-        {
-            deliveryPackage.PickupBy(courier);
+            Package deliveryPackage;
+            if (courier.GetPackage())
+            {
+                courier.GetPackage().DeliverPackage();
+            }
+            else if (packageStore.GetPackageWithinPickupRange(courier, out deliveryPackage))
+            {
+                deliveryPackage.PickupBy(courier);
+            }
         }
     }
 }

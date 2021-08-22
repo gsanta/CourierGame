@@ -7,8 +7,6 @@ public class Player : MonoBehaviour, ICourier
     public GameObject minimapObject;
 
     private PlayerStore playerStore;
-    private IWorldState worldState;
-    private PlayerInputComponent playerInputComponent;
 
     [SerializeField] private Transform viewPoint;
     [SerializeField] private CharacterController charController;
@@ -33,28 +31,27 @@ public class Player : MonoBehaviour, ICourier
     public GameObject TimelineImage { get => timelineImage; set => timelineImage = value; }
 
     [Inject]
-    public void Construct(PlayerInputComponent playerInputComponent, Timer timer, IWorldState worldState, PlayerStore playerStore)
+    public void Construct(Timer timer, PlayerStore playerStore)
     {
-        this.playerInputComponent = playerInputComponent;
-        playerInputComponent.SetPlayer(this);
+        //this.playerInputComponent = playerInputComponent;
+        //playerInputComponent.SetPlayer(this);
 
         this.timer = timer;
-        this.worldState = worldState;
         this.playerStore = playerStore;
     }
 
     public void ActivatePlayer()
     {
-        if (playerInputComponent != null)
-        {
-            playerInputComponent.ActivateComponent();
-            timer.Elapsed = elapsedTime;
-        }
+        //if (playerInputComponent != null)
+        //{
+        //    playerInputComponent.ActivateComponent();
+        //    timer.Elapsed = elapsedTime;
+        //}
     }
 
     public void DeactivatePlayer()
     {
-        playerInputComponent.DeactivateComnponent();
+        //playerInputComponent.DeactivateComnponent();
     }
 
     void Start()
@@ -111,7 +108,6 @@ public class Player : MonoBehaviour, ICourier
         movement = ((transform.forward * moveDir.z) + (transform.right * moveDir.x)).normalized * activeMoveSpeed;
         movement.y += Physics.gravity.y * gravityMod;
         charController.Move(movement * Time.deltaTime);
-        Debug.Log("y: " + transform.position.y);
     }
 
     public GameObject GetGameObject()
@@ -158,12 +154,22 @@ public class Player : MonoBehaviour, ICourier
         return transform;
     }
 
-    public void SetPlayer(bool isPlayer)
+    public void InitPlayRole(bool isPlayer)
     {
         throw new NotImplementedException();
     }
 
     public bool IsPlayer()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetCurrentRole(CurrentRole currentRole)
+    {
+        throw new NotImplementedException();
+    }
+
+    public CurrentRole GetCurrentRole()
     {
         throw new NotImplementedException();
     }

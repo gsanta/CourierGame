@@ -48,7 +48,7 @@ namespace AI
 
         protected override WorldState[] GetAfterEffects()
         {
-            return new WorldState[] { new WorldState("isPackageAssigned", 3) };
+            return new WorldState[] { new WorldState("isPackageReserved", 3) };
         }
 
         protected override WorldState[] GetPreConditions()

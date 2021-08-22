@@ -26,7 +26,6 @@ public class InputHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(key))
             {
-                Debug.Log(key);
                 TriggerKeyDown(new KeyDownEventArgs(key));
             }
         }

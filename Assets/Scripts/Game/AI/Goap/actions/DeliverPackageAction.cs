@@ -30,7 +30,7 @@ namespace AI
 
             Package package = courierAgent.GetPackage();
 
-            package.DropPackage();
+            package.DeliverPackage();
 
             SubGoal s1 = new SubGoal("isPackageDropped", 1, true);
             agent.goals.Add(s1, 3);

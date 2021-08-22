@@ -3,16 +3,23 @@ using UnityEngine;
 using Zenject;
 public class Timer : MonoBehaviour
 {
-    private ITimeProvider timeProvider;
-    private IWorldState worldState;
-    private DateTime time = DateTime.MinValue;
-    private int secondAccum = 0;
+    [SerializeField]
+    private int secondsPerDay = 100;
 
+    private ITimeProvider timeProvider;
+    private DateTime time = DateTime.MinValue;
+    private int milliSecondAccum = 0;
+    private int secondAccum = 0;
+    private bool isDayStarted = false;
+
+    public int SecondsPerDay { get => secondsPerDay; }
+
+    public bool IsDayStarted { get => isDayStarted; set => isDayStarted = value; }
+    
     [Inject]
-    public void Construct(ITimeProvider timeProvider, IWorldState worldState)
+    public void Construct(ITimeProvider timeProvider)
     {
         this.timeProvider = timeProvider;
-        this.worldState = worldState;
         Elapsed = 0;
     }
 
@@ -20,7 +27,7 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-        if (worldState.IsDayStarted())
+        if (isDayStarted)
         {
             Tick();
         }
@@ -29,6 +36,12 @@ public class Timer : MonoBehaviour
     public void Pause()
     {
         time = DateTime.MinValue;
+    }
+
+    public void Reset()
+    {
+        milliSecondAccum = 0;
+        secondAccum = 0;
     }
 
     private void Tick()
@@ -41,6 +54,7 @@ public class Timer : MonoBehaviour
             Elapsed += delta.Milliseconds;
 
             HandleSecondPassed(delta);
+            HandleDayPassed();
         }
 
         time = curr;
@@ -48,20 +62,30 @@ public class Timer : MonoBehaviour
 
     private void HandleSecondPassed(TimeSpan delta)
     {
-        secondAccum += delta.Milliseconds;
+        milliSecondAccum += delta.Milliseconds;
 
-        if (secondAccum >= 1000)
+        if (milliSecondAccum >= 1000)
         {
             OnSecondPassed?.Invoke(this, EventArgs.Empty);
-            secondAccum = secondAccum - 1000;
+            milliSecondAccum = milliSecondAccum - 1000;
+            secondAccum++;
+        }
+    }
+
+    private void HandleDayPassed()
+    {
+        if (secondAccum >= SecondsPerDay)
+        {
+            OnDayPassed?.Invoke(this, EventArgs.Empty);
         }
     }
 
     public float GetDayPercentageAt(int elapsedTime)
     {
         // Cast is not redundant, otherwise the division is zero if less than one
-        return (float) (elapsedTime / 1000) / (float) worldState.SecondsPerDay();
+        return (float) (elapsedTime / 1000) / (float) SecondsPerDay;
     }
 
     public event EventHandler OnSecondPassed;
+    public event EventHandler OnDayPassed;
 }
