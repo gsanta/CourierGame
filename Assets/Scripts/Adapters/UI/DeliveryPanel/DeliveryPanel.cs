@@ -24,7 +24,7 @@ public class DeliveryPanel : MonoBehaviour
     void Start()
     {
         packageStore.OnPackageAdded += HandlePackageAdded;
-
+        courierService.CurrentRoleChanged += HandleCurrentRoleChanged;
         //packageStore.OnPackageAdded += RefreshWaitingDeliveryList;
         //deliveryService.OnDeliveryStatusChanged += RefreshWaitingDeliveryList;
     }
@@ -48,13 +48,18 @@ public class DeliveryPanel : MonoBehaviour
 
     private void HandlePackageStatusChanged(object sender, EventArgs e)
     {
-        Package package = (Package)sender;
-        DeliveryListItem deliveryListItem = activeDeliveryItems.Find(item => item.controller.Package == package);
-        deliveryListItem.controller.UpdateStatus();
+        SetReservationEnabled();
     }
 
-    public void HandleReserve()
+    private void HandleCurrentRoleChanged(object sender, EventArgs e)
     {
+        SetReservationEnabled();
+    }
 
+    private void SetReservationEnabled()
+    {
+        var courier = courierService.FindPlayRole();
+        bool isReservationEnabled = courier != null && courier.GetPackage() == null;
+        activeDeliveryItems.ForEach(item => item.controller.SetReservationEnabled(isReservationEnabled));
     }
 }

@@ -1,5 +1,7 @@
 
 using AI;
+using Domain;
+using Service;
 using UnityEngine;
 using Zenject;
 
@@ -54,11 +56,12 @@ public class MainInstaller : MonoInstaller
 
         Container.Bind<CourierService>().FromInstance(courierService).AsSingle();
         Container.Bind<CourierStore>().FromInstance(courierStore).AsSingle();
-        Container.Bind<ItemFactory<CourierConfig, CourierAgent>>().To<CourierFactory>().FromInstance(courierFactory).AsSingle();
+        Container.Bind<CourierFactory>().FromInstance(courierFactory).AsSingle();
         Container.Bind<CourierSpawner>().AsSingle();
         Container.Bind<CourierSetup>().AsSingle();
+        Container.Bind<ICourierCallbacks>().To<CourierCallbacksImpl>().AsSingle();
         //Container.Bind<CourierAgent>().FromComponentInNewPrefab(courierAgnet);
-        Container.BindFactory<Object, CourierAgent, CourierAgent.Factory>().FromFactory<PrefabFactory<CourierAgent>>();
+        Container.BindFactory<Object, Courier, Courier.Factory>().FromFactory<PrefabFactory<Courier>>();
 
 
         Container.Bind<PackageStore>().FromInstance(packageStore).AsSingle();

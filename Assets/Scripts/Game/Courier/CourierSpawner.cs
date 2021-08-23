@@ -1,4 +1,5 @@
 ﻿using AI;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,12 @@ using UnityEngine;
 public class CourierSpawner : BaseSpawner<CourierConfig>
 {
     private CourierStore courierStore;
-    private ItemFactory<CourierConfig, CourierAgent> courierFactory;
+    private CourierFactory courierFactory;
 
-    public CourierSpawner(CourierStore courierStore, ItemFactory<CourierConfig, CourierAgent> courierFactory)
+    public CourierSpawner(CourierFactory courierFactory, CourierStore courierStore)
     {
-        this.courierStore = courierStore;
         this.courierFactory = courierFactory;
+        this.courierStore = courierStore;
     }
 
     override public void StartSpawning()
@@ -30,7 +31,7 @@ public class CourierSpawner : BaseSpawner<CourierConfig>
         {
             GameObject spawnPoint = ChooseSpawnPoint(usedSpawnPoints);
             CourierConfig config = new CourierConfig(spawnPoint, new SubGoal("isPackageDropped", 1, true), $"Courier-{i}");
-            CourierAgent courier = courierFactory.Create(config);
+            Courier courier = courierFactory.Create(config);
             courierStore.Add(courier);
         }
     }

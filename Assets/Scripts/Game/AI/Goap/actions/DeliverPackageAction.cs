@@ -15,7 +15,7 @@ namespace AI
 
         public override bool PrePerform()
         {
-            CourierAgent courierAgent = (CourierAgent)agent;
+            Courier courierAgent = (Courier)agent;
 
             Package package = courierAgent.GetPackage();
 
@@ -26,7 +26,7 @@ namespace AI
 
         public override bool PostPerform()
         {
-            CourierAgent courierAgent = (CourierAgent)agent;
+            Courier courierAgent = (Courier)agent;
 
             Package package = courierAgent.GetPackage();
 

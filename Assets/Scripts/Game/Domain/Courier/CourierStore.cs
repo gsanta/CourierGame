@@ -13,13 +13,13 @@ public class CourierStore : MonoBehaviour
     [SerializeField]
     private GameObject[] spawnPoints;
     [SerializeField]
-    private CourierAgent courierTemplate;
+    private Courier courierTemplate;
     public GameObject[] SpawnPoints
     {
         get => spawnPoints;
     }
 
-    public CourierAgent CourierTemplate
+    public Courier CourierTemplate
     {
         get => courierTemplate;
     }

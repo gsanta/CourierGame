@@ -61,9 +61,12 @@ namespace UI
         private void ResetCourierStates()
         {
             ICourier courier = courierService.FindPlayOrFollowRole();
-            courier.SetCurrentRole(CurrentRole.NONE);
+            if (courier != null)
+            {
+                courier.SetCurrentRole(CurrentRole.NONE);
 
-            mainCamera.ResetPosition();
+                mainCamera.ResetPosition();
+            }
         }
 
         private void SetCourierState(ICourier courier, bool isPlayer, bool isFollow)

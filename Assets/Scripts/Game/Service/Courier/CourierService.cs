@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class CourierService : MonoBehaviour
 {
 
     private CourierStore courierStore;
+
 
     [Inject]
     public void Construct(CourierStore courierStore)
@@ -22,4 +24,12 @@ public class CourierService : MonoBehaviour
     {
         return courierStore.GetAll().Find(courier => courier.GetCurrentRole() == CurrentRole.PLAY || courier.GetCurrentRole() == CurrentRole.FOLLOW);
     }
+
+    // TODO hide it from global space
+    public void EmitCurrentRoleChanged(ICourier courier)
+    {
+        CurrentRoleChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public event EventHandler CurrentRoleChanged;
 }

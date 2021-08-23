@@ -8,6 +8,6 @@ using UnityEngine;
 
 class FollowerComponent : MonoBehaviour
 {
-    public CourierAgent courierAgent;
+    public Courier courierAgent;
 
 }

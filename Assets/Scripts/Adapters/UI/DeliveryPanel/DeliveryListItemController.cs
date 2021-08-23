@@ -12,6 +12,7 @@ namespace UI
         private readonly CourierService courierService;
         private readonly DeliveryStore deliveryStore;
         private Package package;
+        private bool isReservationEnabled = false;
 
         public DeliveryListItemController(DeliveryListItem deliveryListItem, CourierService courierService, DeliveryStore deliveryStore)
         {
@@ -21,22 +22,28 @@ namespace UI
             deliveryListItem.OnReserveButtonClick += HandleReserveButtonClick;
         }
 
+        public void SetReservationEnabled(bool isEnabled)
+        {
+            isReservationEnabled = isEnabled;
+            UpdateReservationButtonStatus();
+        }
+
         public Package Package
         {
             set
             {
                 package = value;
 
-                UpdateStatus();
+                UpdateReservationButtonStatus();
             }
 
             get => package;
         }
 
-        public void UpdateStatus()
+        private void UpdateReservationButtonStatus()
         {
             deliveryListItem.packageStatus.text = package.Status.GetDescription();
-            if (package.Status == DeliveryStatus.UNASSIGNED)
+            if (package.Status == DeliveryStatus.UNASSIGNED && isReservationEnabled)
             {
                 deliveryListItem.packageStatus.gameObject.SetActive(false);
                 deliveryListItem.reserveButton.gameObject.SetActive(true);
@@ -48,13 +55,12 @@ namespace UI
             }
         }
 
-
         private void HandleReserveButtonClick(object sender, EventArgs e)
         {
             var player = courierService.FindPlayRole();
             if (player != null && player.GetPackage() == null)
             {
-                deliveryStore.AssignPackageToPlayer(player, package);
+                package.ReservePackage(player);
             }
         }
     }

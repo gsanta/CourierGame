@@ -1,4 +1,5 @@
 ﻿using AI;
+using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,22 +8,21 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-public class CourierFactory : MonoBehaviour, ItemFactory<CourierConfig, CourierAgent>
+public class CourierFactory : MonoBehaviour, ItemFactory<CourierConfig, Courier>
 {
-    private CourierAgent.Factory instanceFactory;
+    private Courier.Factory instanceFactory;
     private CourierStore courierStore;
 
-
     [Inject]
-    public void Construct(CourierAgent.Factory instanceFactory, CourierStore courierStore)
+    public void Construct(Courier.Factory instanceFactory, CourierStore courierStore)
     {
         this.instanceFactory = instanceFactory;
         this.courierStore = courierStore;
     }
 
-    public CourierAgent Create(CourierConfig config)
+    public Courier Create(CourierConfig config)
     {
-        CourierAgent newCourier = instanceFactory.Create(courierStore.CourierTemplate);
+        Courier newCourier = instanceFactory.Create(courierStore.CourierTemplate);
         newCourier.transform.position = config.spawnPoint.transform.position;
         newCourier.goals.Add(config.goal, 3);
         newCourier.SetName(config.name);

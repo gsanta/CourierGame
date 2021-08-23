@@ -33,7 +33,7 @@ namespace AI
                 int selectedIndex = UnityEngine.Random.Range(0, packages.Count);
                 Package selectedPackage = packages[0];
 
-                selectedPackage.ReservePackage((CourierAgent) agent);
+                selectedPackage.ReservePackage((Courier) agent);
 
                 target = selectedPackage.gameObject;
 

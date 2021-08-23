@@ -77,12 +77,12 @@ public class Package : MonoBehaviour
 
         if (Vector2.Distance(packagePos, targetPos) < 1)
         {
-            Status = DeliveryStatus.DELIVERED;
-
             targetObject.SetMeshVisibility(false);
             packageStore.Remove(this);
             courier.SetPackage(null);
             courier = null;
+
+            Status = DeliveryStatus.DELIVERED;
 
             DestroyPackage();
         }
