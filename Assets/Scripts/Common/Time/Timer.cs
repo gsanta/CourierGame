@@ -66,7 +66,7 @@ public class Timer : MonoBehaviour
 
         if (milliSecondAccum >= 1000)
         {
-            OnSecondPassed?.Invoke(this, EventArgs.Empty);
+            SecondPassed?.Invoke(this, EventArgs.Empty);
             milliSecondAccum = milliSecondAccum - 1000;
             secondAccum++;
         }
@@ -76,16 +76,16 @@ public class Timer : MonoBehaviour
     {
         if (secondAccum >= SecondsPerDay)
         {
-            OnDayPassed?.Invoke(this, EventArgs.Empty);
+            DayPassed?.Invoke(this, EventArgs.Empty);
         }
     }
 
-    public float GetDayPercentageAt(int elapsedTime)
+    public float GetDayPercentageAt()
     {
         // Cast is not redundant, otherwise the division is zero if less than one
-        return (float) (elapsedTime / 1000) / (float) SecondsPerDay;
+        return (float) (Elapsed / 1000) / (float) SecondsPerDay;
     }
 
-    public event EventHandler OnSecondPassed;
-    public event EventHandler OnDayPassed;
+    public event EventHandler SecondPassed;
+    public event EventHandler DayPassed;
 }

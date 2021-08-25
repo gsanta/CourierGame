@@ -6,43 +6,43 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class CourierStore : MonoBehaviour
+public class BikerStore : MonoBehaviour
 {
-    private List<ICourier> couriers = new List<ICourier>();
+    private List<Courier> bikers = new List<Courier>();
 
     [SerializeField]
     private GameObject[] spawnPoints;
     [SerializeField]
-    private Courier courierTemplate;
+    private Courier bikerTemplate;
     public GameObject[] SpawnPoints
     {
         get => spawnPoints;
     }
 
-    public Courier CourierTemplate
+    public Courier BikerTemplate
     {
-        get => courierTemplate;
+        get => bikerTemplate;
     }
 
-    public void Add(ICourier courier)
+    public void Add(Courier biker)
     {
-        couriers.Add(courier);
-        TriggerCourierAdded(courier);
+        bikers.Add(biker);
+        TriggerCourierAdded(biker);
     }
 
-    public List<ICourier> GetAll()
+    public List<Courier> GetAll()
     {
-        return couriers;
+        return bikers;
     }
 
-    public event EventHandler<CourierAddedEventArgs> OnCourierAdded;
+    public event EventHandler<CourierAddedEventArgs> OnBikerAdded;
 
-    private void TriggerCourierAdded(ICourier courier)
+    private void TriggerCourierAdded(ICourier biker)
     {
-        EventHandler<CourierAddedEventArgs> handler = OnCourierAdded;
+        EventHandler<CourierAddedEventArgs> handler = OnBikerAdded;
         if (handler != null)
         {
-            handler(this, new CourierAddedEventArgs(courier));
+            handler(this, new CourierAddedEventArgs(biker));
         }
     }
 }

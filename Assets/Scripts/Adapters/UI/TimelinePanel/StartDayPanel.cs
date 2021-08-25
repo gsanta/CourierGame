@@ -11,7 +11,7 @@ public class StartDayPanel : MonoBehaviour
     {
         this.timer = timer;
 
-        timer.OnDayPassed += HandleDayPassed;
+        timer.DayPassed += HandleDayPassed;
     }
 
     public void OnStart()

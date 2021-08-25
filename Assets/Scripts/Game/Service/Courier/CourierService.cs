@@ -6,11 +6,11 @@ using Zenject;
 public class CourierService : MonoBehaviour
 {
 
-    private CourierStore courierStore;
+    private BikerStore courierStore;
 
 
     [Inject]
-    public void Construct(CourierStore courierStore)
+    public void Construct(BikerStore courierStore)
     {
         this.courierStore = courierStore;
     }

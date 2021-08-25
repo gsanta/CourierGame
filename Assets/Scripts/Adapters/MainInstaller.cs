@@ -29,9 +29,9 @@ public class MainInstaller : MonoInstaller
     private PackageFactory packageFactory;
 
     [SerializeField]
-    private CourierStore courierStore;
+    private BikerStore courierStore;
     [SerializeField]
-    private CourierFactory courierFactory;
+    private BikerFactory courierFactory;
     [SerializeField]
     private CourierService courierService;
 
@@ -55,8 +55,8 @@ public class MainInstaller : MonoInstaller
         Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();
 
         Container.Bind<CourierService>().FromInstance(courierService).AsSingle();
-        Container.Bind<CourierStore>().FromInstance(courierStore).AsSingle();
-        Container.Bind<CourierFactory>().FromInstance(courierFactory).AsSingle();
+        Container.Bind<BikerStore>().FromInstance(courierStore).AsSingle();
+        Container.Bind<BikerFactory>().FromInstance(courierFactory).AsSingle();
         Container.Bind<CourierSpawner>().AsSingle();
         Container.Bind<CourierSetup>().AsSingle();
         Container.Bind<ICourierCallbacks>().To<CourierCallbacksImpl>().AsSingle();

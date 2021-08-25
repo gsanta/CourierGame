@@ -24,7 +24,7 @@ public class PackageSpawner : BaseSpawner<PackageConfig>
     {
         base.StartSpawning();
 
-        timer.OnSecondPassed += Spawn;
+        timer.SecondPassed += Spawn;
     }
 
     private void Spawn(object sender, EventArgs e)

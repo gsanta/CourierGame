@@ -38,11 +38,7 @@ public class TimelineController : MonoBehaviour
     {
         if (timer.IsDayStarted)
         {
-            Player player = playerStore.GetActivePlayer();
-            if (player)
-            {
-                slider.SetSliderVal(timer.GetDayPercentageAt(player.ElapsedTime));
-            }
+            slider.SetSliderVal(timer.GetDayPercentageAt());
         }
     }
 }

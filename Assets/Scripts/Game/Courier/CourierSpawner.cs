@@ -9,10 +9,10 @@ using UnityEngine;
 
 public class CourierSpawner : BaseSpawner<CourierConfig>
 {
-    private CourierStore courierStore;
-    private CourierFactory courierFactory;
+    private BikerStore courierStore;
+    private BikerFactory courierFactory;
 
-    public CourierSpawner(CourierFactory courierFactory, CourierStore courierStore)
+    public CourierSpawner(BikerFactory courierFactory, BikerStore courierStore)
     {
         this.courierFactory = courierFactory;
         this.courierStore = courierStore;

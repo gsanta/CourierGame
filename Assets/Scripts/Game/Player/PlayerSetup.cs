@@ -17,6 +17,6 @@ public class PlayerSetup
         //playerPool.AddPlayerConfig(playerSpawner.Spawn());
         //playerPool.AddPlayerConfig(playerSpawner.Spawn());
 
-        playerFactory.CreatePlayer(playerSpawner.Spawn());
+        //playerFactory.CreatePlayer(playerSpawner.Spawn());
     }
 }

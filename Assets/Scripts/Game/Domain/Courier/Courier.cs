@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using Zenject;
 using AI;
 using Domain;
+using System;
 
 public class Courier : GAgent, ICourier
 {
@@ -20,6 +21,7 @@ public class Courier : GAgent, ICourier
     private string courierName;
 
     private CurrentRole currentRole = CurrentRole.NONE;
+    private bool isPaused = false;
 
     private float activeMoveSpeed;
     private Vector3 moveDir, movement;
@@ -33,7 +35,6 @@ public class Courier : GAgent, ICourier
         this.playerInputComponent = playerInputComponent;
         this.courierCallbacks = courierCallbacks;
         playerInputComponent.SetPlayer(this);
-        playerInputComponent.ActivateComponent();
 
         actions.Add(new AssignPackageAction(this, packageStore));
         actions.Add(new DeliverPackageAction(this));
@@ -61,31 +62,30 @@ public class Courier : GAgent, ICourier
         charController.Move(movement * Time.deltaTime);
     }
 
-    public void ActivatePlayer()
-    {
-        if (playerInputComponent != null)
-        {
-            playerInputComponent.ActivateComponent();
-        }
-    }
-
-    public void DeactivatePlayer()
-    {
-        playerInputComponent.DeactivateComnponent();
-    }
-
     protected override void Start()
     {
         base.Start();
         cam = Camera.main;
     }
 
-    //public new void Start()
-    //{
-    //    base.Start();
-    //    SubGoal s1 = new SubGoal("isPackageDropped", 1, true);
-    //    goals.Add(s1, 3);
-    //}
+    public bool Paused { 
+        get => isPaused;
+        set {
+            isPaused = value;
+            UpdatePausedState();
+        }
+    }
+
+    private void UpdatePausedState()
+    {
+        if (isPaused)
+        {
+            SetCurrentRole(CurrentRole.NONE);
+            gameObject.GetComponent<NavMeshAgent>().enabled = false;
+        } else {
+            gameObject.GetComponent<NavMeshAgent>().enabled = true;
+        }
+    }
 
     public GameObject GetGameObject()
     {
@@ -163,6 +163,7 @@ public class Courier : GAgent, ICourier
             }
 
             courierCallbacks.OnCurrentRoleChanged(this);
+            CurrentRoleChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -180,6 +181,7 @@ public class Courier : GAgent, ICourier
     private void InitPlayRole()
     {
         gameObject.GetComponent<NavMeshAgent>().enabled = false;
+        playerInputComponent.ActivateComponent();
         SetRunning(false);
     }
 
@@ -202,7 +204,9 @@ public class Courier : GAgent, ICourier
         return worldStates;
     }
 
-    public class Factory : PlaceholderFactory<Object, Courier>
+    public event EventHandler CurrentRoleChanged;
+
+    public class Factory : PlaceholderFactory<UnityEngine.Object, Courier>
     {
     }
 }

@@ -14,12 +14,12 @@ namespace UI
         private CourierListItem courierListItemTemplate;
         private List<CourierListItem> courierList = new List<CourierListItem>();
 
-        private CourierStore courierStore;
+        private BikerStore courierStore;
         private CourierService courierService;
         private MainCamera mainCamera;
 
         [Inject]
-        public void Construct(CourierStore courierStore, CourierService courierService, MainCamera mainCamera)
+        public void Construct(BikerStore courierStore, CourierService courierService, MainCamera mainCamera)
         {
             this.courierStore = courierStore;
             this.courierService = courierService;
@@ -28,7 +28,7 @@ namespace UI
 
         void Start()
         {
-            courierStore.OnCourierAdded += HandleCourierAdded;
+            courierStore.OnBikerAdded += HandleCourierAdded;
         }
 
         private void HandleCourierAdded(object sender, CourierAddedEventArgs args)
