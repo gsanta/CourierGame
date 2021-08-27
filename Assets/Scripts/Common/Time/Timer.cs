@@ -33,15 +33,12 @@ public class Timer : MonoBehaviour
         }
     }
 
-    public void Pause()
-    {
-        time = DateTime.MinValue;
-    }
-
     public void Reset()
     {
         milliSecondAccum = 0;
         secondAccum = 0;
+        Elapsed = 0;
+        HandleDayStarted();
     }
 
     private void Tick()
@@ -80,12 +77,18 @@ public class Timer : MonoBehaviour
         }
     }
 
-    public float GetDayPercentageAt()
+    private void HandleDayStarted()
+    {
+        DayStarted?.Invoke(this, EventArgs.Empty);
+    }
+
+    public float GetDayPercentage()
     {
         // Cast is not redundant, otherwise the division is zero if less than one
-        return (float) (Elapsed / 1000) / (float) SecondsPerDay;
+        return ((float) Elapsed / 1000f) / (float) SecondsPerDay;
     }
 
     public event EventHandler SecondPassed;
     public event EventHandler DayPassed;
+    public event EventHandler DayStarted;
 }

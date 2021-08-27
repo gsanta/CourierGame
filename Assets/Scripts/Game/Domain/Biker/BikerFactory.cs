@@ -28,6 +28,7 @@ public class BikerFactory : MonoBehaviour, ItemFactory<CourierConfig, Courier>
         newBiker.transform.position = config.spawnPoint.transform.position;
         newBiker.goals.Add(config.goal, 3);
         newBiker.SetName(config.name);
+        newBiker.gameObject.SetActive(true);
 
         MinimapBiker newMinimapBiker = Instantiate(minimapTemplate, minimapTemplate.transform.parent);
         newMinimapBiker.Biker = newBiker;

@@ -82,8 +82,10 @@ public class Courier : GAgent, ICourier
         {
             SetCurrentRole(CurrentRole.NONE);
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            SetRunning(false);
         } else {
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
+            SetRunning(true);
         }
     }
 

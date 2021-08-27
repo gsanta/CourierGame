@@ -37,7 +37,7 @@ public class BikerStore : MonoBehaviour
 
     public event EventHandler<CourierAddedEventArgs> OnBikerAdded;
 
-    private void TriggerCourierAdded(ICourier biker)
+    private void TriggerCourierAdded(Courier biker)
     {
         EventHandler<CourierAddedEventArgs> handler = OnBikerAdded;
         if (handler != null)
@@ -49,12 +49,12 @@ public class BikerStore : MonoBehaviour
 
 public class CourierAddedEventArgs : EventArgs
 {
-    private readonly ICourier courier;
+    private readonly Courier courier;
 
-    internal CourierAddedEventArgs(ICourier courier)
+    internal CourierAddedEventArgs(Courier courier)
     {
         this.courier = courier;
     }
-    public ICourier Courier { get => courier; }
+    public Courier Courier { get => courier; }
 }
 

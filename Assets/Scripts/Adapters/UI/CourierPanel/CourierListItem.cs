@@ -17,11 +17,16 @@ namespace UI
         [SerializeField]
         private ToggleButton playButton;
 
-        private ICourier courier;
+        private Courier courier;
         private CourierService courierService;
         private MainCamera mainCamera;
 
-        public ICourier Courier { set => courier = value;  }
+        public Courier Courier { 
+            set {
+                courier = value;
+                courier.CurrentRoleChanged += HandleCurrentRoleChanged;
+            }
+        }
 
         public CourierService CourierService { set => courierService = value; }
 
@@ -38,8 +43,6 @@ namespace UI
             {
                 SetCourierState(courier, false, true);
             }
-            
-            followButton.SetToggleState(isOn);
         }
 
         public void HandleClickPlay()
@@ -54,8 +57,12 @@ namespace UI
             {
                 SetCourierState(courier, true, true);
             }
+        }
 
-            playButton.SetToggleState(isOn);
+        private void HandleCurrentRoleChanged(object sender, EventArgs args)
+        {
+            playButton.SetToggleState(courier.GetCurrentRole() == CurrentRole.PLAY);
+            followButton.SetToggleState(courier.GetCurrentRole() == CurrentRole.FOLLOW);
         }
 
         private void ResetCourierStates()

@@ -64,6 +64,7 @@ namespace AI
         protected abstract WorldState[] GetAfterEffects();
         public abstract bool PrePerform();
         public abstract bool PostPerform();
+        public abstract bool PostAbort();
         public abstract bool IsDestinationReached();
     }
 }

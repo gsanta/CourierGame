@@ -11,6 +11,7 @@ public class MainInstaller : MonoInstaller
     private Timer timer;
     [SerializeField]
     private TimelineController timelineController;
+
     [SerializeField]
     private StartDayPanel startDayPanel;
     [SerializeField]
@@ -45,6 +46,9 @@ public class MainInstaller : MonoInstaller
         Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
         Container.Bind<Timer>().FromInstance(timer).AsSingle();
         Container.Bind<TimelineSlider>().FromInstance(timelineController.slider).AsSingle();
+
+        Container.Bind<DayService>().AsSingle();
+
         Container.Bind<ISpawnPointHandler>().To<RandomSpawnPointHandler>().AsTransient();
 
         Container.Bind<PlayerStore>().FromInstance(playerStore).AsSingle();
@@ -81,6 +85,7 @@ public class MainInstaller : MonoInstaller
         playerSetup.Setup();
         CourierSetup courierSetup = Container.Resolve<CourierSetup>();
         courierSetup.Setup();
+        DayService dayService = Container.Resolve<DayService>();
 
     }
 }

@@ -37,13 +37,6 @@ namespace AI
         private bool isRunning = true;
 
         protected abstract WorldStates GetWorldStates();
-        private Timer timer;
-
-        [Inject]
-        public void Construct(Timer timer)
-        {
-            this.timer = timer;
-        }
 
         public void SetRunning(bool isRunning)
         {
@@ -64,17 +57,31 @@ namespace AI
 
         void CompleteAction()
         {
-            currentAction.running = false;
-            if (currentAction.PostPerform())
+            if (currentAction != null)
             {
+                currentAction.running = false;
+                if (currentAction.PostPerform())
+                {
+                    currentAction = null;
+                }
+                invoked = false;
+            }
+        }
+
+        public void AbortAction()
+        {
+            if (currentAction != null)
+            {
+                currentAction.running = false;
+                currentAction.PostAbort();
                 currentAction = null;
             }
-            invoked = false;
+            planner = null;
         }
 
         protected virtual void LateUpdate()
         {
-            if (!isRunning || !timer.IsDayStarted)
+            if (!isRunning)
             {
                 return;
             }

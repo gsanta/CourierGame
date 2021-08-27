@@ -21,6 +21,11 @@ namespace AI
             return true;
         }
 
+        public override bool PostAbort()
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool PostPerform()
         {
             List<Package> packages = packageStore.GetAllPickable();

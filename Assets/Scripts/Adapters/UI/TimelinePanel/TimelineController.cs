@@ -38,7 +38,8 @@ public class TimelineController : MonoBehaviour
     {
         if (timer.IsDayStarted)
         {
-            slider.SetSliderVal(timer.GetDayPercentageAt());
+            Debug.Log(timer.GetDayPercentage());
+            slider.SetSliderVal(timer.GetDayPercentage());
         }
     }
 }

@@ -53,5 +53,10 @@ namespace AI
         {
             return new WorldState[] { new WorldState("isPackageDropped", 3) };
         }
+
+        public override bool PostAbort()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

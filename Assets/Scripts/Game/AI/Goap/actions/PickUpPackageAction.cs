@@ -45,5 +45,10 @@ namespace AI
         {
             return new WorldState[] { new WorldState("isPackagePickedUp", 3) };
         }
+
+        public override bool PostAbort()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
