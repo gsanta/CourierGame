@@ -9,9 +9,9 @@ namespace Domain
 {
     public class MinimapBiker : MonoBehaviour
     {
-        private Courier biker;
+        private Biker biker;
         
-        public Courier Biker { set => biker = value; }
+        public Biker Biker { set => biker = value; }
 
         public void Start()
         {

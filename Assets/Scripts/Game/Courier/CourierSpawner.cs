@@ -31,7 +31,7 @@ public class CourierSpawner : BaseSpawner<CourierConfig>
         {
             GameObject spawnPoint = ChooseSpawnPoint(usedSpawnPoints);
             CourierConfig config = new CourierConfig(spawnPoint, new SubGoal("isPackageDropped", 1, true), $"Courier-{i}");
-            Courier courier = courierFactory.Create(config);
+            Biker courier = courierFactory.Create(config);
             courierStore.Add(courier);
         }
     }

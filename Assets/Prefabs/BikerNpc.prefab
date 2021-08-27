@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 954592312787651773}
   - component: {fileID: -358788667383095460}
   - component: {fileID: 1321874488}
+  - component: {fileID: 8472538161976676045}
   - component: {fileID: 5175631968212648827}
   m_Layer: 7
   m_Name: BikerNpc
@@ -133,12 +134,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926a9681d6645cd49a57da679bb90d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentId: abcd
   viewPoint: {fileID: 954592314089168290}
   charController: {fileID: 5175631968212648827}
   moveSpeed: 5
   runSpeed: 8
   gravityMod: 2.5
+  package: {fileID: 0}
+--- !u!114 &8472538161976676045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954592312787651769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb749a6129fe524d978c5e3879d0f0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentId: agent
 --- !u!143 &5175631968212648827
 CharacterController:
   m_ObjectHideFlags: 0

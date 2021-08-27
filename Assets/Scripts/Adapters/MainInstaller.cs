@@ -65,7 +65,8 @@ public class MainInstaller : MonoInstaller
         Container.Bind<CourierSetup>().AsSingle();
         Container.Bind<ICourierCallbacks>().To<CourierCallbacksImpl>().AsSingle();
         //Container.Bind<CourierAgent>().FromComponentInNewPrefab(courierAgnet);
-        Container.BindFactory<Object, Courier, Courier.Factory>().FromFactory<PrefabFactory<Courier>>();
+        Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
+        Container.BindFactory<Object, BikerAgentComponent, BikerAgentComponent.Factory>().FromFactory<PrefabFactory<BikerAgentComponent>>();
 
 
         Container.Bind<PackageStore>().FromInstance(packageStore).AsSingle();

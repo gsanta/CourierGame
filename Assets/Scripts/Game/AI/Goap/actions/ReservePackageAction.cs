@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace AI
 {
-    public class AssignPackageAction : GAction
+    public class AssignPackageAction : GAction<Biker>
     {
 
         private PackageStore packageStore;
 
-        public AssignPackageAction(GAgent agent, PackageStore packageStore) : base(agent)
+        public AssignPackageAction(IGoapAgentProvider<Biker> goapAgentProvider, PackageStore packageStore) : base(goapAgentProvider)
         {
             this.packageStore = packageStore;
         }
@@ -38,7 +38,7 @@ namespace AI
                 int selectedIndex = UnityEngine.Random.Range(0, packages.Count);
                 Package selectedPackage = packages[0];
 
-                selectedPackage.ReservePackage((Courier) agent);
+                selectedPackage.ReservePackage(GoapAgent.Parent);
 
                 target = selectedPackage.gameObject;
 

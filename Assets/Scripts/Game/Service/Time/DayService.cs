@@ -28,7 +28,7 @@ namespace Service
         {
             bikerStore.GetAll().ForEach(biker => {
                 biker.Paused = true;
-                biker.AbortAction();
+                biker.Agent.GoapAgent.AbortAction();
             });
         }
     }

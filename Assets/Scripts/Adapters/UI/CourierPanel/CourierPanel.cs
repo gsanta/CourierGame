@@ -33,7 +33,7 @@ namespace UI
 
         private void HandleCourierAdded(object sender, CourierAddedEventArgs args)
         {
-            Courier courier = args.Courier;
+            Biker courier = args.Courier;
 
             CourierListItem courierListItem = Instantiate(courierListItemTemplate, courierListItemTemplate.transform.parent);
             courierListItem.courierNameText.text = courier.GetName();

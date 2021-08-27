@@ -17,11 +17,11 @@ namespace UI
         [SerializeField]
         private ToggleButton playButton;
 
-        private Courier courier;
+        private Biker courier;
         private CourierService courierService;
         private MainCamera mainCamera;
 
-        public Courier Courier { 
+        public Biker Courier { 
             set {
                 courier = value;
                 courier.CurrentRoleChanged += HandleCurrentRoleChanged;

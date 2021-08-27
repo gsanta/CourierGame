@@ -9,7 +9,7 @@ using Zenject;
 
 namespace AI
 {
-    public abstract class GAction
+    public abstract class GAction<T>
     {
         public string actionName = "Action";
         public float cost = 1.0f;
@@ -21,14 +21,16 @@ namespace AI
         public WorldStates agentBeliefs;
         public bool running = false;
 
-        protected GAgent agent;
+        private IGoapAgentProvider<T> goapAgentProvider;
 
-        public GAction(GAgent agent)
+        public GAction(IGoapAgentProvider<T> goapAgentProvider)
         {
-            this.agent = agent;
+            this.goapAgentProvider = goapAgentProvider;
             preConditionsDict = new Dictionary<string, int>();
             effectsDict = new Dictionary<string, int>();
         }
+
+        public GoapAgent<T> GoapAgent { get => goapAgentProvider.GetGoapAgent(); }
 
         public void Init()
         {

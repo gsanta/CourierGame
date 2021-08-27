@@ -7,15 +7,15 @@ using UnityEngine.AI;
 
 namespace AI
 {
-    class DeliverPackageAction : GAction
+    class DeliverPackageAction : GAction<Biker>
     {
-        public DeliverPackageAction(GAgent agent) : base(agent)
+        public DeliverPackageAction(IGoapAgentProvider<Biker> agent) : base(agent)
         {
         }
 
         public override bool PrePerform()
         {
-            Courier courierAgent = (Courier)agent;
+            Biker courierAgent = GoapAgent.Parent;
 
             Package package = courierAgent.GetPackage();
 
@@ -26,21 +26,21 @@ namespace AI
 
         public override bool PostPerform()
         {
-            Courier courierAgent = (Courier)agent;
+            Biker courierAgent = GoapAgent.Parent;
 
             Package package = courierAgent.GetPackage();
 
             package.DeliverPackage();
 
             SubGoal s1 = new SubGoal("isPackageDropped", 1, true);
-            agent.goals.Add(s1, 3);
+            GoapAgent.goals.Add(s1, 3);
 
             return true;
         }
 
         public override bool IsDestinationReached()
         {
-            var navMeshAgent = agent.GetComponent<NavMeshAgent>();
+            var navMeshAgent = GoapAgent.NavMeshAgent;
             return navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
         }
 

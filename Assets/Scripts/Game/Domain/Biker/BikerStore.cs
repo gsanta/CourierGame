@@ -8,36 +8,36 @@ using UnityEngine;
 
 public class BikerStore : MonoBehaviour
 {
-    private List<Courier> bikers = new List<Courier>();
+    private List<Biker> bikers = new List<Biker>();
 
     [SerializeField]
     private GameObject[] spawnPoints;
     [SerializeField]
-    private Courier bikerTemplate;
+    private Biker bikerTemplate;
     public GameObject[] SpawnPoints
     {
         get => spawnPoints;
     }
 
-    public Courier BikerTemplate
+    public Biker BikerTemplate
     {
         get => bikerTemplate;
     }
 
-    public void Add(Courier biker)
+    public void Add(Biker biker)
     {
         bikers.Add(biker);
         TriggerCourierAdded(biker);
     }
 
-    public List<Courier> GetAll()
+    public List<Biker> GetAll()
     {
         return bikers;
     }
 
     public event EventHandler<CourierAddedEventArgs> OnBikerAdded;
 
-    private void TriggerCourierAdded(Courier biker)
+    private void TriggerCourierAdded(Biker biker)
     {
         EventHandler<CourierAddedEventArgs> handler = OnBikerAdded;
         if (handler != null)
@@ -49,12 +49,12 @@ public class BikerStore : MonoBehaviour
 
 public class CourierAddedEventArgs : EventArgs
 {
-    private readonly Courier courier;
+    private readonly Biker courier;
 
-    internal CourierAddedEventArgs(Courier courier)
+    internal CourierAddedEventArgs(Biker courier)
     {
         this.courier = courier;
     }
-    public Courier Courier { get => courier; }
+    public Biker Courier { get => courier; }
 }
 

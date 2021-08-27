@@ -5,7 +5,7 @@ using AI;
 using Domain;
 using System;
 
-public class Courier : GAgent, ICourier
+public class Biker : MonoBehaviour, ICourier
 {
     [SerializeField]
     private Transform viewPoint;
@@ -29,16 +29,20 @@ public class Courier : GAgent, ICourier
     private PlayerInputComponent playerInputComponent;
     private ICourierCallbacks courierCallbacks;
 
+    private BikerAgentComponent agent;
+    private PackageStore packageStore;
+
+    public BikerAgentComponent Agent {
+        get => GetComponent<BikerAgentComponent>();
+    }
+
     [Inject]
     public void Construct(PlayerInputComponent playerInputComponent, PackageStore packageStore, ICourierCallbacks courierCallbacks)
     {
         this.playerInputComponent = playerInputComponent;
         this.courierCallbacks = courierCallbacks;
+        this.packageStore = packageStore;
         playerInputComponent.SetPlayer(this);
-
-        actions.Add(new AssignPackageAction(this, packageStore));
-        actions.Add(new DeliverPackageAction(this));
-        actions.Add(new PickUpPackageAction(this));
     }
 
     private void Move()
@@ -62,10 +66,11 @@ public class Courier : GAgent, ICourier
         charController.Move(movement * Time.deltaTime);
     }
 
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
         cam = Camera.main;
+
+        agent = GetComponent<BikerAgentComponent>();
     }
 
     public bool Paused { 
@@ -82,10 +87,10 @@ public class Courier : GAgent, ICourier
         {
             SetCurrentRole(CurrentRole.NONE);
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            SetRunning(false);
+            agent.GoapAgent.SetRunning(false);
         } else {
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
-            SetRunning(true);
+            agent.GoapAgent.SetRunning(true);
         }
     }
 
@@ -96,7 +101,7 @@ public class Courier : GAgent, ICourier
 
     public string GetId()
     {
-        return agentId;
+        return agent.GoapAgent.AgentId;
     }
 
     public string GetName()
@@ -132,12 +137,8 @@ public class Courier : GAgent, ICourier
         }
     }
 
-    protected override void LateUpdate()
+    protected void LateUpdate()
     {
-        if (currentRole != CurrentRole.PLAY)
-        {
-            base.LateUpdate();
-        }
         SetCameraPosition();
     }
 
@@ -177,38 +178,19 @@ public class Courier : GAgent, ICourier
     private void FinishPlayRole()
     {
         gameObject.GetComponent<NavMeshAgent>().enabled = true;
-        SetRunning(true);
+        agent.GoapAgent.SetRunning(true);
     }
 
     private void InitPlayRole()
     {
         gameObject.GetComponent<NavMeshAgent>().enabled = false;
         playerInputComponent.ActivateComponent();
-        SetRunning(false);
-    }
-
-    protected override WorldStates GetWorldStates()
-    {
-        var worldStates = new WorldStates();
-
-        var package = GetPackage();
-        if (package)
-        {
-            if (package.Status == DeliveryStatus.ASSIGNED)
-            {
-                worldStates.AddState("isPackageReserved", 3);
-                worldStates.AddState("isPackagePickedUp", 3);
-            } else if (package.Status == DeliveryStatus.RESERVED)
-            {
-                worldStates.AddState("isPackageReserved", 3);
-            }
-        }
-        return worldStates;
+        agent.GoapAgent.SetRunning(false);
     }
 
     public event EventHandler CurrentRoleChanged;
 
-    public class Factory : PlaceholderFactory<UnityEngine.Object, Courier>
+    public class Factory : PlaceholderFactory<UnityEngine.Object, Biker>
     {
     }
 }

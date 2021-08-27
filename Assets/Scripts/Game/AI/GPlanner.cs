@@ -7,14 +7,14 @@ using UnityEngine;
 
 namespace AI
 {
-    public class Node
+    public class Node<T>
     {
-        public Node parent;
+        public Node<T> parent;
         public float cost;
         public Dictionary<string, int> state;
-        public GAction action;
+        public GAction<T> action;
 
-        public Node(Node parent, float cost, Dictionary<string, int> allStates, GAction action)
+        public Node(Node<T> parent, float cost, Dictionary<string, int> allStates, GAction<T> action)
         {
             this.parent = parent;
             this.cost = cost;
@@ -23,12 +23,12 @@ namespace AI
         }
     }
 
-    public class GPlanner
+    public class GPlanner<T>
     {
-        public Queue<GAction> plan(List<GAction> actions, Dictionary<string, int> goal, WorldStates states)
+        public Queue<GAction<T>> plan(List<GAction<T>> actions, Dictionary<string, int> goal, WorldStates states)
         {
-            List<GAction> usableActions = new List<GAction>();
-            foreach (GAction a in actions)
+            List<GAction<T>> usableActions = new List<GAction<T>>();
+            foreach (GAction<T> a in actions)
             {
                 if (a.IsAchievable())
                 {
@@ -36,8 +36,8 @@ namespace AI
                 }
             }
 
-            List<Node> leaves = new List<Node>();
-            Node start = new Node(null, 0, states.ToDictionary(), null);
+            List<Node<T>> leaves = new List<Node<T>>();
+            Node<T> start = new Node<T>(null, 0, states.ToDictionary(), null);
 
             bool success = BuildGraph(start, leaves, usableActions, goal);
 
@@ -46,8 +46,8 @@ namespace AI
                 Debug.Log("No Plan found");
             }
 
-            Node cheapest = null;
-            foreach (Node leaf in leaves)
+            Node<T> cheapest = null;
+            foreach (Node<T> leaf in leaves)
             {
                 if (cheapest == null)
                 {
@@ -61,8 +61,8 @@ namespace AI
                 }
             }
 
-            List<GAction> result = new List<GAction>();
-            Node n = cheapest;
+            List<GAction<T>> result = new List<GAction<T>>();
+            Node<T> n = cheapest;
             while (n != null)
             {
                 if (n.action != null)
@@ -72,14 +72,14 @@ namespace AI
                 n = n.parent;
             }
 
-            Queue<GAction> queue = new Queue<GAction>();
-            foreach (GAction a in result)
+            Queue<GAction<T>> queue = new Queue<GAction<T>>();
+            foreach (GAction<T> a in result)
             {
                 queue.Enqueue(a);
             }
 
             Debug.Log("The Plan is: ");
-            foreach (GAction a in queue)
+            foreach (GAction<T> a in queue)
             {
                 Debug.Log("Q: " + a.actionName);
             }
@@ -87,11 +87,11 @@ namespace AI
             return queue;
         }
 
-        private bool BuildGraph(Node parent, List<Node> leaves, List<GAction> usableActions, Dictionary<string, int> goal)
+        private bool BuildGraph(Node<T> parent, List<Node<T>> leaves, List<GAction<T>> usableActions, Dictionary<string, int> goal)
         {
             bool foundPath = false;
 
-            foreach (GAction action in usableActions)
+            foreach (GAction<T> action in usableActions)
             {
                 if (action.IsAchievableGiven(parent.state))
                 {
@@ -104,7 +104,7 @@ namespace AI
                         }
                     }
 
-                    Node node = new Node(parent, parent.cost + action.cost, currentState, action);
+                    Node<T> node = new Node<T>(parent, parent.cost + action.cost, currentState, action);
 
                     if (GoalAchieved(goal, currentState))
                     {
@@ -113,7 +113,7 @@ namespace AI
                     }
                     else
                     {
-                        List<GAction> subset = ActionSubset(usableActions, action);
+                        List<GAction<T>> subset = ActionSubset(usableActions, action);
                         bool found = BuildGraph(node, leaves, subset, goal);
 
                         if (found)
@@ -139,11 +139,11 @@ namespace AI
             return true;
         }
 
-        private List<GAction> ActionSubset(List<GAction> actions, GAction removeMe)
+        private List<GAction<T>> ActionSubset(List<GAction<T>> actions, GAction<T> removeMe)
         {
-            List<GAction> subset = new List<GAction>();
+            List<GAction<T>> subset = new List<GAction<T>>();
 
-            foreach (GAction a in actions)
+            foreach (GAction<T> a in actions)
             {
                 if (!a.Equals(removeMe))
                 {

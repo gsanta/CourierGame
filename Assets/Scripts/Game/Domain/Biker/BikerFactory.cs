@@ -8,25 +8,24 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-public class BikerFactory : MonoBehaviour, ItemFactory<CourierConfig, Courier>
+public class BikerFactory : MonoBehaviour, ItemFactory<CourierConfig, Biker>
 {
     [SerializeField]
     private MinimapBiker minimapTemplate;
-    private Courier.Factory instanceFactory;
+    private Biker.Factory instanceFactory;
     private BikerStore courierStore;
 
     [Inject]
-    public void Construct(Courier.Factory instanceFactory, BikerStore courierStore)
+    public void Construct(Biker.Factory instanceFactory, BikerStore courierStore)
     {
         this.instanceFactory = instanceFactory;
         this.courierStore = courierStore;
     }
 
-    public Courier Create(CourierConfig config)
+    public Biker Create(CourierConfig config)
     {
-        Courier newBiker = instanceFactory.Create(courierStore.BikerTemplate);
+        Biker newBiker = instanceFactory.Create(courierStore.BikerTemplate);
         newBiker.transform.position = config.spawnPoint.transform.position;
-        newBiker.goals.Add(config.goal, 3);
         newBiker.SetName(config.name);
         newBiker.gameObject.SetActive(true);
 

@@ -8,22 +8,22 @@ using UnityEngine.AI;
 
 namespace AI
 {
-    class PickUpPackageAction : GAction
+    class PickUpPackageAction : GAction<Biker>
     {
-        public PickUpPackageAction(GAgent agent) : base(agent)
+        public PickUpPackageAction(IGoapAgentProvider<Biker> agent) : base(agent)
         {
         }
 
         public override bool PrePerform()
         {
-            Courier courierAgent = (Courier)agent;
+            Biker courierAgent = GoapAgent.Parent;
             target = courierAgent.GetPackage().gameObject;
 
             return true;
         }
         public override bool PostPerform()
         {
-            Courier courierAgent = (Courier)agent;
+            Biker courierAgent = GoapAgent.Parent;
 
             Package package = courierAgent.GetPackage();
             package.PickupBy(courierAgent);
@@ -32,7 +32,7 @@ namespace AI
 
         public override bool IsDestinationReached()
         {
-            var navMeshAgent = agent.GetComponent<NavMeshAgent>();
+            var navMeshAgent = GoapAgent.NavMeshAgent;
             return navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AI
 {
-    interface IGoapAction<out T> where T : GAgent
+    interface IGoapAction<out T> where T : GAgent<T>
     {
         void Init();
         bool IsAchievable();
