@@ -8,7 +8,7 @@ using Zenject;
 
 namespace UI
 {
-    public class CourierPanel : MonoBehaviour
+    public class BikerPanel : MonoBehaviour
     {
         [SerializeField]
         private CourierListItem courierListItemTemplate;

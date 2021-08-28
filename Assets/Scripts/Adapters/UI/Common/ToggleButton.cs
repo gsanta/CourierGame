@@ -15,13 +15,7 @@ namespace UI {
         {
             this.isOn = isOn;
 
-            if (isOn)
-            {
-                GetComponent<Image>().color = Color.green;
-            } else
-            {
-                GetComponent<Image>().color = Color.grey;
-            }
+            GetComponent<Toggle>().isOn = isOn;
         }
 
         public bool IsOn { get => isOn;  }

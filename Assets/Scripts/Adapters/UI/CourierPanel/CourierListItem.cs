@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -13,9 +14,9 @@ namespace UI
     {
         public TMP_Text courierNameText;
         [SerializeField]
-        private ToggleButton followButton;
+        private Toggle followButton;
         [SerializeField]
-        private ToggleButton playButton;
+        private Toggle playButton;
 
         private Biker courier;
         private CourierService courierService;
@@ -34,9 +35,9 @@ namespace UI
 
         public void HandleClickFollow()
         {
-            bool isOn = !followButton.IsOn;
+            bool isOn = !followButton.isOn;
 
-            GetComponentInParent<CourierPanel>().ResetListItemsToggleButtons();
+            GetComponentInParent<BikerPanel>().ResetListItemsToggleButtons();
             ResetCourierStates();
 
             if (isOn)
@@ -47,9 +48,9 @@ namespace UI
 
         public void HandleClickPlay()
         {
-            bool isOn = !playButton.IsOn;
+            bool isOn = !playButton.isOn;
 
-            GetComponentInParent<CourierPanel>().ResetListItemsToggleButtons();
+            GetComponentInParent<BikerPanel>().ResetListItemsToggleButtons();
 
             ResetCourierStates();
             
@@ -61,8 +62,17 @@ namespace UI
 
         private void HandleCurrentRoleChanged(object sender, EventArgs args)
         {
-            playButton.SetToggleState(courier.GetCurrentRole() == CurrentRole.PLAY);
-            followButton.SetToggleState(courier.GetCurrentRole() == CurrentRole.FOLLOW);
+            var isPlay = courier.GetCurrentRole() == CurrentRole.PLAY;
+            if (playButton.isOn != isPlay)
+            {
+                playButton.isOn = isPlay;
+            }
+
+            var isFollow = courier.GetCurrentRole() == CurrentRole.FOLLOW;
+            if (followButton.isOn != isFollow)
+            {
+                followButton.isOn = isFollow;
+            }
         }
 
         private void ResetCourierStates()
@@ -93,12 +103,8 @@ namespace UI
 
         public void ResetToggleButtons()
         {
-            var toggleButtons = GetComponentsInChildren<ToggleButton>();
-
-            foreach(var button in toggleButtons)
-            {
-                button.SetToggleState(false);
-            }
+            followButton.isOn = false;
+            playButton.isOn = false;
         }
     }
 }

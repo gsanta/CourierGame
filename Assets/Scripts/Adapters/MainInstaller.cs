@@ -2,6 +2,7 @@
 using AI;
 using Domain;
 using Service;
+using UI;
 using UnityEngine;
 using Zenject;
 
@@ -30,11 +31,13 @@ public class MainInstaller : MonoInstaller
     private PackageFactory packageFactory;
 
     [SerializeField]
-    private BikerStore courierStore;
+    private BikerStore bikerStore;
     [SerializeField]
-    private BikerFactory courierFactory;
+    private BikerFactory bikerFactory;
     [SerializeField]
     private CourierService courierService;
+    [SerializeField]
+    private BikerPanel bikerPanel;
 
     [SerializeField]
     private MainCamera mainCamera;
@@ -58,9 +61,10 @@ public class MainInstaller : MonoInstaller
         Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();
 
         Container.Bind<CourierService>().FromInstance(courierService).AsSingle();
-        Container.Bind<BikerStore>().FromInstance(courierStore).AsSingle();
-        Container.Bind<BikerFactory>().FromInstance(courierFactory).AsSingle();
+        Container.Bind<BikerStore>().FromInstance(bikerStore).AsSingle();
+        Container.Bind<BikerFactory>().FromInstance(bikerFactory).AsSingle();
         Container.Bind<CourierSpawner>().AsSingle();
+        Container.Bind<BikerPanel>().FromInstance(bikerPanel).AsSingle();
         Container.Bind<CourierSetup>().AsSingle();
         Container.Bind<ICourierCallbacks>().To<CourierCallbacksImpl>().AsSingle();
         //Container.Bind<CourierAgent>().FromComponentInNewPrefab(courierAgnet);
