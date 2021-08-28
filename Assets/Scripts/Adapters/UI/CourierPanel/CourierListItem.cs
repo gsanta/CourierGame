@@ -18,72 +18,53 @@ namespace UI
         [SerializeField]
         private Toggle playButton;
 
-        private Biker courier;
-        private CourierService courierService;
+        private Biker biker;
+        private BikerService courierService;
         private MainCamera mainCamera;
+        private bool isResetting = false;
 
-        public Biker Courier { 
+        public Biker Biker { 
             set {
-                courier = value;
-                courier.CurrentRoleChanged += HandleCurrentRoleChanged;
+                biker = value;
+                biker.CurrentRoleChanged += HandleCurrentRoleChanged;
             }
+
+            get => biker;
         }
 
-        public CourierService CourierService { set => courierService = value; }
+        public BikerService CourierService { set => courierService = value; }
 
         public MainCamera MainCamera { set => mainCamera = value; }
 
         public void HandleClickFollow()
         {
-            bool isOn = !followButton.isOn;
-
-            GetComponentInParent<BikerPanel>().ResetListItemsToggleButtons();
-            ResetCourierStates();
-
-            if (isOn)
+            if (!isResetting)
             {
-                SetCourierState(courier, false, true);
+                SetCourierState(biker, false, followButton.isOn);
             }
         }
 
         public void HandleClickPlay()
         {
-            bool isOn = !playButton.isOn;
-
-            GetComponentInParent<BikerPanel>().ResetListItemsToggleButtons();
-
-            ResetCourierStates();
-            
-            if (isOn)
+            if (!isResetting)
             {
-                SetCourierState(courier, true, true);
+                SetCourierState(biker, playButton.isOn, false);
             }
         }
 
         private void HandleCurrentRoleChanged(object sender, EventArgs args)
         {
-            var isPlay = courier.GetCurrentRole() == CurrentRole.PLAY;
-            if (playButton.isOn != isPlay)
-            {
-                playButton.isOn = isPlay;
-            }
+            var isPlay = biker.GetCurrentRole() == CurrentRole.PLAY;
+            //if (playButton.isOn != isPlay)
+            //{
+            //    playButton.isOn = isPlay;
+            //}
 
-            var isFollow = courier.GetCurrentRole() == CurrentRole.FOLLOW;
-            if (followButton.isOn != isFollow)
-            {
-                followButton.isOn = isFollow;
-            }
-        }
-
-        private void ResetCourierStates()
-        {
-            ICourier courier = courierService.FindPlayOrFollowRole();
-            if (courier != null)
-            {
-                courier.SetCurrentRole(CurrentRole.NONE);
-
-                mainCamera.ResetPosition();
-            }
+            var isFollow = biker.GetCurrentRole() == CurrentRole.FOLLOW;
+            //if (followButton.isOn != isFollow)
+            //{
+            //    followButton.isOn = isFollow;
+            //}
         }
 
         private void SetCourierState(ICourier courier, bool isPlayer, bool isFollow)
@@ -101,10 +82,25 @@ namespace UI
             }
         }
 
-        public void ResetToggleButtons()
+        public void ResetToggleButtons(bool isFollow, bool isPlay)
         {
-            followButton.isOn = false;
-            playButton.isOn = false;
+            try
+            {
+                isResetting = true;
+
+                if (followButton.isOn != isFollow)
+                {
+                    followButton.isOn = isFollow;
+                }
+
+                if (playButton.isOn != isPlay)
+                {
+                    playButton.isOn = isPlay;
+                }
+            } finally
+            {
+                isResetting = false;
+            }
         }
     }
 }

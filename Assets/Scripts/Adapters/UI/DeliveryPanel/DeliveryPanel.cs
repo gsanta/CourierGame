@@ -9,12 +9,12 @@ public class DeliveryPanel : MonoBehaviour
     [SerializeField] private DeliveryListItem deliveryListItemTemplate;
     private DeliveryStore deliveryStore;
     private PackageStore packageStore;
-    private CourierService courierService;
+    private BikerService courierService;
 
     private List<DeliveryListItem> activeDeliveryItems = new List<DeliveryListItem>();
 
     [Inject]
-    public void Construct(DeliveryStore deliveryStore, PackageStore packageStore, CourierService courierService)
+    public void Construct(DeliveryStore deliveryStore, PackageStore packageStore, BikerService courierService)
     {
         this.deliveryStore = deliveryStore;
         this.packageStore = packageStore;

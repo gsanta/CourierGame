@@ -10,17 +10,16 @@ namespace Service
 {
     public class CourierCallbacksImpl : ICourierCallbacks
     {
-        private readonly CourierService courierService;
+        private readonly BikerService courierService;
 
-        public CourierCallbacksImpl(CourierService courierService)
+        public CourierCallbacksImpl(BikerService courierService)
         {
             this.courierService = courierService;
         }
 
         public void OnCurrentRoleChanged(ICourier courier)
         {
-            Debug.Log("Current role changed");
-            courierService.EmitCurrentRoleChanged(courier);
+            courierService.EmitCurrentRoleChanged();
         }
     }
 }

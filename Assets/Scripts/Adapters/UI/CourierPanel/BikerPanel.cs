@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -14,21 +11,24 @@ namespace UI
         private CourierListItem courierListItemTemplate;
         private List<CourierListItem> courierList = new List<CourierListItem>();
 
-        private BikerStore courierStore;
-        private CourierService courierService;
+        private BikerStore bikerStore;
+        private BikerService bikerService;
         private MainCamera mainCamera;
 
+        private CourierListItem prevActiveItem;
+
         [Inject]
-        public void Construct(BikerStore courierStore, CourierService courierService, MainCamera mainCamera)
+        public void Construct(BikerStore bikerStore, BikerService bikerService, MainCamera mainCamera)
         {
-            this.courierStore = courierStore;
-            this.courierService = courierService;
+            this.bikerStore = bikerStore;
+            this.bikerService = bikerService;
             this.mainCamera = mainCamera;
         }
 
         void Start()
         {
-            courierStore.OnBikerAdded += HandleCourierAdded;
+            bikerStore.OnBikerAdded += HandleCourierAdded;
+            bikerService.CurrentRoleChanged += HandleBikerRoleChanged;
         }
 
         private void HandleCourierAdded(object sender, CourierAddedEventArgs args)
@@ -38,15 +38,29 @@ namespace UI
             CourierListItem courierListItem = Instantiate(courierListItemTemplate, courierListItemTemplate.transform.parent);
             courierListItem.courierNameText.text = courier.GetName();
             courierListItem.gameObject.SetActive(true);
-            courierListItem.CourierService = courierService;
-            courierListItem.Courier = args.Courier;
+            courierListItem.CourierService = bikerService;
+            courierListItem.Biker = args.Courier;
             courierListItem.MainCamera = mainCamera;
             courierList.Add(courierListItem);
         }
 
-        public void ResetListItemsToggleButtons()
+        private void HandleBikerRoleChanged(object sender, EventArgs args)
         {
-            courierList.ForEach(item => item.ResetToggleButtons());
+            if (prevActiveItem != null)
+            {
+                var prevBiker = prevActiveItem.Biker;
+                prevActiveItem.ResetToggleButtons(prevBiker.GetCurrentRole() == CurrentRole.FOLLOW, prevBiker.GetCurrentRole() == CurrentRole.PLAY);
+            }
+
+            prevActiveItem = null;
+
+            var activeBiker = bikerService.FindPlayOrFollowRole();
+
+            if (activeBiker != null)
+            {
+                var listItem = courierList.Find(item => item.Biker == activeBiker);
+                prevActiveItem = listItem;
+            }
         }
     }
 }

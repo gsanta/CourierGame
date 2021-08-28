@@ -35,7 +35,7 @@ public class MainInstaller : MonoInstaller
     [SerializeField]
     private BikerFactory bikerFactory;
     [SerializeField]
-    private CourierService courierService;
+    private BikerService courierService;
     [SerializeField]
     private BikerPanel bikerPanel;
 
@@ -60,7 +60,7 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PlayerSetup>().AsSingle();
         Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();
 
-        Container.Bind<CourierService>().FromInstance(courierService).AsSingle();
+        Container.Bind<BikerService>().FromInstance(courierService).AsSingle();
         Container.Bind<BikerStore>().FromInstance(bikerStore).AsSingle();
         Container.Bind<BikerFactory>().FromInstance(bikerFactory).AsSingle();
         Container.Bind<CourierSpawner>().AsSingle();

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-public class CourierService : MonoBehaviour
+public class BikerService : MonoBehaviour
 {
 
     private BikerStore courierStore;
@@ -20,13 +20,13 @@ public class CourierService : MonoBehaviour
         return courierStore.GetAll().Find(courier => courier.GetCurrentRole() == CurrentRole.PLAY);
     }
 
-    public ICourier FindPlayOrFollowRole()
+    public Biker FindPlayOrFollowRole()
     {
         return courierStore.GetAll().Find(courier => courier.GetCurrentRole() == CurrentRole.PLAY || courier.GetCurrentRole() == CurrentRole.FOLLOW);
     }
 
     // TODO hide it from global space
-    public void EmitCurrentRoleChanged(ICourier courier)
+    public void EmitCurrentRoleChanged()
     {
         CurrentRoleChanged?.Invoke(this, EventArgs.Empty);
     }

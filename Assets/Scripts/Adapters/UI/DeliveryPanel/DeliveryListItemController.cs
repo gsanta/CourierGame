@@ -9,12 +9,12 @@ namespace UI
     public class DeliveryListItemController
     {
         private readonly DeliveryListItem deliveryListItem;
-        private readonly CourierService courierService;
+        private readonly BikerService courierService;
         private readonly DeliveryStore deliveryStore;
         private Package package;
         private bool isReservationEnabled = false;
 
-        public DeliveryListItemController(DeliveryListItem deliveryListItem, CourierService courierService, DeliveryStore deliveryStore)
+        public DeliveryListItemController(DeliveryListItem deliveryListItem, BikerService courierService, DeliveryStore deliveryStore)
         {
             this.deliveryListItem = deliveryListItem;
             this.courierService = courierService;
