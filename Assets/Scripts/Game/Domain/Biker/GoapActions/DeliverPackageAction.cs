@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.AI;
+using AI;
 
-namespace AI
+namespace Domain
 {
-    class DeliverPackageAction : GAction<Biker>
+    class DeliverPackageAction : GoapAction<Biker>
     {
         public DeliverPackageAction(IGoapAgentProvider<Biker> agent) : base(agent)
         {
@@ -56,7 +57,7 @@ namespace AI
 
         public override bool PostAbort()
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

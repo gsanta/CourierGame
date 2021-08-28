@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AI;
 
-namespace AI
+namespace Domain
 {
-    public class AssignPackageAction : GAction<Biker>
+    public class AssignPackageAction : GoapAction<Biker>
     {
 
         private PackageStore packageStore;
@@ -23,7 +21,7 @@ namespace AI
 
         public override bool PostAbort()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public override bool PostPerform()

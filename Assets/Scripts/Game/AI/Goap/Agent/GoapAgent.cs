@@ -5,47 +5,46 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
-using Zenject;
-using AI;
 
-//namespace AI
-//{
-
-    public class GAgent<T> : MonoBehaviour
+namespace AI
+{
+    public class GoapAgent<T>
     {
-        public List<GAction<T>> actions = new List<GAction<T>>();
+        public List<GoapAction<T>> actions = new List<GoapAction<T>>();
         public Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
-        public GAction<T> currentAction;
+        public GoapAction<T> currentAction;
 
-        [SerializeField]
-        public string agentId;
-
-        protected GPlanner<T> planner;
-        private Queue<GAction<T>> actionQueue;
+        protected GoapPlanner<T> planner;
+        private Queue<GoapAction<T>> actionQueue;
         private SubGoal currentGoal;
+        private IGoapAgentInjections<T> goapAgentInjections;
 
-        private bool isRunning = true;
+        private string agentId;
 
-        public T Parent { get; set; }
-
-        public void SetRunning(bool isRunning)
+        public GoapAgent(string agentId, IGoapAgentInjections<T> goapAgentInjections, List<GoapAction<T>> actions, Dictionary<SubGoal, int> goals)
         {
-            this.isRunning = isRunning;
-            planner = null;
-            if (currentAction != null) {
-                currentAction.running = false;
-            }
-            currentAction = null;
+            this.agentId = agentId;
+            this.goapAgentInjections = goapAgentInjections;
+            this.actions = actions;
+            this.goals = goals;
+
+            Start();
         }
+
+        public T Parent { get => goapAgentInjections.GetCharachter(); }
+
+        public NavMeshAgent NavMeshAgent { get => goapAgentInjections.GetNavMeshAgent(); }
+
+        public string AgentId { get => agentId; }
 
         bool invoked = false;
 
-        protected virtual void Start()
+        public void Start()
         {
             actions.ForEach(action => action.Init());
         }
 
-        void CompleteAction()
+        public void CompleteAction()
         {
             if (currentAction != null)
             {
@@ -69,13 +68,8 @@ using AI;
             planner = null;
         }
 
-        protected virtual void LateUpdate()
+        public void Update()
         {
-            if (!isRunning)
-            {
-                return;
-            }
-
             if (currentAction != null)
             {
                 if (currentAction.running == false)
@@ -86,7 +80,7 @@ using AI;
 
                         if (currentAction.target != null)
                         {
-                            var navMeshAgent = GetComponent<NavMeshAgent>();
+                            NavMeshAgent navMeshAgent = goapAgentInjections.GetNavMeshAgent();
                             navMeshAgent.SetDestination(currentAction.target.transform.position);
                         }
                     }
@@ -102,7 +96,7 @@ using AI;
                     {
                         if (!invoked)
                         {
-                            Invoke("CompleteAction", currentAction.duration);
+                            goapAgentInjections.Invoke("CompleteAction", currentAction.duration);
                             invoked = true;
                         }
                     }
@@ -113,13 +107,13 @@ using AI;
 
             if (planner == null || actionQueue == null)
             {
-                planner = new GPlanner<T>();
+                planner = new GoapPlanner<T>();
 
                 var sortedGoals = from entry in goals orderby entry.Value descending select entry;
-           
-                foreach(KeyValuePair<SubGoal, int> sg in sortedGoals)
+
+                foreach (KeyValuePair<SubGoal, int> sg in sortedGoals)
                 {
-                    actionQueue = planner.plan(actions, sg.Key.sgoals, null);
+                    actionQueue = planner.plan(actions, sg.Key.sgoals, goapAgentInjections.GetWorldStates());
 
                     if (actionQueue != null)
                     {
@@ -144,4 +138,4 @@ using AI;
             }
         }
     }
-//}
+}

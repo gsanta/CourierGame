@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
+using AI;
 
-namespace AI
+namespace Domain
 {
     public class BikerAgentComponent : MonoBehaviour, IGoapAgentInjections<Biker>, IGoapAgentProvider<Biker>
     {
@@ -15,13 +16,13 @@ namespace AI
         private string agentId;
         private GoapAgent<Biker> goapAgent;
         private PackageStore packageStore;
+        private bool isActivated = false;
 
         [Inject]
         public void Construct(PackageStore packageStore)
         {
             this.packageStore = packageStore;
         }
-
 
         public GoapAgent<Biker> GoapAgent { get => goapAgent; }
 
@@ -30,12 +31,24 @@ namespace AI
             return GetComponent<NavMeshAgent>();
         }
 
+        public void SetActivated(bool isActivated)
+        {
+            if (this.isActivated != isActivated)
+            {
+                this.isActivated = isActivated;
+                if (!isActivated)
+                {
+                    goapAgent.AbortAction();
+                }
+            } 
+        }
+        
         private void Start()
         {
             Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
             goals.Add(new SubGoal("isPackageDropped", 1, true), 3);
             
-            List<GAction<Biker>> actions = new List<GAction<Biker>>();
+            List<GoapAction<Biker>> actions = new List<GoapAction<Biker>>();
 
             actions.Add(new AssignPackageAction(this, packageStore));
             actions.Add(new DeliverPackageAction(this));
@@ -77,7 +90,10 @@ namespace AI
 
         private void LateUpdate()
         {
-            goapAgent.Update();
+            if (isActivated)
+            {
+                goapAgent.Update();
+            }
         }
 
         public Biker GetCharachter()
@@ -88,6 +104,5 @@ namespace AI
         public class Factory : PlaceholderFactory<UnityEngine.Object, BikerAgentComponent>
         {
         }
-
     }
 }

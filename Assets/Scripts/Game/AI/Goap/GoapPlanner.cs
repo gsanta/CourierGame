@@ -12,9 +12,9 @@ namespace AI
         public Node<T> parent;
         public float cost;
         public Dictionary<string, int> state;
-        public GAction<T> action;
+        public GoapAction<T> action;
 
-        public Node(Node<T> parent, float cost, Dictionary<string, int> allStates, GAction<T> action)
+        public Node(Node<T> parent, float cost, Dictionary<string, int> allStates, GoapAction<T> action)
         {
             this.parent = parent;
             this.cost = cost;
@@ -23,12 +23,12 @@ namespace AI
         }
     }
 
-    public class GPlanner<T>
+    public class GoapPlanner<T>
     {
-        public Queue<GAction<T>> plan(List<GAction<T>> actions, Dictionary<string, int> goal, WorldStates states)
+        public Queue<GoapAction<T>> plan(List<GoapAction<T>> actions, Dictionary<string, int> goal, WorldStates states)
         {
-            List<GAction<T>> usableActions = new List<GAction<T>>();
-            foreach (GAction<T> a in actions)
+            List<GoapAction<T>> usableActions = new List<GoapAction<T>>();
+            foreach (GoapAction<T> a in actions)
             {
                 if (a.IsAchievable())
                 {
@@ -61,7 +61,7 @@ namespace AI
                 }
             }
 
-            List<GAction<T>> result = new List<GAction<T>>();
+            List<GoapAction<T>> result = new List<GoapAction<T>>();
             Node<T> n = cheapest;
             while (n != null)
             {
@@ -72,14 +72,14 @@ namespace AI
                 n = n.parent;
             }
 
-            Queue<GAction<T>> queue = new Queue<GAction<T>>();
-            foreach (GAction<T> a in result)
+            Queue<GoapAction<T>> queue = new Queue<GoapAction<T>>();
+            foreach (GoapAction<T> a in result)
             {
                 queue.Enqueue(a);
             }
 
             Debug.Log("The Plan is: ");
-            foreach (GAction<T> a in queue)
+            foreach (GoapAction<T> a in queue)
             {
                 Debug.Log("Q: " + a.actionName);
             }
@@ -87,11 +87,11 @@ namespace AI
             return queue;
         }
 
-        private bool BuildGraph(Node<T> parent, List<Node<T>> leaves, List<GAction<T>> usableActions, Dictionary<string, int> goal)
+        private bool BuildGraph(Node<T> parent, List<Node<T>> leaves, List<GoapAction<T>> usableActions, Dictionary<string, int> goal)
         {
             bool foundPath = false;
 
-            foreach (GAction<T> action in usableActions)
+            foreach (GoapAction<T> action in usableActions)
             {
                 if (action.IsAchievableGiven(parent.state))
                 {
@@ -113,7 +113,7 @@ namespace AI
                     }
                     else
                     {
-                        List<GAction<T>> subset = ActionSubset(usableActions, action);
+                        List<GoapAction<T>> subset = ActionSubset(usableActions, action);
                         bool found = BuildGraph(node, leaves, subset, goal);
 
                         if (found)
@@ -139,11 +139,11 @@ namespace AI
             return true;
         }
 
-        private List<GAction<T>> ActionSubset(List<GAction<T>> actions, GAction<T> removeMe)
+        private List<GoapAction<T>> ActionSubset(List<GoapAction<T>> actions, GoapAction<T> removeMe)
         {
-            List<GAction<T>> subset = new List<GAction<T>>();
+            List<GoapAction<T>> subset = new List<GoapAction<T>>();
 
-            foreach (GAction<T> a in actions)
+            foreach (GoapAction<T> a in actions)
             {
                 if (!a.Equals(removeMe))
                 {

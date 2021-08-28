@@ -9,7 +9,7 @@ using Zenject;
 
 namespace AI
 {
-    public abstract class GAction<T>
+    public abstract class GoapAction<T>
     {
         public string actionName = "Action";
         public float cost = 1.0f;
@@ -23,7 +23,7 @@ namespace AI
 
         private IGoapAgentProvider<T> goapAgentProvider;
 
-        public GAction(IGoapAgentProvider<T> goapAgentProvider)
+        public GoapAction(IGoapAgentProvider<T> goapAgentProvider)
         {
             this.goapAgentProvider = goapAgentProvider;
             preConditionsDict = new Dictionary<string, int>();

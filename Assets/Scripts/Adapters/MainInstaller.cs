@@ -55,7 +55,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PlayerFactory>().FromInstance(playerFactory).AsSingle();
         Container.Bind<PlayerSpawner>().AsSingle();
         Container.Bind<PlayerSetup>().AsSingle();
-        Container.Bind<PlayerInputComponent>().AsTransient();
         Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();
 
         Container.Bind<CourierService>().FromInstance(courierService).AsSingle();
@@ -67,6 +66,7 @@ public class MainInstaller : MonoInstaller
         //Container.Bind<CourierAgent>().FromComponentInNewPrefab(courierAgnet);
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
         Container.BindFactory<Object, BikerAgentComponent, BikerAgentComponent.Factory>().FromFactory<PrefabFactory<BikerAgentComponent>>();
+        Container.BindFactory<Object, BikerPlayComponent, BikerPlayComponent.Factory>().FromFactory<PrefabFactory<BikerPlayComponent>>();
 
 
         Container.Bind<PackageStore>().FromInstance(packageStore).AsSingle();

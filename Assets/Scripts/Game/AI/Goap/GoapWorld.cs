@@ -2,19 +2,19 @@
 
 namespace AI
 {
-	public sealed class GWorld
+	public sealed class GoapWorld
 	{
-		private static readonly GWorld instance = new GWorld();
+		private static readonly GoapWorld instance = new GoapWorld();
 		private static WorldStates world;
 
-		static GWorld()
+		static GoapWorld()
 		{
 			world = new WorldStates();
 		}
 
-		private GWorld() { }
+		private GoapWorld() { }
 
-		public static GWorld Instance
+		public static GoapWorld Instance
         {
 			get { return instance; }
         }

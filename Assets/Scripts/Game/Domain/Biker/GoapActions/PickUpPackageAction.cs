@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.AI;
+using AI;
 
-namespace AI
+namespace Domain
 {
-    class PickUpPackageAction : GAction<Biker>
+    class PickUpPackageAction : GoapAction<Biker>
     {
         public PickUpPackageAction(IGoapAgentProvider<Biker> agent) : base(agent)
         {
@@ -48,7 +43,7 @@ namespace AI
 
         public override bool PostAbort()
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }
