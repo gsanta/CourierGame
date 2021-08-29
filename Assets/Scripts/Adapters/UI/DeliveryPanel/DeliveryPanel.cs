@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using UI;
+using System.Collections;
 
 public class DeliveryPanel : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class DeliveryPanel : MonoBehaviour
     {
         Package package = args.Package;
 
-        package.OnStatusChanged += HandlePackageStatusChanged;
+        package.StatusChanged += HandlePackageStatusChanged;
 
         DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
         deliveryListItem.gameObject.SetActive(true);
@@ -46,14 +47,28 @@ public class DeliveryPanel : MonoBehaviour
 
     }
 
-    private void HandlePackageStatusChanged(object sender, EventArgs e)
+    private void HandlePackageStatusChanged(object sender, PackageStatusChangedEventArgs e)
     {
         SetReservationEnabled();
+
+        if (e.Package.Status == DeliveryStatus.DELIVERED)
+        {
+            StartCoroutine(RemovePackageAfterTimeout(2, e.Package));
+        }
     }
 
     private void HandleCurrentRoleChanged(object sender, EventArgs e)
     {
         SetReservationEnabled();
+    }
+
+    private IEnumerator RemovePackageAfterTimeout(int delay, Package package)
+    {
+        yield return new WaitForSeconds(delay);
+        var item = activeDeliveryItems.Find(item => item.controller.Package == package);
+        activeDeliveryItems.Remove(item);
+        item.gameObject.SetActive(false);
+        Destroy(item.gameObject);
     }
 
     private void SetReservationEnabled()

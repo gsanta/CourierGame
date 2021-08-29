@@ -11,6 +11,7 @@ public class Timer : MonoBehaviour
     private int milliSecondAccum = 0;
     private int secondAccum = 0;
     private bool isDayStarted = false;
+    private int currentDay = 1;
 
     public int SecondsPerDay { get => secondsPerDay; }
 
@@ -22,6 +23,8 @@ public class Timer : MonoBehaviour
         this.timeProvider = timeProvider;
         Elapsed = 0;
     }
+
+    public int CurrentDay { get => currentDay; }
 
     public int Elapsed { get; set; }
 
@@ -73,6 +76,7 @@ public class Timer : MonoBehaviour
     {
         if (secondAccum >= SecondsPerDay)
         {
+            currentDay++;
             DayPassed?.Invoke(this, EventArgs.Empty);
         }
     }

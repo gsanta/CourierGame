@@ -1,9 +1,14 @@
 using System;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
 public class StartDayPanel : MonoBehaviour
 {
+
+    [SerializeField]
+    private TMP_Text dayLabel;
+
     private Timer timer;
 
     [Inject]
@@ -12,6 +17,11 @@ public class StartDayPanel : MonoBehaviour
         this.timer = timer;
 
         timer.DayPassed += HandleDayPassed;
+    }
+
+    private void Start()
+    {
+        dayLabel.SetText("Day " + timer.CurrentDay);
     }
 
     public void OnStart()
@@ -26,5 +36,6 @@ public class StartDayPanel : MonoBehaviour
     {
         timer.IsDayStarted = false;
         gameObject.SetActive(true);
+        dayLabel.SetText("Day " + timer.CurrentDay);
     }
 }

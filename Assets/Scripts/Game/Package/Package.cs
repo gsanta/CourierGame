@@ -100,13 +100,25 @@ public class Package : MonoBehaviour
                 break;
         }
 
-        OnStatusChanged?.Invoke(this, EventArgs.Empty);
+        StatusChanged?.Invoke(this, new PackageStatusChangedEventArgs(this));
     }
 
-    public event EventHandler OnStatusChanged;
+    public event EventHandler<PackageStatusChangedEventArgs> StatusChanged;
 
 
     public class Factory : PlaceholderFactory<UnityEngine.Object, Package>
     {
     }
+}
+
+public class PackageStatusChangedEventArgs : EventArgs
+{
+    private readonly Package package;
+
+    public PackageStatusChangedEventArgs(Package package)
+    {
+        this.package = package;
+    }
+    
+    public Package Package { get => package; }
 }
