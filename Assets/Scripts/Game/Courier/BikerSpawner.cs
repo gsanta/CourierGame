@@ -7,12 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class CourierSpawner : BaseSpawner<CourierConfig>
+public class BikerSpawner : BaseSpawner<CourierConfig>
 {
     private BikerStore courierStore;
     private BikerFactory courierFactory;
 
-    public CourierSpawner(BikerFactory courierFactory, BikerStore courierStore)
+    public BikerSpawner(BikerFactory courierFactory, BikerStore courierStore)
     {
         this.courierFactory = courierFactory;
         this.courierStore = courierStore;
@@ -27,7 +27,7 @@ public class CourierSpawner : BaseSpawner<CourierConfig>
     {
         List<GameObject> usedSpawnPoints = new List<GameObject>(); 
 
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 3; i++)
         {
             GameObject spawnPoint = ChooseSpawnPoint(usedSpawnPoints);
             CourierConfig config = new CourierConfig(spawnPoint, new SubGoal("isPackageDropped", 1, true), $"Courier-{i}");

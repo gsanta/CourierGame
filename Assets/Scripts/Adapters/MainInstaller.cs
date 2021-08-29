@@ -1,5 +1,6 @@
 
 using AI;
+using Controller;
 using Domain;
 using Service;
 using UI;
@@ -12,6 +13,8 @@ public class MainInstaller : MonoInstaller
     private Timer timer;
     [SerializeField]
     private TimelineController timelineController;
+    [SerializeField]
+    private PanelManager panelManager;
 
     [SerializeField]
     private StartDayPanel startDayPanel;
@@ -49,6 +52,7 @@ public class MainInstaller : MonoInstaller
         Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
         Container.Bind<Timer>().FromInstance(timer).AsSingle();
         Container.Bind<TimelineSlider>().FromInstance(timelineController.slider).AsSingle();
+        Container.Bind<PanelManager>().FromInstance(panelManager).AsSingle();
 
         Container.Bind<DayService>().AsSingle();
 
@@ -63,7 +67,7 @@ public class MainInstaller : MonoInstaller
         Container.Bind<BikerService>().FromInstance(courierService).AsSingle();
         Container.Bind<BikerStore>().FromInstance(bikerStore).AsSingle();
         Container.Bind<BikerFactory>().FromInstance(bikerFactory).AsSingle();
-        Container.Bind<CourierSpawner>().AsSingle();
+        Container.Bind<BikerSpawner>().AsSingle();
         Container.Bind<BikerPanel>().FromInstance(bikerPanel).AsSingle();
         Container.Bind<CourierSetup>().AsSingle();
         Container.Bind<ICourierCallbacks>().To<CourierCallbacksImpl>().AsSingle();
@@ -78,6 +82,7 @@ public class MainInstaller : MonoInstaller
         Container.Bind<ItemFactory<PackageConfig, Package>>().To<PackageFactory>().FromInstance(packageFactory).AsSingle();
         Container.BindFactory<Object, Package, Package.Factory>().FromFactory<PrefabFactory<Package>>();
 
+        Container.Bind<DeliveryPanel>().FromInstance(deliveryPanel).AsSingle();
         Container.Bind<DeliveryStore>().AsSingle();
 
         Container.Bind<MainCamera>().FromInstance(mainCamera).AsSingle();

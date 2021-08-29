@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 public class CourierSetup
 {
-    private readonly CourierSpawner courierSpawner;
+    private readonly BikerSpawner courierSpawner;
 
-    public CourierSetup(CourierSpawner courierSpawner)
+    public CourierSetup(BikerSpawner courierSpawner)
     {
         this.courierSpawner = courierSpawner;
     }
