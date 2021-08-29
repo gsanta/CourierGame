@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace UI
 {
     // TODO: Create controller
-    public class CourierListItem : MonoBehaviour
+    public class BikerListItem : MonoBehaviour
     {
         public TMP_Text courierNameText;
         [SerializeField]
@@ -19,8 +19,7 @@ namespace UI
         private Toggle playButton;
 
         private Biker biker;
-        private BikerService courierService;
-        private MainCamera mainCamera;
+        private BikerService bikerService;
         private bool isResetting = false;
 
         public Biker Biker { 
@@ -32,9 +31,7 @@ namespace UI
             get => biker;
         }
 
-        public BikerService CourierService { set => courierService = value; }
-
-        public MainCamera MainCamera { set => mainCamera = value; }
+        public BikerService CourierService { set => bikerService = value; }
 
         public void HandleClickFollow()
         {
@@ -67,18 +64,18 @@ namespace UI
             //}
         }
 
-        private void SetCourierState(ICourier courier, bool isPlayer, bool isFollow)
+        private void SetCourierState(Biker biker, bool isPlayer, bool isFollow)
         {
             // TODO maybe the role should come as a parameter and no need for the ifs
             if (isPlayer)
             {
-                courier.SetCurrentRole(CurrentRole.PLAY);
+                bikerService.SetCurrentRole(CurrentRole.PLAY, biker);
             } else if (isFollow)
             {
-                courier.SetCurrentRole(CurrentRole.FOLLOW);
+                bikerService.SetCurrentRole(CurrentRole.FOLLOW, biker);
             } else
             {
-                courier.SetCurrentRole(CurrentRole.NONE);
+                bikerService.SetCurrentRole(CurrentRole.NONE, biker);
             }
         }
 

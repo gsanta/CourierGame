@@ -20,6 +20,20 @@ public class BikerService : MonoBehaviour
         return courierStore.GetAll().Find(courier => courier.GetCurrentRole() == CurrentRole.PLAY);
     }
 
+    public void SetCurrentRole(CurrentRole currentRole, Biker biker)
+    {
+        if (currentRole == CurrentRole.PLAY || currentRole == CurrentRole.FOLLOW)
+        {
+            var prevBiker = FindPlayOrFollowRole();
+            if (prevBiker != null)
+            {
+                prevBiker.SetCurrentRole(CurrentRole.NONE);
+            }
+        }
+
+        biker.SetCurrentRole(currentRole);
+    }
+
     public Biker FindPlayOrFollowRole()
     {
         return courierStore.GetAll().Find(courier => courier.GetCurrentRole() == CurrentRole.PLAY || courier.GetCurrentRole() == CurrentRole.FOLLOW);

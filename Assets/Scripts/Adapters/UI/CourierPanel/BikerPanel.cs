@@ -8,14 +8,14 @@ namespace UI
     public class BikerPanel : MonoBehaviour
     {
         [SerializeField]
-        private CourierListItem courierListItemTemplate;
-        private List<CourierListItem> courierList = new List<CourierListItem>();
+        private BikerListItem courierListItemTemplate;
+        private List<BikerListItem> courierList = new List<BikerListItem>();
 
         private BikerStore bikerStore;
         private BikerService bikerService;
         private MainCamera mainCamera;
 
-        private CourierListItem prevActiveItem;
+        private BikerListItem prevActiveItem;
 
         [Inject]
         public void Construct(BikerStore bikerStore, BikerService bikerService, MainCamera mainCamera)
@@ -35,12 +35,11 @@ namespace UI
         {
             Biker courier = args.Courier;
 
-            CourierListItem courierListItem = Instantiate(courierListItemTemplate, courierListItemTemplate.transform.parent);
+            BikerListItem courierListItem = Instantiate(courierListItemTemplate, courierListItemTemplate.transform.parent);
             courierListItem.courierNameText.text = courier.GetName();
             courierListItem.gameObject.SetActive(true);
             courierListItem.CourierService = bikerService;
             courierListItem.Biker = args.Courier;
-            courierListItem.MainCamera = mainCamera;
             courierList.Add(courierListItem);
         }
 
