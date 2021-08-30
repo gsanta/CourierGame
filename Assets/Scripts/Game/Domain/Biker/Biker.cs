@@ -11,6 +11,8 @@ public class Biker : MonoBehaviour, ICourier
     public Transform viewPoint;
     [SerializeField]
     private CharacterController charController;
+    [SerializeField]
+    public Transform packageHolder;
 
     public Package package;
     private string courierName;

@@ -6,7 +6,7 @@ public class Package : MonoBehaviour
 {
     private PackageStore packageStore;
     private PackageTarget targetObject;
-    private ICourier courier;
+    private Biker biker;
 
     public GameObject SpawnPoint { get; set; }
 
@@ -39,24 +39,26 @@ public class Package : MonoBehaviour
         get => targetObject;
     }
 
-    public void PickupBy(ICourier courier)
+    public void PickupBy(Biker biker)
     {
-        if (this.courier == courier)
+        if (this.biker == biker)
         {
-            gameObject.transform.SetParent(courier.GetGameObject().transform);
+            gameObject.transform.position = this.biker.packageHolder.position;
+            gameObject.transform.rotation = this.biker.packageHolder.rotation;
+            gameObject.transform.parent = this.biker.packageHolder;
             Status = DeliveryStatus.ASSIGNED;
             targetObject.SetMeshVisibility(true);
             HandleStatusChanged();
         }
     }
 
-    public void ReservePackage(ICourier courier)
+    public void ReservePackage(Biker biker)
     {
-        if (this.courier == null)
+        if (this.biker == null)
         {
-            this.courier = courier;
+            this.biker = biker;
             Status = DeliveryStatus.RESERVED;
-            courier.SetPackage(this);
+            biker.SetPackage(this);
             HandleStatusChanged();
         }
     }
@@ -75,12 +77,12 @@ public class Package : MonoBehaviour
         Vector2 packagePos = new Vector2(transform.position.x, transform.position.z);
         Vector2 targetPos = new Vector2(Target.transform.position.x, Target.transform.position.z);
 
-        if (Vector2.Distance(packagePos, targetPos) < 1)
+        if (Vector2.Distance(packagePos, targetPos) < 2)
         {
             targetObject.SetMeshVisibility(false);
             packageStore.Remove(this);
-            courier.SetPackage(null);
-            courier = null;
+            biker.SetPackage(null);
+            biker = null;
 
             Status = DeliveryStatus.DELIVERED;
 

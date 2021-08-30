@@ -15,7 +15,7 @@ public class BikerService : MonoBehaviour
         this.courierStore = courierStore;
     }
 
-    public ICourier FindPlayRole()
+    public Biker FindPlayRole()
     {
         return courierStore.GetAll().Find(courier => courier.GetCurrentRole() == CurrentRole.PLAY);
     }
