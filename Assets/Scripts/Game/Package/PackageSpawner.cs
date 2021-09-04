@@ -47,7 +47,10 @@ public class PackageSpawner : BaseSpawner<PackageConfig>
 
             freeSpawnPoints.RemoveAt(index);
 
-            PackageConfig config = new PackageConfig(spawnPoint);
+            int price = UnityEngine.Random.Range(50, 100);
+
+
+            PackageConfig config = new PackageConfig(spawnPoint, price);
             Package package = packageFactory.Create(config);
 
             packageStore.Add(package);

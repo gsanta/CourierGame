@@ -10,15 +10,13 @@ namespace UI
     {
         private readonly DeliveryListItem deliveryListItem;
         private readonly BikerService courierService;
-        private readonly DeliveryStore deliveryStore;
         private Package package;
         private bool isReservationEnabled = false;
 
-        public DeliveryListItemController(DeliveryListItem deliveryListItem, BikerService courierService, DeliveryStore deliveryStore)
+        public DeliveryListItemController(DeliveryListItem deliveryListItem, BikerService courierService)
         {
             this.deliveryListItem = deliveryListItem;
             this.courierService = courierService;
-            this.deliveryStore = deliveryStore;
             deliveryListItem.OnReserveButtonClick += HandleReserveButtonClick;
         }
 
@@ -33,6 +31,7 @@ namespace UI
             set
             {
                 package = value;
+                deliveryListItem.packagePrice.text = package.Price.ToString() + " $";
 
                 UpdateReservationButtonStatus();
             }

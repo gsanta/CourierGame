@@ -6,9 +6,11 @@ using UnityEngine;
 public class DeliveryListItem : MonoBehaviour
 {
     [SerializeField]
-    public TMP_Text packageNameText;
+    public TMP_Text packageName;
     [SerializeField]
-    public TMP_Text playerNameText;
+    public TMP_Text playerName;
+    [SerializeField]
+    public TMP_Text packagePrice;
     [SerializeField]
     public TMP_Text packageStatus;
     [SerializeField]

@@ -22,13 +22,11 @@ public class BikerService : MonoBehaviour
 
     public void SetCurrentRole(CurrentRole currentRole, Biker biker)
     {
-        if (currentRole == CurrentRole.PLAY || currentRole == CurrentRole.FOLLOW)
+        var prevBiker = FindPlayOrFollowRole();
+
+        if (prevBiker && prevBiker != biker && (currentRole == CurrentRole.PLAY || currentRole == CurrentRole.FOLLOW))
         {
-            var prevBiker = FindPlayOrFollowRole();
-            if (prevBiker != null)
-            {
-                prevBiker.SetCurrentRole(CurrentRole.NONE);
-            }
+            prevBiker.SetCurrentRole(CurrentRole.NONE);
         }
 
         biker.SetCurrentRole(currentRole);

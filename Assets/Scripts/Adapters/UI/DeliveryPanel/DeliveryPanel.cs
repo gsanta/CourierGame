@@ -41,9 +41,9 @@ namespace UI
             DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
             deliveryListItem.gameObject.SetActive(true);
         
-            var controller = new DeliveryListItemController(deliveryListItem, courierService, deliveryStore);
+            var controller = new DeliveryListItemController(deliveryListItem, courierService);
             deliveryListItem.controller = controller;
-            deliveryListItem.packageNameText.text = package.Name;
+            deliveryListItem.packageName.text = package.Name;
             controller.Package = package;
             activeDeliveryItems.Add(deliveryListItem);
 

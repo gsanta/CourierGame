@@ -12,6 +12,8 @@ public class Package : MonoBehaviour
 
     public GameObject MinimapGameObject { get; set; }
 
+    public int Price { set; get; }
+
     private DeliveryStatus status = DeliveryStatus.UNASSIGNED;
 
     public DeliveryStatus Status

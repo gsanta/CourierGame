@@ -23,6 +23,7 @@ public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
         newPackage.transform.position = packageConfig.spawnPoint.transform.position;
         newPackage.Target = targetObject;
         newPackage.Name = "package-" + packageCounter++;
+        newPackage.Price = packageConfig.price;
         newPackage.gameObject.SetActive(true);
         newPackage.SpawnPoint = packageConfig.spawnPoint;
 
