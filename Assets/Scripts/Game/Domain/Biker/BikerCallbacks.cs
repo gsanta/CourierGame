@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public interface ICourierCallbacks
+    public interface BikerCallbacks
     {
-        void OnCurrentRoleChanged(ICourier courier);
+        void OnCurrentRoleChanged(Biker courier);
     }
 }
 

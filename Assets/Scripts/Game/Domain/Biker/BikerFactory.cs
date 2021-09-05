@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-public class BikerFactory : MonoBehaviour, ItemFactory<CourierConfig, Biker>
+public class BikerFactory : MonoBehaviour, ItemFactory<BikerConfig, Biker>
 {
     [SerializeField]
     private MinimapBiker minimapTemplate;
@@ -22,7 +22,7 @@ public class BikerFactory : MonoBehaviour, ItemFactory<CourierConfig, Biker>
         this.courierStore = courierStore;
     }
 
-    public Biker Create(CourierConfig config)
+    public Biker Create(BikerConfig config)
     {
         Biker newBiker = instanceFactory.Create(courierStore.BikerTemplate);
         newBiker.transform.position = config.spawnPoint.transform.position;

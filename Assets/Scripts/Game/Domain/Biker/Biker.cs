@@ -5,7 +5,7 @@ using AI;
 using Domain;
 using System;
 
-public class Biker : MonoBehaviour, ICourier
+public class Biker : MonoBehaviour
 {
     [SerializeField]
     public Transform viewPoint;
@@ -20,7 +20,7 @@ public class Biker : MonoBehaviour, ICourier
     private CurrentRole currentRole = CurrentRole.NONE;
     private bool isPaused = false;
 
-    private ICourierCallbacks courierCallbacks;
+    private BikerCallbacks courierCallbacks;
 
     private BikerAgentComponent agent;
     private BikerPlayComponent player;
@@ -30,7 +30,7 @@ public class Biker : MonoBehaviour, ICourier
     }
 
     [Inject]
-    public void Construct(ICourierCallbacks courierCallbacks)
+    public void Construct(BikerCallbacks courierCallbacks)
     {
         this.courierCallbacks = courierCallbacks;
     }

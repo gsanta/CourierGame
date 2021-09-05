@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace UI
         private Toggle playButton;
 
         private Biker biker;
-        private BikerService bikerService;
+        private RoleService roleService;
         private bool isResetting = false;
 
         public Biker Biker { 
@@ -31,7 +32,7 @@ namespace UI
             get => biker;
         }
 
-        public BikerService CourierService { set => bikerService = value; }
+        public RoleService RoleService { set => roleService = value; }
 
         public void HandleClickFollow()
         {
@@ -69,13 +70,13 @@ namespace UI
             // TODO maybe the role should come as a parameter and no need for the ifs
             if (isPlayer)
             {
-                bikerService.SetCurrentRole(CurrentRole.PLAY, biker);
+                roleService.SetCurrentRole(CurrentRole.PLAY, biker);
             } else if (isFollow)
             {
-                bikerService.SetCurrentRole(CurrentRole.FOLLOW, biker);
+                roleService.SetCurrentRole(CurrentRole.FOLLOW, biker);
             } else
             {
-                bikerService.SetCurrentRole(CurrentRole.NONE, biker);
+                roleService.SetCurrentRole(CurrentRole.NONE, biker);
             }
         }
 

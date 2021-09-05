@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class Player : MonoBehaviour, ICourier
+public class Player : MonoBehaviour
 {
     public GameObject minimapObject;
 

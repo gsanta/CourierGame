@@ -63,11 +63,11 @@ public class PackageStore : MonoBehaviour
         return packages.FindAll(package => statuses.Contains(package.Status));
     }
 
-    public bool GetPackageWithinPickupRange(ICourier courier, out Package deliveryPackage)
+    public bool GetPackageWithinPickupRange(Biker biker, out Package deliveryPackage)
     {
         foreach (var package in packages)
         {
-            if (Vector3.Distance(courier.GetTransform().position, package.transform.position) < 2)
+            if (Vector3.Distance(biker.GetTransform().position, package.transform.position) < 2)
             {
                 deliveryPackage = package;
                 return true;

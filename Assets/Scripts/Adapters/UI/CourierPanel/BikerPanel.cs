@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -13,22 +14,22 @@ namespace UI
 
         private BikerStore bikerStore;
         private BikerService bikerService;
-        private MainCamera mainCamera;
+        private RoleService roleService;
 
         private BikerListItem prevActiveItem;
 
         [Inject]
-        public void Construct(BikerStore bikerStore, BikerService bikerService, MainCamera mainCamera)
+        public void Construct(BikerStore bikerStore, BikerService bikerService, RoleService roleService)
         {
             this.bikerStore = bikerStore;
             this.bikerService = bikerService;
-            this.mainCamera = mainCamera;
+            this.roleService = roleService;
         }
 
         void Start()
         {
             bikerStore.OnBikerAdded += HandleCourierAdded;
-            bikerService.CurrentRoleChanged += HandleBikerRoleChanged;
+            roleService.CurrentRoleChanged += HandleBikerRoleChanged;
         }
 
         private void HandleCourierAdded(object sender, CourierAddedEventArgs args)
@@ -38,7 +39,7 @@ namespace UI
             BikerListItem courierListItem = Instantiate(courierListItemTemplate, courierListItemTemplate.transform.parent);
             courierListItem.courierNameText.text = courier.GetName();
             courierListItem.gameObject.SetActive(true);
-            courierListItem.CourierService = bikerService;
+            courierListItem.RoleService = roleService;
             courierListItem.Biker = args.Courier;
             courierList.Add(courierListItem);
         }

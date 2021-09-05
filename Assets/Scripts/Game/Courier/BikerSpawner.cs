@@ -7,15 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class BikerSpawner : BaseSpawner<CourierConfig>
+public class BikerSpawner : BaseSpawner<BikerConfig>
 {
-    private BikerStore courierStore;
-    private BikerFactory courierFactory;
+    private BikerStore bikerStore;
+    private BikerFactory bikerFactory;
 
-    public BikerSpawner(BikerFactory courierFactory, BikerStore courierStore)
+    public BikerSpawner(BikerFactory bikerFactory, BikerStore bikerStore)
     {
-        this.courierFactory = courierFactory;
-        this.courierStore = courierStore;
+        this.bikerFactory = bikerFactory;
+        this.bikerStore = bikerStore;
     }
 
     override public void StartSpawning()
@@ -30,15 +30,15 @@ public class BikerSpawner : BaseSpawner<CourierConfig>
         for (int i = 0; i < 1; i++)
         {
             GameObject spawnPoint = ChooseSpawnPoint(usedSpawnPoints);
-            CourierConfig config = new CourierConfig(spawnPoint, new SubGoal("isPackageDropped", 1, true), $"Courier-{i}");
-            Biker courier = courierFactory.Create(config);
-            courierStore.Add(courier);
+            BikerConfig config = new BikerConfig(spawnPoint, new SubGoal("isPackageDropped", 1, true), $"Courier-{i}");
+            Biker courier = bikerFactory.Create(config);
+            bikerStore.Add(courier);
         }
     }
 
     private GameObject ChooseSpawnPoint(List<GameObject> usedSpawnPoints)
     {
-        var freeSpawnPoints = courierStore.SpawnPoints.Where(spawnPoint => usedSpawnPoints.Contains(spawnPoint) == false).ToArray();
+        var freeSpawnPoints = bikerStore.SpawnPoints.Where(spawnPoint => usedSpawnPoints.Contains(spawnPoint) == false).ToArray();
         int randomIndex = UnityEngine.Random.Range(0, freeSpawnPoints.Length);
 
         var spawnPoint = freeSpawnPoints[randomIndex];

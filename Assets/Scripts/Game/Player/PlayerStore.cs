@@ -21,7 +21,7 @@ public class PlayerStore : MonoBehaviour
     {
         foreach(GameObject spawnPoint in spawnPoints)
         {
-            spawnPoint.SetActive(false);
+            //spawnPoint.SetActive(false);
         }
     }
 

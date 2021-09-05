@@ -4,6 +4,7 @@ using UnityEngine;
 using Zenject;
 using UI;
 using System.Collections;
+using Service;
 
 namespace UI
 {
@@ -12,22 +13,24 @@ namespace UI
         [SerializeField] private DeliveryListItem deliveryListItemTemplate;
         private DeliveryStore deliveryStore;
         private PackageStore packageStore;
-        private BikerService courierService;
+        private BikerService bikerService;
+        private RoleService roleService;
 
         private List<DeliveryListItem> activeDeliveryItems = new List<DeliveryListItem>();
 
         [Inject]
-        public void Construct(DeliveryStore deliveryStore, PackageStore packageStore, BikerService courierService)
+        public void Construct(DeliveryStore deliveryStore, PackageStore packageStore, BikerService bikerService, RoleService roleService)
         {
             this.deliveryStore = deliveryStore;
             this.packageStore = packageStore;
-            this.courierService = courierService;
+            this.bikerService = bikerService;
+            this.roleService = roleService;
         }
 
         void Start()
         {
             packageStore.OnPackageAdded += HandlePackageAdded;
-            courierService.CurrentRoleChanged += HandleCurrentRoleChanged;
+            roleService.CurrentRoleChanged += HandleCurrentRoleChanged;
             //packageStore.OnPackageAdded += RefreshWaitingDeliveryList;
             //deliveryService.OnDeliveryStatusChanged += RefreshWaitingDeliveryList;
         }
@@ -41,7 +44,7 @@ namespace UI
             DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
             deliveryListItem.gameObject.SetActive(true);
         
-            var controller = new DeliveryListItemController(deliveryListItem, courierService);
+            var controller = new DeliveryListItemController(deliveryListItem, bikerService);
             deliveryListItem.controller = controller;
             deliveryListItem.packageName.text = package.Name;
             controller.Package = package;
@@ -75,7 +78,7 @@ namespace UI
 
         private void SetReservationEnabled()
         {
-            var courier = courierService.FindPlayRole();
+            var courier = bikerService.FindPlayRole();
             bool isReservationEnabled = courier != null && courier.GetPackage() == null;
             activeDeliveryItems.ForEach(item => item.controller.SetReservationEnabled(isReservationEnabled));
         }

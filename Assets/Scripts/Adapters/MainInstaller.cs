@@ -38,7 +38,7 @@ public class MainInstaller : MonoInstaller
     [SerializeField]
     private BikerFactory bikerFactory;
     [SerializeField]
-    private BikerService courierService;
+    private BikerService bikerService;
     [SerializeField]
     private BikerPanel bikerPanel;
 
@@ -64,13 +64,13 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PlayerSetup>().AsSingle();
         Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();
 
-        Container.Bind<BikerService>().FromInstance(courierService).AsSingle();
+        Container.Bind<BikerService>().FromInstance(bikerService).AsSingle();
         Container.Bind<BikerStore>().FromInstance(bikerStore).AsSingle();
         Container.Bind<BikerFactory>().FromInstance(bikerFactory).AsSingle();
         Container.Bind<BikerSpawner>().AsSingle();
         Container.Bind<BikerPanel>().FromInstance(bikerPanel).AsSingle();
         Container.Bind<CourierSetup>().AsSingle();
-        Container.Bind<ICourierCallbacks>().To<CourierCallbacksImpl>().AsSingle();
+        Container.Bind<BikerCallbacks>().To<BikerCallbacksImpl>().AsSingle();
         //Container.Bind<CourierAgent>().FromComponentInNewPrefab(courierAgnet);
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
         Container.BindFactory<Object, BikerAgentComponent, BikerAgentComponent.Factory>().FromFactory<PrefabFactory<BikerAgentComponent>>();
@@ -84,6 +84,8 @@ public class MainInstaller : MonoInstaller
 
         Container.Bind<DeliveryPanel>().FromInstance(deliveryPanel).AsSingle();
         Container.Bind<DeliveryStore>().AsSingle();
+
+        Container.Bind<RoleService>().AsSingle();
 
         Container.Bind<MainCamera>().FromInstance(mainCamera).AsSingle();
     }

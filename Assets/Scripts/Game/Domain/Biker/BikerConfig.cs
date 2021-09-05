@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public struct CourierConfig
+public struct BikerConfig
 {
     public readonly GameObject spawnPoint;
     public readonly SubGoal goal;
     public readonly string name;
 
-    public CourierConfig(GameObject spawnPoint, SubGoal goal, string name)
+    public BikerConfig(GameObject spawnPoint, SubGoal goal, string name)
     {
         this.spawnPoint = spawnPoint;
         this.goal = goal;
