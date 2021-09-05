@@ -14,27 +14,24 @@ namespace UI
         [SerializeField] private DeliveryListItem deliveryListItemTemplate;
         private PackageStore packageStore;
         private BikerService bikerService;
-        private RoleService roleService;
-        private EventService eventService;
+        private IEventService eventService;
         private IDeliveryService deliveryService;
 
         private List<DeliveryListItem> activeDeliveryItems = new List<DeliveryListItem>();
 
         [Inject]
-        public void Construct(IDeliveryService deliveryService, PackageStore packageStore, BikerService bikerService, RoleService roleService, EventService eventService)
+        public void Construct(IDeliveryService deliveryService, PackageStore packageStore, BikerService bikerService, IEventService eventService)
         {
             this.deliveryService = deliveryService;
             this.packageStore = packageStore;
             this.bikerService = bikerService;
-            this.roleService = roleService;
             this.eventService = eventService;
         }
 
         void Start()
         {
             packageStore.OnPackageAdded += HandlePackageAdded;
-            roleService.CurrentRoleChanged += HandleCurrentRoleChanged;
-
+            eventService.BikerCurrentRoleChanged += HandleCurrentRoleChanged;
             eventService.PackageStatusChanged += HandlePackageStatusChanged;
         }
 

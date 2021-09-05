@@ -20,7 +20,7 @@ public class Biker : MonoBehaviour
     private CurrentRole currentRole = CurrentRole.NONE;
     private bool isPaused = false;
 
-    private BikerCallbacks courierCallbacks;
+    private IEventService eventService;
 
     private BikerAgentComponent agent;
     private BikerPlayComponent player;
@@ -30,9 +30,9 @@ public class Biker : MonoBehaviour
     }
 
     [Inject]
-    public void Construct(BikerCallbacks courierCallbacks)
+    public void Construct(IEventService eventService)
     {
-        this.courierCallbacks = courierCallbacks;
+        this.eventService = eventService;
     }
 
     protected void Start()
@@ -111,7 +111,7 @@ public class Biker : MonoBehaviour
                 FinishPlayRole();
             }
 
-            courierCallbacks.OnCurrentRoleChanged(this);
+            eventService.EmitBikerCurrentRoleChanged(this);
             CurrentRoleChanged?.Invoke(this, EventArgs.Empty);
         }
     }

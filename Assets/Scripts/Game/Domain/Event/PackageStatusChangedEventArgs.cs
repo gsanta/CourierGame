@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Service
+namespace Domain
 {
     public class PackageStatusChangedEventArgs : EventArgs
     {

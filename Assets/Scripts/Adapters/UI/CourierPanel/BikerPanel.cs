@@ -1,4 +1,5 @@
-﻿using Service;
+﻿using Domain;
+using Service;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,22 +15,23 @@ namespace UI
 
         private BikerStore bikerStore;
         private BikerService bikerService;
+        private IEventService eventService;
         private RoleService roleService;
-
         private BikerListItem prevActiveItem;
 
         [Inject]
-        public void Construct(BikerStore bikerStore, BikerService bikerService, RoleService roleService)
+        public void Construct(BikerStore bikerStore, BikerService bikerService, RoleService roleService, IEventService eventService)
         {
             this.bikerStore = bikerStore;
             this.bikerService = bikerService;
             this.roleService = roleService;
+            this.eventService = eventService;
         }
 
         void Start()
         {
             bikerStore.OnBikerAdded += HandleCourierAdded;
-            roleService.CurrentRoleChanged += HandleBikerRoleChanged;
+            eventService.BikerCurrentRoleChanged += HandleBikerRoleChanged;
         }
 
         private void HandleCourierAdded(object sender, CourierAddedEventArgs args)

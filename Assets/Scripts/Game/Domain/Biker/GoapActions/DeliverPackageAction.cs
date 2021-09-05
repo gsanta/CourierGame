@@ -21,6 +21,7 @@ namespace Domain
             Biker courierAgent = GoapAgent.Parent;
 
             Package package = courierAgent.GetPackage();
+            package.Target.gameObject.SetActive(true);
 
             target = package.Target.gameObject;
 

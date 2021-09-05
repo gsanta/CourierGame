@@ -5,10 +5,10 @@ namespace Service
 {
     public class DeliveryService : IDeliveryService
     {
-        private readonly EventService eventService;
+        private readonly IEventService eventService;
         private readonly PackageStore packageStore;
 
-        public DeliveryService(EventService eventService, PackageStore packageStore)
+        public DeliveryService(IEventService eventService, PackageStore packageStore)
         {
             this.eventService = eventService;
             this.packageStore = packageStore;
@@ -23,7 +23,6 @@ namespace Service
                 package.Biker = biker;
 
                 eventService.EmitPackageStatusChanged(package);
-                //HandleStatusChanged();
             }
         }
 
@@ -40,8 +39,7 @@ namespace Service
             package.gameObject.transform.rotation = biker.packageHolder.rotation;
             package.gameObject.transform.parent = biker.packageHolder;
             package.Status = DeliveryStatus.ASSIGNED;
-            package.Target.SetMeshVisibility(true);
-            //HandleStatusChanged();
+            package.Target.gameObject.SetActive(true);
         }
 
         public void DeliverPackage(Package package, bool checkRange)
@@ -60,7 +58,7 @@ namespace Service
 
             if (!checkRange || Vector2.Distance(packagePos, targetPos) < 2)
             {
-                package.Target.SetMeshVisibility(false);
+                package.Target.gameObject.SetActive(true);
                 packageStore.Remove(package);
                 biker.SetPackage(null);
                 biker = null;

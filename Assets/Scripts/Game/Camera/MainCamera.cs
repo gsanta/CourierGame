@@ -1,4 +1,5 @@
-﻿using Service;
+﻿using Domain;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +12,16 @@ public class MainCamera : MonoBehaviour
 {
     private Vector3 defaultPosition;
     private Quaternion defaultRotation;
-    private RoleService roleService;
     private BikerService bikerService;
     private Biker currentBiker;
 
+
     [Inject]
-    public void Construct(RoleService roleService, BikerService bikerService)
+    public void Construct(IEventService eventService, BikerService bikerService)
     {
-        this.roleService = roleService;
         this.bikerService = bikerService;
 
-        roleService.CurrentRoleChanged += HandleCurrentRoleChanged;
+        eventService.BikerCurrentRoleChanged += HandleCurrentRoleChanged;
     }
 
     private void Start()

@@ -57,8 +57,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<BikerSpawner>().AsSingle();
         Container.Bind<BikerPanel>().FromInstance(bikerPanel).AsSingle();
         Container.Bind<BikerSetup>().AsSingle();
-        Container.Bind<BikerCallbacks>().To<BikerCallbacksImpl>().AsSingle();
-        //Container.Bind<CourierAgent>().FromComponentInNewPrefab(courierAgnet);
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
         Container.BindFactory<Object, BikerAgentComponent, BikerAgentComponent.Factory>().FromFactory<PrefabFactory<BikerAgentComponent>>();
         Container.BindFactory<Object, BikerPlayComponent, BikerPlayComponent.Factory>().FromFactory<PrefabFactory<BikerPlayComponent>>();
@@ -74,7 +72,11 @@ public class MainInstaller : MonoInstaller
         Container.Bind<IDeliveryService>().To<DeliveryService>().AsSingle();
 
         Container.Bind<RoleService>().AsSingle();
-        Container.Bind<EventService>().AsSingle();
+        Container.Bind<IEventService>().To<EventService>().AsSingle();
+
+        Container.Bind<MinimapStore>().AsSingle();
+        Container.Bind<MinimapPackageSetter>().AsSingle();
+        Container.Bind<MinimapPackageUpdater>().AsSingle();
 
         Container.Bind<MainCamera>().FromInstance(mainCamera).AsSingle();
     }
@@ -84,7 +86,9 @@ public class MainInstaller : MonoInstaller
 
         BikerSetup bikerSetup = Container.Resolve<BikerSetup>();
         bikerSetup.Setup();
-        DayService dayService = Container.Resolve<DayService>();
+        Container.Resolve<DayService>();
+        Container.Resolve<MinimapPackageSetter>();
+        Container.Resolve<MinimapPackageUpdater>();
 
     }
 }

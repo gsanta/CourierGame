@@ -1,10 +1,16 @@
 ﻿
+using Domain;
 using System;
+using UnityEngine;
 
 namespace Service
 {
-    public class EventService
+    public class EventService : IEventService
     {
+        public EventService()
+        {
+            Debug.Log("EventService created");
+        }
 
         public void EmitPackageStatusChanged(Package package)
         {
@@ -12,5 +18,12 @@ namespace Service
         }
 
         public event EventHandler<PackageStatusChangedEventArgs> PackageStatusChanged;
+
+        public void EmitBikerCurrentRoleChanged(Biker biker)
+        {
+            BikerCurrentRoleChanged?.Invoke(this, new BikerCurrentRoleChangedEventArgs(biker));
+        }
+
+        public event EventHandler<BikerCurrentRoleChangedEventArgs> BikerCurrentRoleChanged;
     }
 }

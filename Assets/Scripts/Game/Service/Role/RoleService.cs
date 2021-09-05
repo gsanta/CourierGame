@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain;
+using System;
 using Zenject;
 
 namespace Service
@@ -7,12 +8,14 @@ namespace Service
     {
         private readonly BikerService bikerService;
         private readonly PackageStore packageStore;
+        private readonly IEventService eventService;
 
         [Inject]
-        public RoleService(BikerService bikerService, PackageStore packageStore)
+        public RoleService(BikerService bikerService, PackageStore packageStore, IEventService eventService)
         {
             this.bikerService = bikerService;
             this.packageStore = packageStore;
+            this.eventService = eventService;
         }
 
         public void SetCurrentRole(CurrentRole currentRole, Biker biker)
@@ -39,14 +42,8 @@ namespace Service
                     activePackage.MinimapGameObject.SetActive(true);
                 }
             }
-        }
 
-        // TODO hide it from global space
-        public void EmitCurrentRoleChanged()
-        {
-            CurrentRoleChanged?.Invoke(this, EventArgs.Empty);
+            eventService.EmitBikerCurrentRoleChanged(biker);
         }
-
-        public event EventHandler CurrentRoleChanged;
     }
 }

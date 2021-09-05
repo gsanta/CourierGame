@@ -10,6 +10,7 @@ public class Package : MonoBehaviour
     public GameObject SpawnPoint { get; set; }
 
     public GameObject MinimapGameObject { get; set; }
+    public GameObject TargetMinimapGameObject { get; set; }
 
     public int Price { set; get; }
 
@@ -45,10 +46,11 @@ public class Package : MonoBehaviour
     public void DestroyPackage()
     {
         gameObject.SetActive(false);
-        targetObject.SetMeshVisibility(false);
+        targetObject.gameObject.SetActive(false);
         MinimapGameObject.SetActive(false);
         Destroy(gameObject);
         Destroy(MinimapGameObject);
+        Destroy(TargetMinimapGameObject);
     }
 
     private void HandleStatusChanged()

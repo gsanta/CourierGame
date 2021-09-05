@@ -112,7 +112,7 @@ public class PackageStore : MonoBehaviour
 
         foreach (PackageTarget target in packageTargetPoints)
         {
-            target.SetMeshVisibility(false);
+            target.gameObject.SetActive(false);
         }
     }
 }

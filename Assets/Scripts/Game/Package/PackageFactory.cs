@@ -34,6 +34,11 @@ public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
 
         newPackage.MinimapGameObject = newMinimapPackage;
 
+        GameObject targetMinimapGameObject = Instantiate(packageStore.PackageTargetMinimapTemplate, packageStore.PackageTargetMinimapTemplate.transform.parent);
+        targetMinimapGameObject.transform.position = targetObject.transform.position;
+
+        newPackage.TargetMinimapGameObject = targetMinimapGameObject;
+
         return newPackage;
     }
 
