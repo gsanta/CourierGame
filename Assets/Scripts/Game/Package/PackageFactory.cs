@@ -19,9 +19,9 @@ public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
     public Package Create(PackageConfig packageConfig)
     {
         PackageTarget targetObject = GetTargetPoint();
+
         Package newPackage = instanceFactory.Create(packageStore.PackageTemplate);
         newPackage.transform.position = packageConfig.spawnPoint.transform.position;
-        newPackage.Target = targetObject;
         newPackage.Name = "package-" + packageCounter++;
         newPackage.Price = packageConfig.price;
         newPackage.gameObject.SetActive(true);
@@ -31,12 +31,15 @@ public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
         newMinimapPackage.transform.position = packageConfig.spawnPoint.transform.position;
         newMinimapPackage.gameObject.SetActive(true);
         newMinimapPackage.transform.SetParent(gameObject.transform);
-
         newPackage.MinimapGameObject = newMinimapPackage;
+
+        GameObject packageTarget = Instantiate(packageStore.PackageTargetTemplate, packageStore.PackageTargetTemplate.transform.parent);
+        packageTarget.gameObject.SetActive(true);
+        packageTarget.transform.position = targetObject.transform.position;
+        newPackage.Target = packageTarget;
 
         GameObject targetMinimapGameObject = Instantiate(packageStore.PackageTargetMinimapTemplate, packageStore.PackageTargetMinimapTemplate.transform.parent);
         targetMinimapGameObject.transform.position = targetObject.transform.position;
-
         newPackage.TargetMinimapGameObject = targetMinimapGameObject;
 
         return newPackage;

@@ -4,8 +4,7 @@ using Zenject;
 
 public class Package : MonoBehaviour
 {
-    private PackageStore packageStore;
-    private PackageTarget targetObject;
+    private GameObject targetObject;
 
     public GameObject SpawnPoint { get; set; }
 
@@ -29,15 +28,9 @@ public class Package : MonoBehaviour
         get => status;
     }
 
-    [Inject]
-    public void Construct(PackageStore packageStore)
-    {
-        this.packageStore = packageStore;
-    }
-
     public string Name { get; set; }
 
-    public PackageTarget Target
+    public GameObject Target
     {
         set => targetObject = value;
         get => targetObject;

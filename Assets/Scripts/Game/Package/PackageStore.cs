@@ -15,6 +15,8 @@ public class PackageStore : MonoBehaviour
     [SerializeField]
     private Package packageTemplate;
     [SerializeField]
+    private GameObject packageTargetTemplate;
+    [SerializeField]
     private GameObject packageMinimapTemplate;
     [SerializeField]
     private GameObject packageTargetMinimapTemplate;
@@ -32,6 +34,11 @@ public class PackageStore : MonoBehaviour
     public Package PackageTemplate
     {
         get => packageTemplate;
+    }
+
+    public GameObject PackageTargetTemplate
+    {
+        get => packageTargetTemplate;
     }
 
     public GameObject PackageMinimapTemplate

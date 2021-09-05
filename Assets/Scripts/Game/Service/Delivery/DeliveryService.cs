@@ -40,6 +40,7 @@ namespace Service
             package.gameObject.transform.parent = biker.packageHolder;
             package.Status = DeliveryStatus.ASSIGNED;
             package.Target.gameObject.SetActive(true);
+            eventService.EmitPackageStatusChanged(package);
         }
 
         public void DeliverPackage(Package package, bool checkRange)
@@ -65,6 +66,7 @@ namespace Service
 
                 package.Status = DeliveryStatus.DELIVERED;
 
+                eventService.EmitPackageStatusChanged(package);
                 package.DestroyPackage();
             }
         }
