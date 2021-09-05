@@ -16,16 +16,18 @@ namespace Domain
 
         private InputHandler inputHandler;
         private PackageStore packageStore;
+        private IDeliveryService deliveryService;
 
         private float activeMoveSpeed;
         private Vector3 moveDir, movement;
         private bool isActivated = false;
 
         [Inject]
-        public void Construct(PackageStore packageStore, InputHandler inputHandler)
+        public void Construct(PackageStore packageStore, InputHandler inputHandler, IDeliveryService deliveryService)
         {
             this.packageStore = packageStore;
             this.inputHandler = inputHandler;
+            this.deliveryService = deliveryService;
         }
 
         private Biker Biker { get => GetComponentInParent<Biker>(); }
@@ -62,11 +64,11 @@ namespace Domain
                 Package deliveryPackage;
                 if (Biker.GetPackage())
                 {
-                    Biker.GetPackage().DeliverPackage();
+                    deliveryService.DeliverPackage(Biker.GetPackage(), true);
                 }
                 else if (packageStore.GetPackageWithinPickupRange(Biker, out deliveryPackage))
                 {
-                    deliveryPackage.PickupBy(Biker);
+                    deliveryService.AssignPackage(deliveryPackage);
                 }
             }
         }

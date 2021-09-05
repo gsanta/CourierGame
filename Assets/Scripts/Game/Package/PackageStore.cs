@@ -8,10 +8,16 @@ public class PackageStore : MonoBehaviour
 {
     private List<Package> packages = new List<Package>();
 
-    [SerializeField] private GameObject[] packageSpawnPoints;
-    [SerializeField] private PackageTarget[] packageTargetPoints;
-    [SerializeField] private Package packageTemplate;
-    [SerializeField] private GameObject deliveryPackageMinimapTemplate;
+    [SerializeField]
+    private GameObject[] packageSpawnPoints;
+    [SerializeField]
+    private PackageTarget[] packageTargetPoints;
+    [SerializeField]
+    private Package packageTemplate;
+    [SerializeField]
+    private GameObject packageMinimapTemplate;
+    [SerializeField]
+    private GameObject packageTargetMinimapTemplate;
 
     public GameObject[] PackageSpawnPoints
     {
@@ -28,9 +34,14 @@ public class PackageStore : MonoBehaviour
         get => packageTemplate;
     }
 
-    public GameObject DeliveryPackageMinimapTemplate
+    public GameObject PackageMinimapTemplate
     {
-        get => deliveryPackageMinimapTemplate;
+        get => packageMinimapTemplate;
+    }
+
+    public GameObject PackageTargetMinimapTemplate
+    {
+        get => packageTargetMinimapTemplate;
     }
 
     public void Add(Package package)
@@ -92,7 +103,7 @@ public class PackageStore : MonoBehaviour
     public void Start()
     {
         PackageTemplate.gameObject.SetActive(false);
-        DeliveryPackageMinimapTemplate.SetActive(false);
+        PackageMinimapTemplate.SetActive(false);
 
         foreach (GameObject spawnPoint in PackageSpawnPoints)
         {

@@ -24,11 +24,6 @@ public class MainInstaller : MonoInstaller
     private InputHandler inputHandler;
 
     [SerializeField]
-    private PlayerStore playerStore;
-    [SerializeField]
-    private PlayerFactory playerFactory;
-
-    [SerializeField]
     private PackageStore packageStore;
     [SerializeField]
     private PackageFactory packageFactory;
@@ -56,20 +51,12 @@ public class MainInstaller : MonoInstaller
 
         Container.Bind<DayService>().AsSingle();
 
-        Container.Bind<ISpawnPointHandler>().To<RandomSpawnPointHandler>().AsTransient();
-
-        Container.Bind<PlayerStore>().FromInstance(playerStore).AsSingle();
-        Container.Bind<PlayerFactory>().FromInstance(playerFactory).AsSingle();
-        Container.Bind<PlayerSpawner>().AsSingle();
-        Container.Bind<PlayerSetup>().AsSingle();
-        Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();
-
         Container.Bind<BikerService>().FromInstance(bikerService).AsSingle();
         Container.Bind<BikerStore>().FromInstance(bikerStore).AsSingle();
         Container.Bind<BikerFactory>().FromInstance(bikerFactory).AsSingle();
         Container.Bind<BikerSpawner>().AsSingle();
         Container.Bind<BikerPanel>().FromInstance(bikerPanel).AsSingle();
-        Container.Bind<CourierSetup>().AsSingle();
+        Container.Bind<BikerSetup>().AsSingle();
         Container.Bind<BikerCallbacks>().To<BikerCallbacksImpl>().AsSingle();
         //Container.Bind<CourierAgent>().FromComponentInNewPrefab(courierAgnet);
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
@@ -84,8 +71,10 @@ public class MainInstaller : MonoInstaller
 
         Container.Bind<DeliveryPanel>().FromInstance(deliveryPanel).AsSingle();
         Container.Bind<DeliveryStore>().AsSingle();
+        Container.Bind<IDeliveryService>().To<DeliveryService>().AsSingle();
 
         Container.Bind<RoleService>().AsSingle();
+        Container.Bind<EventService>().AsSingle();
 
         Container.Bind<MainCamera>().FromInstance(mainCamera).AsSingle();
     }
@@ -93,10 +82,8 @@ public class MainInstaller : MonoInstaller
     {
         base.Start();
 
-        PlayerSetup playerSetup = Container.Resolve<PlayerSetup>();
-        playerSetup.Setup();
-        CourierSetup courierSetup = Container.Resolve<CourierSetup>();
-        courierSetup.Setup();
+        BikerSetup bikerSetup = Container.Resolve<BikerSetup>();
+        bikerSetup.Setup();
         DayService dayService = Container.Resolve<DayService>();
 
     }

@@ -27,7 +27,7 @@ public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
         newPackage.gameObject.SetActive(true);
         newPackage.SpawnPoint = packageConfig.spawnPoint;
 
-        GameObject newMinimapPackage = Instantiate(packageStore.DeliveryPackageMinimapTemplate, packageStore.DeliveryPackageMinimapTemplate.transform.parent);
+        GameObject newMinimapPackage = Instantiate(packageStore.PackageMinimapTemplate, packageStore.PackageMinimapTemplate.transform.parent);
         newMinimapPackage.transform.position = packageConfig.spawnPoint.transform.position;
         newMinimapPackage.gameObject.SetActive(true);
         newMinimapPackage.transform.SetParent(gameObject.transform);

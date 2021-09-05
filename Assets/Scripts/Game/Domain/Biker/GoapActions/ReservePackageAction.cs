@@ -8,10 +8,12 @@ namespace Domain
     {
 
         private PackageStore packageStore;
+        private readonly IDeliveryService deliveryService;
 
-        public AssignPackageAction(IGoapAgentProvider<Biker> goapAgentProvider, PackageStore packageStore) : base(goapAgentProvider)
+        public AssignPackageAction(IGoapAgentProvider<Biker> goapAgentProvider, PackageStore packageStore, IDeliveryService deliveryService) : base(goapAgentProvider)
         {
             this.packageStore = packageStore;
+            this.deliveryService = deliveryService;
         }
 
         public override bool IsDestinationReached()
@@ -36,7 +38,7 @@ namespace Domain
                 int selectedIndex = UnityEngine.Random.Range(0, packages.Count);
                 Package selectedPackage = packages[0];
 
-                selectedPackage.ReservePackage(GoapAgent.Parent);
+                deliveryService.ReservePackage(selectedPackage, GoapAgent.Parent);
 
                 target = selectedPackage.gameObject;
 

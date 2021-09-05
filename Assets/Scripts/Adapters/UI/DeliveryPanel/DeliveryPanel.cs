@@ -5,46 +5,47 @@ using Zenject;
 using UI;
 using System.Collections;
 using Service;
+using Domain;
 
 namespace UI
 {
     public class DeliveryPanel : MonoBehaviour
     {
         [SerializeField] private DeliveryListItem deliveryListItemTemplate;
-        private DeliveryStore deliveryStore;
         private PackageStore packageStore;
         private BikerService bikerService;
         private RoleService roleService;
+        private EventService eventService;
+        private IDeliveryService deliveryService;
 
         private List<DeliveryListItem> activeDeliveryItems = new List<DeliveryListItem>();
 
         [Inject]
-        public void Construct(DeliveryStore deliveryStore, PackageStore packageStore, BikerService bikerService, RoleService roleService)
+        public void Construct(IDeliveryService deliveryService, PackageStore packageStore, BikerService bikerService, RoleService roleService, EventService eventService)
         {
-            this.deliveryStore = deliveryStore;
+            this.deliveryService = deliveryService;
             this.packageStore = packageStore;
             this.bikerService = bikerService;
             this.roleService = roleService;
+            this.eventService = eventService;
         }
 
         void Start()
         {
             packageStore.OnPackageAdded += HandlePackageAdded;
             roleService.CurrentRoleChanged += HandleCurrentRoleChanged;
-            //packageStore.OnPackageAdded += RefreshWaitingDeliveryList;
-            //deliveryService.OnDeliveryStatusChanged += RefreshWaitingDeliveryList;
+
+            eventService.PackageStatusChanged += HandlePackageStatusChanged;
         }
 
         private void HandlePackageAdded(object sender, PackageAddedEventArgs args)
         {
             Package package = args.Package;
 
-            package.StatusChanged += HandlePackageStatusChanged;
-
             DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
             deliveryListItem.gameObject.SetActive(true);
         
-            var controller = new DeliveryListItemController(deliveryListItem, bikerService);
+            var controller = new DeliveryListItemController(deliveryListItem, bikerService, deliveryService);
             deliveryListItem.controller = controller;
             deliveryListItem.packageName.text = package.Name;
             controller.Package = package;

@@ -16,12 +16,14 @@ namespace Domain
         private string agentId;
         private GoapAgent<Biker> goapAgent;
         private PackageStore packageStore;
+        private IDeliveryService deliveryService;
         private bool isActivated = false;
 
         [Inject]
-        public void Construct(PackageStore packageStore)
+        public void Construct(PackageStore packageStore, IDeliveryService deliveryService)
         {
             this.packageStore = packageStore;
+            this.deliveryService = deliveryService;
         }
 
         public GoapAgent<Biker> GoapAgent { get => goapAgent; }
@@ -50,9 +52,9 @@ namespace Domain
             
             List<GoapAction<Biker>> actions = new List<GoapAction<Biker>>();
 
-            actions.Add(new AssignPackageAction(this, packageStore));
-            actions.Add(new DeliverPackageAction(this));
-            actions.Add(new PickUpPackageAction(this));
+            actions.Add(new AssignPackageAction(this, packageStore, deliveryService));
+            actions.Add(new DeliverPackageAction(this, deliveryService));
+            actions.Add(new PickUpPackageAction(this, deliveryService));
 
             goapAgent = new GoapAgent<Biker>(agentId, this, actions, goals);
         }

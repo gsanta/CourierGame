@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,15 @@ namespace UI
     {
         private readonly DeliveryListItem deliveryListItem;
         private readonly BikerService courierService;
+        private readonly IDeliveryService deliveryService;
         private Package package;
         private bool isReservationEnabled = false;
 
-        public DeliveryListItemController(DeliveryListItem deliveryListItem, BikerService courierService)
+        public DeliveryListItemController(DeliveryListItem deliveryListItem, BikerService courierService, IDeliveryService deliveryService)
         {
             this.deliveryListItem = deliveryListItem;
             this.courierService = courierService;
+            this.deliveryService = deliveryService;
             deliveryListItem.OnReserveButtonClick += HandleReserveButtonClick;
         }
 
@@ -59,7 +62,7 @@ namespace UI
             var player = courierService.FindPlayRole();
             if (player != null && player.GetPackage() == null)
             {
-                package.ReservePackage(player);
+                deliveryService.ReservePackage(package, player);
             }
         }
     }

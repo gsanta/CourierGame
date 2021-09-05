@@ -10,8 +10,10 @@ namespace Domain
 {
     class DeliverPackageAction : GoapAction<Biker>
     {
-        public DeliverPackageAction(IGoapAgentProvider<Biker> agent) : base(agent)
+        private IDeliveryService deliveryService;
+        public DeliverPackageAction(IGoapAgentProvider<Biker> agent, IDeliveryService deliveryService) : base(agent)
         {
+            this.deliveryService = deliveryService;
         }
 
         public override bool PrePerform()
@@ -31,7 +33,7 @@ namespace Domain
 
             Package package = courierAgent.GetPackage();
 
-            package.DeliverPackage();
+            deliveryService.DeliverPackage(package, false);
 
             SubGoal s1 = new SubGoal("isPackageDropped", 1, true);
             GoapAgent.goals.Add(s1, 3);

@@ -6,7 +6,6 @@ public class Package : MonoBehaviour
 {
     private PackageStore packageStore;
     private PackageTarget targetObject;
-    private Biker biker;
 
     public GameObject SpawnPoint { get; set; }
 
@@ -15,6 +14,8 @@ public class Package : MonoBehaviour
     public int Price { set; get; }
 
     private DeliveryStatus status = DeliveryStatus.UNASSIGNED;
+
+    public Biker Biker { set; get; }
 
     public DeliveryStatus Status
     {
@@ -41,30 +42,6 @@ public class Package : MonoBehaviour
         get => targetObject;
     }
 
-    public void PickupBy(Biker biker)
-    {
-        if (this.biker == biker)
-        {
-            gameObject.transform.position = this.biker.packageHolder.position;
-            gameObject.transform.rotation = this.biker.packageHolder.rotation;
-            gameObject.transform.parent = this.biker.packageHolder;
-            Status = DeliveryStatus.ASSIGNED;
-            targetObject.SetMeshVisibility(true);
-            HandleStatusChanged();
-        }
-    }
-
-    public void ReservePackage(Biker biker)
-    {
-        if (this.biker == null)
-        {
-            this.biker = biker;
-            Status = DeliveryStatus.RESERVED;
-            biker.SetPackage(this);
-            HandleStatusChanged();
-        }
-    }
-
     public void DestroyPackage()
     {
         gameObject.SetActive(false);
@@ -72,24 +49,6 @@ public class Package : MonoBehaviour
         MinimapGameObject.SetActive(false);
         Destroy(gameObject);
         Destroy(MinimapGameObject);
-    }
-
-    public void DeliverPackage()
-    {
-        Vector2 packagePos = new Vector2(transform.position.x, transform.position.z);
-        Vector2 targetPos = new Vector2(Target.transform.position.x, Target.transform.position.z);
-
-        if (Vector2.Distance(packagePos, targetPos) < 2)
-        {
-            targetObject.SetMeshVisibility(false);
-            packageStore.Remove(this);
-            biker.SetPackage(null);
-            biker = null;
-
-            Status = DeliveryStatus.DELIVERED;
-
-            DestroyPackage();
-        }
     }
 
     private void HandleStatusChanged()
@@ -103,26 +62,9 @@ public class Package : MonoBehaviour
                 MinimapGameObject.SetActive(true);
                 break;
         }
-
-        StatusChanged?.Invoke(this, new PackageStatusChangedEventArgs(this));
     }
-
-    public event EventHandler<PackageStatusChangedEventArgs> StatusChanged;
-
 
     public class Factory : PlaceholderFactory<UnityEngine.Object, Package>
     {
     }
-}
-
-public class PackageStatusChangedEventArgs : EventArgs
-{
-    private readonly Package package;
-
-    public PackageStatusChangedEventArgs(Package package)
-    {
-        this.package = package;
-    }
-    
-    public Package Package { get => package; }
 }

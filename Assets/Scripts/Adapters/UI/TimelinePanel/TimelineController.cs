@@ -9,15 +9,13 @@ public class TimelineController : MonoBehaviour
     [SerializeField]
     public TimelineSlider slider;
 
-    private PlayerStore playerStore;
     private Timer timer;
 
     private HashSet<GameObject> usedPlayerImages = new HashSet<GameObject>();
 
     [Inject]
-    public void Construct(PlayerStore playerStore, Timer timer)
+    public void Construct(Timer timer)
     {
-        this.playerStore = playerStore;
         this.timer = timer;
     }
 

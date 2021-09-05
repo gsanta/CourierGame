@@ -5,8 +5,11 @@ namespace Domain
 {
     class PickUpPackageAction : GoapAction<Biker>
     {
-        public PickUpPackageAction(IGoapAgentProvider<Biker> agent) : base(agent)
+        private readonly IDeliveryService deliveryService;
+
+        public PickUpPackageAction(IGoapAgentProvider<Biker> agent, IDeliveryService deliveryService) : base(agent)
         {
+            this.deliveryService = deliveryService;
         }
 
         public override bool PrePerform()
@@ -21,7 +24,7 @@ namespace Domain
             Biker courierAgent = GoapAgent.Parent;
 
             Package package = courierAgent.GetPackage();
-            package.PickupBy(courierAgent);
+            deliveryService.AssignPackage(package);
             return true;
         }
 
