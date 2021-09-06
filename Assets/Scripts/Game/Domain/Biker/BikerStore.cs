@@ -45,6 +45,14 @@ public class BikerStore : MonoBehaviour
             handler(this, new CourierAddedEventArgs(biker));
         }
     }
+
+    private void Start()
+    {
+        foreach (var sp in spawnPoints)
+        {
+            sp.SetActive(false);
+        }
+    }
 }
 
 public class CourierAddedEventArgs : EventArgs

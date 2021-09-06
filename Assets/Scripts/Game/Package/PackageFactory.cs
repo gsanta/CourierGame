@@ -34,7 +34,7 @@ public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
         newPackage.MinimapGameObject = newMinimapPackage;
 
         GameObject packageTarget = Instantiate(packageStore.PackageTargetTemplate, packageStore.PackageTargetTemplate.transform.parent);
-        packageTarget.gameObject.SetActive(true);
+        packageTarget.gameObject.SetActive(false);
         packageTarget.transform.position = targetObject.transform.position;
         newPackage.Target = packageTarget;
 

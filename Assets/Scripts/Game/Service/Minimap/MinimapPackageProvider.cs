@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Service
 {
-    public class MinimapPackageSetter
+    public class MinimapPackageProvider
     {
         private readonly IEventService eventService;
         private readonly MinimapStore minimapStore;
@@ -14,7 +14,7 @@ namespace Service
         private readonly BikerService bikerService;
 
         [Inject]
-        public MinimapPackageSetter(IEventService eventService, MinimapStore minimapStore, PackageStore packageStore, BikerService bikerService)
+        public MinimapPackageProvider(IEventService eventService, MinimapStore minimapStore, PackageStore packageStore, BikerService bikerService)
         {
             this.eventService = eventService;
             this.minimapStore = minimapStore;
@@ -40,13 +40,17 @@ namespace Service
         
             if (biker && biker.package)
             {
-                minimapStore.VisiblePackages = new List<GameObject> { biker.package.MinimapGameObject };
-                if (biker.package.Status == DeliveryStatus.ASSIGNED || biker.package.Status == DeliveryStatus.RESERVED)
+                minimapStore.VisiblePackages = new List<GameObject>();
+                minimapStore.VisiblePackageTargets = new List<GameObject>();
+
+                if (biker.package.Status == DeliveryStatus.RESERVED)
+                {
+                    minimapStore.VisiblePackages = new List<GameObject> { biker.package.MinimapGameObject };
+                } 
+
+                if (biker.package.Status == DeliveryStatus.ASSIGNED)
                 {
                     minimapStore.VisiblePackageTargets = new List<GameObject> { biker.package.TargetMinimapGameObject };
-                } else
-                {
-                    minimapStore.VisiblePackageTargets = new List<GameObject>();
                 }
             } else
             {

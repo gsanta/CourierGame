@@ -38,10 +38,8 @@ public class Package : MonoBehaviour
 
     public void DestroyPackage()
     {
-        gameObject.SetActive(false);
-        targetObject.gameObject.SetActive(false);
-        MinimapGameObject.SetActive(false);
         Destroy(gameObject);
+        Destroy(Target);
         Destroy(MinimapGameObject);
         Destroy(TargetMinimapGameObject);
     }

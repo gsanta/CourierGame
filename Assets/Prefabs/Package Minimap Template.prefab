@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3858781584153882437}
   - component: {fileID: 3858781584153882458}
   - component: {fileID: 3858781584153882459}
-  - component: {fileID: 3858781584153882439}
   - component: {fileID: 3954725776128739181}
   m_Layer: 6
   m_Name: Package Minimap Template
@@ -63,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d60194b2814889842981ad8c8cfab285, type: 2}
+  - {fileID: 2100000, guid: dc5976a362986a6498b4e92cf093af21, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,20 +107,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c11c2b58a16e18488edfe54db0846e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerService: {fileID: 0}
-  targetObject: {fileID: 0}
---- !u!114 &3858781584153882439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3858781584153882457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04259e1054a54b44a9a2295ea7ebc7d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &3954725776128739181

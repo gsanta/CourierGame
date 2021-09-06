@@ -20,7 +20,10 @@ public class DeliveryListItem : MonoBehaviour
 
     public void HandleReserveButtonClick()
     {
-        OnReserveButtonClick?.Invoke(this, EventArgs.Empty);
+        if (controller != null)
+        {
+            controller.HandleReserveButtonClick();
+        }
     }
 
     public event EventHandler OnReserveButtonClick;

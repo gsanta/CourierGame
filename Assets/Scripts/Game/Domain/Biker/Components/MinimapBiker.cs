@@ -21,7 +21,7 @@ namespace Domain
 
         private void Update()
         {
-            transform.position = biker.transform.position;
+            transform.position = new Vector3(biker.transform.position.x, 5, biker.transform.position.z);
             transform.rotation = biker.transform.rotation;
         }
 

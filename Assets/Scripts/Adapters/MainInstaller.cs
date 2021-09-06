@@ -75,8 +75,8 @@ public class MainInstaller : MonoInstaller
         Container.Bind<IEventService>().To<EventService>().AsSingle();
 
         Container.Bind<MinimapStore>().AsSingle();
-        Container.Bind<MinimapPackageSetter>().AsSingle();
-        Container.Bind<MinimapPackageUpdater>().AsSingle();
+        Container.Bind<MinimapPackageProvider>().AsSingle();
+        Container.Bind<MinimapPackageConsumer>().AsSingle();
 
         Container.Bind<MainCamera>().FromInstance(mainCamera).AsSingle();
     }
@@ -87,8 +87,8 @@ public class MainInstaller : MonoInstaller
         BikerSetup bikerSetup = Container.Resolve<BikerSetup>();
         bikerSetup.Setup();
         Container.Resolve<DayService>();
-        Container.Resolve<MinimapPackageSetter>();
-        Container.Resolve<MinimapPackageUpdater>();
+        Container.Resolve<MinimapPackageProvider>();
+        Container.Resolve<MinimapPackageConsumer>();
 
     }
 }

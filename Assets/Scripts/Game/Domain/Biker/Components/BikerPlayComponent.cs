@@ -61,14 +61,20 @@ namespace Domain
         {
             if (e.Key == "e")
             {
+                if (Biker.GetPackage() == null)
+                {
+                    return;
+                }
+
                 Package deliveryPackage;
-                if (Biker.GetPackage())
+                if (Biker.GetPackage().Status == DeliveryStatus.RESERVED)
+                {
+                    deliveryService.AssignPackage(Biker.GetPackage());
+                }
+                else if (Biker.GetPackage().Status == DeliveryStatus.ASSIGNED)
+                //else if (packageStore.GetPackageWithinPickupRange(Biker, out deliveryPackage))
                 {
                     deliveryService.DeliverPackage(Biker.GetPackage(), true);
-                }
-                else if (packageStore.GetPackageWithinPickupRange(Biker, out deliveryPackage))
-                {
-                    deliveryService.AssignPackage(deliveryPackage);
                 }
             }
         }

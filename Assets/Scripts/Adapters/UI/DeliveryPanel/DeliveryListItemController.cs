@@ -20,7 +20,6 @@ namespace UI
             this.deliveryListItem = deliveryListItem;
             this.courierService = courierService;
             this.deliveryService = deliveryService;
-            deliveryListItem.OnReserveButtonClick += HandleReserveButtonClick;
         }
 
         public void SetReservationEnabled(bool isEnabled)
@@ -57,12 +56,12 @@ namespace UI
             }
         }
 
-        private void HandleReserveButtonClick(object sender, EventArgs e)
+        public void HandleReserveButtonClick()
         {
-            var player = courierService.FindPlayRole();
-            if (player != null && player.GetPackage() == null)
+            var biker = courierService.FindPlayRole();
+            if (biker != null && biker.GetPackage() == null)
             {
-                deliveryService.ReservePackage(package, player);
+                deliveryService.ReservePackage(package, biker);
             }
         }
     }

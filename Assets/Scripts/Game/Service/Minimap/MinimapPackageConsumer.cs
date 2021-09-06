@@ -3,12 +3,12 @@ using System;
 
 namespace Service
 {
-    public class MinimapPackageUpdater
+    public class MinimapPackageConsumer
     {
         private readonly MinimapStore minimapStore;
         private readonly PackageStore packageStore;
 
-        public MinimapPackageUpdater(MinimapStore minimapStore, PackageStore pacakgeStore)
+        public MinimapPackageConsumer(MinimapStore minimapStore, PackageStore pacakgeStore)
         {
             this.minimapStore = minimapStore;
             this.packageStore = pacakgeStore;
@@ -21,7 +21,7 @@ namespace Service
             packageStore.GetAll().ForEach(package =>
             {
                 package.MinimapGameObject.SetActive(false);
-                package.Target.gameObject.SetActive(false);
+                package.TargetMinimapGameObject.SetActive(false);
             });
 
             minimapStore.VisiblePackages.ForEach(gameObject => gameObject.SetActive(true));
