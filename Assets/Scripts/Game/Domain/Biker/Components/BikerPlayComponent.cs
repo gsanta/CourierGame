@@ -22,7 +22,6 @@ namespace Domain
         private Vector3 moveDir, movement;
         private bool isActivated = false;
 
-        [Inject]
         public void Construct(PackageStore packageStore, InputHandler inputHandler, IDeliveryService deliveryService)
         {
             this.packageStore = packageStore;

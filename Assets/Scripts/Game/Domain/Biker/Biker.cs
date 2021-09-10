@@ -28,7 +28,6 @@ public class Biker : MonoBehaviour
         get => GetComponent<BikerAgentComponent>();
     }
 
-    [Inject]
     public void Construct(IEventService eventService)
     {
         this.eventService = eventService;

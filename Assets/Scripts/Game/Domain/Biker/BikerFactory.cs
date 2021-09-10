@@ -6,19 +6,33 @@ public class BikerFactory : MonoBehaviour, ItemFactory<BikerConfig, Biker>
 {
     [SerializeField]
     private MinimapBiker minimapTemplate;
-    private Biker.Factory instanceFactory;
     private BikerStore bikerStore;
+    private IEventService eventService;
+    private PackageStore packageStore;
+    private IDeliveryService deliveryService;
+    private InputHandler inputHandler;
+    private PedestrianStore pedestrianStore;
 
     [Inject]
-    public void Construct(Biker.Factory instanceFactory, BikerStore bikerStore)
+    public void Construct(BikerStore bikerStore, PedestrianStore pedestrianStore, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler)
     {
-        this.instanceFactory = instanceFactory;
         this.bikerStore = bikerStore;
+        this.eventService = eventService;
+        this.packageStore = packageStore;
+        this.deliveryService = deliveryService;
+        this.inputHandler = inputHandler;
+        this.pedestrianStore = pedestrianStore;
     }
 
     public Biker Create(BikerConfig config)
     {
-        Biker newBiker = instanceFactory.Create(bikerStore.BikerTemplate);
+        Biker newBiker = Instantiate(bikerStore.BikerTemplate);
+        newBiker.Construct(eventService);
+
+        newBiker.GetComponent<BikerAgentComponent>().Construct(packageStore, deliveryService);
+        newBiker.GetComponent<BikerPlayComponent>().Construct(packageStore, inputHandler, deliveryService);
+        newBiker.GetComponent<SteeringComponent>().Construct(pedestrianStore, bikerStore);
+
         newBiker.transform.position = config.spawnPoint.transform.position;
         newBiker.SetName(config.name);
         newBiker.gameObject.SetActive(true);

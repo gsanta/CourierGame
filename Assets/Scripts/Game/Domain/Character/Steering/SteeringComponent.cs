@@ -10,7 +10,6 @@ namespace Domain
 
         public Steering Steering { get; private set; } 
 
-        [Inject]
         public void Construct(PedestrianStore pedestrianStore, BikerStore bikerStore)
         {
             this.pedestrianStore = pedestrianStore;

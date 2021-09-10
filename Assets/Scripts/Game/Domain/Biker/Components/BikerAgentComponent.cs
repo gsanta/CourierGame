@@ -16,7 +16,6 @@ namespace Domain
         private IDeliveryService deliveryService;
         private bool isActivated = false;
 
-        [Inject]
         public void Construct(PackageStore packageStore, IDeliveryService deliveryService)
         {
             this.packageStore = packageStore;
