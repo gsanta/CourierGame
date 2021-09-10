@@ -32,7 +32,8 @@ public class StartDayPanel : MonoBehaviour
     {
         timer.IsDayStarted = true;
         gameObject.SetActive(false);
-        timer.Reset();
+
+        timer.IsDayStarted = true;
 
     }
 

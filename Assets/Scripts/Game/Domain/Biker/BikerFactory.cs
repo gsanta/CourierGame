@@ -12,9 +12,10 @@ public class BikerFactory : MonoBehaviour, ItemFactory<BikerConfig, Biker>
     private IDeliveryService deliveryService;
     private InputHandler inputHandler;
     private PedestrianStore pedestrianStore;
+    private Timer timer;
 
     [Inject]
-    public void Construct(BikerStore bikerStore, PedestrianStore pedestrianStore, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler)
+    public void Construct(BikerStore bikerStore, PedestrianStore pedestrianStore, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler, Timer timer)
     {
         this.bikerStore = bikerStore;
         this.eventService = eventService;
@@ -22,6 +23,7 @@ public class BikerFactory : MonoBehaviour, ItemFactory<BikerConfig, Biker>
         this.deliveryService = deliveryService;
         this.inputHandler = inputHandler;
         this.pedestrianStore = pedestrianStore;
+        this.timer = timer;
     }
 
     public Biker Create(BikerConfig config)
@@ -31,7 +33,7 @@ public class BikerFactory : MonoBehaviour, ItemFactory<BikerConfig, Biker>
 
         newBiker.GetComponent<BikerAgentComponent>().Construct(packageStore, deliveryService);
         newBiker.GetComponent<BikerPlayComponent>().Construct(packageStore, inputHandler, deliveryService);
-        newBiker.GetComponent<SteeringComponent>().Construct(pedestrianStore, bikerStore);
+        newBiker.GetComponent<SteeringComponent>().Construct(pedestrianStore, bikerStore, timer);
 
         newBiker.transform.position = config.spawnPoint.transform.position;
         newBiker.SetName(config.name);

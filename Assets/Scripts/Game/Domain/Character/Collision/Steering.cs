@@ -1,13 +1,17 @@
 ﻿
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Domain
 {
     public class Steering
     {
+        public Dictionary<GameObject, int> avoidedGameObjects = new Dictionary<GameObject, int>();
+
         private readonly GameObject gameObject;
         public float seeAhead = 5f;
-        public float radius = 2f;
+        public float radius = 1f;
+        public float maxAvoidanceForce = 5f;
 
         public Steering(GameObject gameObject)
         {
@@ -52,7 +56,7 @@ namespace Domain
 
         public Vector3 GetAvoidance(Steering other)
         {
-            return Ahead() - other.GetCenterTo(this);
+            return (Ahead() - other.GetCenterTo(this)).normalized * maxAvoidanceForce;
         }
     }
 }

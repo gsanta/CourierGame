@@ -13,23 +13,16 @@ namespace Domain
 
         private PedestrianStore pedestrianStore;
         private BikerStore bikerStore;
+        private Timer timer;
+
+        public GameObject PedestrianContainer { get => pedestrianContainer; }
 
         [Inject]
-        public void Construct(PedestrianStore pedestrianStore, BikerStore bikerStore)
+        public void Construct(PedestrianStore pedestrianStore, BikerStore bikerStore, Timer timer)
         {
             this.pedestrianStore = pedestrianStore;
             this.bikerStore = bikerStore;
-        }
-
-        private void Start()
-        {
-            var childCount = pedestrianContainer.transform.childCount;
-
-            for (int i = 0; i < childCount; i++)
-            {
-                var pedestrian = pedestrianContainer.transform.GetChild(i).GetComponent<Pedestrian>();
-                InitializeObj(pedestrian);
-            }
+            this.timer = timer;
         }
 
         public Pedestrian Create(PedestrianConfig config)
@@ -43,7 +36,7 @@ namespace Domain
             return pedestrian;
         }
 
-        private void InitializeObj(Pedestrian pedestrian)
+        public void InitializeObj(Pedestrian pedestrian)
         {
             Initialize(pedestrian);
             pedestrian.transform.position = pedestrian.GetComponent<WaypointNavigator>().currentWaypoint.transform.position;
@@ -51,7 +44,7 @@ namespace Domain
 
         private void Initialize(Pedestrian pedestrian)
         {
-            pedestrian.GetComponent<SteeringComponent>().Construct(pedestrianStore, bikerStore);
+            pedestrian.GetComponent<SteeringComponent>().Construct(pedestrianStore, bikerStore, timer);
         }
     }
 }

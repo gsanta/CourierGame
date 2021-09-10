@@ -19,7 +19,7 @@ namespace Service.AI
 
         public IWaypointProvider waypointProvider;
 
-        CharacterNavigationController controller;
+        public CharacterNavigationController controller;
         public Waypoint currentWaypoint;
         public int direction;
 
@@ -31,8 +31,10 @@ namespace Service.AI
 
         void Start()
         {
-            Debug.Log("layer: " + gameObject.layer);
-            direction = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
+            if (direction == -1)
+            {
+                direction = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
+            }
             controller.SetDestination(currentWaypoint.GetPosition());
         }
 

@@ -8,14 +8,31 @@ public class Timer : MonoBehaviour
 
     private ITimeProvider timeProvider;
     private DateTime time = DateTime.MinValue;
-    private int milliSecondAccum = 0;
+    private long milliSecondAccum = 0;
     private int secondAccum = 0;
     private bool isDayStarted = false;
     private int currentDay = 1;
 
+    private int daySecondsCounter = 0;
+
     public int SecondsPerDay { get => secondsPerDay; }
 
-    public bool IsDayStarted { get => isDayStarted; set => isDayStarted = value; }
+    public bool IsDayStarted
+    {
+        get => isDayStarted;
+        set
+        {
+            if (value)
+            {
+                isDayStarted = true;
+                HandleDayStarted();
+            }
+            else
+            {
+                isDayStarted = false;
+            }
+        }
+    }
     
     [Inject]
     public void Construct(ITimeProvider timeProvider)
@@ -30,20 +47,9 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-        if (isDayStarted)
-        {
-            Tick();
-        }
+        Tick();
     }
-
-    public void Reset()
-    {
-        milliSecondAccum = 0;
-        secondAccum = 0;
-        Elapsed = 0;
-        HandleDayStarted();
-    }
-
+    
     private void Tick()
     {
         DateTime curr = timeProvider.UtcNow();
@@ -54,7 +60,10 @@ public class Timer : MonoBehaviour
             Elapsed += delta.Milliseconds;
 
             HandleSecondPassed(delta);
-            HandleDayPassed();
+            if (isDayStarted)
+            {
+                HandleDayPassed();
+            }
         }
 
         time = curr;
@@ -69,20 +78,27 @@ public class Timer : MonoBehaviour
             SecondPassed?.Invoke(this, EventArgs.Empty);
             milliSecondAccum = milliSecondAccum - 1000;
             secondAccum++;
+
+            if (isDayStarted)
+            {
+                daySecondsCounter++;
+            }
         }
     }
 
     private void HandleDayPassed()
     {
-        if (secondAccum >= SecondsPerDay)
+        if (daySecondsCounter >= SecondsPerDay)
         {
             currentDay++;
+            IsDayStarted = false;
             DayPassed?.Invoke(this, EventArgs.Empty);
         }
     }
 
     private void HandleDayStarted()
     {
+        daySecondsCounter = 0;
         DayStarted?.Invoke(this, EventArgs.Empty);
     }
 

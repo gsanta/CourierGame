@@ -21,7 +21,21 @@ namespace Service
 
         void Start()
         {
+            InitPreExistingObjects();
             StartCoroutine(Spawn());
+        }
+
+        private void InitPreExistingObjects()
+        {
+            var pedestrianContainer = pedestrianFactory.PedestrianContainer;
+            var childCount = pedestrianContainer.transform.childCount;
+
+            for (int i = 0; i < childCount; i++)
+            {
+                var pedestrian = pedestrianContainer.transform.GetChild(i).GetComponent<Pedestrian>();
+                pedestrianFactory.InitializeObj(pedestrian);
+                pedestrianStore.Add(pedestrian);
+            }
         }
 
         IEnumerator Spawn()
