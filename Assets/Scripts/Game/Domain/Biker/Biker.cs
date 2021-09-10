@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
-using AI;
 using Domain;
 using System;
 

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Domain;
+using Service.AI;
 using System.Collections.Generic;
-using AI;
 
-namespace Domain
+namespace Service
 {
     public class AssignPackageAction : GoapAction<Biker>
     {

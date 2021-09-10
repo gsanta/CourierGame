@@ -1,22 +1,22 @@
 using Domain;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace AI
+namespace Service
 {
     public class PedestrianSpawner : MonoBehaviour
     {
-        public Pedestrian pedestrianPrefab;
         public int pedestriansToSpawn;
 
         private PedestrianStore pedestrianStore;
+        private PedestrianFactory pedestrianFactory;
 
         [Inject]
-        public void Construct(PedestrianStore pedestrianStore)
+        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory)
         {
             this.pedestrianStore = pedestrianStore;
+            this.pedestrianFactory = pedestrianFactory;
         }
 
         void Start()
@@ -30,11 +30,11 @@ namespace AI
 
             while (count < pedestriansToSpawn)
             {
-                Pedestrian obj = Instantiate(pedestrianPrefab);
-                Transform child = transform.GetChild(Random.Range(0, transform.childCount - 1));
-                obj.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
-                obj.transform.position = child.position;
-                pedestrianStore.Add(obj);
+
+                var transf = transform.GetChild(Random.Range(0, transform.childCount - 1));
+
+                var pedestrian = pedestrianFactory.Create(new PedestrianConfig(transf.gameObject));
+                pedestrianStore.Add(pedestrian);
 
                 yield return new WaitForEndOfFrame();
                 count++;

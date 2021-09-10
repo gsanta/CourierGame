@@ -1,5 +1,4 @@
 
-using AI;
 using Domain;
 using Service;
 using UI;
@@ -39,6 +38,11 @@ public class MainInstaller : MonoInstaller
     [SerializeField]
     private MainCamera mainCamera;
 
+    [SerializeField]
+    private PedestrianSpawner pedestrianSpawner;
+    [SerializeField]
+    private PedestrianFactory pedestrianFactory;
+
     public override void InstallBindings()
     {
         Container.Bind<InputHandler>().FromInstance(inputHandler).AsSingle();
@@ -59,7 +63,8 @@ public class MainInstaller : MonoInstaller
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
         Container.BindFactory<Object, BikerAgentComponent, BikerAgentComponent.Factory>().FromFactory<PrefabFactory<BikerAgentComponent>>();
         Container.BindFactory<Object, BikerPlayComponent, BikerPlayComponent.Factory>().FromFactory<PrefabFactory<BikerPlayComponent>>();
-
+        Container.BindFactory<Object, SteeringComponent, SteeringComponent.Factory>().FromFactory<PrefabFactory<SteeringComponent>>();
+        Container.BindFactory<Object, Pedestrian, Pedestrian.Factory>().FromFactory<PrefabFactory<Pedestrian>>();
 
         Container.Bind<PackageStore>().FromInstance(packageStore).AsSingle();
         Container.Bind<ISpawner<PackageConfig>>().To<PackageSpawner>().AsSingle().NonLazy();
@@ -78,6 +83,10 @@ public class MainInstaller : MonoInstaller
         Container.Bind<MinimapPackageConsumer>().AsSingle();
 
         Container.Bind<MainCamera>().FromInstance(mainCamera).AsSingle();
+
+        Container.Bind<PedestrianSpawner>().FromInstance(pedestrianSpawner).AsSingle();
+        Container.Bind<PedestrianStore>().AsSingle();
+        Container.Bind<PedestrianFactory>().FromInstance(pedestrianFactory).AsSingle();
     }
     override public void Start()
     {

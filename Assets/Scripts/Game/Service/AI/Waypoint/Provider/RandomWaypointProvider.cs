@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AI
+namespace Service.AI
 {
     class RandomWaypointProvider : MonoBehaviour, IWaypointProvider
     {

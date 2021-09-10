@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace AI
+﻿namespace Service.AI
 {
-	public sealed class GoapWorld
+    public sealed class GoapWorld
 	{
 		private static readonly GoapWorld instance = new GoapWorld();
 		private static WorldStates world;

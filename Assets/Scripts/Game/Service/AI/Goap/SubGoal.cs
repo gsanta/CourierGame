@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AI
+namespace Service.AI
 {
     public class SubGoal {
         public Dictionary<string, int> sgoals;

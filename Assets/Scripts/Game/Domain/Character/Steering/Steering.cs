@@ -20,24 +20,29 @@ namespace Domain
             return gameObject.transform.position - other.Center;
         }
 
-        public Vector3 Ahead()
+        private Vector3 Ahead()
         {
             return gameObject.transform.forward * seeAhead;
         }
 
-        public Vector3 Ahead2()
+        private Vector3 Ahead2()
         {
             return gameObject.transform.forward * seeAhead / 2;
         }
 
-        public float DistToAhead(Steering other)
+        private float DistToAhead(Steering other)
         {
             return Vector3.Distance(Ahead(), other.GetCenterTo(this));
         }
 
-        public float DistToAhead2(Steering other)
+        private float DistToAhead2(Steering other)
         {
             return Vector3.Distance(Ahead2(), other.GetCenterTo(this));
+        }
+
+        public float Distance(Steering other)
+        {
+            return Vector3.Distance(Center, other.Center);
         }
 
         public bool Intersects(Steering other)

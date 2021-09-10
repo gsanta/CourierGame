@@ -1,6 +1,4 @@
-using AI;
-using System.Collections;
-using System.Collections.Generic;
+using Service.AI;
 using UnityEditor;
 using UnityEngine;
 

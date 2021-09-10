@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine.AI;
+﻿using UnityEngine.AI;
 
-namespace AI
+namespace Service.AI
 {
     public interface IGoapAgentInjections<T>
     {

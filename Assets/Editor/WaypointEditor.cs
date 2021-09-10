@@ -1,5 +1,5 @@
-﻿using AI;
-using Editor;
+﻿using Editor;
+using Service.AI;
 using UnityEditor;
 
 [InitializeOnLoad()]
