@@ -11,7 +11,7 @@ public class PackageStore : MonoBehaviour
     [SerializeField]
     private GameObject[] packageSpawnPoints;
     [SerializeField]
-    private PackageTarget[] packageTargetPoints;
+    private GameObject[] packageTargetPoints;
     [SerializeField]
     private Package packageTemplate;
     [SerializeField]
@@ -26,7 +26,7 @@ public class PackageStore : MonoBehaviour
         get => packageSpawnPoints;
     }
 
-    public PackageTarget[] PackageTargetPoints
+    public GameObject[] PackageTargetPoints
     {
         get => packageTargetPoints;
     }
@@ -117,7 +117,7 @@ public class PackageStore : MonoBehaviour
             spawnPoint.SetActive(false);
         }
 
-        foreach (PackageTarget target in packageTargetPoints)
+        foreach (GameObject target in packageTargetPoints)
         {
             target.gameObject.SetActive(false);
         }

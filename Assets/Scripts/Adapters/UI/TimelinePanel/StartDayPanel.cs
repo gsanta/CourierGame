@@ -1,6 +1,4 @@
-using Controller;
 using System;
-using System.Collections;
 using TMPro;
 using UI;
 using UnityEngine;

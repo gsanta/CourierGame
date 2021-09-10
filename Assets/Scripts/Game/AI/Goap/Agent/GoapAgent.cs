@@ -92,7 +92,6 @@ namespace AI
                 }
                 else
                 {
-                    if (currentAction.IsDestinationReached())
                     {
                         if (!invoked)
                         {

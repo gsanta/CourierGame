@@ -13,18 +13,18 @@ public class BikerFactory : MonoBehaviour, ItemFactory<BikerConfig, Biker>
     [SerializeField]
     private MinimapBiker minimapTemplate;
     private Biker.Factory instanceFactory;
-    private BikerStore courierStore;
+    private BikerStore bikerStore;
 
     [Inject]
-    public void Construct(Biker.Factory instanceFactory, BikerStore courierStore)
+    public void Construct(Biker.Factory instanceFactory, BikerStore bikerStore)
     {
         this.instanceFactory = instanceFactory;
-        this.courierStore = courierStore;
+        this.bikerStore = bikerStore;
     }
 
     public Biker Create(BikerConfig config)
     {
-        Biker newBiker = instanceFactory.Create(courierStore.BikerTemplate);
+        Biker newBiker = instanceFactory.Create(bikerStore.BikerTemplate);
         newBiker.transform.position = config.spawnPoint.transform.position;
         newBiker.SetName(config.name);
         newBiker.gameObject.SetActive(true);

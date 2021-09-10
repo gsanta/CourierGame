@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-namespace Controller
+namespace UI
 {
     public class PanelManager : MonoBehaviour
     {

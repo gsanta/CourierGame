@@ -18,7 +18,7 @@ public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
 
     public Package Create(PackageConfig packageConfig)
     {
-        PackageTarget targetObject = GetTargetPoint();
+        GameObject targetObject = GetTargetPoint();
 
         Package newPackage = instanceFactory.Create(packageStore.PackageTemplate);
         newPackage.transform.position = packageConfig.spawnPoint.transform.position;
@@ -50,7 +50,7 @@ public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
         return packageStore.PackageSpawnPoints[Random.Range(0, packageStore.PackageSpawnPoints.Length)].transform;
     }
 
-    public PackageTarget GetTargetPoint()
+    public GameObject GetTargetPoint()
     {
         return packageStore.PackageTargetPoints[Random.Range(0, packageStore.PackageTargetPoints.Length)];
     }
