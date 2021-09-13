@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Service.AI
 {
@@ -9,6 +10,12 @@ namespace Service.AI
         public float stopDistance = 1.5f;
         public Vector3 destination;
         public bool reachedDestination = false;
+        private NavMeshAgent agent;
+
+        private void Start()
+        {
+            agent = GetComponent<NavMeshAgent>();
+        }
 
         void Update()
         {
@@ -17,14 +24,14 @@ namespace Service.AI
                 Vector3 destinationDirection = destination - transform.position;
                 destinationDirection.y = 0;
 
-                float destinationDistnace = destinationDirection.magnitude;
+                float destinationDistance = destinationDirection.magnitude;
 
-                if (destinationDistnace >= stopDistance)
+                if (destinationDistance >= stopDistance)
                 {
                     reachedDestination = false;
-                    Quaternion targetRotation = Quaternion.LookRotation(destinationDirection);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-                    transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+                    //Quaternion targetRotation = Quaternion.LookRotation(destinationDirection);
+                    //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                    //transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
                 }
                 else
                 {
@@ -35,6 +42,7 @@ namespace Service.AI
 
         public void SetDestination(Vector3 destination)
         {
+            GetComponent<NavMeshAgent>().SetDestination(destination);
             this.destination = destination;
             reachedDestination = false;
         }

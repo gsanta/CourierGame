@@ -18,7 +18,7 @@ namespace Domain
             this.pedestrianStore = pedestrianStore;
             this.bikerStore = bikerStore;
             Steering = new Steering(this.gameObject);
-            timer.SecondPassed += HandleSecondPassed;
+            //timer.SecondPassed += HandleSecondPassed;
         }
 
         private void HandleSecondPassed(object sender, EventArgs e)
@@ -57,8 +57,8 @@ namespace Domain
 
             foreach(Pedestrian pedestrian in pedestrianStore.GetAll())
             {
-                if (!suspendedAvoidanceMap.ContainsKey(pedestrian.gameObject))
-                {
+                //if (!suspendedAvoidanceMap.ContainsKey(pedestrian.gameObject))
+                //{
                     bool intersects = Steering.Intersects(pedestrian.GetComponent<SteeringComponent>().Steering);
 
                     if (intersects)
@@ -68,7 +68,7 @@ namespace Domain
                             closest = pedestrian;
                         }
                     }
-                }
+                //}
             }
 
             if (closest != null)

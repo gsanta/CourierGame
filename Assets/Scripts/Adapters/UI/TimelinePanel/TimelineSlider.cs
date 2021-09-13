@@ -22,7 +22,7 @@ public class TimelineSlider : MonoBehaviour
     }
 
     public void SetSliderVal(float ratio)
-    {
+    { 
         slider.value = ratio * 100;
     }
 }

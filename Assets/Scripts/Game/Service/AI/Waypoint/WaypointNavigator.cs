@@ -44,10 +44,11 @@ namespace Service.AI
             {
 
                 WaypointInfo waypointInfo = waypointProvider.GetNextWaypoint();
-                currentWaypoint = waypointInfo.waypoint;
                 direction = waypointInfo.direction;
 
-                controller.SetDestination(currentWaypoint.GetPosition());
+                controller.SetDestination(waypointInfo.waypoint.GetPosition());
+                currentWaypoint = waypointInfo.waypoint;
+
             }
         }
 
