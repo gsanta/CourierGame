@@ -1,5 +1,4 @@
-﻿using Domain;
-using Service.AI;
+﻿using Model;
 using UnityEditor;
 using UnityEngine;
 

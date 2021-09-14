@@ -1,5 +1,5 @@
-﻿using Domain;
-using Service.AI;
+﻿using Model;
+using AI;
 
 namespace Service
 {

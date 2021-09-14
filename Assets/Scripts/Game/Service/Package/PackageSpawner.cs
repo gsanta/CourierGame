@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Model;
 
 public class PackageSpawner : BaseSpawner<PackageConfig>
 {

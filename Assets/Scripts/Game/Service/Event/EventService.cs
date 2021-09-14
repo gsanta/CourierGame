@@ -1,5 +1,4 @@
-﻿
-using Domain;
+﻿using Model;
 using System;
 using UnityEngine;
 

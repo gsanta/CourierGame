@@ -1,4 +1,4 @@
-using Domain;
+using Model;
 using System.Collections;
 using UnityEngine;
 using Zenject;

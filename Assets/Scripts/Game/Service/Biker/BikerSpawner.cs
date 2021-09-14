@@ -1,4 +1,5 @@
-﻿using Service.AI;
+﻿using Model;
+using AI;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;

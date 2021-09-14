@@ -1,5 +1,5 @@
-﻿using Domain;
-using Service.AI;
+﻿using Model;
+using AI;
 
 namespace Service
 {
@@ -31,7 +31,9 @@ namespace Service
         public override bool IsDestinationReached()
         {
             var navMeshAgent = GoapAgent.NavMeshAgent;
-            return navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
+            var ret = navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
+
+            return ret;
         }
 
         protected override WorldState[] GetPreConditions()

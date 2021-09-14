@@ -1,16 +1,16 @@
-﻿using Domain;
-using Service.AI;
+﻿using Model;
+using AI;
 using System.Collections.Generic;
 
 namespace Service
 {
-    public class AssignPackageAction : GoapAction<Biker>
+    public class ReservePackageAction : GoapAction<Biker>
     {
 
         private PackageStore packageStore;
         private readonly IDeliveryService deliveryService;
 
-        public AssignPackageAction(IGoapAgentProvider<Biker> goapAgentProvider, PackageStore packageStore, IDeliveryService deliveryService) : base(goapAgentProvider)
+        public ReservePackageAction(IGoapAgentProvider<Biker> goapAgentProvider, PackageStore packageStore, IDeliveryService deliveryService) : base(goapAgentProvider)
         {
             this.packageStore = packageStore;
             this.deliveryService = deliveryService;

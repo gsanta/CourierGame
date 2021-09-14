@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using Model;
 using UnityEngine;
 
 namespace Service

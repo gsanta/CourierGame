@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using Model;
 using System;
 
 namespace Service

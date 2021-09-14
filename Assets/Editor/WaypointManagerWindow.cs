@@ -1,4 +1,4 @@
-using Service.AI;
+using AI;
 using UnityEditor;
 using UnityEngine;
 
