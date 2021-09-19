@@ -35,7 +35,7 @@ namespace AI
             {
                 direction = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
             }
-            controller.SetDestination(currentWaypoint.GetPosition());
+            controller.SetDestination(currentWaypoint.GetRandomPosition());
         }
 
         void Update()
@@ -46,12 +46,10 @@ namespace AI
                 WaypointInfo waypointInfo = waypointProvider.GetNextWaypoint();
                 direction = waypointInfo.direction;
 
-                controller.SetDestination(waypointInfo.waypoint.GetPosition());
+                controller.SetDestination(waypointInfo.waypoint.GetRandomPosition());
                 currentWaypoint = waypointInfo.waypoint;
 
             }
         }
-
-        event EventHandler<NewWayPointCreatedEventArgs> OnNewWaypointCreated;
     }
 }
