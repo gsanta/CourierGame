@@ -1,13 +1,13 @@
 using System;
 
-public class RouteNode<T> : IComparable<RouteNode<T>>
+public class RouteNode<T> : IComparable<RouteNode<T>> where T : class
 {
     private readonly T current;
     private T previous;
     private double routeScore;
     private double estimatedScore;
 
-    public RouteNode(T current): this(current, default(T), Double.PositiveInfinity, Double.PositiveInfinity)
+    public RouteNode(T current): this(current, null, Double.PositiveInfinity, Double.PositiveInfinity)
     {
 
     }

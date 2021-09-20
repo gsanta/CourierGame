@@ -29,6 +29,7 @@ namespace AI
             branches.Add(branch);
         }
 
+        public string Id { get; set; }
         public Vector3 Position { get => transform.position; }
         public Vector3 Right { get => transform.right; }
         public Vector3 Forward { get => transform.forward; }
