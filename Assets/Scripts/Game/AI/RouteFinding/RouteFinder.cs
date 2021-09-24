@@ -1,11 +1,10 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace AI
 {
-    public class RouteFinder<TNode, TEdge> where TNode : class
+    public class RouteFinder<TNode, TEdge>
     {
         private readonly DirectedGraph<TNode, TEdge> graph;
         private readonly Scorer<TNode> nextNodeScorer;
@@ -74,7 +73,7 @@ namespace AI
             do
             {
                 route.Insert(0, currentRouteNode.Current);
-                currentRouteNode = currentRouteNode.Previous != null ? routeNodeMap[currentRouteNode.Previous] : null;
+                currentRouteNode = routeNodeMap[currentRouteNode.Previous];
             } 
             while (currentRouteNode != null);
             

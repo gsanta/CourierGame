@@ -5,7 +5,6 @@ namespace AI
 {
     public interface IWaypoint
     {
-        string Id { get; }
         Vector3 Position { get; }
         IWaypoint PrevWayPoint { get; set; }
         IWaypoint NextWayPoint { get; set; }
