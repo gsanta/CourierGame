@@ -1,11 +1,13 @@
 using AI;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class RouteFinderTests
 {
     [Test]
-    public void Simple_Route()
+    public void RouteFinderTestsSimplePasses()
     {
 
         var graphBuilder = new GraphBuilder(
@@ -21,37 +23,13 @@ public class RouteFinderTests
                 { 0, 0, 0, 0, 0, 0, 0, 0 }
             }
         );
-
         var (graph, nodes) = graphBuilder.GetGraph();
+
         var routeFinder = new RouteFinder<IntVec, object>(graph, new TestScorer(), new TestScorer());
+
         var route = routeFinder.FindRoute(nodes[(1, 3)], nodes[(4, 2)]);
 
-        Assert.That(route, Is.EquivalentTo(new List<IntVec> { new IntVec(1, 3), new IntVec(2, 3), new IntVec(3, 3), new IntVec(4, 3), new IntVec(4, 2) }));
-    }
-
-    [Test]
-    public void Complex_Route()
-    {
-
-        var graphBuilder = new GraphBuilder(
-            new int[8, 8]
-            {
-                { 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 1, 0, 0, 0 },
-                { 0, 1, 1, 1, 1, 0, 0, 0 },
-                { 0, 1, 0, 1, 0, 0, 0, 0 },
-                { 0, 1, 0, 1, 0, 0, 0, 0 },
-                { 0, 1, 1, 1, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0 }
-            }
-        );
-
-        var (graph, nodes) = graphBuilder.GetGraph();
-        var routeFinder = new RouteFinder<IntVec, object>(graph, new TestScorer(), new TestScorer());
-        var route = routeFinder.FindRoute(nodes[(2, 6)], nodes[(3, 2)]);
-
-        Assert.That(route, Is.EquivalentTo(new List<IntVec> { new IntVec(2, 6), new IntVec(3, 6), new IntVec(3, 5), new IntVec(3, 4), new IntVec(3, 3), new IntVec(3, 2) }));
+        Assert.AreEqual(5, route.Count);
     }
 }
 
@@ -69,19 +47,6 @@ class IntVec
     public override string ToString()
     {
         return x + ":" + y;
-    }
-
-    public override bool Equals(object obj)
-    {
-        return this.x == (obj as IntVec).x && this.y == (obj as IntVec).y;
-    }
-
-    public override int GetHashCode()
-    {
-        int hashCode = 1502939027;
-        hashCode = hashCode * -1521134295 + x.GetHashCode();
-        hashCode = hashCode * -1521134295 + y.GetHashCode();
-        return hashCode;
     }
 }
 
