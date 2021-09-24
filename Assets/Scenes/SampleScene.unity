@@ -338,10 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 0}
-  nextWaypoint: {fileID: 722662063}
   width: 4.67
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -475,10 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 933074035}
-  nextWaypoint: {fileID: 0}
   width: 3.8
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -1161,7 +1155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ec6cc33ef1e4a468e34d2fbae640a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pedestriansToSpawn: 50
+  pedestriansToSpawn: 1
 --- !u!1001 &100616643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3553,10 +3547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 1634030307}
-  nextWaypoint: {fileID: 1477562706}
   width: 3.8
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -3673,10 +3664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 701323812}
-  nextWaypoint: {fileID: 0}
   width: 3.68
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -5354,10 +5342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 1477562706}
-  nextWaypoint: {fileID: 933074035}
   width: 3.8
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -5838,10 +5823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 1959849823}
-  nextWaypoint: {fileID: 772562561}
   width: 1.77
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -6204,10 +6186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 2027962561}
-  nextWaypoint: {fileID: 701323812}
   width: 5
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -6934,10 +6913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 625507477}
-  nextWaypoint: {fileID: 333205027}
   width: 4.5
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -7226,10 +7202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 24925964}
-  nextWaypoint: {fileID: 911212319}
   width: 4.61
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -7544,10 +7517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 1702647072}
-  nextWaypoint: {fileID: 1959849823}
   width: 1.77
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -8143,10 +8113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 572244198}
-  nextWaypoint: {fileID: 0}
   width: 1.77
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -9469,10 +9436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 722662063}
-  nextWaypoint: {fileID: 985740721}
   width: 5
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -9658,10 +9622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 517438651}
-  nextWaypoint: {fileID: 49073075}
   width: 3.8
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -10178,10 +10139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 911212319}
-  nextWaypoint: {fileID: 2099548462}
   width: 5
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -11062,10 +11020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 1958474776}
-  nextWaypoint: {fileID: 2024605823}
   width: 3.8
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -13411,10 +13366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 1656649182}
-  nextWaypoint: {fileID: 1860518975}
   width: 5
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -13461,10 +13413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 321030530}
-  nextWaypoint: {fileID: 517438651}
   width: 3.8
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -14854,11 +14803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 2024605823}
-  nextWaypoint: {fileID: 321030530}
   width: 3.8
-  branches:
-  - {fileID: 24925964}
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -14989,10 +14934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 2099548462}
-  nextWaypoint: {fileID: 1472930488}
   width: 5
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -15438,10 +15380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 0}
-  nextWaypoint: {fileID: 738198960}
   width: 1.77
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -16931,10 +16870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 1472930488}
-  nextWaypoint: {fileID: 2027962561}
   width: 5
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -17871,10 +17807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 0}
-  nextWaypoint: {fileID: 1082114243}
   width: 3.8
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -17907,10 +17840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 738198960}
-  nextWaypoint: {fileID: 572244198}
   width: 1.77
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -19397,10 +19327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 1082114243}
-  nextWaypoint: {fileID: 1634030307}
   width: 3.8
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -19452,10 +19379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 1860518975}
-  nextWaypoint: {fileID: 625507477}
   width: 5
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
@@ -19836,10 +19760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176501e6a6e15ad4facc28071c2fc01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 985740721}
-  nextWaypoint: {fileID: 1656649182}
   width: 5
-  branches: []
   leftMargin: 0
   rightMargin: 0
   branchRatio: 0.5
