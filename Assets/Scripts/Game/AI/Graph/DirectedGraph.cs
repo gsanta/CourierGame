@@ -33,10 +33,9 @@ namespace AI
         }
 
         public bool ContainsNode(TNode node) => adjacencyList.ContainsKey(node);
+        public IEnumerable<Edge<TNode, TEdgeData>> OutgouingEdges(TNode source) => new AdjacencyList(this, source);
 
-        public IEnumerable<TNode> OutgoingNodes(TNode source) => new AdjacencyList(this, source); 
-        
-        public class AdjacencyListEnumerator : IEnumerator<TNode>
+        public class AdjacencyListEnumerator : IEnumerator<Edge<TNode, TEdgeData>>
         {
             private readonly DirectedGraph<TNode, TEdgeData> g;
             private TNode source;
@@ -51,7 +50,7 @@ namespace AI
                 current = list;
             }
 
-            public TNode Current
+            public Edge<TNode, TEdgeData> Current
             {
                 get
                 {
@@ -60,7 +59,7 @@ namespace AI
                         throw new InvalidOperationException();
                     }
 
-                    return current.Data;
+                    return new Edge<TNode, TEdgeData>(source, current.Data, g.edges[new Tuple<TNode, TNode>(this.source, this.current.Data)]);
                 }
             }
 
@@ -87,7 +86,7 @@ namespace AI
             }
         }
 
-        public class AdjacencyList : IEnumerable<TNode>
+        public class AdjacencyList : IEnumerable<Edge<TNode, TEdgeData>>
         {
             private readonly DirectedGraph<TNode, TEdgeData> g;
             private readonly TNode source;
@@ -98,7 +97,7 @@ namespace AI
                 this.source = source;
             }
 
-            public IEnumerator<TNode> GetEnumerator() => new AdjacencyListEnumerator(g, source);
+            public IEnumerator<Edge<TNode, TEdgeData>> GetEnumerator() => new AdjacencyListEnumerator(g, source);
 
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
