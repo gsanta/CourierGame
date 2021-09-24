@@ -10,13 +10,6 @@ namespace AI
         private readonly Scorer<TNode> nextNodeScorer;
         private readonly Scorer<TNode> targetScorer;
 
-        public RouteFinder(DirectedGraph<TNode, TEdge> graph, Scorer<TNode> nextNodeScorer, Scorer<TNode> targetScorer)
-        {
-            this.graph = graph;
-            this.nextNodeScorer = nextNodeScorer;
-            this.targetScorer = targetScorer;
-        }
-
         public List<TNode> FindRoute(TNode from, TNode to)
         {
             PriorityQueue<RouteNode<TNode>> openSet = new PriorityQueue<RouteNode<TNode>>();

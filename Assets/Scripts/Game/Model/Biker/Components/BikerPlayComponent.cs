@@ -65,11 +65,13 @@ namespace Model
                     return;
                 }
 
+                Package deliveryPackage;
                 if (Biker.GetPackage().Status == DeliveryStatus.RESERVED)
                 {
                     deliveryService.AssignPackage(Biker.GetPackage());
                 }
                 else if (Biker.GetPackage().Status == DeliveryStatus.ASSIGNED)
+                //else if (packageStore.GetPackageWithinPickupRange(Biker, out deliveryPackage))
                 {
                     deliveryService.DeliverPackage(Biker.GetPackage(), true);
                 }

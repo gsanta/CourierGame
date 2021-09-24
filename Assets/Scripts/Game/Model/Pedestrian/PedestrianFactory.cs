@@ -7,9 +7,9 @@ namespace Model
     public class PedestrianFactory : MonoBehaviour, ItemFactory<PedestrianConfig, Pedestrian>
     {
         [SerializeField]
-        private Pedestrian pedestrianPrefab = null;
+        private Pedestrian pedestrianPrefab;
         [SerializeField]
-        public GameObject pedestrianContainer = null;
+        private GameObject pedestrianContainer;
 
         private PedestrianStore pedestrianStore;
         private BikerStore bikerStore;

@@ -1,0 +1,16 @@
+{
+    "name": "AI_UnitTests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:066164ba3fd981444bb820e2cc1a9a6a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

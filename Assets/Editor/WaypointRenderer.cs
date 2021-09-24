@@ -20,21 +20,21 @@ namespace Editor
             DrawCenterPoint();
             DrawLine();
 
-            if (waypoint.PrevWayPoint != null)
+            if (waypoint.previousWaypoint != null)
             {
                 DrawRightBorder();
 
-                if (waypoint.rightMargin != 0 || waypoint.PrevWayPoint.RightMargin != 0)
+                if (waypoint.rightMargin != 0 || waypoint.previousWaypoint.rightMargin != 0)
                 {
                     DrawRightMargin();
                 }
             }
 
-            if (waypoint.NextWayPoint!= null)
+            if (waypoint.nextWaypoint != null)
             {
                 DrawLeftBorder();
 
-                if (waypoint.leftMargin != 0 || waypoint.NextWayPoint.LeftMargin != 0)
+                if (waypoint.leftMargin != 0 || waypoint.nextWaypoint.leftMargin != 0)
                 {
                     DrawLeftMargin();
                 }
@@ -85,19 +85,19 @@ namespace Editor
             Vector3 offset = GetRightOffset();
             Vector3 offsetTo = GetRightOffsetTo();
 
-            Gizmos.DrawLine(waypoint.transform.position + offset, waypoint.PrevWayPoint.Position + offsetTo);
+            Gizmos.DrawLine(waypoint.transform.position + offset, waypoint.previousWaypoint.transform.position + offsetTo);
         }
 
         private void DrawRightMargin()
         {
             Gizmos.color = LightRed;
 
-            IWaypoint previousWaypoint = waypoint.PrevWayPoint;
+            Waypoint previousWaypoint = waypoint.previousWaypoint;
 
             Vector3 offset = GetRightOffset() + waypoint.transform.right * waypoint.rightMargin;
-            Vector3 offsetTo = GetRightOffsetTo() + previousWaypoint.Right * previousWaypoint.RightMargin;
+            Vector3 offsetTo = GetRightOffsetTo() + previousWaypoint.transform.right * previousWaypoint.rightMargin;
 
-            Gizmos.DrawLine(waypoint.transform.position + offset, waypoint.PrevWayPoint.Position + offsetTo);
+            Gizmos.DrawLine(waypoint.transform.position + offset, waypoint.previousWaypoint.transform.position + offsetTo);
         }
 
         private Vector3 GetRightOffset()
@@ -107,28 +107,28 @@ namespace Editor
 
         private Vector3 GetRightOffsetTo()
         {
-            return waypoint.PrevWayPoint.Right * waypoint.PrevWayPoint.Width / 2f;
+            return waypoint.previousWaypoint.transform.right * waypoint.previousWaypoint.width / 2f;
         }
 
         private void DrawLeftBorder()
         {
             Gizmos.color = Color.green;
             Vector3 offset = -waypoint.transform.right * waypoint.width / 2f;
-            Vector3 offsetTo = -waypoint.NextWayPoint.Right * waypoint.NextWayPoint.Width / 2;
+            Vector3 offsetTo = -waypoint.nextWaypoint.transform.right * waypoint.nextWaypoint.width / 2;
 
-            Gizmos.DrawLine(waypoint.transform.position + offset, waypoint.NextWayPoint.Position + offsetTo);
+            Gizmos.DrawLine(waypoint.transform.position + offset, waypoint.nextWaypoint.transform.position + offsetTo);
         }
 
         private void DrawLeftMargin()
         {
             Gizmos.color = LightGreen;
 
-            IWaypoint nextWaypoint = waypoint.NextWayPoint;
+            Waypoint nextWaypoint = waypoint.nextWaypoint;
 
             Vector3 offset = GetLeftOffset() - waypoint.transform.right * waypoint.leftMargin;
-            Vector3 offsetTo = GetLeftOffsetTo(waypoint) - nextWaypoint.Right * nextWaypoint.LeftMargin;
+            Vector3 offsetTo = GetLeftOffsetTo(waypoint) - nextWaypoint.transform.right * nextWaypoint.leftMargin;
 
-            Gizmos.DrawLine(waypoint.transform.position + offset, waypoint.NextWayPoint.Position + offsetTo);
+            Gizmos.DrawLine(waypoint.transform.position + offset, waypoint.nextWaypoint.transform.position + offsetTo);
         }
 
         private Vector3 GetLeftOffset()
@@ -138,7 +138,7 @@ namespace Editor
 
         private Vector3 GetLeftOffsetTo(Waypoint waypoint)
         {
-            return -waypoint.NextWayPoint.Right * waypoint.NextWayPoint.Width / 2f;
+            return -waypoint.nextWaypoint.transform.right * waypoint.nextWaypoint.width / 2f;
         }
 
         private void DrawBranches()
