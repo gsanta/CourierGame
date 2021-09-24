@@ -21,7 +21,7 @@ namespace Service
 
         void Start()
         {
-            InitPreExistingObjects();
+            //InitPreExistingObjects();
             StartCoroutine(Spawn());
         }
 

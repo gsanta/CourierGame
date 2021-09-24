@@ -5,8 +5,10 @@ namespace AI
 {
     public class Waypoint : MonoBehaviour, IWaypoint
     {
-        private IWaypoint previousWaypoint;
-        private IWaypoint nextWaypoint;
+        [SerializeField]
+        private Waypoint previousWaypoint;
+        [SerializeField]
+        private Waypoint nextWaypoint;
 
         [Range(0f, 5f)]
         public float width = 1f;
@@ -19,8 +21,8 @@ namespace AI
         [Range(0f, 1f)]
         public float branchRatio = 0.5f;
 
-        public IWaypoint PrevWayPoint { get => previousWaypoint; set => previousWaypoint = value; }
-        public IWaypoint NextWayPoint { get => nextWaypoint; set => nextWaypoint = value; }
+        public IWaypoint PrevWayPoint { get => previousWaypoint; set => previousWaypoint = (Waypoint) value; }
+        public IWaypoint NextWayPoint { get => nextWaypoint; set => nextWaypoint = (Waypoint) value; }
 
         public List<IWaypoint> Branches { get => branches; }
 
