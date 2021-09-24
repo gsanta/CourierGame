@@ -34,45 +34,45 @@ namespace AI
 
         private WaypointInfo GetBranchWaypoint(Waypoint currentWaypoint, int direction)
         {
-            Waypoint newWaypoint = currentWaypoint.branches[UnityEngine.Random.Range(0, currentWaypoint.branches.Count - 1)];
+            IWaypoint newWaypoint = currentWaypoint.Branches[UnityEngine.Random.Range(0, currentWaypoint.branches.Count - 1)];
 
-            return new WaypointInfo(newWaypoint, direction);
+            return new WaypointInfo((Waypoint)newWaypoint, direction);
         }
 
-        private WaypointInfo GetNextWaypoint(Waypoint currentWaypoint, int direction)
+        private WaypointInfo GetNextWaypoint(IWaypoint currentWaypoint, int direction)
         {
-            Waypoint newWaypoint;
+            IWaypoint newWaypoint;
             int newDirection = direction;
 
-            if (currentWaypoint.nextWaypoint != null)
+            if (currentWaypoint.NextWayPoint != null)
             {
-                newWaypoint = currentWaypoint.nextWaypoint;
+                newWaypoint = currentWaypoint.NextWayPoint;
             }
             else
             {
-                newWaypoint = currentWaypoint.previousWaypoint;
+                newWaypoint = currentWaypoint.PrevWayPoint;
                 newDirection = 1;
             }
 
-            return new WaypointInfo(newWaypoint, newDirection);
+            return new WaypointInfo((Waypoint)newWaypoint, newDirection);
         }
 
-        private WaypointInfo GetPrevWaypoint(Waypoint currentWaypoint, int direction)
+        private WaypointInfo GetPrevWaypoint(IWaypoint currentWaypoint, int direction)
         {
-            Waypoint newWaypoint;
+            IWaypoint newWaypoint;
             int newDirection = direction;
 
-            if (currentWaypoint.previousWaypoint != null)
+            if (currentWaypoint.PrevWayPoint != null)
             {
-                newWaypoint = currentWaypoint.previousWaypoint;
+                newWaypoint = currentWaypoint.PrevWayPoint;
             }
             else
             {
-                newWaypoint = currentWaypoint.nextWaypoint;
+                newWaypoint = currentWaypoint.NextWayPoint;
                 newDirection = 0;
             }
 
-            return new WaypointInfo(newWaypoint, newDirection);
+            return new WaypointInfo((Waypoint)newWaypoint, newDirection);
         }
 
         private bool ShouldBranch(Waypoint currentWaypoint)
