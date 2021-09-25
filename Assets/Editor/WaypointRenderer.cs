@@ -92,7 +92,7 @@ namespace Editor
         {
             Gizmos.color = LightRed;
 
-            IWaypoint previousWaypoint = waypoint.PrevWayPoint;
+            Waypoint previousWaypoint = waypoint.PrevWayPoint;
 
             Vector3 offset = GetRightOffset() + waypoint.transform.right * waypoint.rightMargin;
             Vector3 offsetTo = GetRightOffsetTo() + previousWaypoint.Right * previousWaypoint.RightMargin;
@@ -123,7 +123,7 @@ namespace Editor
         {
             Gizmos.color = LightGreen;
 
-            IWaypoint nextWaypoint = waypoint.NextWayPoint;
+            Waypoint nextWaypoint = waypoint.NextWayPoint;
 
             Vector3 offset = GetLeftOffset() - waypoint.transform.right * waypoint.leftMargin;
             Vector3 offsetTo = GetLeftOffsetTo(waypoint) - nextWaypoint.Right * nextWaypoint.LeftMargin;

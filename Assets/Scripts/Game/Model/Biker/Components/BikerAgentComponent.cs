@@ -17,12 +17,14 @@ namespace Model
         private IDeliveryService deliveryService;
         private bool isActivated = false;
         private PackageStore2 packageStore2;
+        private RouteAction routeAction;
 
-        public void Construct(PackageStore packageStore, IDeliveryService deliveryService, PackageStore2 packageStore2)
+        public void Construct(PackageStore packageStore, IDeliveryService deliveryService, PackageStore2 packageStore2, RouteAction routeAction)
         {
             this.packageStore = packageStore;
             this.deliveryService = deliveryService;
             this.packageStore2 = packageStore2;
+            this.routeAction = routeAction;
         }
 
         public GoapAgent<Biker> GoapAgent { get => goapAgent; }
@@ -55,7 +57,8 @@ namespace Model
             actions.Add(new ReservePackageAction(this, packageStore, deliveryService));
             actions.Add(new DeliverPackageAction(this, deliveryService));
             actions.Add(new PickUpPackageAction(this, deliveryService));
-            actions.Add(new RouteAction(this, deliveryService, packageStore2));
+            actions.Add(routeAction);
+            routeAction.SetAgent(this);
 
             goapAgent = new GoapAgent<Biker>(agentId, this, actions, goals);
         }

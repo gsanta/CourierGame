@@ -1,23 +1,41 @@
 ﻿using Model;
 using AI;
 using Delivery;
+using Road;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Service
 {
-    class RouteAction : GoapAction<Biker>
+    public class RouteAction : GoapAction<Biker>
     {
         private readonly IDeliveryService deliveryService;
         private readonly PackageStore2 packageStore;
+        private readonly RoadStore roadStore;
 
-        public RouteAction(IGoapAgentProvider<Biker> agent, IDeliveryService deliveryService, PackageStore2 packageStore) : base(agent)
+        public RouteAction(IDeliveryService deliveryService, PackageStore2 packageStore, RoadStore roadStore) : base(null)
         {
             this.deliveryService = deliveryService;
             this.packageStore = packageStore;
+            this.roadStore = roadStore;
+        }
+
+        public void SetAgent(IGoapAgentProvider<Biker> agent)
+        {
+            this.agent = agent;
         }
 
         public override bool PrePerform()
         {
             DirectedGraph<Waypoint, object> graph = new DirectedGraph<Waypoint, object>();
+            RouteFinder<Waypoint, object> routeFinder = new RouteFinder<Waypoint, object>(graph, new WaypointScorer(), new WaypointScorer());
+            WaypointGraphBuilder builder = new WaypointGraphBuilder();
+            builder.BuildGraph(this.roadStore.Waypoints, graph);
+            NearestItemCalc<Transform, Waypoint> nearestItemCalc = new NearestItemCalc<Transform, Waypoint>(x => x.position, x => x.transform.position);
+            
+            var nearestToBiker = nearestItemCalc.GetNearest(agent.GetGoapAgent().Parent.transform, roadStore.Waypoints);
+            var nearestToPackage = nearestItemCalc.GetNearest(packageStore.Packages[0].transform, roadStore.Waypoints);
+            var route = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
             //Biker courierAgent = GoapAgent.Parent;
             //target = courierAgent.GetPackage().gameObject;
 

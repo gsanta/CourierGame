@@ -1,5 +1,6 @@
 using Delivery;
 using Model;
+using Road;
 using Service;
 using UI;
 using UnityEngine;
@@ -45,6 +46,9 @@ public class MainInstaller : MonoInstaller
 
     [SerializeField]
     private PackageStore2 packageStore2;
+
+    [SerializeField]
+    private RoadStore roadStore;
 
     public override void InstallBindings()
     {
@@ -92,6 +96,11 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PedestrianFactory>().FromInstance(pedestrianFactory).AsSingle();
 
         Container.Bind<PackageStore2>().FromInstance(packageStore2).AsSingle();
+
+        Container.Bind<RoadStore>().FromInstance(roadStore).AsSingle();
+
+        // actions
+        Container.Bind<RouteAction>().AsTransient();
     }
     override public void Start()
     {

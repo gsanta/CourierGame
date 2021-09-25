@@ -15,16 +15,16 @@ namespace AI
         public WorldStates agentBeliefs;
         public bool running = false;
 
-        private IGoapAgentProvider<T> goapAgentProvider;
+        protected IGoapAgentProvider<T> agent;
 
-        public GoapAction(IGoapAgentProvider<T> goapAgentProvider)
+        public GoapAction(IGoapAgentProvider<T> agent)
         {
-            this.goapAgentProvider = goapAgentProvider;
+            this.agent = agent;
             preConditionsDict = new Dictionary<string, int>();
             effectsDict = new Dictionary<string, int>();
         }
 
-        public GoapAgent<T> GoapAgent { get => goapAgentProvider.GetGoapAgent(); }
+        public GoapAgent<T> GoapAgent { get => agent.GetGoapAgent(); }
 
         public void Init()
         {

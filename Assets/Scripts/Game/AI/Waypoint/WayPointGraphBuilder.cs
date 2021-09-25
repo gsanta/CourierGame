@@ -6,7 +6,7 @@ namespace AI
     public class WaypointGraphBuilder
     {
 
-        public void BuildGraph(List<IWaypoint> waypoints, DirectedGraph<IWaypoint, object> graph)
+        public void BuildGraph(List<Waypoint> waypoints, DirectedGraph<Waypoint, object> graph)
         {
             waypoints.ForEach(waypoint =>
             {
@@ -27,7 +27,7 @@ namespace AI
             });
         }
 
-        private void AddEdge(DirectedGraph<IWaypoint, object> graph, IWaypoint wp1, IWaypoint wp2)
+        private void AddEdge(DirectedGraph<Waypoint, object> graph, Waypoint wp1, Waypoint wp2)
         {
             graph.AddEdge(wp1, wp2, Waypoint.Distance(wp1, wp2));
         }

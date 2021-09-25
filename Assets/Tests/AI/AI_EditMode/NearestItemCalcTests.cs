@@ -16,17 +16,9 @@ public class NearestItemCalcTests
             new Vector3(0, 0, 5)
         };
 
-        NearestItemCalc<Vector3> calc = new NearestItemCalc<Vector3>(new TestConverter());
+        NearestItemCalc<Vector3, Vector3> calc = new NearestItemCalc<Vector3, Vector3>(x => x, x => x);
 
         var nearestItem = calc.GetNearest(item, items);
         Assert.AreEqual(nearestItem, items[1]);
-    }
-
-    class TestConverter : ItemToPositionConverter<Vector3>
-    {
-        public Vector3 GetPosition(Vector3 item)
-        {
-            return item;
-        }
     }
 }

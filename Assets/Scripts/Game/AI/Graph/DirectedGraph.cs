@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AI
 {
@@ -8,6 +9,7 @@ namespace AI
     {
         private Dictionary<TNode, LinkedListCell<TNode>> adjacencyList = new Dictionary<TNode, LinkedListCell<TNode>>();
         private Dictionary<Tuple<TNode, TNode>, TEdgeData> edges = new Dictionary<Tuple<TNode, TNode>, TEdgeData>();
+        private ISet<TNode> nodes = new HashSet<TNode>();
 
         public void AddEdge(TNode source, TNode dest, TEdgeData value)
         {
@@ -16,6 +18,10 @@ namespace AI
             {
                 throw new ArgumentException();
             }
+
+            nodes.Add(source);
+            nodes.Add(dest);
+
             edges.Add(key, value);
             LinkedListCell<TNode> linkedListCell;
 
@@ -31,6 +37,10 @@ namespace AI
                 adjacencyList.Add(dest, null);
             }
         }
+
+        public List<Tuple<TNode, TNode>> Edges { get => edges.Keys.ToList(); }
+
+        public ISet<TNode> Nodes { get => nodes; }
 
         public bool ContainsNode(TNode node) => adjacencyList.ContainsKey(node);
 

@@ -8,13 +8,13 @@ public class WaypointGraphBuilderTests
     [Test]
     public void WaypointGraphBuilderTestsSimplePasses()
     {
-        var waypoint = Substitute.For<IWaypoint>();
-        waypoint.Branches.Returns(new List<IWaypoint>());
+        var waypoint = Substitute.For<Waypoint>();
+        waypoint.Branches.Returns(new List<Waypoint>());
 
-        var waypoints = new List<IWaypoint> { waypoint };
+        var waypoints = new List<Waypoint> { waypoint };
 
         var graphBuilder = new WaypointGraphBuilder();
-        var graph = new DirectedGraph<IWaypoint, object>();
+        var graph = new DirectedGraph<Waypoint, object>();
 
         graphBuilder.BuildGraph(waypoints, graph);
 

@@ -34,14 +34,14 @@ namespace AI
 
         private WaypointInfo GetBranchWaypoint(Waypoint currentWaypoint, int direction)
         {
-            IWaypoint newWaypoint = currentWaypoint.Branches[UnityEngine.Random.Range(0, currentWaypoint.branches.Count - 1)];
+            Waypoint newWaypoint = currentWaypoint.Branches[UnityEngine.Random.Range(0, currentWaypoint.branches.Count - 1)];
 
             return new WaypointInfo((Waypoint)newWaypoint, direction);
         }
 
-        private WaypointInfo GetNextWaypoint(IWaypoint currentWaypoint, int direction)
+        private WaypointInfo GetNextWaypoint(Waypoint currentWaypoint, int direction)
         {
-            IWaypoint newWaypoint;
+            Waypoint newWaypoint;
             int newDirection = direction;
 
             if (currentWaypoint.NextWayPoint != null)
@@ -57,9 +57,9 @@ namespace AI
             return new WaypointInfo((Waypoint)newWaypoint, newDirection);
         }
 
-        private WaypointInfo GetPrevWaypoint(IWaypoint currentWaypoint, int direction)
+        private WaypointInfo GetPrevWaypoint(Waypoint currentWaypoint, int direction)
         {
-            IWaypoint newWaypoint;
+            Waypoint newWaypoint;
             int newDirection = direction;
 
             if (currentWaypoint.PrevWayPoint != null)
@@ -79,7 +79,7 @@ namespace AI
         {
             if (currentWaypoint.branches != null && currentWaypoint.branches.Count > 0)
             {
-                return UnityEngine.Random.Range(0f, 1f) <= currentWaypoint.branchRatio ? true : false;
+                return Random.Range(0f, 1f) <= currentWaypoint.branchRatio ? true : false;
             }
 
             return false;

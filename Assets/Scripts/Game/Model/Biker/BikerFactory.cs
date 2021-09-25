@@ -1,4 +1,6 @@
 ﻿using Delivery;
+using Road;
+using Service;
 using UnityEngine;
 using Zenject;
 
@@ -16,9 +18,10 @@ namespace Model
         private PedestrianStore pedestrianStore;
         private Timer timer;
         private PackageStore2 packageStore2;
+        private RouteAction routeAction;
 
         [Inject]
-        public void Construct(BikerStore bikerStore, PedestrianStore pedestrianStore, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler, Timer timer, PackageStore2 packageStore2)
+        public void Construct(BikerStore bikerStore, PedestrianStore pedestrianStore, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler, Timer timer, PackageStore2 packageStore2, RouteAction routeAction)
         {
             this.bikerStore = bikerStore;
             this.eventService = eventService;
@@ -28,6 +31,7 @@ namespace Model
             this.pedestrianStore = pedestrianStore;
             this.timer = timer;
             this.packageStore2 = packageStore2;
+            this.routeAction = routeAction;
         }
 
         public Biker Create(BikerConfig config)
@@ -35,7 +39,7 @@ namespace Model
             Biker newBiker = Instantiate(bikerStore.BikerTemplate);
             newBiker.Construct(eventService);
 
-            newBiker.GetComponent<BikerAgentComponent>().Construct(packageStore, deliveryService, packageStore2);
+            newBiker.GetComponent<BikerAgentComponent>().Construct(packageStore, deliveryService, packageStore2, routeAction);
             newBiker.GetComponent<BikerPlayComponent>().Construct(packageStore, inputHandler, deliveryService);
             newBiker.GetComponent<SteeringComponent>().Construct(pedestrianStore, bikerStore, timer);
 

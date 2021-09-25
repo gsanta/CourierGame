@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AI
 {
-    public class Waypoint : MonoBehaviour, IWaypoint
+    public class Waypoint : MonoBehaviour
     {
         [SerializeField]
         private Waypoint previousWaypoint;
@@ -12,7 +12,7 @@ namespace AI
 
         [Range(0f, 5f)]
         public float width = 1f;
-        public List<IWaypoint> branches = new List<IWaypoint>();
+        public List<Waypoint> branches = new List<Waypoint>();
 
         [Range(0f, 3f)]
         public float leftMargin = 0f;
@@ -21,10 +21,10 @@ namespace AI
         [Range(0f, 1f)]
         public float branchRatio = 0.5f;
 
-        public IWaypoint PrevWayPoint { get => previousWaypoint; set => previousWaypoint = (Waypoint) value; }
-        public IWaypoint NextWayPoint { get => nextWaypoint; set => nextWaypoint = (Waypoint) value; }
+        public Waypoint PrevWayPoint { get => previousWaypoint; set => previousWaypoint = (Waypoint) value; }
+        public Waypoint NextWayPoint { get => nextWaypoint; set => nextWaypoint = (Waypoint) value; }
 
-        public List<IWaypoint> Branches { get => branches; }
+        public List<Waypoint> Branches { get => branches; }
 
         public void AddBranch(Waypoint branch)
         {
@@ -47,7 +47,7 @@ namespace AI
             return Vector3.Lerp(minBound, maxBound, UnityEngine.Random.Range(0f, 1f));
         }
 
-        public static float Distance(IWaypoint wp1, IWaypoint wp2)
+        public static float Distance(Waypoint wp1, Waypoint wp2)
         {
             return Vector3.Distance(wp1.Position, wp2.Position);
         }
