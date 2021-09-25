@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
+using Delivery;
 
 namespace Model
 {
@@ -15,11 +16,13 @@ namespace Model
         private PackageStore packageStore;
         private IDeliveryService deliveryService;
         private bool isActivated = false;
+        private PackageStore2 packageStore2;
 
-        public void Construct(PackageStore packageStore, IDeliveryService deliveryService)
+        public void Construct(PackageStore packageStore, IDeliveryService deliveryService, PackageStore2 packageStore2)
         {
             this.packageStore = packageStore;
             this.deliveryService = deliveryService;
+            this.packageStore2 = packageStore2;
         }
 
         public GoapAgent<Biker> GoapAgent { get => goapAgent; }
@@ -44,13 +47,15 @@ namespace Model
         private void Start()
         {
             Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
-            goals.Add(new SubGoal("isPackageDropped", 1, true), 3);
+            //goals.Add(new SubGoal("isPackageDropped", 1, true), 3);
+            goals.Add(new SubGoal("isTestFinished", 1, true), 3);
 
             List<GoapAction<Biker>> actions = new List<GoapAction<Biker>>();
 
             actions.Add(new ReservePackageAction(this, packageStore, deliveryService));
             actions.Add(new DeliverPackageAction(this, deliveryService));
             actions.Add(new PickUpPackageAction(this, deliveryService));
+            actions.Add(new RouteAction(this, deliveryService, packageStore2));
 
             goapAgent = new GoapAgent<Biker>(agentId, this, actions, goals);
         }

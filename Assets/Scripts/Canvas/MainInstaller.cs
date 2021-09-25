@@ -1,3 +1,4 @@
+using Delivery;
 using Model;
 using Service;
 using UI;
@@ -41,6 +42,9 @@ public class MainInstaller : MonoInstaller
     private PedestrianSpawner pedestrianSpawner;
     [SerializeField]
     private PedestrianFactory pedestrianFactory;
+
+    [SerializeField]
+    private PackageStore2 packageStore2;
 
     public override void InstallBindings()
     {
@@ -86,6 +90,8 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PedestrianSpawner>().FromInstance(pedestrianSpawner).AsSingle();
         Container.Bind<PedestrianStore>().AsSingle();
         Container.Bind<PedestrianFactory>().FromInstance(pedestrianFactory).AsSingle();
+
+        Container.Bind<PackageStore2>().FromInstance(packageStore2).AsSingle();
     }
     override public void Start()
     {

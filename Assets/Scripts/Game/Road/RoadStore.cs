@@ -1,0 +1,6 @@
+﻿namespace Road
+{
+    class RoadStore
+    {
+    }
+}

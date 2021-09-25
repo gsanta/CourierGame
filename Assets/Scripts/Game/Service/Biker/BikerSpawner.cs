@@ -28,7 +28,8 @@ namespace Service
 
             for (int i = 0; i < 1; i++)
             {
-                GameObject spawnPoint = ChooseSpawnPoint(usedSpawnPoints);
+                //GameObject spawnPoint = ChooseSpawnPoint(usedSpawnPoints);
+                GameObject spawnPoint = bikerStore.SpawnPoints[2];
                 BikerConfig config = new BikerConfig(spawnPoint, new SubGoal("isPackageDropped", 1, true), $"Courier-{i}");
                 Biker courier = bikerFactory.Create(config);
                 bikerStore.Add(courier);

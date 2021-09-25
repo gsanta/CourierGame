@@ -62,5 +62,7 @@ namespace AI
         public abstract bool PostPerform();
         public abstract bool PostAbort();
         public abstract bool IsDestinationReached();
+
+        public virtual void Update() { }
     }
 }
