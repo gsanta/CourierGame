@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Delivery;
+using System;
 
 namespace Model
 {

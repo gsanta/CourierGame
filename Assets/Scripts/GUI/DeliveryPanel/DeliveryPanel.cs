@@ -1,11 +1,11 @@
+using Bikers;
+using Delivery;
+using Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using UI;
-using System.Collections;
-using Service;
-using Model;
 
 namespace UI
 {
