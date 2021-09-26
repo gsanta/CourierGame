@@ -16,6 +16,11 @@ namespace Service
         private Queue<Waypoint> route;
         private Vector3 currentTarget;
 
+        private DirectedGraph<Waypoint, object> graph;
+        private RouteFinder<Waypoint, object> routeFinder;
+        private NearestItemCalc<Transform, Waypoint> nearestItemCalc;
+        private int packageIndex = 0;
+
         public RouteAction(IDeliveryService deliveryService, PackageStore2 packageStore, RoadStore roadStore) : base(null)
         {
             this.deliveryService = deliveryService;
@@ -30,16 +35,13 @@ namespace Service
 
         public override bool PrePerform()
         {
-            DirectedGraph<Waypoint, object> graph = new DirectedGraph<Waypoint, object>();
-            RouteFinder<Waypoint, object> routeFinder = new RouteFinder<Waypoint, object>(graph, new WaypointScorer(), new WaypointScorer());
+            graph = new DirectedGraph<Waypoint, object>();
+            routeFinder = new RouteFinder<Waypoint, object>(graph, new WaypointScorer(), new WaypointScorer());
             WaypointGraphBuilder builder = new WaypointGraphBuilder();
             builder.BuildGraph(this.roadStore.Waypoints, graph);
-            NearestItemCalc<Transform, Waypoint> nearestItemCalc = new NearestItemCalc<Transform, Waypoint>(x => x.position, x => x.transform.position);
-            
-            var nearestToBiker = nearestItemCalc.GetNearest(agent.GetGoapAgent().Parent.transform, roadStore.Waypoints);
-            var nearestToPackage = nearestItemCalc.GetNearest(packageStore.Packages[0].transform, roadStore.Waypoints);
-            var routeNodes = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
-            route = new Queue<Waypoint>(routeNodes);
+            nearestItemCalc = new NearestItemCalc<Transform, Waypoint>(x => x.position, x => x.transform.position);
+
+            SetupDestination();
             //Biker courierAgent = GoapAgent.Parent;
 
             UpdateDestination();
@@ -92,10 +94,24 @@ namespace Service
 
                 NavMeshAgent navMeshAgent = agent.GetGoapAgent().NavMeshAgent;
                 navMeshAgent.SetDestination(currentTarget);
-            } else
+            } else if (packageIndex < 3)
+            {
+                SetupDestination();
+                UpdateDestination();
+            }
+            else
             {
                 finished = true;
             }
+        }
+
+        private void SetupDestination()
+        {
+            var nearestToBiker = nearestItemCalc.GetNearest(agent.GetGoapAgent().Parent.transform, roadStore.Waypoints);
+            var nearestToPackage = nearestItemCalc.GetNearest(packageStore.Packages[packageIndex].transform, roadStore.Waypoints);
+            var routeNodes = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
+            route = new Queue<Waypoint>(routeNodes);
+            packageIndex++;
         }
     }
 }

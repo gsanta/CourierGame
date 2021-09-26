@@ -56,6 +56,11 @@ public class WaypointManagerWindow : EditorWindow
                 CreateWaypointAfter();
             }
 
+            if (GUILayout.Button("Create Waypoint After (single direction)"))
+            {
+                CreateWaypointAfter();
+            }
+
             if (GUILayout.Button("Remove Waypoint"))
             {
                 RemoveWaypoint();

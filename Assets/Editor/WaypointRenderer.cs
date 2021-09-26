@@ -33,6 +33,7 @@ namespace Editor
             if (waypoint.NextWayPoint != null)
             {
                 DrawLeftBorder();
+                DrawArrow();
 
                 if (waypoint.leftMargin != 0 || waypoint.NextWayPoint.LeftMargin != 0)
                 {
@@ -147,6 +148,24 @@ namespace Editor
             {
                 Gizmos.color = Color.blue;
                 Gizmos.DrawLine(waypoint.transform.position, branch.transform.position);
+            }
+        }
+
+        private void DrawArrow()
+        {
+            Gizmos.color = Color.blue;
+
+            Waypoint nextWaypoint = waypoint.NextWayPoint;
+
+            if (waypoint.direction == 1)
+            {
+                ArrowDrawer.ForGizmo(waypoint.transform.position, nextWaypoint.transform.position);
+            } else if (waypoint.direction == -1)
+            {
+                ArrowDrawer.ForGizmo(nextWaypoint.transform.position, waypoint.transform.position);
+            } else
+            {
+                Gizmos.DrawLine(waypoint.transform.position, nextWaypoint.transform.position);
             }
         }
     }

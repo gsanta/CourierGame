@@ -14,6 +14,9 @@ namespace AI
         public float width = 1f;
         public List<Waypoint> branches = new List<Waypoint>();
 
+        [Range(-1, 1)]
+        public int direction = 0;
+
         [Range(0f, 3f)]
         public float leftMargin = 0f;
         [Range(0f, 3f)]

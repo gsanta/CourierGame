@@ -10,12 +10,12 @@ namespace AI
         {
             waypoints.ForEach(waypoint =>
             {
-                if (waypoint.PrevWayPoint != null)
+                if (waypoint.PrevWayPoint != null && waypoint.direction != 1)
                 {
                     AddEdge(graph, waypoint, waypoint.PrevWayPoint);
                 }
 
-                if (waypoint.NextWayPoint != null)
+                if (waypoint.NextWayPoint != null && waypoint.direction != -1)
                 {
                     AddEdge(graph, waypoint, waypoint.NextWayPoint);
                 }
