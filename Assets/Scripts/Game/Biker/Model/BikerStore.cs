@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Model
+namespace Bikers
 {
     public class BikerStore : MonoBehaviour
     {

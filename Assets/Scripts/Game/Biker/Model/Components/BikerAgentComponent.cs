@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 using Delivery;
+using Model;
 
-namespace Model
+namespace Bikers
 {
     public class BikerAgentComponent : MonoBehaviour, IGoapAgentInjections<Biker>, IGoapAgentProvider<Biker>
     {

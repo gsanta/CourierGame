@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Model;
 using UnityEngine;
 using Zenject;
 
-namespace Model
+namespace Bikers
 {
     public class BikerPlayComponent : MonoBehaviour
     {

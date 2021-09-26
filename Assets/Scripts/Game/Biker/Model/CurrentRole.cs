@@ -1,6 +1,6 @@
 ﻿
 
-namespace Model
+namespace Bikers
 {
     public enum CurrentRole
     {

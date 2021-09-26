@@ -1,7 +1,7 @@
 ﻿using AI;
 using UnityEngine;
 
-namespace Model
+namespace Bikers
 {
     public struct BikerConfig
     {

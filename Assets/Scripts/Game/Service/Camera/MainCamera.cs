@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Bikers;
+using Model;
 using System;
 using UnityEngine;
 using Zenject;

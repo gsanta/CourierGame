@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bikers;
+using System;
 
 namespace Model
 {

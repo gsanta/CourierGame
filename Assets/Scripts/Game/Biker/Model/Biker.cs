@@ -2,8 +2,9 @@
 using UnityEngine.AI;
 using Zenject;
 using System;
+using Model;
 
-namespace Model
+namespace Bikers
 {
     public class Biker : MonoBehaviour
     {

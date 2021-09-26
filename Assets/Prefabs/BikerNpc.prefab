@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 954592312787651774}
   - component: {fileID: 954592312787651773}
   - component: {fileID: -358788667383095460}
-  - component: {fileID: 1321874488}
+  - component: {fileID: 8391117010172028948}
   - component: {fileID: 8472538161976676045}
   - component: {fileID: -5063781984719222902}
   - component: {fileID: 882821763048665921}
@@ -127,7 +127,7 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1321874488
+--- !u!114 &8391117010172028948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,11 +136,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 954592312787651769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 926a9681d6645cd49a57da679bb90d23, type: 3}
+  m_Script: {fileID: 11500000, guid: 05b2eb21959f73848be96d5fe8ddf4bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   viewPoint: {fileID: 954592314089168290}
-  charController: {fileID: 5175631968212648827}
+  charController: {fileID: 0}
   packageHolder: {fileID: 4864236468026608713}
   package: {fileID: 0}
 --- !u!114 &8472538161976676045

@@ -1,10 +1,10 @@
 ﻿using Delivery;
-using Road;
+using Model;
 using Service;
 using UnityEngine;
 using Zenject;
 
-namespace Model
+namespace Bikers
 {
     public class BikerFactory : MonoBehaviour, ItemFactory<BikerConfig, Biker>
     {

@@ -1,4 +1,4 @@
-using Model;
+using Bikers;
 using UnityEngine;
 using Zenject;
 public class BikerService : MonoBehaviour
