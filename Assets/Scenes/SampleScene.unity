@@ -1157,7 +1157,7 @@ GameObject:
   - component: {fileID: 93388789}
   - component: {fileID: 93388790}
   m_Layer: 0
-  m_Name: Waypoints
+  m_Name: Pedestrian Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1170,7 +1170,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 93388788}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.51, y: 0, z: -38.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1181,8 +1181,8 @@ Transform:
   - {fileID: 422663032}
   - {fileID: 2053604566}
   - {fileID: 1966844452}
-  m_Father: {fileID: 665503638}
-  m_RootOrder: 2
+  m_Father: {fileID: 388617303}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &93388790
 MonoBehaviour:
@@ -4500,6 +4500,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368540969}
   m_CullTransparentMesh: 1
+--- !u!1 &375125143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 375125144}
+  - component: {fileID: 375125145}
+  m_Layer: 7
+  m_Name: Biker Store
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &375125144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375125143}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2131461161}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &375125145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375125143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de046679545e77247ae452770785099d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints:
+  - {fileID: 382273325}
+  - {fileID: 1942322427}
+  - {fileID: 2078862036}
+  - {fileID: 1921474649}
+  - {fileID: 1758675055}
+  bikerTemplate: {fileID: 413390577}
 --- !u!1 &376211555 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8263614866213562171, guid: 94009449ec02b5549ab32345f2f3a407, type: 3}
@@ -4542,10 +4592,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 93388789}
   - {fileID: 1912692953}
   - {fileID: 990445927}
   m_Father: {fileID: 665503638}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &389581282
 PrefabInstance:
@@ -7519,7 +7570,6 @@ Transform:
   m_Children:
   - {fileID: 1778988335}
   - {fileID: 1690603880}
-  - {fileID: 93388789}
   - {fileID: 2131461161}
   - {fileID: 388617303}
   - {fileID: 1925892937}
@@ -11288,7 +11338,7 @@ Transform:
   m_Children:
   - {fileID: 552876171}
   m_Father: {fileID: 388617303}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &992204296
 PrefabInstance:
@@ -16332,7 +16382,7 @@ MonoBehaviour:
   inputHandler: {fileID: 199176769}
   packageStore: {fileID: 1778988336}
   packageFactory: {fileID: 530680680}
-  bikerStore: {fileID: 2131461162}
+  bikerStore: {fileID: 375125145}
   bikerFactory: {fileID: 1321825635}
   bikerService: {fileID: 1374839191}
   bikerPanel: {fileID: 204935617}
@@ -19174,7 +19224,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 388617303}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1912692954
 MonoBehaviour:
@@ -19370,7 +19420,7 @@ Transform:
   - {fileID: 507511998}
   - {fileID: 1684318939}
   m_Father: {fileID: 665503638}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1927628546 stripped
 Transform:
@@ -22291,7 +22341,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2131461161}
-  - component: {fileID: 2131461162}
   m_Layer: 7
   m_Name: Bikers
   m_TagString: Untagged
@@ -22315,28 +22364,10 @@ Transform:
   - {fileID: 1803532696}
   - {fileID: 1321825636}
   - {fileID: 1374839192}
+  - {fileID: 375125144}
   m_Father: {fileID: 665503638}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2131461162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2131461160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de046679545e77247ae452770785099d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPoints:
-  - {fileID: 382273325}
-  - {fileID: 1942322427}
-  - {fileID: 2078862036}
-  - {fileID: 1921474649}
-  - {fileID: 1758675055}
-  bikerTemplate: {fileID: 413390577}
 --- !u!4 &2139904833 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e3fbb77151ff78948a8691bd8025039a, type: 3}

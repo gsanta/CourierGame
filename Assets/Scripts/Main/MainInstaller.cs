@@ -106,11 +106,15 @@ public class MainInstaller : MonoInstaller
     {
         base.Start();
 
+        Invoke("RunSetups", 0.5f);
+    }
+
+    private void RunSetups()
+    {
         BikerSetup bikerSetup = Container.Resolve<BikerSetup>();
         bikerSetup.Setup();
         Container.Resolve<DayService>();
         Container.Resolve<MinimapPackageProvider>();
         Container.Resolve<MinimapPackageConsumer>();
-
     }
 }

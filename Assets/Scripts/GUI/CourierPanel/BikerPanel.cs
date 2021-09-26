@@ -30,11 +30,11 @@ namespace UI
 
         void Start()
         {
-            bikerStore.OnBikerAdded += HandleCourierAdded;
+            bikerStore.OnBikerAdded += handleBikerAdded;
             eventService.BikerCurrentRoleChanged += HandleBikerRoleChanged;
         }
 
-        private void HandleCourierAdded(object sender, CourierAddedEventArgs args)
+        private void handleBikerAdded(object sender, CourierAddedEventArgs args)
         {
             Biker courier = args.Courier;
 
