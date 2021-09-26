@@ -16441,10 +16441,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1912692952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42791d1060972d04cb39d1e66b666f1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c89555a53ad5fd4181af190e5caa0e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pedestrianPrefab: {fileID: 7435900608642692240, guid: bb931d0b9d4ebb34cb397cf8f193a393, type: 3}
+  pedestrianPrefab: {fileID: 2902610570975193907, guid: bb931d0b9d4ebb34cb397cf8f193a393, type: 3}
   pedestrianContainer: {fileID: 990445926}
 --- !u!1001 &1916067720
 PrefabInstance:

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-namespace Model
+namespace Pedestrians
 {
     public class Pedestrian : MonoBehaviour
     {

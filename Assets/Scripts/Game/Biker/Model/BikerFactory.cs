@@ -1,6 +1,6 @@
 ﻿using Delivery;
 using Model;
-using Service;
+using Pedestrians;
 using UnityEngine;
 using Zenject;
 

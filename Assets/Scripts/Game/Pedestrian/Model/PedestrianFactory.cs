@@ -1,9 +1,10 @@
 ﻿using AI;
 using Bikers;
+using Model;
 using UnityEngine;
 using Zenject;
 
-namespace Model
+namespace Pedestrians
 {
     public class PedestrianFactory : MonoBehaviour, ItemFactory<PedestrianConfig, Pedestrian>
     {

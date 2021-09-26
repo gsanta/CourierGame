@@ -1,6 +1,7 @@
 using Bikers;
 using Delivery;
 using Model;
+using Pedestrians;
 using Road;
 using Service;
 using UI;

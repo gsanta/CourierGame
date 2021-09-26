@@ -1,5 +1,6 @@
 ﻿using AI;
 using Bikers;
+using Pedestrians;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

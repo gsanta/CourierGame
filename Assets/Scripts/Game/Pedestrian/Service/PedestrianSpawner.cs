@@ -1,9 +1,8 @@
-using Model;
 using System.Collections;
 using UnityEngine;
 using Zenject;
 
-namespace Service
+namespace Pedestrians
 {
     public class PedestrianSpawner : MonoBehaviour
     {
