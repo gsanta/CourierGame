@@ -15,7 +15,7 @@ namespace Service
         public override bool PrePerform()
         {
             Biker courierAgent = GoapAgent.Parent;
-            target = courierAgent.GetPackage().gameObject;
+            target = courierAgent.GetPackage().gameObject.transform.position;
 
             return true;
         }
@@ -28,12 +28,10 @@ namespace Service
             return true;
         }
 
-        public override bool IsDestinationReached()
+        public override void Update()
         {
             var navMeshAgent = GoapAgent.NavMeshAgent;
-            var ret = navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
-
-            return ret;
+            finished = navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
         }
 
         protected override WorldState[] GetPreConditions()

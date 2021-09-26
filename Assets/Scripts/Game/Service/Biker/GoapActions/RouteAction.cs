@@ -4,6 +4,7 @@ using Delivery;
 using Road;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Service
 {
@@ -12,6 +13,8 @@ namespace Service
         private readonly IDeliveryService deliveryService;
         private readonly PackageStore2 packageStore;
         private readonly RoadStore roadStore;
+        private Queue<Waypoint> route;
+        private Vector3 currentTarget;
 
         public RouteAction(IDeliveryService deliveryService, PackageStore2 packageStore, RoadStore roadStore) : base(null)
         {
@@ -35,9 +38,11 @@ namespace Service
             
             var nearestToBiker = nearestItemCalc.GetNearest(agent.GetGoapAgent().Parent.transform, roadStore.Waypoints);
             var nearestToPackage = nearestItemCalc.GetNearest(packageStore.Packages[0].transform, roadStore.Waypoints);
-            var route = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
+            var routeNodes = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
+            route = new Queue<Waypoint>(routeNodes);
             //Biker courierAgent = GoapAgent.Parent;
-            //target = courierAgent.GetPackage().gameObject;
+
+            UpdateDestination();
 
             return true;
         }
@@ -47,15 +52,6 @@ namespace Service
 
             //Package package = courierAgent.GetPackage();
             //deliveryService.AssignPackage(package);
-            return true;
-        }
-
-        public override bool IsDestinationReached()
-        {
-            //var navMeshAgent = GoapAgent.NavMeshAgent;
-            //var ret = navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
-
-            //return ret;
             return true;
         }
 
@@ -72,6 +68,34 @@ namespace Service
         public override bool PostAbort()
         {
             return true;
+        }
+
+        public override void Update()
+        {
+            if (IsDestinationReached())
+            {
+                UpdateDestination();
+            }
+        }
+
+        private bool IsDestinationReached()
+        {
+            var navMeshAgent = GoapAgent.NavMeshAgent;
+            return navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
+        }
+
+        private void UpdateDestination()
+        {
+            if (route.Count > 0)
+            {
+                currentTarget = route.Dequeue().transform.position;
+
+                NavMeshAgent navMeshAgent = agent.GetGoapAgent().NavMeshAgent;
+                navMeshAgent.SetDestination(currentTarget);
+            } else
+            {
+                finished = true;
+            }
         }
     }
 }

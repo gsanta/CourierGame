@@ -18,7 +18,7 @@ namespace Service
             Package package = courierAgent.GetPackage();
             package.Target.gameObject.SetActive(true);
 
-            target = package.Target.gameObject;
+            target = package.Target.gameObject.transform.position;
 
             return true;
         }
@@ -37,10 +37,10 @@ namespace Service
             return true;
         }
 
-        public override bool IsDestinationReached()
+        public override void Update()
         {
             var navMeshAgent = GoapAgent.NavMeshAgent;
-            return navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
+            finished = navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
         }
 
         protected override WorldState[] GetPreConditions()

@@ -7,13 +7,15 @@ namespace AI
     {
         public string actionName = "Action";
         public float cost = 1.0f;
-        public GameObject target;
+        public Vector3 target;
         public string targetTag;
         public float duration = 1;
         public Dictionary<string, int> preConditionsDict;
         public Dictionary<string, int> effectsDict;
         public WorldStates agentBeliefs;
+
         public bool running = false;
+        protected bool finished = false;
 
         protected IGoapAgentProvider<T> agent;
 
@@ -23,6 +25,8 @@ namespace AI
             preConditionsDict = new Dictionary<string, int>();
             effectsDict = new Dictionary<string, int>();
         }
+
+        public bool Finished { get => finished; }
 
         public GoapAgent<T> GoapAgent { get => agent.GetGoapAgent(); }
 
@@ -61,8 +65,6 @@ namespace AI
         public abstract bool PrePerform();
         public abstract bool PostPerform();
         public abstract bool PostAbort();
-        public abstract bool IsDestinationReached();
-
         public virtual void Update() { }
     }
 }

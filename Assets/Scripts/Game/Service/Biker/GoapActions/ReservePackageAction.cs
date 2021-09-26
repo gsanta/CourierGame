@@ -16,9 +16,9 @@ namespace Service
             this.deliveryService = deliveryService;
         }
 
-        public override bool IsDestinationReached()
+        public override void Update()
         {
-            return true;
+            finished = true;
         }
 
         public override bool PostAbort()
@@ -40,7 +40,7 @@ namespace Service
 
                 deliveryService.ReservePackage(selectedPackage, GoapAgent.Parent);
 
-                target = selectedPackage.gameObject;
+                target = selectedPackage.gameObject.transform.position;
 
                 return true;
             }

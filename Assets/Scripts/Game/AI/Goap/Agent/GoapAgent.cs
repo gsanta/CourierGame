@@ -83,11 +83,10 @@ namespace AI
                 {
                     currentAction.running = true;
 
-                    if (currentAction.target != null)
-                    {
-                        NavMeshAgent navMeshAgent = goapAgentInjections.GetNavMeshAgent();
-                        navMeshAgent.SetDestination(currentAction.target.transform.position);
-                    }
+                    //if (currentAction.target != null)
+                    //{
+
+                    //}
                 }
                 else
                 {
@@ -97,7 +96,9 @@ namespace AI
             }
             else
             {
-                if (currentAction.IsDestinationReached())
+                currentAction.Update();
+
+                if (currentAction.Finished)
                 {
                     if (!invoked)
                     {
