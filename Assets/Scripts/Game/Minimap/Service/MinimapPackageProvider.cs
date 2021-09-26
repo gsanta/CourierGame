@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-namespace Service
+namespace Minimap
 {
     public class MinimapPackageProvider
     {

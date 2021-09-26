@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace Service
+namespace Cameras
 {
     public class MainCamera : MonoBehaviour
     {

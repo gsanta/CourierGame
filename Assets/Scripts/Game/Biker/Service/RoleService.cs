@@ -1,9 +1,8 @@
-﻿using Bikers;
-using Delivery;
+﻿using Delivery;
 using Model;
 using Zenject;
 
-namespace Service
+namespace Bikers
 {
     public class RoleService
     {

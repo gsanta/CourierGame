@@ -1,8 +1,7 @@
 ﻿using Bikers;
-using Model;
 using System;
 
-namespace Service
+namespace Times
 {
     public class DayService
     {

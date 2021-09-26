@@ -41,7 +41,6 @@ namespace Bikers
 
             newBiker.GetComponent<BikerAgentComponent>().Construct(packageStore, deliveryService, packageStore2, routeAction);
             newBiker.GetComponent<BikerPlayComponent>().Construct(packageStore, inputHandler, deliveryService);
-            newBiker.GetComponent<SteeringComponent>().Construct(pedestrianStore, bikerStore, timer);
 
             newBiker.transform.position = config.spawnPoint.transform.position;
             newBiker.SetName(config.name);

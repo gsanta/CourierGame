@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Model
+namespace Minimap
 {
     public class MinimapStore
     {

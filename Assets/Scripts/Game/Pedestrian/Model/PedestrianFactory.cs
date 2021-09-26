@@ -30,7 +30,6 @@ namespace Pedestrians
         public Pedestrian Create(PedestrianConfig config)
         {
             Pedestrian pedestrian = Instantiate(pedestrianPrefab, pedestrianContainer.transform);
-            Initialize(pedestrian);
             Transform child = config.spawnPoint.transform;
             pedestrian.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
             pedestrian.transform.position = child.position;
@@ -40,13 +39,7 @@ namespace Pedestrians
 
         public void InitializeObj(Pedestrian pedestrian)
         {
-            Initialize(pedestrian);
             pedestrian.transform.position = pedestrian.GetComponent<WaypointNavigator>().currentWaypoint.transform.position;
-        }
-
-        private void Initialize(Pedestrian pedestrian)
-        {
-            pedestrian.GetComponent<SteeringComponent>().Construct(pedestrianStore, bikerStore, timer);
         }
     }
 }

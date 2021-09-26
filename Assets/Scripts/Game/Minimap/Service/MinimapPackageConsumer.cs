@@ -1,8 +1,7 @@
 ﻿using Delivery;
-using Model;
 using System;
 
-namespace Service
+namespace Minimap
 {
     public class MinimapPackageConsumer
     {

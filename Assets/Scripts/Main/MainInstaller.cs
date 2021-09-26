@@ -1,9 +1,12 @@
 using Bikers;
+using Cameras;
 using Delivery;
+using Minimap;
 using Model;
 using Pedestrians;
 using Road;
 using Service;
+using Times;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -72,7 +75,6 @@ public class MainInstaller : MonoInstaller
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
         Container.BindFactory<Object, BikerAgentComponent, BikerAgentComponent.Factory>().FromFactory<PrefabFactory<BikerAgentComponent>>();
         Container.BindFactory<Object, BikerPlayComponent, BikerPlayComponent.Factory>().FromFactory<PrefabFactory<BikerPlayComponent>>();
-        Container.BindFactory<Object, SteeringComponent, SteeringComponent.Factory>().FromFactory<PrefabFactory<SteeringComponent>>();
         Container.BindFactory<Object, Pedestrian, Pedestrian.Factory>().FromFactory<PrefabFactory<Pedestrian>>();
 
         Container.Bind<PackageStore>().FromInstance(packageStore).AsSingle();
