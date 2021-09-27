@@ -12,13 +12,15 @@ namespace Delivery
     {
 
         private Timer timer;
-        private PackageStore packageStore;
+        private readonly PackageStore packageStore;
+        private PackageSpawnPointStore packageSpawnPointStore;
         private ItemFactory<PackageConfig, Package> packageFactory;
 
-        public PackageSpawner(Timer timer, PackageStore packageStore, ItemFactory<PackageConfig, Package> packageFactory)
+        public PackageSpawner(Timer timer, PackageStore packageStore, PackageSpawnPointStore packageSpawnPointStore, ItemFactory<PackageConfig, Package> packageFactory)
         {
             this.timer = timer;
             this.packageStore = packageStore;
+            this.packageSpawnPointStore = packageSpawnPointStore;
             this.packageFactory = packageFactory;
             StartSpawning();
         }
@@ -67,7 +69,7 @@ namespace Delivery
             List<Package> occupiedPackages = packageStore.GetPackagesOfStatus(DeliveryStatus.UNASSIGNED, DeliveryStatus.ASSIGNED);
             List<GameObject> occupiedSpawnPoints = occupiedPackages.Select(package => package.SpawnPoint).ToList();
 
-            GameObject[] freeSpawnPoints = Array.FindAll(packageStore.PackageSpawnPoints, spawnPoint => !occupiedSpawnPoints.Contains(spawnPoint));
+            List<GameObject> freeSpawnPoints = packageSpawnPointStore.GetAll().FindAll(spawnPoint => !occupiedSpawnPoints.Contains(spawnPoint));
 
             return new List<GameObject>(freeSpawnPoints);
         }

@@ -12,10 +12,6 @@ namespace Delivery
         private List<Package> packages = new List<Package>();
 
         [SerializeField]
-        private GameObject[] packageSpawnPoints;
-        [SerializeField]
-        private GameObject[] packageTargetPoints;
-        [SerializeField]
         private Package packageTemplate;
         [SerializeField]
         private GameObject packageTargetTemplate;
@@ -23,16 +19,6 @@ namespace Delivery
         private GameObject packageMinimapTemplate;
         [SerializeField]
         private GameObject packageTargetMinimapTemplate;
-
-        public GameObject[] PackageSpawnPoints
-        {
-            get => packageSpawnPoints;
-        }
-
-        public GameObject[] PackageTargetPoints
-        {
-            get => packageTargetPoints;
-        }
 
         public Package PackageTemplate
         {
@@ -114,16 +100,6 @@ namespace Delivery
         {
             PackageTemplate.gameObject.SetActive(false);
             PackageMinimapTemplate.SetActive(false);
-
-            foreach (GameObject spawnPoint in PackageSpawnPoints)
-            {
-                spawnPoint.SetActive(false);
-            }
-
-            foreach (GameObject target in packageTargetPoints)
-            {
-                target.gameObject.SetActive(false);
-            }
         }
     }
 

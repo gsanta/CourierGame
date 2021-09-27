@@ -30,6 +30,10 @@ public class MainInstaller : MonoInstaller
     [SerializeField]
     private PackageStore packageStore;
     [SerializeField]
+    private PackageSpawnPointStore packageSpawnPointStore;
+    [SerializeField]
+    private PackageTargetPointStore packageTargetPointStore;
+    [SerializeField]
     private PackageFactory packageFactory;
 
     [SerializeField]
@@ -78,6 +82,8 @@ public class MainInstaller : MonoInstaller
         Container.BindFactory<Object, Pedestrian, Pedestrian.Factory>().FromFactory<PrefabFactory<Pedestrian>>();
 
         Container.Bind<PackageStore>().FromInstance(packageStore).AsSingle();
+        Container.Bind<PackageSpawnPointStore>().FromInstance(packageSpawnPointStore).AsSingle();
+        Container.Bind<PackageTargetPointStore>().FromInstance(packageTargetPointStore).AsSingle();
         Container.Bind<ISpawner<PackageConfig>>().To<PackageSpawner>().AsSingle().NonLazy();
         Container.Bind<ItemFactory<PackageConfig, Package>>().To<PackageFactory>().FromInstance(packageFactory).AsSingle();
         Container.BindFactory<Object, Package, Package.Factory>().FromFactory<PrefabFactory<Package>>();

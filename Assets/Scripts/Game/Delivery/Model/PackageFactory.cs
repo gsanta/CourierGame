@@ -8,14 +8,17 @@ namespace Delivery
 
         private Package.Factory instanceFactory;
         private PackageStore packageStore;
+        private PackageSpawnPointStore packageSpawnPointStore;
+        private PackageTargetPointStore packageTargetPointStore;
 
         private int packageCounter = 0;
 
         [Inject]
-        public void Construct(Package.Factory instanceFactory, PackageStore packageStore)
+        public void Construct(Package.Factory instanceFactory, PackageSpawnPointStore packageSpawnPointStore, PackageTargetPointStore packageTargetPointStore)
         {
             this.instanceFactory = instanceFactory;
-            this.packageStore = packageStore;
+            this.packageSpawnPointStore = packageSpawnPointStore;
+            this.packageTargetPointStore = packageTargetPointStore;
         }
 
         public Package Create(PackageConfig packageConfig)
@@ -49,12 +52,12 @@ namespace Delivery
 
         public Transform GetSpawnPosition()
         {
-            return packageStore.PackageSpawnPoints[Random.Range(0, packageStore.PackageSpawnPoints.Length)].transform;
+            return packageSpawnPointStore.GetAll()[Random.Range(0, packageSpawnPointStore.Size)].transform;
         }
 
         public GameObject GetTargetPoint()
         {
-            return packageStore.PackageTargetPoints[Random.Range(0, packageStore.PackageTargetPoints.Length)];
+            return packageTargetPointStore.GetAll()[Random.Range(0, packageTargetPointStore.Size)];
         }
     }
 }

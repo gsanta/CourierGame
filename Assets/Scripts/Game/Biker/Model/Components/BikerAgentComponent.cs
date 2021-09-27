@@ -50,8 +50,8 @@ namespace Bikers
         private void Start()
         {
             Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
-            //goals.Add(new SubGoal("isPackageDropped", 1, true), 3);
-            goals.Add(new SubGoal("isTestFinished", 1, true), 3);
+            goals.Add(new SubGoal("isPackageDropped", 1, true), 3);
+            //goals.Add(new SubGoal("isTestFinished", 1, true), 3);
 
             List<GoapAction<Biker>> actions = new List<GoapAction<Biker>>();
 
