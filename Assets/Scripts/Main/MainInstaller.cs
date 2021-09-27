@@ -4,7 +4,7 @@ using Delivery;
 using Minimap;
 using Model;
 using Pedestrians;
-using Road;
+using Route;
 using Service;
 using Times;
 using UI;
@@ -108,6 +108,8 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PackageStore2>().FromInstance(packageStore2).AsSingle();
 
         Container.Bind<RoadStore>().FromInstance(roadStore).AsSingle();
+        Container.Bind<RouteFacade>().AsSingle();
+        Container.Bind<RouteSetup>().AsSingle().NonLazy();
 
         // actions
         Container.Bind<RouteAction>().AsTransient();

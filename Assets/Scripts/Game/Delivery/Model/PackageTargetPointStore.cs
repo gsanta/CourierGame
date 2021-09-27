@@ -15,7 +15,7 @@ namespace Delivery
         {
             foreach (Transform child in container.transform)
             {
-                var obj = child.GetComponent<GameObject>();
+                var obj = child.gameObject;
                 obj.SetActive(false);
                 spawnPoints.Add(obj);
             }

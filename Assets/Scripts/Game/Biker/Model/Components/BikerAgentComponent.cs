@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using Zenject;
 using Delivery;
 using Model;
+using Route;
 
 namespace Bikers
 {
@@ -19,13 +20,15 @@ namespace Bikers
         private bool isActivated = false;
         private PackageStore2 packageStore2;
         private RouteAction routeAction;
+        private RouteFacade routeFacade;
 
-        public void Construct(PackageStore packageStore, IDeliveryService deliveryService, PackageStore2 packageStore2, RouteAction routeAction)
+        public void Construct(PackageStore packageStore, IDeliveryService deliveryService, PackageStore2 packageStore2, RouteAction routeAction, RouteFacade routeFacade)
         {
             this.packageStore = packageStore;
             this.deliveryService = deliveryService;
             this.packageStore2 = packageStore2;
             this.routeAction = routeAction;
+            this.routeFacade = routeFacade;
         }
 
         public GoapAgent<Biker> GoapAgent { get => goapAgent; }
@@ -57,7 +60,7 @@ namespace Bikers
 
             actions.Add(new ReservePackageAction(this, packageStore, deliveryService));
             actions.Add(new DeliverPackageAction(this, deliveryService));
-            actions.Add(new PickUpPackageAction(this, deliveryService));
+            actions.Add(new PickUpPackageAction(this, deliveryService, routeFacade));
             actions.Add(routeAction);
             routeAction.SetAgent(this);
 

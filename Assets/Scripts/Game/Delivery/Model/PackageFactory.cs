@@ -14,9 +14,10 @@ namespace Delivery
         private int packageCounter = 0;
 
         [Inject]
-        public void Construct(Package.Factory instanceFactory, PackageSpawnPointStore packageSpawnPointStore, PackageTargetPointStore packageTargetPointStore)
+        public void Construct(Package.Factory instanceFactory, PackageStore packageStore, PackageSpawnPointStore packageSpawnPointStore, PackageTargetPointStore packageTargetPointStore)
         {
             this.instanceFactory = instanceFactory;
+            this.packageStore = packageStore;
             this.packageSpawnPointStore = packageSpawnPointStore;
             this.packageTargetPointStore = packageTargetPointStore;
         }

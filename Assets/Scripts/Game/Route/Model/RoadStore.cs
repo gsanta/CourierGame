@@ -1,8 +1,9 @@
 ﻿using AI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Road
+namespace Route
 {
     public class RoadStore : MonoBehaviour
     {
@@ -16,8 +17,12 @@ namespace Road
             {
                 waypoints.Add(obj.GetComponent<Waypoint>());
             }
+
+            Initialized?.Invoke(this, EventArgs.Empty);
         }
 
         public List<Waypoint> Waypoints { get => waypoints; }
+
+        public event EventHandler Initialized;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AI;
 using Delivery;
-using Road;
+using Route;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,19 +12,21 @@ namespace Bikers
         private readonly IDeliveryService deliveryService;
         private readonly PackageStore2 packageStore;
         private readonly RoadStore roadStore;
+        private readonly RouteFacade routeFacade;
         private Queue<Waypoint> route;
         private Vector3 currentTarget;
 
-        private DirectedGraph<Waypoint, object> graph;
-        private RouteFinder<Waypoint, object> routeFinder;
-        private NearestItemCalc<Transform, Waypoint> nearestItemCalc;
+        //private DirectedGraph<Waypoint, object> graph;
+        //private RouteFinder<Waypoint, object> routeFinder;
+        //private NearestItemCalc<Transform, Waypoint> nearestItemCalc;
         private int packageIndex = 0;
 
-        public RouteAction(IDeliveryService deliveryService, PackageStore2 packageStore, RoadStore roadStore) : base(null)
+        public RouteAction(IDeliveryService deliveryService, PackageStore2 packageStore, RoadStore roadStore, RouteFacade routeFacade) : base(null)
         {
             this.deliveryService = deliveryService;
             this.packageStore = packageStore;
             this.roadStore = roadStore;
+            this.routeFacade = routeFacade;
         }
 
         public void SetAgent(IGoapAgentProvider<Biker> agent)
@@ -34,11 +36,11 @@ namespace Bikers
 
         public override bool PrePerform()
         {
-            graph = new DirectedGraph<Waypoint, object>();
-            routeFinder = new RouteFinder<Waypoint, object>(graph, new WaypointScorer(), new WaypointScorer());
-            WaypointGraphBuilder builder = new WaypointGraphBuilder();
-            builder.BuildGraph(this.roadStore.Waypoints, graph);
-            nearestItemCalc = new NearestItemCalc<Transform, Waypoint>(x => x.position, x => x.transform.position);
+            //graph = new DirectedGraph<Waypoint, object>();
+            //routeFinder = new RouteFinder<Waypoint, object>(graph, new WaypointScorer(), new WaypointScorer());
+            //WaypointGraphBuilder builder = new WaypointGraphBuilder();
+            //builder.BuildGraph(this.roadStore.Waypoints, graph);
+            //nearestItemCalc = new NearestItemCalc<Transform, Waypoint>(x => x.position, x => x.transform.position);
 
             SetupDestination();
             //Biker courierAgent = GoapAgent.Parent;
@@ -106,10 +108,13 @@ namespace Bikers
 
         private void SetupDestination()
         {
-            var nearestToBiker = nearestItemCalc.GetNearest(agent.GetGoapAgent().Parent.transform, roadStore.Waypoints);
-            var nearestToPackage = nearestItemCalc.GetNearest(packageStore.Packages[packageIndex].transform, roadStore.Waypoints);
-            var routeNodes = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
-            route = new Queue<Waypoint>(routeNodes);
+            var from = agent.GetGoapAgent().Parent.transform;
+            var to = packageStore.Packages[packageIndex].transform;
+            //var nearestToBiker = nearestItemCalc.GetNearest(agent.GetGoapAgent().Parent.transform, roadStore.Waypoints);
+            //var nearestToPackage = nearestItemCalc.GetNearest(packageStore.Packages[packageIndex].transform, roadStore.Waypoints);
+            //var routeNodes = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
+            //route = new Queue<Waypoint>(routeNodes);
+            route = routeFacade.BuildRoute(from, to);
             packageIndex++;
         }
     }

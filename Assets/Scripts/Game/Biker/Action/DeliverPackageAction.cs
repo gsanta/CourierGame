@@ -1,14 +1,14 @@
 ﻿using Model;
 using AI;
 using Delivery;
+using UnityEngine.AI;
 
 namespace Bikers
 {
-    class PickUpPackageAction : GoapAction<Biker>
+    class DeliverPackageAction : GoapAction<Biker>
     {
-        private readonly IDeliveryService deliveryService;
-
-        public PickUpPackageAction(IGoapAgentProvider<Biker> agent, IDeliveryService deliveryService) : base(agent)
+        private IDeliveryService deliveryService;
+        public DeliverPackageAction(IGoapAgentProvider<Biker> agent, IDeliveryService deliveryService) : base(agent)
         {
             this.deliveryService = deliveryService;
         }
@@ -16,16 +16,29 @@ namespace Bikers
         public override bool PrePerform()
         {
             Biker courierAgent = GoapAgent.Parent;
-            target = courierAgent.GetPackage().gameObject.transform.position;
+
+            Package package = courierAgent.GetPackage();
+            package.Target.gameObject.SetActive(true);
+
+            target = package.Target.gameObject.transform.position;
+
+            NavMeshAgent navMeshAgent = agent.GetGoapAgent().NavMeshAgent;
+            navMeshAgent.SetDestination(target);
 
             return true;
         }
+
         public override bool PostPerform()
         {
             Biker courierAgent = GoapAgent.Parent;
 
             Package package = courierAgent.GetPackage();
-            deliveryService.AssignPackage(package);
+
+            deliveryService.DeliverPackage(package, false);
+
+            SubGoal s1 = new SubGoal("isPackageDropped", 1, true);
+            GoapAgent.goals.Add(s1, 3);
+
             return true;
         }
 
@@ -37,12 +50,12 @@ namespace Bikers
 
         protected override WorldState[] GetPreConditions()
         {
-            return new WorldState[] { new WorldState("isPackageReserved", 3) };
+            return new WorldState[] { new WorldState("isPackagePickedUp", 3) };
         }
 
         protected override WorldState[] GetAfterEffects()
         {
-            return new WorldState[] { new WorldState("isPackagePickedUp", 3) };
+            return new WorldState[] { new WorldState("isPackageDropped", 3) };
         }
 
         public override bool PostAbort()
