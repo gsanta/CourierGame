@@ -15,20 +15,12 @@ namespace Bikers
         [SerializeField]
         private string agentId;
         private GoapAgent<Biker> goapAgent;
-        private PackageStore packageStore;
-        private IDeliveryService deliveryService;
         private bool isActivated = false;
-        private PackageStore2 packageStore2;
-        private RouteAction routeAction;
-        private RouteFacade routeFacade;
+        private BikerActionProvider bikerActionProvider;
 
-        public void Construct(PackageStore packageStore, IDeliveryService deliveryService, PackageStore2 packageStore2, RouteAction routeAction, RouteFacade routeFacade)
+        public void Construct(BikerActionProvider bikerActionProvider)
         {
-            this.packageStore = packageStore;
-            this.deliveryService = deliveryService;
-            this.packageStore2 = packageStore2;
-            this.routeAction = routeAction;
-            this.routeFacade = routeFacade;
+            this.bikerActionProvider = bikerActionProvider;
         }
 
         public GoapAgent<Biker> GoapAgent { get => goapAgent; }
@@ -56,13 +48,7 @@ namespace Bikers
             goals.Add(new SubGoal("isPackageDropped", 1, true), 3);
             //goals.Add(new SubGoal("isTestFinished", 1, true), 3);
 
-            List<GoapAction<Biker>> actions = new List<GoapAction<Biker>>();
-
-            actions.Add(new ReservePackageAction(this, packageStore, deliveryService));
-            actions.Add(new DeliverPackageAction(this, deliveryService));
-            actions.Add(new PickUpPackageAction(this, deliveryService, routeFacade));
-            actions.Add(routeAction);
-            routeAction.SetAgent(this);
+            List<GoapAction<Biker>> actions = bikerActionProvider.CloneActions(this);
 
             goapAgent = new GoapAgent<Biker>(agentId, this, actions, goals);
         }

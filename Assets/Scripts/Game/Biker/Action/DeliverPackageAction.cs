@@ -1,14 +1,14 @@
-﻿using Model;
-using AI;
+﻿using AI;
 using Delivery;
 using UnityEngine.AI;
+using Route;
 
 namespace Bikers
 {
-    class DeliverPackageAction : GoapAction<Biker>
+    public class DeliverPackageAction : AbstractRouteAction
     {
         private IDeliveryService deliveryService;
-        public DeliverPackageAction(IGoapAgentProvider<Biker> agent, IDeliveryService deliveryService) : base(agent)
+        public DeliverPackageAction(IDeliveryService deliveryService, RouteFacade routeFacade) : base(routeFacade, null)
         {
             this.deliveryService = deliveryService;
         }
@@ -20,10 +20,11 @@ namespace Bikers
             Package package = courierAgent.GetPackage();
             package.Target.gameObject.SetActive(true);
 
-            target = package.Target.gameObject.transform.position;
+            var from = agent.GetGoapAgent().Parent.transform;
+            var to = package.Target.gameObject.transform;
 
-            NavMeshAgent navMeshAgent = agent.GetGoapAgent().NavMeshAgent;
-            navMeshAgent.SetDestination(target);
+            StartRoute(from, to);
+
 
             return true;
         }
@@ -42,12 +43,6 @@ namespace Bikers
             return true;
         }
 
-        public override void Update()
-        {
-            var navMeshAgent = GoapAgent.NavMeshAgent;
-            finished = navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
-        }
-
         protected override WorldState[] GetPreConditions()
         {
             return new WorldState[] { new WorldState("isPackagePickedUp", 3) };
@@ -61,6 +56,13 @@ namespace Bikers
         public override bool PostAbort()
         {
             return true;
+        }
+
+        public override GoapAction<Biker> CloneAndSetup(IGoapAgentProvider<Biker> agent)
+        {
+            var clone = new DeliverPackageAction(deliveryService, routeFacade);
+            clone.agent = agent;
+            return clone;
         }
     }
 }

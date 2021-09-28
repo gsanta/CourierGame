@@ -30,6 +30,11 @@ namespace AI
 
         public GoapAgent<T> GoapAgent { get => agent.GetGoapAgent(); }
 
+        public void SetAgent(IGoapAgentProvider<T> agent)
+        {
+            this.agent = agent;
+        }
+
         public void Init()
         {
             foreach (WorldState w in GetPreConditions())
@@ -66,5 +71,6 @@ namespace AI
         public abstract bool PostPerform();
         public abstract bool PostAbort();
         public virtual void Update() { }
+        public abstract GoapAction<T> CloneAndSetup(IGoapAgentProvider<T> agent);
     }
 }

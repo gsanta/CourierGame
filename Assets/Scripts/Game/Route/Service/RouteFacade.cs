@@ -2,6 +2,7 @@
 using AI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Route
@@ -19,7 +20,7 @@ namespace Route
             this.roadStore = roadStore;
         }
 
-        public Queue<Waypoint> BuildRoute(Transform from, Transform to)
+        public Queue<Vector3> BuildRoute(Transform from, Transform to)
         {
             if (graph == null)
             {
@@ -28,8 +29,12 @@ namespace Route
 
             var nearestToBiker = nearestItemCalc.GetNearest(from, roadStore.Waypoints);
             var nearestToPackage = nearestItemCalc.GetNearest(to, roadStore.Waypoints);
-            var routeNodes = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
-            return new Queue<Waypoint>(routeNodes);
+            var routeWayPoints = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
+            var routePoints = routeWayPoints.Select(wp => wp.Position).ToList();
+            routePoints.RemoveAt(routePoints.Count - 1);
+            routePoints.Add(to.position);
+
+            return new Queue<Vector3>(routePoints);
         }
 
         public void Setup()

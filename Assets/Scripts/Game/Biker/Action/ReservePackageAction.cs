@@ -10,7 +10,7 @@ namespace Bikers
         private PackageStore packageStore;
         private readonly IDeliveryService deliveryService;
 
-        public ReservePackageAction(IGoapAgentProvider<Biker> goapAgentProvider, PackageStore packageStore, IDeliveryService deliveryService) : base(goapAgentProvider)
+        public ReservePackageAction(PackageStore packageStore, IDeliveryService deliveryService) : base(null)
         {
             this.packageStore = packageStore;
             this.deliveryService = deliveryService;
@@ -59,6 +59,13 @@ namespace Bikers
         protected override WorldState[] GetPreConditions()
         {
             return new WorldState[0];
+        }
+
+        public override GoapAction<Biker> CloneAndSetup(IGoapAgentProvider<Biker> agent)
+        {
+            var clone = new ReservePackageAction(packageStore, deliveryService);
+            clone.agent = agent;
+            return clone;
         }
     }
 }

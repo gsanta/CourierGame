@@ -13,7 +13,7 @@ namespace Bikers
         private readonly PackageStore2 packageStore;
         private readonly RoadStore roadStore;
         private readonly RouteFacade routeFacade;
-        private Queue<Waypoint> route;
+        private Queue<Vector3> route;
         private Vector3 currentTarget;
 
         //private DirectedGraph<Waypoint, object> graph;
@@ -27,11 +27,6 @@ namespace Bikers
             this.packageStore = packageStore;
             this.roadStore = roadStore;
             this.routeFacade = routeFacade;
-        }
-
-        public void SetAgent(IGoapAgentProvider<Biker> agent)
-        {
-            this.agent = agent;
         }
 
         public override bool PrePerform()
@@ -91,7 +86,7 @@ namespace Bikers
         {
             if (route.Count > 0)
             {
-                currentTarget = route.Dequeue().transform.position;
+                currentTarget = route.Dequeue();
 
                 NavMeshAgent navMeshAgent = agent.GetGoapAgent().NavMeshAgent;
                 navMeshAgent.SetDestination(currentTarget);
@@ -110,12 +105,15 @@ namespace Bikers
         {
             var from = agent.GetGoapAgent().Parent.transform;
             var to = packageStore.Packages[packageIndex].transform;
-            //var nearestToBiker = nearestItemCalc.GetNearest(agent.GetGoapAgent().Parent.transform, roadStore.Waypoints);
-            //var nearestToPackage = nearestItemCalc.GetNearest(packageStore.Packages[packageIndex].transform, roadStore.Waypoints);
-            //var routeNodes = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
-            //route = new Queue<Waypoint>(routeNodes);
             route = routeFacade.BuildRoute(from, to);
             packageIndex++;
+        }
+
+        public override GoapAction<Biker> CloneAndSetup(IGoapAgentProvider<Biker> agent)
+        {
+            var clone = new RouteAction(deliveryService, packageStore, roadStore, routeFacade);
+            clone.agent = agent;
+            return clone;
         }
     }
 }

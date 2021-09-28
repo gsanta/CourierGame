@@ -10,6 +10,7 @@ using Times;
 using UI;
 using UnityEngine;
 using Zenject;
+using AI;
 
 public class MainInstaller : MonoInstaller
 {
@@ -112,7 +113,11 @@ public class MainInstaller : MonoInstaller
         Container.Bind<RouteSetup>().AsSingle().NonLazy();
 
         // actions
-        Container.Bind<RouteAction>().AsTransient();
+        Container.Bind<RouteAction>().AsSingle().NonLazy();
+        Container.Bind<PickUpPackageAction>().AsSingle().NonLazy();
+        Container.Bind<DeliverPackageAction>().AsSingle().NonLazy();
+        Container.Bind<ReservePackageAction>().AsSingle().NonLazy();
+        Container.Bind<BikerActionProvider>().AsSingle().NonLazy();
     }
     override public void Start()
     {
@@ -128,5 +133,11 @@ public class MainInstaller : MonoInstaller
         Container.Resolve<DayService>();
         Container.Resolve<MinimapPackageProvider>();
         Container.Resolve<MinimapPackageConsumer>();
+
+        BikerActionProvider bikerActionProvider = Container.Resolve<BikerActionProvider>();
+        bikerActionProvider.AddAction(Container.Resolve<RouteAction>());
+        bikerActionProvider.AddAction(Container.Resolve<PickUpPackageAction>());
+        bikerActionProvider.AddAction(Container.Resolve<DeliverPackageAction>());
+        bikerActionProvider.AddAction(Container.Resolve<ReservePackageAction>());
     }
 }

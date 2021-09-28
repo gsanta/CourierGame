@@ -16,25 +16,17 @@ namespace Bikers
         private PackageStore packageStore;
         private IDeliveryService deliveryService;
         private InputHandler inputHandler;
-        private PedestrianStore pedestrianStore;
-        private Timer timer;
-        private PackageStore2 packageStore2;
-        private RouteAction routeAction;
-        private RouteFacade routeFacade;
+        private BikerActionProvider bikerActionProvider;
 
         [Inject]
-        public void Construct(BikerStore bikerStore, PedestrianStore pedestrianStore, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler, Timer timer, PackageStore2 packageStore2, RouteAction routeAction, RouteFacade routeFacade)
+        public void Construct(BikerActionProvider bikerActionProvider, BikerStore bikerStore, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler)
         {
+            this.bikerActionProvider = bikerActionProvider;
             this.bikerStore = bikerStore;
             this.eventService = eventService;
             this.packageStore = packageStore;
             this.deliveryService = deliveryService;
             this.inputHandler = inputHandler;
-            this.pedestrianStore = pedestrianStore;
-            this.timer = timer;
-            this.packageStore2 = packageStore2;
-            this.routeAction = routeAction;
-            this.routeFacade = routeFacade;
         }
 
         public Biker Create(BikerConfig config)
@@ -42,7 +34,7 @@ namespace Bikers
             Biker newBiker = Instantiate(bikerStore.BikerTemplate);
             newBiker.Construct(eventService);
 
-            newBiker.GetComponent<BikerAgentComponent>().Construct(packageStore, deliveryService, packageStore2, routeAction, routeFacade);
+            newBiker.GetComponent<BikerAgentComponent>().Construct(bikerActionProvider);
             newBiker.GetComponent<BikerPlayComponent>().Construct(packageStore, inputHandler, deliveryService);
 
             newBiker.transform.position = config.spawnPoint.transform.position;

@@ -14508,8 +14508,8 @@ MonoBehaviour:
   deliveryPanel: {fileID: 343746767}
   inputHandler: {fileID: 199176769}
   packageStore: {fileID: 1778988336}
-  packageSpawnPointStore: {fileID: 0}
-  packageTargetPointStore: {fileID: 0}
+  packageSpawnPointStore: {fileID: 1966190764}
+  packageTargetPointStore: {fileID: 162993070}
   packageFactory: {fileID: 530680680}
   bikerStore: {fileID: 375125145}
   bikerFactory: {fileID: 1321825635}

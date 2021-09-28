@@ -9,8 +9,8 @@ namespace Bikers
 {
     public abstract class AbstractRouteAction: GoapAction<Biker>
     {
-        private readonly RouteFacade routeFacade;
-        private Queue<Waypoint> route;
+        protected readonly RouteFacade routeFacade;
+        private Queue<Vector3> route;
         private Vector3 currentTarget;
 
         public AbstractRouteAction(RouteFacade routeFacade, IGoapAgentProvider<Biker> agent) : base(agent)
@@ -47,7 +47,7 @@ namespace Bikers
         {
             if (route.Count > 0)
             {
-                currentTarget = route.Dequeue().transform.position;
+                currentTarget = route.Dequeue();
 
                 NavMeshAgent navMeshAgent = agent.GetGoapAgent().NavMeshAgent;
                 navMeshAgent.SetDestination(currentTarget);

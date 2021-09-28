@@ -4,11 +4,11 @@ using Route;
 
 namespace Bikers
 {
-    class PickUpPackageAction : AbstractRouteAction
+    public class PickUpPackageAction : AbstractRouteAction
     {
         private readonly IDeliveryService deliveryService;
 
-        public PickUpPackageAction(IGoapAgentProvider<Biker> agent, IDeliveryService deliveryService, RouteFacade routeFacade) : base(routeFacade, agent)
+        public PickUpPackageAction(IDeliveryService deliveryService, RouteFacade routeFacade) : base(routeFacade, null)
         {
             this.deliveryService = deliveryService;
         }
@@ -20,8 +20,6 @@ namespace Bikers
             var to = courierAgent.GetPackage().gameObject.transform;
 
             StartRoute(from, to);
-            //NavMeshAgent navMeshAgent = agent.GetGoapAgent().NavMeshAgent;
-            //navMeshAgent.SetDestination(target);
 
             return true;
         }
@@ -32,13 +30,6 @@ namespace Bikers
             Package package = courierAgent.GetPackage();
             deliveryService.AssignPackage(package);
             return true;
-        }
-
-        public override void Update()
-        {
-            base.Update();
-            //var navMeshAgent = GoapAgent.NavMeshAgent;
-            //finished = navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
         }
 
         protected override WorldState[] GetPreConditions()
@@ -54,6 +45,13 @@ namespace Bikers
         public override bool PostAbort()
         {
             return true;
+        }
+
+        public override GoapAction<Biker> CloneAndSetup(IGoapAgentProvider<Biker> agent)
+        {
+            var clone = new PickUpPackageAction(deliveryService, routeFacade);
+            clone.agent = agent;
+            return clone;
         }
     }
 }
