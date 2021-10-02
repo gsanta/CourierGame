@@ -20,7 +20,7 @@ namespace Bikers
             Package package = courierAgent.GetPackage();
             package.Target.gameObject.SetActive(true);
 
-            var from = agent.GetGoapAgent().Parent.transform;
+            var from = agent.Parent.transform;
             var to = package.Target.gameObject.transform;
 
             StartRoute(from, to);
@@ -58,7 +58,7 @@ namespace Bikers
             return true;
         }
 
-        public override GoapAction<Biker> CloneAndSetup(IGoapAgentProvider<Biker> agent)
+        public override GoapAction<Biker> CloneAndSetup(GoapAgent<Biker> agent)
         {
             var clone = new DeliverPackageAction(deliveryService, routeFacade);
             clone.agent = agent;

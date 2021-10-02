@@ -14,7 +14,7 @@ namespace Bikers
             actions.Add(action);
         }
 
-        public List<GoapAction<Biker>> CloneActions(IGoapAgentProvider<Biker> agent)
+        public List<GoapAction<Biker>> CloneActions(GoapAgent<Biker> agent)
         {
             return actions.Select(action => action.CloneAndSetup(agent)).ToList();
         }

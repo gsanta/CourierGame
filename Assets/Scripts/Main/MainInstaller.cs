@@ -6,11 +6,12 @@ using Model;
 using Pedestrians;
 using Route;
 using Service;
-using Times;
 using UI;
 using UnityEngine;
 using Zenject;
 using AI;
+using Core;
+using Stats;
 
 public class MainInstaller : MonoInstaller
 {
@@ -59,6 +60,9 @@ public class MainInstaller : MonoInstaller
 
     [SerializeField]
     private RoadStore roadStore;
+
+    [SerializeField]
+    private ReconciliationService reconciliationService;
 
     public override void InstallBindings()
     {
@@ -111,6 +115,10 @@ public class MainInstaller : MonoInstaller
         Container.Bind<RoadStore>().FromInstance(roadStore).AsSingle();
         Container.Bind<RouteFacade>().AsSingle();
         Container.Bind<RouteSetup>().AsSingle().NonLazy();
+
+        Container.Bind<ReconciliationService>().FromInstance(reconciliationService).AsSingle();
+
+        Container.Bind<MoneyStore>().AsSingle();
 
         // actions
         Container.Bind<RouteAction>().AsSingle().NonLazy();

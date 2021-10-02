@@ -1,5 +1,6 @@
 ﻿using Bikers;
 using Model;
+using Stats;
 using UnityEngine;
 
 namespace Delivery
@@ -8,11 +9,13 @@ namespace Delivery
     {
         private readonly IEventService eventService;
         private readonly PackageStore packageStore;
+        private readonly MoneyStore moneyStore;
 
-        public DeliveryService(IEventService eventService, PackageStore packageStore)
+        public DeliveryService(IEventService eventService, PackageStore packageStore, MoneyStore moneyStore)
         {
             this.eventService = eventService;
             this.packageStore = packageStore;
+            this.moneyStore = moneyStore;
         }
 
         public void ReservePackage(Package package, Biker biker)
@@ -64,6 +67,7 @@ namespace Delivery
                 packageStore.Remove(package);
                 biker.SetPackage(null);
                 biker = null;
+                moneyStore.AddMoney(package.Price);
 
                 package.Status = DeliveryStatus.DELIVERED;
 

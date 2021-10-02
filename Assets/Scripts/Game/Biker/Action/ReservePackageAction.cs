@@ -61,7 +61,7 @@ namespace Bikers
             return new WorldState[0];
         }
 
-        public override GoapAction<Biker> CloneAndSetup(IGoapAgentProvider<Biker> agent)
+        public override GoapAction<Biker> CloneAndSetup(GoapAgent<Biker> agent)
         {
             var clone = new ReservePackageAction(packageStore, deliveryService);
             clone.agent = agent;

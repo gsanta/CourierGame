@@ -16,7 +16,7 @@ namespace Bikers
         public override bool PrePerform()
         {
             Biker courierAgent = GoapAgent.Parent;
-            var from = agent.GetGoapAgent().Parent.transform;
+            var from = agent.Parent.transform;
             var to = courierAgent.GetPackage().gameObject.transform;
 
             StartRoute(from, to);
@@ -47,7 +47,7 @@ namespace Bikers
             return true;
         }
 
-        public override GoapAction<Biker> CloneAndSetup(IGoapAgentProvider<Biker> agent)
+        public override GoapAction<Biker> CloneAndSetup(GoapAgent<Biker> agent)
         {
             var clone = new PickUpPackageAction(deliveryService, routeFacade);
             clone.agent = agent;

@@ -13,14 +13,9 @@ namespace Bikers
         private Queue<Vector3> route;
         private Vector3 currentTarget;
 
-        public AbstractRouteAction(RouteFacade routeFacade, IGoapAgentProvider<Biker> agent) : base(agent)
+        public AbstractRouteAction(RouteFacade routeFacade, GoapAgent<Biker> agent) : base(agent)
         {
             this.routeFacade = routeFacade;
-        }
-
-        public void SetAgent(IGoapAgentProvider<Biker> agent)
-        {
-            this.agent = agent;
         }        
 
         public override void Update()
@@ -49,7 +44,7 @@ namespace Bikers
             {
                 currentTarget = route.Dequeue();
 
-                NavMeshAgent navMeshAgent = agent.GetGoapAgent().NavMeshAgent;
+                NavMeshAgent navMeshAgent = agent.NavMeshAgent;
                 navMeshAgent.SetDestination(currentTarget);
             }
             else

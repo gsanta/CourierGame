@@ -17,20 +17,20 @@ namespace AI
         public bool running = false;
         protected bool finished = false;
 
-        protected IGoapAgentProvider<T> agent;
+        protected GoapAgent<T> agent;
 
-        public GoapAction(IGoapAgentProvider<T> agent)
+        public GoapAction(GoapAgent<T> agent)
         {
             this.agent = agent;
             preConditionsDict = new Dictionary<string, int>();
             effectsDict = new Dictionary<string, int>();
         }
 
-        public bool Finished { get => finished; }
+        public bool Finished { get => finished; set => finished = value; }
 
-        public GoapAgent<T> GoapAgent { get => agent.GetGoapAgent(); }
+        public GoapAgent<T> GoapAgent { get => agent; }
 
-        public void SetAgent(IGoapAgentProvider<T> agent)
+        public void SetAgent(GoapAgent<T> agent)
         {
             this.agent = agent;
         }
@@ -71,6 +71,6 @@ namespace AI
         public abstract bool PostPerform();
         public abstract bool PostAbort();
         public virtual void Update() { }
-        public abstract GoapAction<T> CloneAndSetup(IGoapAgentProvider<T> agent);
+        public abstract GoapAction<T> CloneAndSetup(GoapAgent<T> agent);
     }
 }

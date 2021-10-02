@@ -10,7 +10,7 @@ using Route;
 
 namespace Bikers
 {
-    public class BikerAgentComponent : MonoBehaviour, IGoapAgentInjections<Biker>, IGoapAgentProvider<Biker>
+    public class BikerAgentComponent : MonoBehaviour, IGoapAgentInjections<Biker>
     {
         [SerializeField]
         private string agentId;
@@ -48,7 +48,7 @@ namespace Bikers
             goals.Add(new SubGoal("isPackageDropped", 1, true), 3);
             //goals.Add(new SubGoal("isTestFinished", 1, true), 3);
 
-            List<GoapAction<Biker>> actions = bikerActionProvider.CloneActions(this);
+            List<GoapAction<Biker>> actions = bikerActionProvider.CloneActions(goapAgent);
 
             goapAgent = new GoapAgent<Biker>(agentId, this, actions, goals);
         }

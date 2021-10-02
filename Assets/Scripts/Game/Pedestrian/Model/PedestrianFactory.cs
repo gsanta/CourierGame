@@ -1,8 +1,5 @@
 ﻿using AI;
-using Bikers;
-using Model;
 using UnityEngine;
-using Zenject;
 
 namespace Pedestrians
 {
@@ -13,19 +10,7 @@ namespace Pedestrians
         [SerializeField]
         private GameObject pedestrianContainer;
 
-        private PedestrianStore pedestrianStore;
-        private BikerStore bikerStore;
-        private Timer timer;
-
         public GameObject PedestrianContainer { get => pedestrianContainer; }
-
-        [Inject]
-        public void Construct(PedestrianStore pedestrianStore, BikerStore bikerStore, Timer timer)
-        {
-            this.pedestrianStore = pedestrianStore;
-            this.bikerStore = bikerStore;
-            this.timer = timer;
-        }
 
         public Pedestrian Create(PedestrianConfig config)
         {

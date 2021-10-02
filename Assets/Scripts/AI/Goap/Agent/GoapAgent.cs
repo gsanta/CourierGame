@@ -82,11 +82,6 @@ namespace AI
                 if (currentAction.PrePerform())
                 {
                     currentAction.running = true;
-
-                    //if (currentAction.target != null)
-                    //{
-
-                    //}
                 }
                 else
                 {
@@ -140,7 +135,7 @@ namespace AI
 
             if (actionQueue != null && actionQueue.Count > 0)
             {
-                currentAction = actionQueue.Dequeue();
+                currentAction = actionQueue.Dequeue().CloneAndSetup(this);
             }
 
         }

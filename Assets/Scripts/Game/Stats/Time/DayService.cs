@@ -1,7 +1,7 @@
 ﻿using Bikers;
 using System;
 
-namespace Times
+namespace Stats
 {
     public class DayService
     {

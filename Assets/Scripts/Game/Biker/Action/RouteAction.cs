@@ -88,7 +88,7 @@ namespace Bikers
             {
                 currentTarget = route.Dequeue();
 
-                NavMeshAgent navMeshAgent = agent.GetGoapAgent().NavMeshAgent;
+                NavMeshAgent navMeshAgent = agent.NavMeshAgent;
                 navMeshAgent.SetDestination(currentTarget);
             } else if (packageIndex < 3)
             {
@@ -103,13 +103,13 @@ namespace Bikers
 
         private void SetupDestination()
         {
-            var from = agent.GetGoapAgent().Parent.transform;
+            var from = agent.Parent.transform;
             var to = packageStore.Packages[packageIndex].transform;
             route = routeFacade.BuildRoute(from, to);
             packageIndex++;
         }
 
-        public override GoapAction<Biker> CloneAndSetup(IGoapAgentProvider<Biker> agent)
+        public override GoapAction<Biker> CloneAndSetup(GoapAgent<Biker> agent)
         {
             var clone = new RouteAction(deliveryService, packageStore, roadStore, routeFacade);
             clone.agent = agent;
