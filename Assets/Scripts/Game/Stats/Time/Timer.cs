@@ -13,9 +13,10 @@ namespace Stats
         private ITimeProvider timeProvider;
         private DateTime time = DateTime.MinValue;
         private long milliSecondAccum = 0;
-        private int secondAccum = 0;
         private bool isDayStarted = false;
         private int currentDay = 1;
+        private int elapsed;
+
         private bool dirty = false;
 
         private int daySecondsCounter = 0;
@@ -48,7 +49,13 @@ namespace Stats
 
         public int CurrentDay { get => currentDay; }
 
-        public int Elapsed { get; set; }
+        public int Elapsed { 
+            get => elapsed;
+            private set {
+                elapsed = value;
+                dirty = true;
+            }
+        }
 
         void Update()
         {
@@ -57,6 +64,11 @@ namespace Stats
 
         private void Tick()
         {
+            if (!isDayStarted)
+            {
+                return;
+            }
+
             DateTime curr = timeProvider.UtcNow();
 
             if (time != DateTime.MinValue)
@@ -65,10 +77,7 @@ namespace Stats
                 Elapsed += delta.Milliseconds;
 
                 HandleSecondPassed(delta);
-                if (isDayStarted)
-                {
-                    HandleDayPassed();
-                }
+                HandleDayPassed();
             }
 
             time = curr;
@@ -82,7 +91,6 @@ namespace Stats
             {
                 SecondPassed?.Invoke(this, EventArgs.Empty);
                 milliSecondAccum = milliSecondAccum - 1000;
-                secondAccum++;
 
                 if (isDayStarted)
                 {
@@ -104,13 +112,13 @@ namespace Stats
 
         private void HandleDayStarted()
         {
+            Elapsed = 0;
             daySecondsCounter = 0;
             DayStarted?.Invoke(this, EventArgs.Empty);
         }
 
         public float GetDayPercentage()
         {
-            // Cast is not redundant, otherwise the division is zero if less than one
             return Elapsed / 1000f / SecondsPerDay;
         }
 

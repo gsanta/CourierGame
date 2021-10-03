@@ -25,7 +25,7 @@ namespace Stats
         {
             bikerStore.GetAll().ForEach(biker => {
                 biker.Paused = true;
-                biker.Agent.GoapAgent.AbortAction();
+                biker.agent.AbortAction();
             });
         }
     }

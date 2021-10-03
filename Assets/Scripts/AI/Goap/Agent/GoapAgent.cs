@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace AI
@@ -10,34 +11,55 @@ namespace AI
         public Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
         public GoapAction<T> currentAction;
 
+        public WorldStates worldStates = new WorldStates();
+
         protected GoapPlanner<T> planner;
         private Queue<GoapAction<T>> actionQueue;
         private SubGoal currentGoal;
-        private IGoapAgentInjections<T> goapAgentInjections;
 
         private string agentId;
+        private T parent;
+        private MonoBehaviour monoBehaviour;
+        private NavMeshAgent navMeshAgent;
+        private bool isActive = false;
 
-        public GoapAgent(string agentId, IGoapAgentInjections<T> goapAgentInjections, List<GoapAction<T>> actions, Dictionary<SubGoal, int> goals)
+        public GoapAgent(string agentId, T parent, NavMeshAgent navMeshAgent, MonoBehaviour monoBehaviour, Dictionary<SubGoal, int> goals)
         {
             this.agentId = agentId;
-            this.goapAgentInjections = goapAgentInjections;
-            this.actions = actions;
+            this.parent = parent;
+            this.monoBehaviour = monoBehaviour;
+            this.navMeshAgent = navMeshAgent;
             this.goals = goals;
-
-            Start();
         }
 
-        public T Parent { get => goapAgentInjections.GetCharachter(); }
+        public void SetActions(List<GoapAction<T>> actions)
+        {
+            this.actions = actions;
+            actions.ForEach(action => action.Init());
+        }
 
-        public NavMeshAgent NavMeshAgent { get => goapAgentInjections.GetNavMeshAgent(); }
+        public T Parent { get => parent; }
+
+        public NavMeshAgent NavMeshAgent { get => navMeshAgent; }
 
         public string AgentId { get => agentId; }
 
         bool invoked = false;
 
-        public void Start()
+        public bool Active
         {
-            actions.ForEach(action => action.Init());
+            get => isActive;
+            set {
+                if (isActive != value)
+                {
+                    isActive = value;
+                    if (!isActive)
+                    {
+                        AbortAction();
+                    }
+                }
+            }
+
         }
 
         public void CompleteAction()
@@ -97,7 +119,7 @@ namespace AI
                 {
                     if (!invoked)
                     {
-                        goapAgentInjections.Invoke("CompleteAction", currentAction.duration);
+                        monoBehaviour.Invoke("CompleteAction", currentAction.duration);
                         invoked = true;
                     }
                 }
@@ -114,7 +136,7 @@ namespace AI
 
                 foreach (KeyValuePair<SubGoal, int> sg in sortedGoals)
                 {
-                    actionQueue = planner.plan(actions, sg.Key.sgoals, goapAgentInjections.GetWorldStates());
+                    actionQueue = planner.plan(actions, sg.Key.sgoals, worldStates);
 
                     if (actionQueue != null)
                     {
@@ -135,7 +157,7 @@ namespace AI
 
             if (actionQueue != null && actionQueue.Count > 0)
             {
-                currentAction = actionQueue.Dequeue().CloneAndSetup(this);
+                currentAction = actionQueue.Dequeue().Clone(this);
             }
 
         }

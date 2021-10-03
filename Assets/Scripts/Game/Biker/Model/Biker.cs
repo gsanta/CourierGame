@@ -4,6 +4,7 @@ using Zenject;
 using System;
 using Model;
 using Delivery;
+using AI;
 
 namespace Bikers
 {
@@ -23,24 +24,24 @@ namespace Bikers
         private bool isPaused = false;
 
         private IEventService eventService;
+        private AgentFactory agentFactory;
 
-        private BikerAgentComponent agent;
+        public GoapAgent<Biker> agent;
         private BikerPlayComponent player;
 
-        public BikerAgentComponent Agent
-        {
-            get => GetComponent<BikerAgentComponent>();
-        }
+        public NavMeshAgent navMeshAgent;
 
-        public void Construct(IEventService eventService)
+        public void Construct(IEventService eventService, AgentFactory agentFactory)
         {
             this.eventService = eventService;
+            this.agentFactory = agentFactory;
         }
 
         protected void Start()
         {
-            agent = GetComponent<BikerAgentComponent>();
             player = GetComponent<BikerPlayComponent>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
+            agent = agentFactory.CreateBikerAgent(this);
         }
 
         public bool Paused
@@ -53,18 +54,26 @@ namespace Bikers
             }
         }
 
+        private void LateUpdate()
+        {
+            if (agent.Active)
+            {
+                agent.Update();
+            }
+        }
+
         private void UpdatePausedState()
         {
             if (isPaused)
             {
                 SetCurrentRole(CurrentRole.NONE);
                 gameObject.GetComponent<NavMeshAgent>().enabled = false;
-                agent.SetActivated(false);
+                agent.Active = false;
             }
             else
             {
                 gameObject.GetComponent<NavMeshAgent>().enabled = true;
-                agent.SetActivated(true);
+                agent.Active = true;
             }
         }
 
@@ -75,7 +84,7 @@ namespace Bikers
 
         public string GetId()
         {
-            return agent.GoapAgent.AgentId;
+            return agent.AgentId;
         }
 
         public string GetName()
@@ -131,7 +140,7 @@ namespace Bikers
         private void FinishPlayRole()
         {
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
-            agent.SetActivated(true);
+            agent.Active = true;
             player.SetActivated(false);
         }
 
@@ -140,7 +149,12 @@ namespace Bikers
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
 
             player.SetActivated(true);
-            agent.SetActivated(false);
+            agent.Active = false;
+        }
+
+        public void CompleteAction()
+        {
+            agent.CompleteAction();
         }
 
         public event EventHandler CurrentRoleChanged;

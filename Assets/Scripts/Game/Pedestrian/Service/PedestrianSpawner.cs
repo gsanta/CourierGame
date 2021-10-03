@@ -1,3 +1,4 @@
+using Route;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -10,12 +11,14 @@ namespace Pedestrians
 
         private PedestrianStore pedestrianStore;
         private PedestrianFactory pedestrianFactory;
+        private RoadStore roadStore;
 
         [Inject]
-        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory)
+        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, RoadStore roadStore)
         {
             this.pedestrianStore = pedestrianStore;
             this.pedestrianFactory = pedestrianFactory;
+            this.roadStore = roadStore;
         }
 
         void Start()
@@ -44,10 +47,10 @@ namespace Pedestrians
             while (count < pedestriansToSpawn)
             {
 
-                var transf = transform.GetChild(Random.Range(0, transform.childCount - 1));
+                //var waypoint = roadStore.Pavements[Random.Range(0, roadStore.Pavements.Count - 1)];
 
-                var pedestrian = pedestrianFactory.Create(new PedestrianConfig(transf.gameObject));
-                pedestrianStore.Add(pedestrian);
+                //var pedestrian = pedestrianFactory.Create(new PedestrianConfig(waypoint.gameObject));
+                //pedestrianStore.Add(pedestrian);
 
                 yield return new WaitForEndOfFrame();
                 count++;

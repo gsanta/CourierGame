@@ -5,17 +5,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Bikers
+namespace Core
 {
-    public abstract class AbstractRouteAction: GoapAction<Biker>
+    public abstract class AbstractRouteAction<T>: GoapAction<T>
     {
-        protected readonly RouteFacade routeFacade;
         private Queue<Vector3> route;
         private Vector3 currentTarget;
 
-        public AbstractRouteAction(RouteFacade routeFacade, GoapAgent<Biker> agent) : base(agent)
+        public AbstractRouteAction(GoapAgent<T> agent) : base(agent)
         {
-            this.routeFacade = routeFacade;
         }        
 
         public override void Update()
@@ -34,9 +32,11 @@ namespace Bikers
 
         protected void StartRoute(Transform from, Transform to)
         {
-            route = routeFacade.BuildRoute(from, to);
+            route = BuildRoute(from, to);
             UpdateDestination();
         }
+
+        protected abstract Queue<Vector3> BuildRoute(Transform from, Transform to);
 
         private void UpdateDestination()
         {

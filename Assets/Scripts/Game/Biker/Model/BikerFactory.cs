@@ -16,12 +16,12 @@ namespace Bikers
         private PackageStore packageStore;
         private IDeliveryService deliveryService;
         private InputHandler inputHandler;
-        private BikerActionProvider bikerActionProvider;
+        private AgentFactory agentFactory;
 
         [Inject]
-        public void Construct(BikerActionProvider bikerActionProvider, BikerStore bikerStore, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler)
+        public void Construct(AgentFactory agentFactory, BikerStore bikerStore, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler)
         {
-            this.bikerActionProvider = bikerActionProvider;
+            this.agentFactory = agentFactory;
             this.bikerStore = bikerStore;
             this.eventService = eventService;
             this.packageStore = packageStore;
@@ -32,9 +32,8 @@ namespace Bikers
         public Biker Create(BikerConfig config)
         {
             Biker newBiker = Instantiate(bikerStore.BikerTemplate);
-            newBiker.Construct(eventService);
+            newBiker.Construct(eventService, agentFactory);
 
-            newBiker.GetComponent<BikerAgentComponent>().Construct(bikerActionProvider);
             newBiker.GetComponent<BikerPlayComponent>().Construct(packageStore, inputHandler, deliveryService);
 
             newBiker.transform.position = config.spawnPoint.transform.position;

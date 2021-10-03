@@ -36,8 +36,9 @@ namespace Bikers
             } else
             {
                 int selectedIndex = UnityEngine.Random.Range(0, packages.Count);
-                Package selectedPackage = packages[0];
+                Package selectedPackage = packages[selectedIndex];
 
+                GoapAgent.worldStates.AddState("isPackageReserved", 3);
                 deliveryService.ReservePackage(selectedPackage, GoapAgent.Parent);
 
                 target = selectedPackage.gameObject.transform.position;
@@ -61,11 +62,11 @@ namespace Bikers
             return new WorldState[0];
         }
 
-        public override GoapAction<Biker> CloneAndSetup(GoapAgent<Biker> agent)
+        public override GoapAction<Biker> Clone(GoapAgent<Biker> agent = null)
         {
-            var clone = new ReservePackageAction(packageStore, deliveryService);
-            clone.agent = agent;
-            return clone;
+            var action = new ReservePackageAction(packageStore, deliveryService);
+            action.agent = agent;
+            return action;
         }
     }
 }

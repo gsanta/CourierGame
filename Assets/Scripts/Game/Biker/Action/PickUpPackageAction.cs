@@ -1,16 +1,21 @@
 ﻿using AI;
+using Core;
 using Delivery;
 using Route;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Bikers
 {
-    public class PickUpPackageAction : AbstractRouteAction
+    public class PickUpPackageAction : AbstractRouteAction<Biker>
     {
         private readonly IDeliveryService deliveryService;
+        private readonly RouteFacade routeFacade;
 
-        public PickUpPackageAction(IDeliveryService deliveryService, RouteFacade routeFacade) : base(routeFacade, null)
+        public PickUpPackageAction(IDeliveryService deliveryService, RouteFacade routeFacade) : base(null)
         {
             this.deliveryService = deliveryService;
+            this.routeFacade = routeFacade;
         }
 
         public override bool PrePerform()
@@ -26,8 +31,9 @@ namespace Bikers
         public override bool PostPerform()
         {
             Biker courierAgent = GoapAgent.Parent;
-
             Package package = courierAgent.GetPackage();
+
+            GoapAgent.worldStates.AddState("isPackagePickedUp", 3);
             deliveryService.AssignPackage(package);
             return true;
         }
@@ -47,11 +53,16 @@ namespace Bikers
             return true;
         }
 
-        public override GoapAction<Biker> CloneAndSetup(GoapAgent<Biker> agent)
+        public override GoapAction<Biker> Clone(GoapAgent<Biker> agent = null)
         {
-            var clone = new PickUpPackageAction(deliveryService, routeFacade);
-            clone.agent = agent;
-            return clone;
+            var action = new PickUpPackageAction(deliveryService, routeFacade);
+            action.agent = agent;
+            return action;
+        }
+
+        protected override Queue<Vector3> BuildRoute(Transform from, Transform to)
+        {
+            return routeFacade.BuildRoadRoute(from, to);
         }
     }
 }

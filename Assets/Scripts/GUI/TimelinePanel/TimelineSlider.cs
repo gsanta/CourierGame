@@ -1,10 +1,21 @@
+using Core;
+using Stats;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
-public class TimelineSlider : MonoBehaviour
+public class TimelineSlider : MonoBehaviour, IReconcilable
 {
     private Slider slider;
+    private Timer timer;
+
+    [Inject]
+    public void Construct(ReconciliationService reconciliationService, Timer timer)
+    {
+        this.timer = timer;
+        reconciliationService.Add(timer, this);
+    }
 
     public int GetWidth()
     {
@@ -21,8 +32,13 @@ public class TimelineSlider : MonoBehaviour
         slider.value = 0;
     }
 
-    public void SetSliderVal(float ratio)
-    { 
+    public void Reconcile()
+    {
+        SetSliderVal(timer.GetDayPercentage());
+    }
+
+    private void SetSliderVal(float ratio)
+    {
         slider.value = ratio * 100;
     }
 }

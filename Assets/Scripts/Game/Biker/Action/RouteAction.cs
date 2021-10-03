@@ -12,7 +12,7 @@ namespace Bikers
         private readonly IDeliveryService deliveryService;
         private readonly PackageStore2 packageStore;
         private readonly RoadStore roadStore;
-        private readonly RouteFacade routeFacade;
+        private readonly RouteBuilder routeFacade;
         private Queue<Vector3> route;
         private Vector3 currentTarget;
 
@@ -21,7 +21,7 @@ namespace Bikers
         //private NearestItemCalc<Transform, Waypoint> nearestItemCalc;
         private int packageIndex = 0;
 
-        public RouteAction(IDeliveryService deliveryService, PackageStore2 packageStore, RoadStore roadStore, RouteFacade routeFacade) : base(null)
+        public RouteAction(IDeliveryService deliveryService, PackageStore2 packageStore, RoadStore roadStore, RouteBuilder routeFacade) : base(null)
         {
             this.deliveryService = deliveryService;
             this.packageStore = packageStore;
@@ -109,7 +109,7 @@ namespace Bikers
             packageIndex++;
         }
 
-        public override GoapAction<Biker> CloneAndSetup(GoapAgent<Biker> agent)
+        public override GoapAction<Biker> Clone(GoapAgent<Biker> agent)
         {
             var clone = new RouteAction(deliveryService, packageStore, roadStore, routeFacade);
             clone.agent = agent;

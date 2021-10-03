@@ -60,6 +60,8 @@ public class MainInstaller : MonoInstaller
 
     [SerializeField]
     private RoadStore roadStore;
+    [SerializeField]
+    private PavementStore pavementStore;
 
     [SerializeField]
     private ReconciliationService reconciliationService;
@@ -82,7 +84,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<BikerPanel>().FromInstance(bikerPanel).AsSingle();
         Container.Bind<BikerSetup>().AsSingle();
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
-        Container.BindFactory<Object, BikerAgentComponent, BikerAgentComponent.Factory>().FromFactory<PrefabFactory<BikerAgentComponent>>();
         Container.BindFactory<Object, BikerPlayComponent, BikerPlayComponent.Factory>().FromFactory<PrefabFactory<BikerPlayComponent>>();
         Container.BindFactory<Object, Pedestrian, Pedestrian.Factory>().FromFactory<PrefabFactory<Pedestrian>>();
 
@@ -113,6 +114,7 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PackageStore2>().FromInstance(packageStore2).AsSingle();
 
         Container.Bind<RoadStore>().FromInstance(roadStore).AsSingle();
+        Container.Bind<PavementStore>().FromInstance(pavementStore).AsSingle();
         Container.Bind<RouteFacade>().AsSingle();
         Container.Bind<RouteSetup>().AsSingle().NonLazy();
 
@@ -125,7 +127,8 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PickUpPackageAction>().AsSingle().NonLazy();
         Container.Bind<DeliverPackageAction>().AsSingle().NonLazy();
         Container.Bind<ReservePackageAction>().AsSingle().NonLazy();
-        Container.Bind<BikerActionProvider>().AsSingle().NonLazy();
+        Container.Bind<WalkAction>().AsSingle().NonLazy();
+        Container.Bind<AgentFactory>().AsSingle().NonLazy();
     }
     override public void Start()
     {
@@ -142,10 +145,11 @@ public class MainInstaller : MonoInstaller
         Container.Resolve<MinimapPackageProvider>();
         Container.Resolve<MinimapPackageConsumer>();
 
-        BikerActionProvider bikerActionProvider = Container.Resolve<BikerActionProvider>();
-        bikerActionProvider.AddAction(Container.Resolve<RouteAction>());
-        bikerActionProvider.AddAction(Container.Resolve<PickUpPackageAction>());
-        bikerActionProvider.AddAction(Container.Resolve<DeliverPackageAction>());
-        bikerActionProvider.AddAction(Container.Resolve<ReservePackageAction>());
+        AgentFactory bikerActionProvider = Container.Resolve<AgentFactory>();
+        bikerActionProvider.AddBikerAction(Container.Resolve<RouteAction>());
+        bikerActionProvider.AddBikerAction(Container.Resolve<PickUpPackageAction>());
+        bikerActionProvider.AddBikerAction(Container.Resolve<DeliverPackageAction>());
+        bikerActionProvider.AddBikerAction(Container.Resolve<ReservePackageAction>());
+        bikerActionProvider.AddAction(Container.Resolve<WalkAction>());
     }
 }

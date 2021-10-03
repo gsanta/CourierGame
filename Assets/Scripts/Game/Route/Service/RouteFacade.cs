@@ -1,50 +1,27 @@
-﻿
-using AI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Route
 {
     public class RouteFacade
     {
-        private readonly RoadStore roadStore;
-        private DirectedGraph<Waypoint, object> graph;
-        private RouteFinder<Waypoint, object> routeFinder;
-        private NearestItemCalc<Transform, Waypoint> nearestItemCalc;
+        private RouteBuilder roadRouteBuilder;
+        private RouteBuilder pavementRouteBuilder;
 
-
-        public RouteFacade(RoadStore roadStore)
+        public RouteFacade(RoadStore roadStore, PavementStore pavementStore)
         {
-            this.roadStore = roadStore;
+            roadRouteBuilder = new RouteBuilder(roadStore);
+            pavementRouteBuilder = new RouteBuilder(pavementStore);
         }
 
-        public Queue<Vector3> BuildRoute(Transform from, Transform to)
+        public Queue<Vector3> BuildRoadRoute(Transform from, Transform to)
         {
-            if (graph == null)
-            {
-                throw new InvalidOperationException("RouteFacade is not setup.");
-            }
-
-            var nearestToBiker = nearestItemCalc.GetNearest(from, roadStore.Waypoints);
-            var nearestToPackage = nearestItemCalc.GetNearest(to, roadStore.Waypoints);
-            var routeWayPoints = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
-            var routePoints = routeWayPoints.Select(wp => wp.Position).ToList();
-            routePoints.RemoveAt(routePoints.Count - 1);
-            routePoints.Add(to.position);
-
-            return new Queue<Vector3>(routePoints);
+            return roadRouteBuilder.BuildRoute(from, to);
         }
 
-        public void Setup()
+        public Queue<Vector3> BuildPavementRoute(Transform from, Transform to)
         {
-            graph = new DirectedGraph<Waypoint, object>();
-            routeFinder = new RouteFinder<Waypoint, object>(graph, new WaypointScorer(), new WaypointScorer());
-            nearestItemCalc = new NearestItemCalc<Transform, Waypoint>(x => x.position, x => x.transform.position);
-
-            WaypointGraphBuilder builder = new WaypointGraphBuilder();
-            builder.BuildGraph(roadStore.Waypoints, graph);
+            return pavementRouteBuilder.BuildRoute(from, to);
         }
     }
 }

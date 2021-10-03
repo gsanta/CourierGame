@@ -8,6 +8,5 @@ namespace AI
 
         T GetCharachter();
         void Invoke(string methodName, float time);
-        WorldStates GetWorldStates();
     }
 }
