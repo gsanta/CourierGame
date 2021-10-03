@@ -10,17 +10,18 @@ namespace Bikers
     {
 
         private Dictionary<string, int> idMap = new Dictionary<string, int>();
-        private List<GoapAction<Biker>> actions = new List<GoapAction<Biker>>();
+        private List<GoapAction<Biker>> bikerActions = new List<GoapAction<Biker>>();
         private List<GoapAction<Pedestrian>> pedestrianActions = new List<GoapAction<Pedestrian>>();
 
         public AgentFactory()
         {
             idMap.Add("biker", 1);
+            idMap.Add("pedestrian", 1);
         }
 
         public void AddBikerAction(GoapAction<Biker> action)
         {
-            actions.Add(action);
+            bikerActions.Add(action);
         }
 
         public void AddPedestrianAction(GoapAction<Pedestrian> action)
@@ -30,23 +31,27 @@ namespace Bikers
 
         public GoapAgent<Pedestrian> CreatePedestrianAgent(Pedestrian pedestrian)
         {
-            //List<GoapAction<Biker>> actions = CloneBikerActions();
-            //string id = "biker-" + idMap["biker"];
-            //idMap["biker"]++;
+            List<GoapAction<Pedestrian>> actions = ClonePedestrianActions();
+            string id = "pedestrian-" + idMap["pedestrian"];
+            idMap["pedestrian"]++;
 
-            //var agent = new GoapAgent<Pedestrian>(id, pedestrian, pedestrian.navMeshAgent, pedestrian, GetBikerGoals());
-            //agent.SetActions(actions);
+            var agent = new GoapAgent<Pedestrian>(id, pedestrian, pedestrian.navMeshAgent, pedestrian, GetPedestrianGoals());
+            agent.SetActions(actions);
 
-            //return agent;
-            return null;
+            return agent;
         }
 
         private Dictionary<SubGoal, int> GetPedestrianGoals()
         {
             Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
-            goals.Add(new SubGoal("isPackageDropped", 1, true), 3);
+            goals.Add(new SubGoal("isDestinationReached", 1, true), 3);
 
             return goals;
+        }
+
+        private List<GoapAction<Pedestrian>> ClonePedestrianActions()
+        {
+            return pedestrianActions.Select(action => action.Clone()).ToList();
         }
 
         public GoapAgent<Biker> CreateBikerAgent(Biker biker)
@@ -63,7 +68,7 @@ namespace Bikers
 
         private List<GoapAction<Biker>> CloneBikerActions()
         {
-            return actions.Select(action => action.Clone()).ToList();
+            return bikerActions.Select(action => action.Clone()).ToList();
         }
 
         private Dictionary<SubGoal, int> GetBikerGoals()

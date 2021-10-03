@@ -39,16 +39,16 @@ namespace AI
 
         void Update()
         {
-            if (controller.reachedDestination)
-            {
+            //if (controller.reachedDestination)
+            //{
 
-                WaypointInfo waypointInfo = waypointProvider.GetNextWaypoint();
-                direction = waypointInfo.direction;
+            //    WaypointInfo waypointInfo = waypointProvider.GetNextWaypoint();
+            //    direction = waypointInfo.direction;
 
-                controller.SetDestination(waypointInfo.waypoint.GetRandomPosition());
-                currentWaypoint = waypointInfo.waypoint;
+            //    controller.SetDestination(waypointInfo.waypoint.GetRandomPosition());
+            //    currentWaypoint = waypointInfo.waypoint;
 
-            }
+            //}
         }
     }
 }

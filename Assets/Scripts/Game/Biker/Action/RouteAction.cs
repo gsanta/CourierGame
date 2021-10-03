@@ -12,7 +12,7 @@ namespace Bikers
         private readonly IDeliveryService deliveryService;
         private readonly PackageStore2 packageStore;
         private readonly RoadStore roadStore;
-        private readonly RouteBuilder routeFacade;
+        private readonly RouteFacade routeFacade;
         private Queue<Vector3> route;
         private Vector3 currentTarget;
 
@@ -21,7 +21,7 @@ namespace Bikers
         //private NearestItemCalc<Transform, Waypoint> nearestItemCalc;
         private int packageIndex = 0;
 
-        public RouteAction(IDeliveryService deliveryService, PackageStore2 packageStore, RoadStore roadStore, RouteBuilder routeFacade) : base(null)
+        public RouteAction(IDeliveryService deliveryService, PackageStore2 packageStore, RoadStore roadStore, RouteFacade routeFacade) : base(null)
         {
             this.deliveryService = deliveryService;
             this.packageStore = packageStore;
@@ -105,7 +105,7 @@ namespace Bikers
         {
             var from = agent.Parent.transform;
             var to = packageStore.Packages[packageIndex].transform;
-            route = routeFacade.BuildRoute(from, to);
+            route = routeFacade.BuildRoadRoute(from, to);
             packageIndex++;
         }
 

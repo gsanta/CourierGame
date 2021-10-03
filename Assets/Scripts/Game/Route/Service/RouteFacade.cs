@@ -23,5 +23,11 @@ namespace Route
         {
             return pavementRouteBuilder.BuildRoute(from, to);
         }
+
+        public void Setup()
+        {
+            roadRouteBuilder.Setup();
+            pavementRouteBuilder.Setup();
+        }
     }
 }

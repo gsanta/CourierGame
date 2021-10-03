@@ -26,8 +26,22 @@ namespace Pedestrians
 
         private void Start()
         {
-            agent = agentFactory.CreatePedestrianAgent(this);
             navMeshAgent = GetComponent<NavMeshAgent>();
+            agent = agentFactory.CreatePedestrianAgent(this);
+            agent.Active = true;
+        }
+
+        public void CompleteAction()
+        {
+            agent.CompleteAction();
+        }
+
+        private void LateUpdate()
+        {
+            if (agent.Active)
+            {
+                agent.Update();
+            }
         }
 
         public class Factory : PlaceholderFactory<Object, Pedestrian>

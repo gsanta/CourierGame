@@ -42,7 +42,7 @@ namespace Pedestrians
 
         protected override WorldState[] GetAfterEffects()
         {
-            return new WorldState[] { };
+            return new WorldState[] { new WorldState("isDestinationReached", 3) };
         }
 
         public override bool PostAbort()

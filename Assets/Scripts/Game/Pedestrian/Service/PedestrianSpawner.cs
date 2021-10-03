@@ -11,20 +11,20 @@ namespace Pedestrians
 
         private PedestrianStore pedestrianStore;
         private PedestrianFactory pedestrianFactory;
-        private RoadStore roadStore;
+        private PavementStore pavementStore;
 
         [Inject]
-        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, RoadStore roadStore)
+        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, PavementStore pavementStore)
         {
             this.pedestrianStore = pedestrianStore;
             this.pedestrianFactory = pedestrianFactory;
-            this.roadStore = roadStore;
+            this.pavementStore = pavementStore;
         }
 
         void Start()
         {
             //InitPreExistingObjects();
-            StartCoroutine(Spawn());
+            //StartCoroutine(Spawn());
         }
 
         private void InitPreExistingObjects()
@@ -40,19 +40,19 @@ namespace Pedestrians
             }
         }
 
-        IEnumerator Spawn()
+        public void Spawn()
         {
             int count = 0;
 
             while (count < pedestriansToSpawn)
             {
 
-                //var waypoint = roadStore.Pavements[Random.Range(0, roadStore.Pavements.Count - 1)];
+                var waypoint = pavementStore.GetWaypoints()[Random.Range(0, pavementStore.GetWaypoints().Count - 1)];
 
-                //var pedestrian = pedestrianFactory.Create(new PedestrianConfig(waypoint.gameObject));
-                //pedestrianStore.Add(pedestrian);
+                var pedestrian = pedestrianFactory.Create(new PedestrianConfig(waypoint.gameObject));
+                pedestrianStore.Add(pedestrian);
 
-                yield return new WaitForEndOfFrame();
+                //yield return new WaitForEndOfFrame();
                 count++;
             }
         }

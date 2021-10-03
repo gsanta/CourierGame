@@ -1,20 +1,18 @@
-﻿using Service;
-
+﻿
 namespace Bikers
 {
     public class BikerSetup
-
     {
-        private readonly BikerSpawner courierSpawner;
+        private readonly BikerSpawner bikerSpawner;
 
-        public BikerSetup(BikerSpawner courierSpawner)
+        public BikerSetup(BikerSpawner bikerSpawner)
         {
-            this.courierSpawner = courierSpawner;
+            this.bikerSpawner = bikerSpawner;
         }
 
         public void Setup()
         {
-            this.courierSpawner.Spawn();
+            this.bikerSpawner.Spawn();
         }
     }
 }

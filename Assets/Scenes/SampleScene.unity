@@ -15511,6 +15511,7 @@ MonoBehaviour:
   mainCamera: {fileID: 963194229}
   pedestrianSpawner: {fileID: 93388790}
   pedestrianFactory: {fileID: 1912692954}
+  pedestrianGoalStore: {fileID: 1304588484}
   packageStore2: {fileID: 1391290533}
   roadStore: {fileID: 1684318938}
   pavementStore: {fileID: 231428089}

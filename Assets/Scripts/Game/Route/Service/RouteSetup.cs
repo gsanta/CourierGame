@@ -5,9 +5,9 @@ namespace Route
 {
     public class RouteSetup
     {
-        private readonly RouteBuilder routeFacade;
+        private readonly RouteFacade routeFacade;
 
-        public RouteSetup(RoadStore roadStore, RouteBuilder routeFacade)
+        public RouteSetup(RoadStore roadStore, RouteFacade routeFacade)
         {
 
             roadStore.Initialized += HandleRoadInitialized;

@@ -54,6 +54,8 @@ public class MainInstaller : MonoInstaller
     private PedestrianSpawner pedestrianSpawner;
     [SerializeField]
     private PedestrianFactory pedestrianFactory;
+    [SerializeField]
+    private PedestrianGoalStore pedestrianGoalStore;
 
     [SerializeField]
     private PackageStore2 packageStore2;
@@ -110,6 +112,8 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PedestrianSpawner>().FromInstance(pedestrianSpawner).AsSingle();
         Container.Bind<PedestrianStore>().AsSingle();
         Container.Bind<PedestrianFactory>().FromInstance(pedestrianFactory).AsSingle();
+        Container.Bind<PedestrianGoalStore>().FromInstance(pedestrianGoalStore).AsSingle();
+        Container.Bind<PedestrianSetup>().AsSingle();
 
         Container.Bind<PackageStore2>().FromInstance(packageStore2).AsSingle();
 
@@ -141,6 +145,8 @@ public class MainInstaller : MonoInstaller
     {
         BikerSetup bikerSetup = Container.Resolve<BikerSetup>();
         bikerSetup.Setup();
+        PedestrianSetup pedestrianSetup = Container.Resolve<PedestrianSetup>();
+        pedestrianSetup.Setup();
         Container.Resolve<DayService>();
         Container.Resolve<MinimapPackageProvider>();
         Container.Resolve<MinimapPackageConsumer>();
@@ -150,6 +156,6 @@ public class MainInstaller : MonoInstaller
         bikerActionProvider.AddBikerAction(Container.Resolve<PickUpPackageAction>());
         bikerActionProvider.AddBikerAction(Container.Resolve<DeliverPackageAction>());
         bikerActionProvider.AddBikerAction(Container.Resolve<ReservePackageAction>());
-        bikerActionProvider.AddAction(Container.Resolve<WalkAction>());
+        bikerActionProvider.AddPedestrianAction(Container.Resolve<WalkAction>());
     }
 }
