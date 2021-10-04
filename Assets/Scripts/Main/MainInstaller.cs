@@ -12,6 +12,7 @@ using Zenject;
 using AI;
 using Core;
 using Stats;
+using Agents;
 
 public class MainInstaller : MonoInstaller
 {
@@ -133,6 +134,9 @@ public class MainInstaller : MonoInstaller
         Container.Bind<ReservePackageAction>().AsSingle().NonLazy();
         Container.Bind<WalkAction>().AsSingle().NonLazy();
         Container.Bind<AgentFactory>().AsSingle().NonLazy();
+        Container.Bind<ActionProvider>().AsSingle().NonLazy();
+        Container.Bind<ActionFeeder>().AsSingle().NonLazy();
+        Container.Bind<GoalProvider>().AsSingle().NonLazy();
     }
     override public void Start()
     {
@@ -157,5 +161,11 @@ public class MainInstaller : MonoInstaller
         bikerActionProvider.AddBikerAction(Container.Resolve<DeliverPackageAction>());
         bikerActionProvider.AddBikerAction(Container.Resolve<ReservePackageAction>());
         bikerActionProvider.AddPedestrianAction(Container.Resolve<WalkAction>());
+
+        ActionProvider actionProvider = Container.Resolve<ActionProvider>();
+        actionProvider.WalkAction = Container.Resolve<WalkAction>();
+
+        ActionFeeder actionFeeder = Container.Resolve<ActionFeeder>();
+        actionFeeder.Init();
     }
 }

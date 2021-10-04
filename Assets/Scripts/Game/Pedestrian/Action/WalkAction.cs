@@ -1,4 +1,5 @@
-﻿using AI;
+﻿using Agents;
+using AI;
 using Core;
 using Route;
 using System.Collections.Generic;
@@ -10,18 +11,40 @@ namespace Pedestrians
     {
         private PedestrianGoalStore pedestrianGoalStore;
         private RouteFacade routeFacade;
+        private float hideDuration = 0;
+        private GameObject Target;
+        private ActionFeeder actionFeeder;
+        private WorldState afterEffect;
 
-        public WalkAction(RouteFacade routeFacade, PedestrianGoalStore pedestrianGoalStore) : base(null)
+        public WalkAction(RouteFacade routeFacade, PedestrianGoalStore pedestrianGoalStore, ActionFeeder actionFeeder) : base(null)
         {
             this.routeFacade = routeFacade;
             this.pedestrianGoalStore = pedestrianGoalStore;
+            this.actionFeeder = actionFeeder;
+        }
+
+        public WalkAction SetTarget(GameObject target)
+        {
+            Target = target;
+            return this;
+        }
+        public WalkAction SetHideDuration(float duration)
+        {
+            hideDuration = duration;
+            return this;
+        }
+
+        public WalkAction SetAfterEffect(WorldState worldState)
+        {
+            afterEffect = worldState;
+            return this;
         }
 
         public override bool PrePerform()
         {
             Pedestrian agent = GoapAgent.Parent;
 
-            var goal = pedestrianGoalStore.GetGoals()[Random.Range(0, pedestrianGoalStore.GetGoals().Count - 1)];
+            var goal = Target; //pedestrianGoalStore.GetGoals()[Random.Range(0, pedestrianGoalStore.GetGoals().Count - 1)];
 
             var from = agent.transform;
             var to = goal.transform;
@@ -32,6 +55,7 @@ namespace Pedestrians
         }
         public override bool PostPerform()
         {
+            agent.goals.Add(new SubGoal("isDestinationReached", 1, true), 3);
             return true;
         }
 
@@ -42,7 +66,7 @@ namespace Pedestrians
 
         protected override WorldState[] GetAfterEffects()
         {
-            return new WorldState[] { new WorldState("isDestinationReached", 3) };
+            return new WorldState[] { afterEffect };
         }
 
         public override bool PostAbort()
@@ -52,8 +76,10 @@ namespace Pedestrians
 
         public override GoapAction<Pedestrian> Clone(GoapAgent<Pedestrian> agent = null)
         {
-            var action = new WalkAction(routeFacade, pedestrianGoalStore);
+            var action = new WalkAction(routeFacade, pedestrianGoalStore, actionFeeder);
             action.agent = agent;
+            action.Target = Target;
+            action.hideDuration = hideDuration;
             return action;
         }
 

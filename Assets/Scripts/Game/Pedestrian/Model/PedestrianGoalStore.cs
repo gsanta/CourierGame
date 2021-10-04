@@ -23,5 +23,10 @@ namespace Pedestrians
         {
             return goals;
         }
+
+        public GameObject GetByName(string name)
+        {
+            return goals.Find(goal => goal.name == name);
+        }
     }
 }

@@ -1216,7 +1216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ec6cc33ef1e4a468e34d2fbae640a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pedestriansToSpawn: 20
+  pedestriansToSpawn: 10
 --- !u!1001 &103835076
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21434,7 +21434,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1222247604743741030, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
       propertyPath: m_Name
-      value: Cube
+      value: House 1
       objectReference: {fileID: 0}
     - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
       propertyPath: m_RootOrder
@@ -21442,7 +21442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.51
+      value: -24.22
       objectReference: {fileID: 0}
     - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
       propertyPath: m_LocalPosition.y
