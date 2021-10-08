@@ -3,19 +3,18 @@ using AI;
 using Bikers;
 using Pedestrians;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Agents
 {
     public class ActionProvider
     {
-        private readonly PedestrianGoalStore pedestrianGoalStore;
-        private readonly GoalProvider goalProvider;
+        private readonly PedestrianTargetStore pedestrianTargetStore;
         private List<WalkAction> walkActions = new List<WalkAction>();
 
-        public ActionProvider(PedestrianGoalStore pedestrianGoalStore, GoalProvider goalProvider)
+        public ActionProvider(PedestrianTargetStore pedestrianTargetStore)
         {
-            this.pedestrianGoalStore = pedestrianGoalStore;
-            this.goalProvider = goalProvider;
+            this.pedestrianTargetStore = pedestrianTargetStore;
         }
 
         public PickUpPackageAction PickUpPackageAction { get; set; }
@@ -25,14 +24,18 @@ namespace Agents
             get; set;
         }
 
+        public List<WalkAction> GetWalkActions()
+        {
+            return walkActions.Select(action => (WalkAction) action.Clone()).ToList();
+        }
+
         public void Init()
         {
-            goalProvider.GetGoals().ForEach(goal =>
-            {
-                var clone = (WalkAction) WalkAction.Clone();
-                
-                clone.SetTarget(pedestrianGoalStore.GetByName(goal.targetName)).SetHideDuration(goal.hideDuration).SetAfterEffect(new WorldState(goal.goalName, 3));
 
+            pedestrianTargetStore.GetTargets().ForEach(target =>
+            {
+                var clone = (WalkAction)WalkAction.Clone();
+                clone.SetTarget(target.gameObject).SetHideDuration(target.hideDuration).SetAfterEffect(new WorldState("goto" + target.name, 3));
                 walkActions.Add(clone);
             });
         }

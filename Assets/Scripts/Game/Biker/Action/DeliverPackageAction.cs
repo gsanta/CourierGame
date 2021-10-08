@@ -44,8 +44,6 @@ namespace Bikers
 
             GoapAgent.worldStates.RemoveState("isPackagePickedUp");
             GoapAgent.worldStates.RemoveState("isPackageReserved");
-            SubGoal s1 = new SubGoal("isPackageDropped", 1, true);
-            GoapAgent.goals.Add(s1, 3);
 
             return true;
         }

@@ -56,7 +56,7 @@ public class MainInstaller : MonoInstaller
     [SerializeField]
     private PedestrianFactory pedestrianFactory;
     [SerializeField]
-    private PedestrianGoalStore pedestrianGoalStore;
+    private PedestrianTargetStore pedestrianTargetStore;
 
     [SerializeField]
     private PackageStore2 packageStore2;
@@ -113,7 +113,7 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PedestrianSpawner>().FromInstance(pedestrianSpawner).AsSingle();
         Container.Bind<PedestrianStore>().AsSingle();
         Container.Bind<PedestrianFactory>().FromInstance(pedestrianFactory).AsSingle();
-        Container.Bind<PedestrianGoalStore>().FromInstance(pedestrianGoalStore).AsSingle();
+        Container.Bind<PedestrianTargetStore>().FromInstance(pedestrianTargetStore).AsSingle();
         Container.Bind<PedestrianSetup>().AsSingle();
 
         Container.Bind<PackageStore2>().FromInstance(packageStore2).AsSingle();
@@ -135,8 +135,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<WalkAction>().AsSingle().NonLazy();
         Container.Bind<AgentFactory>().AsSingle().NonLazy();
         Container.Bind<ActionProvider>().AsSingle().NonLazy();
-        Container.Bind<ActionFeeder>().AsSingle().NonLazy();
-        Container.Bind<GoalProvider>().AsSingle().NonLazy();
     }
     override public void Start()
     {
@@ -155,17 +153,15 @@ public class MainInstaller : MonoInstaller
         Container.Resolve<MinimapPackageProvider>();
         Container.Resolve<MinimapPackageConsumer>();
 
-        AgentFactory bikerActionProvider = Container.Resolve<AgentFactory>();
-        bikerActionProvider.AddBikerAction(Container.Resolve<RouteAction>());
-        bikerActionProvider.AddBikerAction(Container.Resolve<PickUpPackageAction>());
-        bikerActionProvider.AddBikerAction(Container.Resolve<DeliverPackageAction>());
-        bikerActionProvider.AddBikerAction(Container.Resolve<ReservePackageAction>());
-        bikerActionProvider.AddPedestrianAction(Container.Resolve<WalkAction>());
+        AgentFactory agentFactory = Container.Resolve<AgentFactory>();
+        agentFactory.AddBikerAction(Container.Resolve<RouteAction>());
+        agentFactory.AddBikerAction(Container.Resolve<PickUpPackageAction>());
+        agentFactory.AddBikerAction(Container.Resolve<DeliverPackageAction>());
+        agentFactory.AddBikerAction(Container.Resolve<ReservePackageAction>());
+        agentFactory.AddPedestrianAction(Container.Resolve<WalkAction>());
 
         ActionProvider actionProvider = Container.Resolve<ActionProvider>();
         actionProvider.WalkAction = Container.Resolve<WalkAction>();
-
-        ActionFeeder actionFeeder = Container.Resolve<ActionFeeder>();
-        actionFeeder.Init();
+        actionProvider.Init();
     }
 }

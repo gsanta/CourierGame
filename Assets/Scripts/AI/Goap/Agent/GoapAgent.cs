@@ -8,7 +8,6 @@ namespace AI
     public class GoapAgent<T>
     {
         public List<GoapAction<T>> actions = new List<GoapAction<T>>();
-        public Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
         public GoapAction<T> currentAction;
 
         public WorldStates worldStates = new WorldStates();
@@ -20,19 +19,26 @@ namespace AI
         private string agentId;
         private T parent;
         private MonoBehaviour monoBehaviour;
+        private readonly IGoalProvider goalProvider;
         private NavMeshAgent navMeshAgent;
         private bool isActive = false;
 
-        public GoapAgent(string agentId, T parent, NavMeshAgent navMeshAgent, MonoBehaviour monoBehaviour, Dictionary<SubGoal, int> goals)
+        public GoapAgent(string agentId, T parent, NavMeshAgent navMeshAgent, MonoBehaviour monoBehaviour, IGoalProvider goalProvider)
         {
             this.agentId = agentId;
             this.parent = parent;
             this.monoBehaviour = monoBehaviour;
+            this.goalProvider = goalProvider;
             this.navMeshAgent = navMeshAgent;
-            this.goals = goals;
         }
 
         public void SetActions(List<GoapAction<T>> actions)
+        {
+            this.actions = actions;
+            actions.ForEach(action => action.Init());
+        }
+
+        public void SetGoals()
         {
             this.actions = actions;
             actions.ForEach(action => action.Init());
@@ -132,26 +138,19 @@ namespace AI
             {
                 planner = new GoapPlanner<T>();
 
-                var sortedGoals = from entry in goals orderby entry.Value descending select entry;
+                var subGoal = goalProvider.GetGoal();
 
-                foreach (KeyValuePair<SubGoal, int> sg in sortedGoals)
+                actionQueue = planner.plan(actions, subGoal.sgoals, worldStates);
+
+                if (actionQueue != null)
                 {
-                    actionQueue = planner.plan(actions, sg.Key.sgoals, worldStates);
-
-                    if (actionQueue != null)
-                    {
-                        currentGoal = sg.Key;
-                        break;
-                    }
+                    currentGoal = subGoal;
                 }
             }
 
             if (actionQueue != null && actionQueue.Count == 0)
             {
-                if (currentGoal.remove)
-                {
-                    goals.Remove(currentGoal);
-                }
+                actionQueue = null;
                 planner = null;
             }
 

@@ -1,5 +1,8 @@
 ﻿
+using AI;
+using Pedestrians;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Agents
 {
@@ -17,23 +20,42 @@ namespace Agents
         }
     }
 
-    public class GoalProvider
+    public static class PedestrianGoalNames
     {
-        private List<GoalTemplate> goals = new List<GoalTemplate>();
+        public static string[] names = new string[] {
+            "goToHouse1",
+            "goToHouse2"
+        }; 
+    }
 
-        public GoalProvider()
+    public class GoalProvider : IGoalProvider
+    {
+        private readonly PedestrianTargetStore pedestrianTargetStore;
+        private List<SubGoal> goals = new List<SubGoal>();
+
+        public GoalProvider(PedestrianTargetStore pedestrianTargetStore)
         {
+            this.pedestrianTargetStore = pedestrianTargetStore;
             Init();
         }
 
-        public List<GoalTemplate> GetGoals()
+        public List<SubGoal> GetGoals()
         {
             return goals;
         }
 
+        public SubGoal GetGoal()
+        {
+            var goalIndex = Random.Range(0, goals.Count - 1);
+            return goals[goalIndex];
+        }
+
         private void Init()
         {
-            goals.Add(new GoalTemplate("House 1", 3000, "goToHouse1"));
+            pedestrianTargetStore.GetTargets().ForEach(target =>
+            {
+                goals.Add(new SubGoal("goto" + target.name, target.priority, false));
+            });
         }
     }
 }

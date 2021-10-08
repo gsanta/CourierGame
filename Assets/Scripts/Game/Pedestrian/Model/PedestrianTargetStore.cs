@@ -4,27 +4,27 @@ using UnityEngine;
 
 namespace Pedestrians
 {
-    public class PedestrianGoalStore : MonoBehaviour
+    public class PedestrianTargetStore : MonoBehaviour
     {
         [SerializeField]
         private GameObject goalContainer;
 
-        private List<GameObject> goals = new List<GameObject>();
+        private List<PedestrianTarget> goals = new List<PedestrianTarget>();
 
         private void Awake()
         {
             foreach (Transform obj in goalContainer.transform)
             {
-                goals.Add(obj.gameObject);
+                goals.Add(obj.GetComponent<PedestrianTarget>());
             }
         }
 
-        public List<GameObject> GetGoals()
+        public List<PedestrianTarget> GetTargets()
         {
             return goals;
         }
 
-        public GameObject GetByName(string name)
+        public PedestrianTarget GetByName(string name)
         {
             return goals.Find(goal => goal.name == name);
         }

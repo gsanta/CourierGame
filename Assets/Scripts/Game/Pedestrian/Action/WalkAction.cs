@@ -9,18 +9,16 @@ namespace Pedestrians
 {
     public class WalkAction : AbstractRouteAction<Pedestrian>
     {
-        private PedestrianGoalStore pedestrianGoalStore;
+        private PedestrianTargetStore pedestrianGoalStore;
         private RouteFacade routeFacade;
         private float hideDuration = 0;
         private GameObject Target;
-        private ActionFeeder actionFeeder;
         private WorldState afterEffect;
 
-        public WalkAction(RouteFacade routeFacade, PedestrianGoalStore pedestrianGoalStore, ActionFeeder actionFeeder) : base(null)
+        public WalkAction(RouteFacade routeFacade, PedestrianTargetStore pedestrianGoalStore) : base(null)
         {
             this.routeFacade = routeFacade;
             this.pedestrianGoalStore = pedestrianGoalStore;
-            this.actionFeeder = actionFeeder;
         }
 
         public WalkAction SetTarget(GameObject target)
@@ -44,7 +42,7 @@ namespace Pedestrians
         {
             Pedestrian agent = GoapAgent.Parent;
 
-            var goal = Target; //pedestrianGoalStore.GetGoals()[Random.Range(0, pedestrianGoalStore.GetGoals().Count - 1)];
+            var goal = Target;
 
             var from = agent.transform;
             var to = goal.transform;
@@ -55,7 +53,6 @@ namespace Pedestrians
         }
         public override bool PostPerform()
         {
-            agent.goals.Add(new SubGoal("isDestinationReached", 1, true), 3);
             return true;
         }
 
@@ -76,10 +73,11 @@ namespace Pedestrians
 
         public override GoapAction<Pedestrian> Clone(GoapAgent<Pedestrian> agent = null)
         {
-            var action = new WalkAction(routeFacade, pedestrianGoalStore, actionFeeder);
+            var action = new WalkAction(routeFacade, pedestrianGoalStore);
             action.agent = agent;
             action.Target = Target;
             action.hideDuration = hideDuration;
+            action.afterEffect = afterEffect;
             return action;
         }
 

@@ -27,7 +27,7 @@ namespace Core
         private bool IsDestinationReached()
         {
             var navMeshAgent = GoapAgent.NavMeshAgent;
-            return navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
+            return navMeshAgent.remainingDistance < 1f;
         }
 
         protected void StartRoute(Transform from, Transform to)
