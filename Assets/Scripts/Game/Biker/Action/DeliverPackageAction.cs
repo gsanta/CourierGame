@@ -12,7 +12,7 @@ namespace Bikers
     {
         private IDeliveryService deliveryService;
         private RouteFacade routeFacade;
-        public DeliverPackageAction(IDeliveryService deliveryService, RouteFacade routeFacade) : base(null)
+        public DeliverPackageAction(IDeliveryService deliveryService, RouteFacade routeFacade) : base(null, null)
         {
             this.deliveryService = deliveryService;
             this.routeFacade = routeFacade;

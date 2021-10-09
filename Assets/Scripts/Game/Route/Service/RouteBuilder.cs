@@ -31,7 +31,11 @@ namespace Route
             var nearestToPackage = nearestItemCalc.GetNearest(to, roadLikeStore.GetWaypoints());
             var routeWayPoints = routeFinder.FindRoute(nearestToBiker, nearestToPackage);
             var routePoints = routeWayPoints.Select(wp => wp.Position).ToList();
-            routePoints.RemoveAt(routePoints.Count - 1);
+            if (routePoints.Count >= 2)
+            {
+                routePoints.RemoveAt(0);
+                routePoints.RemoveAt(routePoints.Count - 1);
+            }
             routePoints.Add(to.position);
 
             return new Queue<Vector3>(routePoints);

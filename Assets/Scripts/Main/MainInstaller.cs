@@ -135,6 +135,8 @@ public class MainInstaller : MonoInstaller
         Container.Bind<WalkAction>().AsSingle().NonLazy();
         Container.Bind<AgentFactory>().AsSingle().NonLazy();
         Container.Bind<ActionProvider>().AsSingle().NonLazy();
+
+        Container.Bind<PathCache>().AsSingle().NonLazy();
     }
     override public void Start()
     {
@@ -163,5 +165,8 @@ public class MainInstaller : MonoInstaller
         ActionProvider actionProvider = Container.Resolve<ActionProvider>();
         actionProvider.WalkAction = Container.Resolve<WalkAction>();
         actionProvider.Init();
+
+        PathCache pathCache = Container.Resolve<PathCache>();
+        pathCache.Init();
     }
 }

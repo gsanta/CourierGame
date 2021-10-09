@@ -15,7 +15,7 @@ namespace Pedestrians
         private GameObject Target;
         private WorldState afterEffect;
 
-        public WalkAction(RouteFacade routeFacade, PedestrianTargetStore pedestrianGoalStore) : base(null)
+        public WalkAction(RouteFacade routeFacade, PedestrianTargetStore pedestrianGoalStore, PathCache pathCache) : base(null, pathCache)
         {
             this.routeFacade = routeFacade;
             this.pedestrianGoalStore = pedestrianGoalStore;
@@ -73,7 +73,7 @@ namespace Pedestrians
 
         public override GoapAction<Pedestrian> Clone(GoapAgent<Pedestrian> agent = null)
         {
-            var action = new WalkAction(routeFacade, pedestrianGoalStore);
+            var action = new WalkAction(routeFacade, pedestrianGoalStore, pathCache);
             action.agent = agent;
             action.Target = Target;
             action.hideDuration = hideDuration;
@@ -83,7 +83,8 @@ namespace Pedestrians
 
         protected override Queue<Vector3> BuildRoute(Transform from, Transform to)
         {
-            return routeFacade.BuildPavementRoute(from, to);   
+            return new Queue<Vector3>(new List<Vector3>() { to.position });
+            //return routeFacade.BuildPavementRoute(from, to);   
         }
     }
 }

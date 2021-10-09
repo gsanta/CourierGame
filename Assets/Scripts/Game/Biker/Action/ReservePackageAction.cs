@@ -41,7 +41,7 @@ namespace Bikers
                 GoapAgent.worldStates.AddState("isPackageReserved", 3);
                 deliveryService.ReservePackage(selectedPackage, GoapAgent.Parent);
 
-                target = selectedPackage.gameObject.transform.position;
+                //target = selectedPackage.gameObject.transform.position;
 
                 return true;
             }

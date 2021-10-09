@@ -13,20 +13,19 @@ namespace Pedestrians
         private AgentFactory agentFactory;
         public NavMeshAgent navMeshAgent;
 
+        public bool walked = false;
+
         [Inject]
         public void Construct(AgentFactory agentFactory)
         {
             this.agentFactory = agentFactory;
         }
 
-        private void Update()
-        {
-            Debug.Log("pedestrian update");
-        }
-
         private void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
+            var areaIndex = NavMesh.GetAreaFromName("road");
+            navMeshAgent.SetAreaCost(areaIndex, 8);
             agent = agentFactory.CreatePedestrianAgent(this);
             agent.Active = true;
         }

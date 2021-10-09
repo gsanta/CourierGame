@@ -882,6 +882,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: bike_road_2_assembled (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e3fbb77151ff78948a8691bd8025039a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e3fbb77151ff78948a8691bd8025039a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3fbb77151ff78948a8691bd8025039a, type: 3}
 --- !u!1 &75457990
@@ -1216,7 +1224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ec6cc33ef1e4a468e34d2fbae640a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pedestriansToSpawn: 50
+  pedestriansToSpawn: 1
 --- !u!1001 &103835076
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5234,6 +5242,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a77dd6162f3fa76468c0dca460541cd7, type: 3}
       propertyPath: m_Name
       value: sidewalk_6_assembled
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a77dd6162f3fa76468c0dca460541cd7, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a77dd6162f3fa76468c0dca460541cd7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a77dd6162f3fa76468c0dca460541cd7, type: 3}
@@ -12810,6 +12826,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: b83e9673b7ef97c49a545dd1891569b2, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+--- !u!4 &1254960296 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+  m_PrefabInstance: {fileID: 1538994201}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1264061897
 GameObject:
   m_ObjectHideFlags: 0
@@ -12961,7 +12982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.58
+      value: -21.4
       objectReference: {fileID: 0}
     - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -14757,6 +14778,67 @@ Transform:
   m_Father: {fileID: 507511998}
   m_RootOrder: 40
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1538994201
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1542024022}
+    m_Modifications:
+    - target: {fileID: 1222247604743741030, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_Name
+      value: Cube8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 26.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909950216820503413, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8135692094880449065, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b83e9673b7ef97c49a545dd1891569b2, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aa7df38f2976ff847b078b5f2aa9392c, type: 3}
 --- !u!1 &1540640205
 GameObject:
   m_ObjectHideFlags: 0
@@ -14871,6 +14953,7 @@ Transform:
   - {fileID: 851655291}
   - {fileID: 265977420}
   - {fileID: 1046119582}
+  - {fileID: 1254960296}
   m_Father: {fileID: 388617303}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16819,6 +16902,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e3fbb77151ff78948a8691bd8025039a, type: 3}
       propertyPath: m_Name
       value: bike_road_2_assembled
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e3fbb77151ff78948a8691bd8025039a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e3fbb77151ff78948a8691bd8025039a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3fbb77151ff78948a8691bd8025039a, type: 3}

@@ -23,6 +23,8 @@ namespace AI
         private NavMeshAgent navMeshAgent;
         private bool isActive = false;
 
+        public GoapAction<T> prevAction;
+
         public GoapAgent(string agentId, T parent, NavMeshAgent navMeshAgent, MonoBehaviour monoBehaviour, IGoalProvider goalProvider)
         {
             this.agentId = agentId;
@@ -40,7 +42,6 @@ namespace AI
 
         public void SetGoals()
         {
-            this.actions = actions;
             actions.ForEach(action => action.Init());
         }
 
@@ -75,6 +76,7 @@ namespace AI
                 currentAction.running = false;
                 if (currentAction.PostPerform())
                 {
+                    prevAction = currentAction;
                     currentAction = null;
                 }
                 invoked = false;
@@ -87,6 +89,7 @@ namespace AI
             {
                 currentAction.running = false;
                 currentAction.PostAbort();
+                prevAction = currentAction;
                 currentAction = null;
             }
             planner = null;

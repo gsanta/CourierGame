@@ -74,12 +74,6 @@ namespace AI
                 queue.Enqueue(a);
             }
 
-            Debug.Log("The Plan is: ");
-            foreach (GoapAction<T> a in queue)
-            {
-                Debug.Log("Q: " + a.actionName);
-            }
-
             return queue;
         }
 

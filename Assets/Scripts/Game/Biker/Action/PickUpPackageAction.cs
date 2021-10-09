@@ -12,7 +12,7 @@ namespace Bikers
         private readonly IDeliveryService deliveryService;
         private readonly RouteFacade routeFacade;
 
-        public PickUpPackageAction(IDeliveryService deliveryService, RouteFacade routeFacade) : base(null)
+        public PickUpPackageAction(IDeliveryService deliveryService, RouteFacade routeFacade) : base(null, null)
         {
             this.deliveryService = deliveryService;
             this.routeFacade = routeFacade;

@@ -1,4 +1,5 @@
 ﻿
+using Agents;
 using AI;
 using Route;
 using System.Collections.Generic;
@@ -10,10 +11,11 @@ namespace Core
     public abstract class AbstractRouteAction<T>: GoapAction<T>
     {
         private Queue<Vector3> route;
-        private Vector3 currentTarget;
+        protected PathCache pathCache;
 
-        public AbstractRouteAction(GoapAgent<T> agent) : base(agent)
+        public AbstractRouteAction(GoapAgent<T> agent, PathCache pathCache) : base(agent)
         {
+            this.pathCache = pathCache;
         }        
 
         public override void Update()
@@ -27,7 +29,7 @@ namespace Core
         private bool IsDestinationReached()
         {
             var navMeshAgent = GoapAgent.NavMeshAgent;
-            return navMeshAgent.remainingDistance < 1f;
+            return navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
         }
 
         protected void StartRoute(Transform from, Transform to)
@@ -43,9 +45,17 @@ namespace Core
             if (route.Count > 0)
             {
                 currentTarget = route.Dequeue();
-
                 NavMeshAgent navMeshAgent = agent.NavMeshAgent;
-                navMeshAgent.SetDestination(currentTarget);
+
+
+                if (pathCache != null && agent.prevAction != null)
+                {
+                    var path = pathCache.GetPath((agent.prevAction.currentTarget, currentTarget));
+                    navMeshAgent.SetPath(path);
+                } else
+                {
+                    navMeshAgent.SetDestination(currentTarget);
+                }
             }
             else
             {

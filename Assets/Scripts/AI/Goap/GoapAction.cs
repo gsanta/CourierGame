@@ -7,7 +7,7 @@ namespace AI
     {
         public string actionName = "Action";
         public float cost = 1.0f;
-        public Vector3 target;
+        public Vector3 currentTarget;
         public string targetTag;
         public float duration = 1;
         public Dictionary<string, int> preConditionsDict;
