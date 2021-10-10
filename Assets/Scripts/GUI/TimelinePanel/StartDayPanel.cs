@@ -3,6 +3,7 @@ using System;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 public class StartDayPanel : MonoBehaviour
@@ -35,6 +36,12 @@ public class StartDayPanel : MonoBehaviour
         gameObject.SetActive(false);
 
         timer.IsDayStarted = true;
+    }
+
+    public void OnLoadScene()
+    {
+        Debug.Log("loading scene");
+        SceneManager.LoadSceneAsync("Block2", LoadSceneMode.Additive);
     }
 
     private void HandleDayPassed(object sender, EventArgs e)

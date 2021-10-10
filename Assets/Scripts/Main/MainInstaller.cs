@@ -13,11 +13,10 @@ using AI;
 using Core;
 using Stats;
 using Agents;
+using Scenes;
 
 public class MainInstaller : MonoInstaller
 {
-    [SerializeField]
-    private Timer timer;
     [SerializeField]
     private TimelineController timelineController;
     [SerializeField]
@@ -73,8 +72,6 @@ public class MainInstaller : MonoInstaller
     {
         Container.Bind<InputHandler>().FromInstance(inputHandler).AsSingle();
         Container.Bind<TimelineController>().FromInstance(timelineController).AsSingle();
-        Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
-        Container.Bind<Timer>().FromInstance(timer).AsSingle();
         Container.Bind<TimelineSlider>().FromInstance(timelineController.slider).AsSingle();
         Container.Bind<PanelManager>().FromInstance(panelManager).AsSingle();
 
@@ -137,6 +134,9 @@ public class MainInstaller : MonoInstaller
         Container.Bind<ActionProvider>().AsSingle().NonLazy();
 
         Container.Bind<PathCache>().AsSingle().NonLazy();
+
+        // scenes
+        Container.Bind<SceneLoader>().AsSingle().NonLazy();
     }
     override public void Start()
     {
@@ -168,5 +168,8 @@ public class MainInstaller : MonoInstaller
 
         PathCache pathCache = Container.Resolve<PathCache>();
         pathCache.Init();
+
+        SceneLoader sceneLoader = Container.Resolve<SceneLoader>();
+        sceneLoader.LoadInitialScenes();
     }
 }

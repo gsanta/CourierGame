@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Stats
 {
-    public class Timer : MonoBehaviour, IDirty
+    public class Timer : IDirty
     {
         [SerializeField]
         private int secondsPerDay = 100;
@@ -57,12 +57,7 @@ namespace Stats
             }
         }
 
-        void Update()
-        {
-            Tick();
-        }
-
-        private void Tick()
+        public void Tick()
         {
             if (!isDayStarted)
             {
