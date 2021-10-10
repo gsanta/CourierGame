@@ -2,6 +2,7 @@
 using Agents;
 using AI;
 using Route;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -48,14 +49,16 @@ namespace Core
                 NavMeshAgent navMeshAgent = agent.NavMeshAgent;
 
 
-                if (pathCache != null && agent.prevAction != null)
-                {
-                    var path = pathCache.GetPath((agent.prevAction.currentTarget, currentTarget));
-                    navMeshAgent.SetPath(path);
-                } else
-                {
+                //if (pathCache != null && agent.prevAction != null)
+                //{
+                //    var startTime = DateTime.Now;
+                //    var path = pathCache.GetPath((agent.prevAction.currentTarget, currentTarget));
+                //    navMeshAgent.SetPath(path);
+                //    Debug.Log((DateTime.Now - startTime).Seconds);
+                //} else
+                //{
                     navMeshAgent.SetDestination(currentTarget);
-                }
+                //}
             }
             else
             {

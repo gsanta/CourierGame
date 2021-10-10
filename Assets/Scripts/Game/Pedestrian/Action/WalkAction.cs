@@ -13,7 +13,7 @@ namespace Pedestrians
         private RouteFacade routeFacade;
         private float hideDuration = 0;
         private GameObject Target;
-        private WorldState afterEffect;
+        public WorldState afterEffect;
 
         public WalkAction(RouteFacade routeFacade, PedestrianTargetStore pedestrianGoalStore, PathCache pathCache) : base(null, pathCache)
         {

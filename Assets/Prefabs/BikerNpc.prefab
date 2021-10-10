@@ -14,9 +14,7 @@ GameObject:
   - component: {fileID: 954592312787651773}
   - component: {fileID: -358788667383095460}
   - component: {fileID: 8391117010172028948}
-  - component: {fileID: 8472538161976676045}
   - component: {fileID: -5063781984719222902}
-  - component: {fileID: 882821763048665921}
   - component: {fileID: 5175631968212648827}
   m_Layer: 7
   m_Name: BikerNpc
@@ -126,7 +124,7 @@ NavMeshAgent:
   m_Height: 1
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!114 &8391117010172028948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,19 +141,7 @@ MonoBehaviour:
   charController: {fileID: 0}
   packageHolder: {fileID: 4864236468026608713}
   package: {fileID: 0}
---- !u!114 &8472538161976676045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954592312787651769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acb749a6129fe524d978c5e3879d0f0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentId: agent
+  navMeshAgent: {fileID: 0}
 --- !u!114 &-5063781984719222902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,18 +158,6 @@ MonoBehaviour:
   moveSpeed: 5
   runSpeed: 8
   gravityMod: 2.5
---- !u!114 &882821763048665921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954592312787651769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63ba0c6575e070249a62bb41e43fe014, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!143 &5175631968212648827
 CharacterController:
   m_ObjectHideFlags: 0

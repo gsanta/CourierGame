@@ -19,7 +19,7 @@ namespace AI
         }
     }
 
-    public class GoapPlanner<T>
+    public class GoapPlanner<T> : IPlanner<T>
     {
         public Queue<GoapAction<T>> plan(List<GoapAction<T>> actions, Dictionary<string, int> goal, WorldStates states)
         {

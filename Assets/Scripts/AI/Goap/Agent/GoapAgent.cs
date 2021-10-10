@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,7 +12,6 @@ namespace AI
 
         public WorldStates worldStates = new WorldStates();
 
-        protected GoapPlanner<T> planner;
         private Queue<GoapAction<T>> actionQueue;
         private SubGoal currentGoal;
 
@@ -20,17 +19,19 @@ namespace AI
         private T parent;
         private MonoBehaviour monoBehaviour;
         private readonly IGoalProvider goalProvider;
+        private readonly IPlanner<T> planner;
         private NavMeshAgent navMeshAgent;
         private bool isActive = false;
 
         public GoapAction<T> prevAction;
 
-        public GoapAgent(string agentId, T parent, NavMeshAgent navMeshAgent, MonoBehaviour monoBehaviour, IGoalProvider goalProvider)
+        public GoapAgent(string agentId, T parent, NavMeshAgent navMeshAgent, MonoBehaviour monoBehaviour, IGoalProvider goalProvider, IPlanner<T> planner)
         {
             this.agentId = agentId;
             this.parent = parent;
             this.monoBehaviour = monoBehaviour;
             this.goalProvider = goalProvider;
+            this.planner = planner;
             this.navMeshAgent = navMeshAgent;
         }
 
@@ -92,7 +93,7 @@ namespace AI
                 prevAction = currentAction;
                 currentAction = null;
             }
-            planner = null;
+            actionQueue = null;
         }
 
         public void Update()
@@ -137,13 +138,13 @@ namespace AI
 
         private void FindAction()
         {
-            if (planner == null || actionQueue == null)
+            if (actionQueue == null)
             {
-                planner = new GoapPlanner<T>();
-
                 var subGoal = goalProvider.GetGoal();
 
+                var startTime = DateTime.Now;
                 actionQueue = planner.plan(actions, subGoal.sgoals, worldStates);
+                Debug.Log((DateTime.Now - startTime).Milliseconds);
 
                 if (actionQueue != null)
                 {
@@ -154,7 +155,6 @@ namespace AI
             if (actionQueue != null && actionQueue.Count == 0)
             {
                 actionQueue = null;
-                planner = null;
             }
 
             if (actionQueue != null && actionQueue.Count > 0)

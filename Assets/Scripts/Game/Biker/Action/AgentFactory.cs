@@ -48,7 +48,7 @@ namespace Bikers
 
             var goalProvider = new GoalProvider(pedestrianTargetStore);
 
-            var agent = new GoapAgent<Pedestrian>(id, pedestrian, pedestrian.navMeshAgent, pedestrian, goalProvider);
+            var agent = new GoapAgent<Pedestrian>(id, pedestrian, pedestrian.navMeshAgent, pedestrian, goalProvider, new PedestrianPlanner(actionProvider));
             agent.SetActions(actions);
 
             return agent;
@@ -76,7 +76,7 @@ namespace Bikers
             var goalProvider = new BikerGoalProvider();
 
 
-            var agent = new GoapAgent<Biker>(id, biker, biker.navMeshAgent, biker, goalProvider);
+            var agent = new GoapAgent<Biker>(id, biker, biker.navMeshAgent, biker, goalProvider, new GoapPlanner<Biker>());
             agent.SetActions(actions);
 
             return agent;

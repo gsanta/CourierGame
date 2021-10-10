@@ -16,8 +16,6 @@ GameObject:
   - component: {fileID: 1221894700258713044}
   - component: {fileID: 5794767504772231193}
   - component: {fileID: 2902610570975193907}
-  - component: {fileID: 2960104643149582863}
-  - component: {fileID: 835663639024934882}
   - component: {fileID: 6195329513134689117}
   - component: {fileID: 8772476996781926769}
   m_Layer: 7
@@ -35,7 +33,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8575618206237545019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.1, y: 2.88, z: 6.32}
+  m_LocalPosition: {x: 19.1, y: 0.52, z: 6.32}
   m_LocalScale: {x: 0.9171428, y: 0.9171428, z: 0.9171428}
   m_Children:
   - {fileID: 9156844513815919047}
@@ -100,7 +98,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 8575618206237545019}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -161,31 +159,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0ad6961802630f41b9a858ee2ba208f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seeAhead: 5
---- !u!114 &2960104643149582863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8575618206237545019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63ba0c6575e070249a62bb41e43fe014, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &835663639024934882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8575618206237545019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ee42f93a67aea64c84623aa399eb77e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  navMeshAgent: {fileID: 0}
+  walked: 0
 --- !u!65 &6195329513134689117
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -195,7 +170,7 @@ BoxCollider:
   m_GameObject: {fileID: 8575618206237545019}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.8895867, y: 1.7740897, z: 0.73310655}
   m_Center: {x: -0.0004898258, y: 0.11295642, z: 0.039937407}
@@ -208,7 +183,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8575618206237545019}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.45
+  m_Radius: 0.18
   m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50

@@ -29,6 +29,11 @@ namespace Agents
             return walkActions.Select(action => (WalkAction) action.Clone()).ToList();
         }
 
+        public WalkAction GetByAfterEffect(string afterEffectName)
+        {
+            return (WalkAction) walkActions.Find(action => action.afterEffect.key == afterEffectName).Clone();
+        }
+
         public void Init()
         {
 

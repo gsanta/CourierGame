@@ -8,7 +8,6 @@ namespace Pedestrians
 {
     public class Pedestrian : MonoBehaviour
     {
-        public float seeAhead = 5f;
         public GoapAgent<Pedestrian> agent;
         private AgentFactory agentFactory;
         public NavMeshAgent navMeshAgent;
@@ -25,7 +24,7 @@ namespace Pedestrians
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
             var areaIndex = NavMesh.GetAreaFromName("road");
-            navMeshAgent.SetAreaCost(areaIndex, 8);
+            //navMeshAgent.SetAreaCost(areaIndex, 8);
             agent = agentFactory.CreatePedestrianAgent(this);
             agent.Active = true;
         }
