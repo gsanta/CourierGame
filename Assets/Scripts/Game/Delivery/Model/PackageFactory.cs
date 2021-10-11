@@ -26,25 +26,25 @@ namespace Delivery
         {
             GameObject targetObject = GetTargetPoint();
 
-            Package newPackage = instanceFactory.Create(packageStore.PackageTemplate);
+            Package newPackage = instanceFactory.Create(packageStore.GetPackageTemplate());
             newPackage.transform.position = packageConfig.spawnPoint.transform.position;
             newPackage.Name = "package-" + packageCounter++;
             newPackage.Price = packageConfig.price;
             newPackage.gameObject.SetActive(true);
             newPackage.SpawnPoint = packageConfig.spawnPoint;
 
-            GameObject newMinimapPackage = Instantiate(packageStore.PackageMinimapTemplate, packageStore.PackageMinimapTemplate.transform.parent);
+            GameObject newMinimapPackage = Instantiate(packageStore.GetPackageMinimapTemplate(), packageStore.GetPackageMinimapTemplate().transform.parent);
             newMinimapPackage.transform.position = packageConfig.spawnPoint.transform.position;
             newMinimapPackage.gameObject.SetActive(true);
             newMinimapPackage.transform.SetParent(gameObject.transform);
             newPackage.MinimapGameObject = newMinimapPackage;
 
-            GameObject packageTarget = Instantiate(packageStore.PackageTargetTemplate, packageStore.PackageTargetTemplate.transform.parent);
+            GameObject packageTarget = Instantiate(packageStore.GetPackageTargetTemplate(), packageStore.GetPackageTargetTemplate().transform.parent);
             packageTarget.gameObject.SetActive(false);
             packageTarget.transform.position = targetObject.transform.position;
             newPackage.Target = packageTarget;
 
-            GameObject targetMinimapGameObject = Instantiate(packageStore.PackageTargetMinimapTemplate, packageStore.PackageTargetMinimapTemplate.transform.parent);
+            GameObject targetMinimapGameObject = Instantiate(packageStore.GetPackageTargetMinimapTemplate(), packageStore.GetPackageTargetMinimapTemplate().transform.parent);
             targetMinimapGameObject.transform.position = targetObject.transform.position;
             newPackage.TargetMinimapGameObject = targetMinimapGameObject;
 

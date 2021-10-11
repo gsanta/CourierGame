@@ -4,22 +4,31 @@ using UnityEngine;
 
 namespace Bikers
 {
-    public class BikerStore : MonoBehaviour
+    public class BikerStore
     {
         private List<Biker> bikers = new List<Biker>();
 
-        [SerializeField]
         private GameObject[] spawnPoints;
-        [SerializeField]
         private Biker bikerTemplate;
-        public GameObject[] SpawnPoints
+        
+        public GameObject[] GetSpawnPoints() 
         {
-            get => spawnPoints;
+            return spawnPoints;
         }
 
-        public Biker BikerTemplate
+        public void SetSpawnPoints(GameObject[] spawnPoints)
         {
-            get => bikerTemplate;
+            this.spawnPoints = spawnPoints;
+        }
+
+        public void SetBikerTemplate(Biker bikerTemplate)
+        {
+            this.bikerTemplate = bikerTemplate;
+        }
+
+        public Biker GetBikerTemplate()
+        {
+            return bikerTemplate;
         }
 
         public void Add(Biker biker)
@@ -41,14 +50,6 @@ namespace Bikers
             if (handler != null)
             {
                 handler(this, new CourierAddedEventArgs(biker));
-            }
-        }
-
-        private void Start()
-        {
-            foreach (var sp in spawnPoints)
-            {
-                sp.SetActive(false);
             }
         }
     }

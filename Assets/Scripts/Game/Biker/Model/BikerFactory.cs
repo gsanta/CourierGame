@@ -31,7 +31,7 @@ namespace Bikers
 
         public Biker Create(BikerConfig config)
         {
-            Biker newBiker = Instantiate(bikerStore.BikerTemplate);
+            Biker newBiker = Instantiate(bikerStore.GetBikerTemplate());
             newBiker.Construct(eventService, agentFactory);
 
             newBiker.GetComponent<BikerPlayComponent>().Construct(packageStore, inputHandler, deliveryService);

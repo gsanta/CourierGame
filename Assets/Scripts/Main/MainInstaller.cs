@@ -1,36 +1,30 @@
+using Agents;
 using Bikers;
 using Cameras;
+using Core;
 using Delivery;
+using GUI;
 using Minimap;
 using Model;
 using Pedestrians;
 using Route;
+using Scenes;
 using Service;
+using Stats;
 using UI;
 using UnityEngine;
 using Zenject;
-using AI;
-using Core;
-using Stats;
-using Agents;
-using Scenes;
 
 public class MainInstaller : MonoInstaller
 {
     [SerializeField]
-    private TimelineController timelineController;
-    [SerializeField]
-    private PanelManager panelManager;
+    private PanelController panelController;
 
-    [SerializeField]
-    private StartDayPanel startDayPanel;
-    [SerializeField]
-    private DeliveryPanel deliveryPanel;
     [SerializeField]
     private InputHandler inputHandler;
 
     [SerializeField]
-    private PackageStore packageStore;
+    private PackageStoreController packageStoreController;
     [SerializeField]
     private PackageSpawnPointStore packageSpawnPointStore;
     [SerializeField]
@@ -39,13 +33,7 @@ public class MainInstaller : MonoInstaller
     private PackageFactory packageFactory;
 
     [SerializeField]
-    private BikerStore bikerStore;
-    [SerializeField]
     private BikerFactory bikerFactory;
-    [SerializeField]
-    private BikerService bikerService;
-    [SerializeField]
-    private BikerPanel bikerPanel;
 
     [SerializeField]
     private MainCamera mainCamera;
@@ -71,34 +59,28 @@ public class MainInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<InputHandler>().FromInstance(inputHandler).AsSingle();
-        Container.Bind<TimelineController>().FromInstance(timelineController).AsSingle();
-        Container.Bind<TimelineSlider>().FromInstance(timelineController.slider).AsSingle();
-        Container.Bind<PanelManager>().FromInstance(panelManager).AsSingle();
+        Container.Bind<PanelController>().FromInstance(panelController).AsSingle();
 
         Container.Bind<DayService>().AsSingle();
 
-        Container.Bind<BikerService>().FromInstance(bikerService).AsSingle();
-        Container.Bind<BikerStore>().FromInstance(bikerStore).AsSingle();
+        Container.Bind<BikerStore>().AsSingle();
         Container.Bind<BikerFactory>().FromInstance(bikerFactory).AsSingle();
         Container.Bind<BikerSpawner>().AsSingle();
-        Container.Bind<BikerPanel>().FromInstance(bikerPanel).AsSingle();
         Container.Bind<BikerSetup>().AsSingle();
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
         Container.BindFactory<Object, BikerPlayComponent, BikerPlayComponent.Factory>().FromFactory<PrefabFactory<BikerPlayComponent>>();
         Container.BindFactory<Object, Pedestrian, Pedestrian.Factory>().FromFactory<PrefabFactory<Pedestrian>>();
 
-        Container.Bind<PackageStore>().FromInstance(packageStore).AsSingle();
+        Container.Bind<PackageStoreController>().FromInstance(packageStoreController).AsSingle();
         Container.Bind<PackageSpawnPointStore>().FromInstance(packageSpawnPointStore).AsSingle();
         Container.Bind<PackageTargetPointStore>().FromInstance(packageTargetPointStore).AsSingle();
         Container.Bind<ISpawner<PackageConfig>>().To<PackageSpawner>().AsSingle().NonLazy();
         Container.Bind<ItemFactory<PackageConfig, Package>>().To<PackageFactory>().FromInstance(packageFactory).AsSingle();
         Container.BindFactory<Object, Package, Package.Factory>().FromFactory<PrefabFactory<Package>>();
 
-        Container.Bind<DeliveryPanel>().FromInstance(deliveryPanel).AsSingle();
         Container.Bind<DeliveryStore>().AsSingle();
         Container.Bind<IDeliveryService>().To<DeliveryService>().AsSingle();
 
-        Container.Bind<RoleService>().AsSingle();
         Container.Bind<IEventService>().To<EventService>().AsSingle();
 
         Container.Bind<MinimapStore>().AsSingle();

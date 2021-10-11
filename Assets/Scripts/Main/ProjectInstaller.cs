@@ -1,4 +1,7 @@
-﻿using Stats;
+﻿using Bikers;
+using Delivery;
+using Stats;
+using UI;
 using Zenject;
 
 namespace Main
@@ -9,6 +12,11 @@ namespace Main
         {
             Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
             Container.Bind<Timer>().AsSingle();
+            Container.Bind<PanelManager>().AsSingle();
+            Container.Bind<BikerStore>().AsSingle();
+            Container.Bind<BikerService>().AsSingle();
+            Container.Bind<RoleService>().AsSingle();
+            Container.Bind<PackageStore>().AsSingle();
         }
     }
 }

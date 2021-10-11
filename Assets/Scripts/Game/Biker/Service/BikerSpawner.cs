@@ -1,5 +1,4 @@
-﻿using Model;
-using AI;
+﻿using AI;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -29,7 +28,7 @@ namespace Bikers
             for (int i = 0; i < 3; i++)
             {
                 //GameObject spawnPoint = ChooseSpawnPoint(usedSpawnPoints);
-                GameObject spawnPoint = bikerStore.SpawnPoints[2];
+                GameObject spawnPoint = bikerStore.GetSpawnPoints()[2];
                 BikerConfig config = new BikerConfig(spawnPoint, new SubGoal("isPackageDropped", 1, true), $"Courier-{i}");
                 Biker courier = bikerFactory.Create(config);
                 bikerStore.Add(courier);
@@ -38,7 +37,7 @@ namespace Bikers
 
         private GameObject ChooseSpawnPoint(List<GameObject> usedSpawnPoints)
         {
-            var freeSpawnPoints = bikerStore.SpawnPoints.Where(spawnPoint => usedSpawnPoints.Contains(spawnPoint) == false).ToArray();
+            var freeSpawnPoints = bikerStore.GetSpawnPoints().Where(spawnPoint => usedSpawnPoints.Contains(spawnPoint) == false).ToArray();
             int randomIndex = Random.Range(0, freeSpawnPoints.Length);
 
             var spawnPoint = freeSpawnPoints[randomIndex];

@@ -7,37 +7,53 @@ using Bikers;
 
 namespace Delivery
 {
-    public class PackageStore : MonoBehaviour
+    public class PackageStore
     {
         private List<Package> packages = new List<Package>();
 
-        [SerializeField]
         private Package packageTemplate;
-        [SerializeField]
         private GameObject packageTargetTemplate;
-        [SerializeField]
         private GameObject packageMinimapTemplate;
-        [SerializeField]
         private GameObject packageTargetMinimapTemplate;
 
-        public Package PackageTemplate
+        public void SetPackageTemplate(Package packageTemplate)
         {
-            get => packageTemplate;
+            this.packageTemplate = packageTemplate;
         }
 
-        public GameObject PackageTargetTemplate
+        public Package GetPackageTemplate()
         {
-            get => packageTargetTemplate;
+            return packageTemplate;
         }
 
-        public GameObject PackageMinimapTemplate
+        public void SetPackageTargetTemplate(GameObject packageTargetTemplate)
         {
-            get => packageMinimapTemplate;
+            this.packageTargetTemplate = packageTargetTemplate;
         }
 
-        public GameObject PackageTargetMinimapTemplate
+        public GameObject GetPackageTargetTemplate()
         {
-            get => packageTargetMinimapTemplate;
+            return packageTargetTemplate;
+        }
+
+        public void SetPackageMinimapTemplate(GameObject packageMinimapTemplate)
+        {
+            this.packageMinimapTemplate = packageMinimapTemplate;
+        }
+
+        public GameObject GetPackageMinimapTemplate()
+        {
+            return packageMinimapTemplate;
+        }
+
+        public void SetPackageTargetMinimapTemplate(GameObject packageTargetMinimapTemplate)
+        {
+            this.packageMinimapTemplate = packageTargetMinimapTemplate;
+        }
+
+        public GameObject GetPackageTargetMinimapTemplate()
+        {
+            return packageTargetMinimapTemplate;
         }
 
         public void Add(Package package)
@@ -94,12 +110,6 @@ namespace Delivery
             {
                 handler(this, e);
             }
-        }
-
-        public void Start()
-        {
-            PackageTemplate.gameObject.SetActive(false);
-            PackageMinimapTemplate.SetActive(false);
         }
     }
 

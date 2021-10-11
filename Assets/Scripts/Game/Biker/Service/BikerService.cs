@@ -1,18 +1,14 @@
-using UnityEngine;
-using Zenject;
 
 namespace Bikers
 {
-    public class BikerService : MonoBehaviour
+    public class BikerService
     {
 
         private BikerStore bikerStore;
 
-
-        [Inject]
-        public void Construct(BikerStore courierStore)
+        public BikerService(BikerStore bikerStore)
         {
-            this.bikerStore = courierStore;
+            this.bikerStore = bikerStore;
         }
 
         public Biker FindPlayRole()
