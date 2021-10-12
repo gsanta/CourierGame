@@ -2,6 +2,7 @@
 using Core;
 using Delivery;
 using Model;
+using Scenes;
 using Service;
 using Stats;
 using UI;
@@ -25,6 +26,11 @@ namespace Main
             Container.Bind<MoneyStore>().AsSingle();
 
             Container.Bind<ReconciliationService>().AsSingle();
+            Container.Bind<SceneLoader>().AsSingle().NonLazy();
+            Container.Bind<PackageSpawnPointStore>().AsSingle();
+            Container.Bind<PackageTargetPointStore>().AsSingle();
+            Container.Bind<PackageFactory> ().To<PackageFactory>().AsSingle();
+
         }
     }
 }

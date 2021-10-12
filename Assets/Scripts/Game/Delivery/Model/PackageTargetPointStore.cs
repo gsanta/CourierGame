@@ -4,31 +4,23 @@ using UnityEngine;
 
 namespace Delivery
 {
-    public class PackageTargetPointStore : MonoBehaviour
+    public class PackageTargetPointStore
     {
-        [SerializeField]
-        private GameObject container;
-
-        private List<GameObject> spawnPoints = new List<GameObject>();
-
-        private void Start()
-        {
-            foreach (Transform child in container.transform)
-            {
-                var obj = child.gameObject;
-                obj.SetActive(false);
-                spawnPoints.Add(obj);
-            }
-        }
+        private List<GameObject> targetPoints = new List<GameObject>();
 
         public List<GameObject> GetAll()
         {
-            return spawnPoints;
+            return targetPoints;
+        }
+
+        public void Add(GameObject targetPoint)
+        {
+            targetPoints.Add(targetPoint);
         }
 
         public int Size
         {
-            get => spawnPoints.Count;
+            get => targetPoints.Count;
         }
     }
 }

@@ -10,5 +10,10 @@ namespace Scenes
         {
             SceneManager.LoadSceneAsync("CanvasScene", LoadSceneMode.Additive);
         }
+
+        public void LoadMapScene(int index)
+        {
+            SceneManager.LoadSceneAsync("Map" + index + "Scene", LoadSceneMode.Additive);
+        }
     }
 }

@@ -23,11 +23,11 @@ public class MainInstaller : MonoInstaller
     [SerializeField]
     private PackageStoreController packageStoreController;
     [SerializeField]
-    private PackageSpawnPointStore packageSpawnPointStore;
+    private PackageSpawnPointStoreController packageSpawnPointStoreController;
     [SerializeField]
-    private PackageTargetPointStore packageTargetPointStore;
+    private PackageTargetPointStoreController packageTargetPointStoreController;
     [SerializeField]
-    private PackageFactory packageFactory;
+    private PackageInstantiator packageInstantiator;
 
     [SerializeField]
     private BikerFactory bikerFactory;
@@ -68,10 +68,10 @@ public class MainInstaller : MonoInstaller
         Container.BindFactory<Object, Pedestrian, Pedestrian.Factory>().FromFactory<PrefabFactory<Pedestrian>>();
 
         Container.Bind<PackageStoreController>().FromInstance(packageStoreController).AsSingle();
-        Container.Bind<PackageSpawnPointStore>().FromInstance(packageSpawnPointStore).AsSingle();
-        Container.Bind<PackageTargetPointStore>().FromInstance(packageTargetPointStore).AsSingle();
+        Container.Bind<PackageSpawnPointStoreController>().FromInstance(packageSpawnPointStoreController).AsSingle();
+        Container.Bind<PackageTargetPointStoreController>().FromInstance(packageTargetPointStoreController).AsSingle();
         Container.Bind<ISpawner<PackageConfig>>().To<PackageSpawner>().AsSingle().NonLazy();
-        Container.Bind<ItemFactory<PackageConfig, Package>>().To<PackageFactory>().FromInstance(packageFactory).AsSingle();
+        Container.Bind<PackageInstantiator>().FromInstance(packageInstantiator).AsSingle();
         Container.BindFactory<Object, Package, Package.Factory>().FromFactory<PrefabFactory<Package>>();
 
         Container.Bind<DeliveryStore>().AsSingle();
@@ -107,9 +107,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<ActionProvider>().AsSingle().NonLazy();
 
         Container.Bind<PathCache>().AsSingle().NonLazy();
-
-        // scenes
-        Container.Bind<SceneLoader>().AsSingle().NonLazy();
     }
     override public void Start()
     {

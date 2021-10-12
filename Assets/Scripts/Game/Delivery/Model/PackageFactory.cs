@@ -3,48 +3,48 @@ using Zenject;
 
 namespace Delivery
 {
-    public class PackageFactory : MonoBehaviour, ItemFactory<PackageConfig, Package>
+    public class PackageFactory : ItemFactory<PackageConfig, Package>
     {
-
-        private Package.Factory instanceFactory;
-        private PackageStore packageStore;
         private PackageSpawnPointStore packageSpawnPointStore;
         private PackageTargetPointStore packageTargetPointStore;
+        private IPackageInstantiator packageInstantiator;
 
         private int packageCounter = 0;
 
         [Inject]
-        public void Construct(Package.Factory instanceFactory, PackageStore packageStore, PackageSpawnPointStore packageSpawnPointStore, PackageTargetPointStore packageTargetPointStore)
+        public void Construct(PackageSpawnPointStore packageSpawnPointStore, PackageTargetPointStore packageTargetPointStore)
         {
-            this.instanceFactory = instanceFactory;
-            this.packageStore = packageStore;
             this.packageSpawnPointStore = packageSpawnPointStore;
             this.packageTargetPointStore = packageTargetPointStore;
+        }
+
+        public void SetPackageInstantiator(IPackageInstantiator packageInstantiator)
+        {
+            this.packageInstantiator = packageInstantiator;
         }
 
         public Package Create(PackageConfig packageConfig)
         {
             GameObject targetObject = GetTargetPoint();
 
-            Package newPackage = instanceFactory.Create(packageStore.GetPackageTemplate());
+            Package newPackage = packageInstantiator.InstantitatePackage();
             newPackage.transform.position = packageConfig.spawnPoint.transform.position;
             newPackage.Name = "package-" + packageCounter++;
             newPackage.Price = packageConfig.price;
             newPackage.gameObject.SetActive(true);
             newPackage.SpawnPoint = packageConfig.spawnPoint;
 
-            GameObject newMinimapPackage = Instantiate(packageStore.GetPackageMinimapTemplate(), packageStore.GetPackageMinimapTemplate().transform.parent);
+            GameObject newMinimapPackage = packageInstantiator.InstantiateMinimapPackage();
             newMinimapPackage.transform.position = packageConfig.spawnPoint.transform.position;
             newMinimapPackage.gameObject.SetActive(true);
-            newMinimapPackage.transform.SetParent(gameObject.transform);
             newPackage.MinimapGameObject = newMinimapPackage;
 
-            GameObject packageTarget = Instantiate(packageStore.GetPackageTargetTemplate(), packageStore.GetPackageTargetTemplate().transform.parent);
+            GameObject packageTarget = packageInstantiator.InstantiatePackageTarget();
             packageTarget.gameObject.SetActive(false);
             packageTarget.transform.position = targetObject.transform.position;
             newPackage.Target = packageTarget;
 
-            GameObject targetMinimapGameObject = Instantiate(packageStore.GetPackageTargetMinimapTemplate(), packageStore.GetPackageTargetMinimapTemplate().transform.parent);
+            GameObject targetMinimapGameObject = packageInstantiator.InstantiatePackageTargetOnMinimap();
             targetMinimapGameObject.transform.position = targetObject.transform.position;
             newPackage.TargetMinimapGameObject = targetMinimapGameObject;
 

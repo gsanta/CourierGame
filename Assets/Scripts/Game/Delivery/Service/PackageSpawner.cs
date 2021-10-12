@@ -16,7 +16,7 @@ namespace Delivery
         private PackageSpawnPointStore packageSpawnPointStore;
         private ItemFactory<PackageConfig, Package> packageFactory;
 
-        public PackageSpawner(Timer timer, PackageStore packageStore, PackageSpawnPointStore packageSpawnPointStore, ItemFactory<PackageConfig, Package> packageFactory)
+        public PackageSpawner(Timer timer, PackageStore packageStore, PackageSpawnPointStore packageSpawnPointStore, PackageFactory packageFactory)
         {
             this.timer = timer;
             this.packageStore = packageStore;

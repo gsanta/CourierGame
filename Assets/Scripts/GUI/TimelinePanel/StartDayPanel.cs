@@ -1,3 +1,4 @@
+using Scenes;
 using Stats;
 using System;
 using TMPro;
@@ -13,12 +14,14 @@ public class StartDayPanel : MonoBehaviour
 
     private Timer timer;
     private PanelManager panelManager;
+    private SceneLoader sceneLoader;
 
     [Inject]
-    public void Construct(Timer timer, PanelManager panelManager)
+    public void Construct(Timer timer, PanelManager panelManager, SceneLoader sceneLoader)
     {
         this.timer = timer;
         this.panelManager = panelManager;
+        this.sceneLoader = sceneLoader;
 
         timer.DayPassed += HandleDayPassed;
         timer.DayStarted += HandleDayStarted;
@@ -41,7 +44,7 @@ public class StartDayPanel : MonoBehaviour
     public void OnLoadScene()
     {
         Debug.Log("loading scene");
-        SceneManager.LoadSceneAsync("Block2", LoadSceneMode.Additive);
+        this.sceneLoader.LoadMapScene(1);
     }
 
     private void HandleDayPassed(object sender, EventArgs e)

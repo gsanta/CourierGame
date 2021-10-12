@@ -3,26 +3,18 @@ using UnityEngine;
 
 namespace Delivery
 {
-    public class PackageSpawnPointStore : MonoBehaviour
+    public class PackageSpawnPointStore
     {
-        [SerializeField]
-        private GameObject container;
-
         private List<GameObject> spawnPoints = new List<GameObject>();
         
-        private void Start()
-        {
-            foreach (Transform child in container.transform)
-            {
-                var obj = child.gameObject;
-                obj.SetActive(false);
-                spawnPoints.Add(obj);
-            }
-        }
-
         public List<GameObject> GetAll()
         {
             return spawnPoints;
+        }
+
+        public void Add(GameObject spawnPoint)
+        {
+            spawnPoints.Add(spawnPoint);
         }
 
         public int Size

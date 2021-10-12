@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CanvasScene.unity
     guid: 01bf4743d0dca054b8e996eff8bf83bf
+  - enabled: 1
+    path: Assets/Scenes/Map1Scene.unity
+    guid: 8c2e1694a4bfc0d4e9f9bfd62b2b7adb
   m_configObjects: {}
