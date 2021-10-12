@@ -10,7 +10,12 @@ namespace Bikers
 
         private GameObject[] spawnPoints;
         private Biker bikerTemplate;
-        
+
+        public BikerStore()
+        {
+            Debug.Log("bikerStore");
+        }
+
         public GameObject[] GetSpawnPoints() 
         {
             return spawnPoints;

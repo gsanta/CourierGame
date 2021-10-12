@@ -1,5 +1,8 @@
 ﻿using Bikers;
+using Core;
 using Delivery;
+using Model;
+using Service;
 using Stats;
 using UI;
 using Zenject;
@@ -17,6 +20,11 @@ namespace Main
             Container.Bind<BikerService>().AsSingle();
             Container.Bind<RoleService>().AsSingle();
             Container.Bind<PackageStore>().AsSingle();
+            Container.Bind<IEventService>().To<EventService>().AsSingle();
+            Container.Bind<IDeliveryService>().To<DeliveryService>().AsSingle();
+            Container.Bind<MoneyStore>().AsSingle();
+
+            Container.Bind<ReconciliationService>().AsSingle();
         }
     }
 }

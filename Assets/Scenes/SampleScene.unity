@@ -2491,50 +2491,6 @@ Transform:
   m_Father: {fileID: 507511998}
   m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &227467504
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 227467505}
-  - component: {fileID: 227467506}
-  m_Layer: 0
-  m_Name: Panel Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &227467505
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 227467504}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 259627175}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &227467506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 227467504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a65f6bec03aef9f46afdc05c6e43455e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panelContainer: {fileID: 0}
 --- !u!1 &229889459
 GameObject:
   m_ObjectHideFlags: 0
@@ -2769,7 +2725,6 @@ Transform:
   - {fileID: 814958786}
   - {fileID: 31159347}
   - {fileID: 287602605}
-  - {fileID: 227467505}
   - {fileID: 276234894}
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -2937,7 +2892,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 276234892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcf5e32bba92a0e48b19ea87abae414f, type: 3}
+  m_Script: {fileID: 11500000, guid: 04f86b23c02fb8945afd2e1f8e153ea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &276234894
@@ -2952,7 +2907,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 259627175}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &278757273
 PrefabInstance:
@@ -13029,9 +12984,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1045b581ce09db46a28765b7065df15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelController: {fileID: 227467506}
+  panelController: {fileID: 0}
   inputHandler: {fileID: 199176769}
-  packageStoreController: {fileID: 0}
+  packageStoreController: {fileID: 1778988337}
   packageSpawnPointStore: {fileID: 1966190764}
   packageTargetPointStore: {fileID: 162993070}
   packageFactory: {fileID: 530680680}
@@ -13043,7 +12998,7 @@ MonoBehaviour:
   packageStore2: {fileID: 1391290533}
   roadStore: {fileID: 1684318938}
   pavementStore: {fileID: 231428089}
-  reconciliationService: {fileID: 276234893}
+  reconciliationController: {fileID: 276234893}
 --- !u!114 &1596121763
 MonoBehaviour:
   m_ObjectHideFlags: 0

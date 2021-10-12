@@ -48,7 +48,7 @@ namespace Delivery
 
         public void SetPackageTargetMinimapTemplate(GameObject packageTargetMinimapTemplate)
         {
-            this.packageMinimapTemplate = packageTargetMinimapTemplate;
+            this.packageTargetMinimapTemplate = packageTargetMinimapTemplate;
         }
 
         public GameObject GetPackageTargetMinimapTemplate()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core
 {
-    public class ReconciliationService : MonoBehaviour
+    public class ReconciliationService
     {
         private Dictionary<IDirty, List<IReconcilable>> map = new Dictionary<IDirty, List<IReconcilable>>();
 
@@ -18,7 +18,7 @@ namespace Core
             map[dirty].Add(reconcilable);
         }
 
-        private void ReconcileAll()
+        public void ReconcileAll()
         {
 
             foreach (var item in map)
@@ -32,11 +32,6 @@ namespace Core
                     });
                 }
             }
-        }
-
-        private void Update()
-        {
-            ReconcileAll();
         }
     }
 }

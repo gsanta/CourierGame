@@ -5,13 +5,10 @@ using Core;
 using Delivery;
 using GUI;
 using Minimap;
-using Model;
 using Pedestrians;
 using Route;
 using Scenes;
-using Service;
 using Stats;
-using UI;
 using UnityEngine;
 using Zenject;
 
@@ -54,7 +51,7 @@ public class MainInstaller : MonoInstaller
     private PavementStore pavementStore;
 
     [SerializeField]
-    private ReconciliationService reconciliationService;
+    private ReconciliationController reconciliationController;
 
     public override void InstallBindings()
     {
@@ -63,7 +60,6 @@ public class MainInstaller : MonoInstaller
 
         Container.Bind<DayService>().AsSingle();
 
-        Container.Bind<BikerStore>().AsSingle();
         Container.Bind<BikerFactory>().FromInstance(bikerFactory).AsSingle();
         Container.Bind<BikerSpawner>().AsSingle();
         Container.Bind<BikerSetup>().AsSingle();
@@ -79,9 +75,6 @@ public class MainInstaller : MonoInstaller
         Container.BindFactory<Object, Package, Package.Factory>().FromFactory<PrefabFactory<Package>>();
 
         Container.Bind<DeliveryStore>().AsSingle();
-        Container.Bind<IDeliveryService>().To<DeliveryService>().AsSingle();
-
-        Container.Bind<IEventService>().To<EventService>().AsSingle();
 
         Container.Bind<MinimapStore>().AsSingle();
         Container.Bind<MinimapPackageProvider>().AsSingle();
@@ -102,9 +95,7 @@ public class MainInstaller : MonoInstaller
         Container.Bind<RouteFacade>().AsSingle();
         Container.Bind<RouteSetup>().AsSingle().NonLazy();
 
-        Container.Bind<ReconciliationService>().FromInstance(reconciliationService).AsSingle();
-
-        Container.Bind<MoneyStore>().AsSingle();
+        Container.Bind<ReconciliationController>().FromInstance(reconciliationController).AsSingle();
 
         // actions
         Container.Bind<RouteAction>().AsSingle().NonLazy();

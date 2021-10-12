@@ -16,10 +16,10 @@ namespace GUI
         [SerializeField]
         private GameObject packageTargetMinimapTemplate;
 
-        private IPackageStore packageStore;
+        private PackageStore packageStore;
 
         [Inject]
-        public void Construct(IPackageStore packageStore)
+        public void Construct(PackageStore packageStore)
         {
             this.packageStore = packageStore;
         }

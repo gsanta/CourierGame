@@ -31,19 +31,24 @@ namespace UI
 
         void Start()
         {
-            bikerStore.OnBikerAdded += handleBikerAdded;
+            bikerStore.OnBikerAdded += HandleBikerAdded;
             eventService.BikerCurrentRoleChanged += HandleBikerRoleChanged;
+
+            bikerStore.GetAll().ForEach(biker => AddBiker(biker));
         }
 
-        private void handleBikerAdded(object sender, CourierAddedEventArgs args)
+        private void HandleBikerAdded(object sender, CourierAddedEventArgs args)
         {
-            Biker courier = args.Courier;
+            AddBiker(args.Courier);
+        }
 
+        private void AddBiker(Biker biker)
+        {
             BikerListItem courierListItem = Instantiate(courierListItemTemplate, courierListItemTemplate.transform.parent);
-            courierListItem.courierNameText.text = courier.GetName();
+            courierListItem.courierNameText.text = biker.GetName();
             courierListItem.gameObject.SetActive(true);
             courierListItem.RoleService = roleService;
-            courierListItem.Biker = args.Courier;
+            courierListItem.Biker = biker;
             courierList.Add(courierListItem);
         }
 

@@ -20,7 +20,7 @@ namespace GUI
 
         public T GetPanel<T>(Type type) where T : class
         {
-            return panelContainer.GetComponentsInChildren(type)[0] as T;
+            return panelContainer.GetComponentsInChildren(type, true)[0] as T;
         }
 
         public void HidePanel(GameObject panel, float delay)
