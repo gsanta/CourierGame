@@ -1,30 +1,23 @@
 ﻿using AI;
 using Bikers;
 using UnityEngine;
-using Zenject;
 
 namespace Pedestrians
 {
-    public class PedestrianFactory : MonoBehaviour, ItemFactory<PedestrianConfig, Pedestrian>
+    public class PedestrianFactory : ItemFactory<PedestrianConfig, Pedestrian>
     {
-        [SerializeField]
-        private Pedestrian pedestrianPrefab;
-        [SerializeField]
-        private GameObject pedestrianContainer;
-
         private AgentFactory agentFactory;
+        private IPedestrianInstantiator pedestrianInstantiator;
 
-        [Inject]
-        public void Construct(AgentFactory agentFactory)
+        public PedestrianFactory(AgentFactory agentFactory, IPedestrianInstantiator pedestrianInstantiator)
         {
             this.agentFactory = agentFactory;
+            this.pedestrianInstantiator = pedestrianInstantiator;
         }
-
-        public GameObject PedestrianContainer { get => pedestrianContainer; }
 
         public Pedestrian Create(PedestrianConfig config)
         {
-            Pedestrian pedestrian = Instantiate(pedestrianPrefab, pedestrianContainer.transform);
+            Pedestrian pedestrian = pedestrianInstantiator.InstantiatePedestrian();
             pedestrian.Construct(agentFactory);
             Transform child = config.spawnPoint.transform;
             pedestrian.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();

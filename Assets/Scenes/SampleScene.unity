@@ -790,7 +790,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 162993068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e92036bad208534085fb1293ae42215, type: 3}
+  m_Script: {fileID: 11500000, guid: b6ee57efc13284f4ca8dd2fb2735f54b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 1583711697}
@@ -2796,7 +2796,7 @@ GameObject:
   - component: {fileID: 530680681}
   - component: {fileID: 530680680}
   m_Layer: 0
-  m_Name: Package Factory
+  m_Name: Package Instantiator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2811,7 +2811,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 530680679}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9f4369ad0753594fb97d2a76bd18906, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ce6a21b86b2c2c4bb3c105aacb4423d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &530680681
@@ -6998,9 +6998,9 @@ MonoBehaviour:
   panelController: {fileID: 0}
   inputHandler: {fileID: 199176769}
   packageStoreController: {fileID: 1778988337}
-  packageSpawnPointStore: {fileID: 1966190764}
-  packageTargetPointStore: {fileID: 162993070}
-  packageFactory: {fileID: 530680680}
+  packageSpawnPointStoreController: {fileID: 1966190764}
+  packageTargetPointStoreController: {fileID: 162993070}
+  packageInstantiator: {fileID: 530680680}
   bikerFactory: {fileID: 1321825635}
   mainCamera: {fileID: 963194229}
   pedestrianSpawner: {fileID: 93388790}
@@ -8050,7 +8050,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1966190762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17b67a58346caed47a5ccf9869207aae, type: 3}
+  m_Script: {fileID: 11500000, guid: c9c2a92a76652b442ad6fea119e297bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 1700037787}

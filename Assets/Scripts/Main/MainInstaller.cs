@@ -1,7 +1,6 @@
 using Agents;
 using Bikers;
 using Cameras;
-using Core;
 using Delivery;
 using GUI;
 using Minimap;
@@ -30,7 +29,7 @@ public class MainInstaller : MonoInstaller
     private PackageInstantiator packageInstantiator;
 
     [SerializeField]
-    private BikerFactory bikerFactory;
+    private BikerInstantiator bikerInstantiator;
 
     [SerializeField]
     private MainCamera mainCamera;
@@ -38,9 +37,11 @@ public class MainInstaller : MonoInstaller
     [SerializeField]
     private PedestrianSpawner pedestrianSpawner;
     [SerializeField]
-    private PedestrianFactory pedestrianFactory;
+    private PedestrianInstantiator pedestrianInstantiator;
     [SerializeField]
     private PedestrianTargetStore pedestrianTargetStore;
+    [SerializeField]
+    private PedestrianStoreController pedestrainStoreController;
 
     [SerializeField]
     private PackageStore2 packageStore2;
@@ -60,12 +61,12 @@ public class MainInstaller : MonoInstaller
 
         Container.Bind<DayService>().AsSingle();
 
-        Container.Bind<BikerFactory>().FromInstance(bikerFactory).AsSingle();
         Container.Bind<BikerSpawner>().AsSingle();
         Container.Bind<BikerSetup>().AsSingle();
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
         Container.BindFactory<Object, BikerPlayComponent, BikerPlayComponent.Factory>().FromFactory<PrefabFactory<BikerPlayComponent>>();
         Container.BindFactory<Object, Pedestrian, Pedestrian.Factory>().FromFactory<PrefabFactory<Pedestrian>>();
+        Container.Bind<BikerInstantiator>().FromInstance(bikerInstantiator).AsSingle();
 
         Container.Bind<PackageStoreController>().FromInstance(packageStoreController).AsSingle();
         Container.Bind<PackageSpawnPointStoreController>().FromInstance(packageSpawnPointStoreController).AsSingle();
@@ -84,9 +85,10 @@ public class MainInstaller : MonoInstaller
 
         Container.Bind<PedestrianSpawner>().FromInstance(pedestrianSpawner).AsSingle();
         Container.Bind<PedestrianStore>().AsSingle();
-        Container.Bind<PedestrianFactory>().FromInstance(pedestrianFactory).AsSingle();
+        Container.Bind<PedestrianInstantiator>().FromInstance(pedestrianInstantiator).AsSingle();
         Container.Bind<PedestrianTargetStore>().FromInstance(pedestrianTargetStore).AsSingle();
         Container.Bind<PedestrianSetup>().AsSingle();
+        Container.Bind<PedestrianStoreController>().FromInstance(pedestrainStoreController).AsSingle();
 
         Container.Bind<PackageStore2>().FromInstance(packageStore2).AsSingle();
 

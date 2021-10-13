@@ -2,6 +2,7 @@
 using Core;
 using Delivery;
 using Model;
+using Pedestrians;
 using Scenes;
 using Service;
 using Stats;
@@ -29,8 +30,9 @@ namespace Main
             Container.Bind<SceneLoader>().AsSingle().NonLazy();
             Container.Bind<PackageSpawnPointStore>().AsSingle();
             Container.Bind<PackageTargetPointStore>().AsSingle();
-            Container.Bind<PackageFactory> ().To<PackageFactory>().AsSingle();
-
+            Container.Bind<PackageFactory>().AsSingle();
+            Container.Bind<BikerFactory>().AsSingle();
+            Container.Bind<PedestrianFactory>().AsSingle();
         }
     }
 }

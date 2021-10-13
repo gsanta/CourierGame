@@ -1,37 +1,34 @@
 ﻿using Delivery;
 using Model;
-using Pedestrians;
-using Route;
-using UnityEngine;
-using Zenject;
 
 namespace Bikers
 {
-    public class BikerFactory : MonoBehaviour, ItemFactory<BikerConfig, Biker>
+    public class BikerFactory : ItemFactory<BikerConfig, Biker>
     {
-        [SerializeField]
-        private MinimapBiker minimapTemplate;
-        private BikerStore bikerStore;
         private IEventService eventService;
         private PackageStore packageStore;
         private IDeliveryService deliveryService;
         private InputHandler inputHandler;
         private AgentFactory agentFactory;
+        private IBikerInstantiator bikerInstantiator;
 
-        [Inject]
-        public void Construct(AgentFactory agentFactory, BikerStore bikerStore, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler)
+        public BikerFactory(AgentFactory agentFactory, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler)
         {
             this.agentFactory = agentFactory;
-            this.bikerStore = bikerStore;
             this.eventService = eventService;
             this.packageStore = packageStore;
             this.deliveryService = deliveryService;
             this.inputHandler = inputHandler;
         }
 
+        public void SetBikerInstantiator(IBikerInstantiator bikerInstantiator)
+        {
+            this.bikerInstantiator = bikerInstantiator;
+        }
+
         public Biker Create(BikerConfig config)
         {
-            Biker newBiker = Instantiate(bikerStore.GetBikerTemplate());
+            Biker newBiker = bikerInstantiator.InstantiateBiker();
             newBiker.Construct(eventService, agentFactory);
 
             newBiker.GetComponent<BikerPlayComponent>().Construct(packageStore, inputHandler, deliveryService);
@@ -40,7 +37,7 @@ namespace Bikers
             newBiker.SetName(config.name);
             newBiker.gameObject.SetActive(true);
 
-            MinimapBiker newMinimapBiker = Instantiate(minimapTemplate, minimapTemplate.transform.parent);
+            MinimapBiker newMinimapBiker = bikerInstantiator.InstantiateMinimapBiker();
             newMinimapBiker.Biker = newBiker;
             newMinimapBiker.gameObject.SetActive(true);
 

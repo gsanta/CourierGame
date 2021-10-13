@@ -29,7 +29,7 @@ namespace Pedestrians
 
         private void InitPreExistingObjects()
         {
-            var pedestrianContainer = pedestrianFactory.PedestrianContainer;
+            var pedestrianContainer = pedestrianStore.GetPedestrianContainer();
             var childCount = pedestrianContainer.transform.childCount;
 
             for (int i = 0; i < childCount; i++)
