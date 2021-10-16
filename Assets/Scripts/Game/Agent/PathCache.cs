@@ -7,10 +7,10 @@ namespace Agents
 {
     public class PathCache
     {
-        private readonly PedestrianTargetStore pedestrianTargetStore;
+        private PedestrianTargetStore pedestrianTargetStore;
         private Dictionary<(Vector3, Vector3), NavMeshPath> pathes = new Dictionary<(Vector3, Vector3), NavMeshPath>();
 
-        public PathCache(PedestrianTargetStore pedestrianTargetStore)
+        public void SetPedestrianTargetStore(PedestrianTargetStore pedestrianTargetStore)
         {
             this.pedestrianTargetStore = pedestrianTargetStore;
         }

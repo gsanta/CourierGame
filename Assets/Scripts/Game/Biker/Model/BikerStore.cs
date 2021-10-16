@@ -6,11 +6,8 @@ namespace Bikers
 {
     public class BikerStore
     {
-        [SerializeField]
-        private MinimapBiker minimapBiker;
-
         private List<Biker> bikers = new List<Biker>();
-
+        private MinimapBiker minimapBiker;
         private GameObject[] spawnPoints;
         private Biker bikerTemplate;
 
@@ -19,7 +16,7 @@ namespace Bikers
             return minimapBiker;
         }
 
-        public void SetBikerMinimapBiker(MinimapBiker minimapBiker)
+        public void SetMinimapBiker(MinimapBiker minimapBiker)
         {
             this.minimapBiker = minimapBiker;
         }

@@ -1,32 +1,25 @@
 ﻿
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Pedestrians
 {
-    public class PedestrianTargetStore : MonoBehaviour
+    public class PedestrianTargetStore
     {
-        [SerializeField]
-        private GameObject goalContainer;
-
-        private List<PedestrianTarget> goals = new List<PedestrianTarget>();
-
-        private void Awake()
-        {
-            foreach (Transform obj in goalContainer.transform)
-            {
-                goals.Add(obj.GetComponent<PedestrianTarget>());
-            }
-        }
+        private List<PedestrianTarget> targets = new List<PedestrianTarget>();
 
         public List<PedestrianTarget> GetTargets()
         {
-            return goals;
+            return targets;
+        }
+
+        public void SetTargets(List<PedestrianTarget> targets)
+        {
+            this.targets = targets;
         }
 
         public PedestrianTarget GetByName(string name)
         {
-            return goals.Find(goal => goal.name == name);
+            return targets.Find(goal => goal.name == name);
         }
     }
 }

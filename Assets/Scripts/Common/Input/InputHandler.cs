@@ -2,14 +2,19 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputHandler : MonoBehaviour
+public class InputHandler
 {
-    [SerializeField] List<string> keys = new List<string>();
+    List<string> keys = new List<string>();
 
-    void Update()
+    public void Update()
     {
         HandleKeys();
         HandleMouse();
+    }
+
+    public void SetKeys(List<string> keys)
+    {
+        this.keys = keys;
     }
 
     private void HandleMouse()

@@ -4,14 +4,21 @@ using Zenject;
 
 namespace GUI
 {
-    public class PedestrianInstantiator : MonoBehaviour
+    public class PedestrianInstantiator : MonoBehaviour, IPedestrianInstantiator
     {
         private PedestrianStore pedestrianStore;
+        private PedestrianFactory pedestrianFactory;
 
         [Inject]
-        public void Construct(PedestrianStore pedestrianStore)
+        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory)
         {
             this.pedestrianStore = pedestrianStore;
+            this.pedestrianFactory = pedestrianFactory;
+        }
+
+        private void Start()
+        {
+            pedestrianFactory.SetPedestrianInstantiator(this);
         }
 
         public Pedestrian InstantiatePedestrian()

@@ -9,9 +9,13 @@ namespace Pedestrians
         private AgentFactory agentFactory;
         private IPedestrianInstantiator pedestrianInstantiator;
 
-        public PedestrianFactory(AgentFactory agentFactory, IPedestrianInstantiator pedestrianInstantiator)
+        public PedestrianFactory(AgentFactory agentFactory)
         {
             this.agentFactory = agentFactory;
+        }
+
+        public void SetPedestrianInstantiator(IPedestrianInstantiator pedestrianInstantiator)
+        {
             this.pedestrianInstantiator = pedestrianInstantiator;
         }
 

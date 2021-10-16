@@ -10,6 +10,8 @@ namespace GUI
         private BikerStore bikerStore;
 
         [SerializeField]
+        private MinimapBiker minimapBiker;
+        [SerializeField]
         private GameObject spawnPointContainer;
         [SerializeField]
         private Biker bikerTemplate;
@@ -32,6 +34,7 @@ namespace GUI
 
             bikerStore.SetSpawnPoints(spawnPoints.ToArray());
             bikerStore.SetBikerTemplate(bikerTemplate);
+            bikerStore.SetMinimapBiker(minimapBiker);
         }
     }
 }

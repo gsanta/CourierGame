@@ -1,12 +1,15 @@
-﻿using Bikers;
+﻿using Agents;
+using Bikers;
 using Core;
 using Delivery;
 using Model;
 using Pedestrians;
+using Route;
 using Scenes;
 using Service;
 using Stats;
 using UI;
+using UnityEngine;
 using Zenject;
 
 namespace Main
@@ -33,6 +36,14 @@ namespace Main
             Container.Bind<PackageFactory>().AsSingle();
             Container.Bind<BikerFactory>().AsSingle();
             Container.Bind<PedestrianFactory>().AsSingle();
+            Container.Bind<PedestrianSpawner>().AsSingle();
+            Container.Bind<PedestrianTargetStore>().AsSingle().NonLazy();
+            Container.Bind<PedestrianStore>().AsSingle();
+            Container.Bind<RoadStore>().AsSingle();
+            Container.Bind<PavementStore>().AsSingle();
+            Container.Bind<AgentFactory>().AsSingle().NonLazy();
+            Container.Bind<ActionProvider>().AsSingle().NonLazy();
+            Container.Bind<InputHandler>().AsSingle();
         }
     }
 }

@@ -15,10 +15,8 @@ public class MainInstaller : MonoInstaller
 {
     [SerializeField]
     private PanelController panelController;
-
     [SerializeField]
-    private InputHandler inputHandler;
-
+    private InputHandlerController inputHandlerController;
     [SerializeField]
     private PackageStoreController packageStoreController;
     [SerializeField]
@@ -27,36 +25,26 @@ public class MainInstaller : MonoInstaller
     private PackageTargetPointStoreController packageTargetPointStoreController;
     [SerializeField]
     private PackageInstantiator packageInstantiator;
-
     [SerializeField]
     private BikerInstantiator bikerInstantiator;
-
     [SerializeField]
     private MainCamera mainCamera;
-
-    [SerializeField]
-    private PedestrianSpawner pedestrianSpawner;
     [SerializeField]
     private PedestrianInstantiator pedestrianInstantiator;
     [SerializeField]
-    private PedestrianTargetStore pedestrianTargetStore;
+    private PedestrianTargetStoreController pedestrainTargetStoreController;
     [SerializeField]
-    private PedestrianStoreController pedestrainStoreController;
-
+    private PedestrainConfigController pedestrainConfigController;
     [SerializeField]
-    private PackageStore2 packageStore2;
-
+    private RoadStoreController roadStoreController;
     [SerializeField]
-    private RoadStore roadStore;
-    [SerializeField]
-    private PavementStore pavementStore;
-
+    private PavementStoreController pavementStoreController;
     [SerializeField]
     private ReconciliationController reconciliationController;
 
     public override void InstallBindings()
     {
-        Container.Bind<InputHandler>().FromInstance(inputHandler).AsSingle();
+        Container.Bind<InputHandlerController>().FromInstance(inputHandlerController).AsSingle();
         Container.Bind<PanelController>().FromInstance(panelController).AsSingle();
 
         Container.Bind<DayService>().AsSingle();
@@ -83,30 +71,24 @@ public class MainInstaller : MonoInstaller
 
         Container.Bind<MainCamera>().FromInstance(mainCamera).AsSingle();
 
-        Container.Bind<PedestrianSpawner>().FromInstance(pedestrianSpawner).AsSingle();
         Container.Bind<PedestrianStore>().AsSingle();
-        Container.Bind<PedestrianInstantiator>().FromInstance(pedestrianInstantiator).AsSingle();
-        Container.Bind<PedestrianTargetStore>().FromInstance(pedestrianTargetStore).AsSingle();
+        Container.Bind<IPedestrianInstantiator>().To<PedestrianInstantiator>().FromInstance(pedestrianInstantiator).AsSingle();
         Container.Bind<PedestrianSetup>().AsSingle();
-        Container.Bind<PedestrianStoreController>().FromInstance(pedestrainStoreController).AsSingle();
+        Container.Bind<PedestrianTargetStoreController>().FromInstance(pedestrainTargetStoreController).AsSingle();
+        Container.Bind<PedestrainConfigController>().FromInstance(pedestrainConfigController).AsSingle();
 
-        Container.Bind<PackageStore2>().FromInstance(packageStore2).AsSingle();
-
-        Container.Bind<RoadStore>().FromInstance(roadStore).AsSingle();
-        Container.Bind<PavementStore>().FromInstance(pavementStore).AsSingle();
+        Container.Bind<RoadStoreController>().FromInstance(roadStoreController).AsSingle();
+        Container.Bind<PavementStoreController>().FromInstance(pavementStoreController).AsSingle();
         Container.Bind<RouteFacade>().AsSingle();
         Container.Bind<RouteSetup>().AsSingle().NonLazy();
 
         Container.Bind<ReconciliationController>().FromInstance(reconciliationController).AsSingle();
 
         // actions
-        Container.Bind<RouteAction>().AsSingle().NonLazy();
         Container.Bind<PickUpPackageAction>().AsSingle().NonLazy();
         Container.Bind<DeliverPackageAction>().AsSingle().NonLazy();
         Container.Bind<ReservePackageAction>().AsSingle().NonLazy();
         Container.Bind<WalkAction>().AsSingle().NonLazy();
-        Container.Bind<AgentFactory>().AsSingle().NonLazy();
-        Container.Bind<ActionProvider>().AsSingle().NonLazy();
 
         Container.Bind<PathCache>().AsSingle().NonLazy();
     }
@@ -128,7 +110,6 @@ public class MainInstaller : MonoInstaller
         Container.Resolve<MinimapPackageConsumer>();
 
         AgentFactory agentFactory = Container.Resolve<AgentFactory>();
-        agentFactory.AddBikerAction(Container.Resolve<RouteAction>());
         agentFactory.AddBikerAction(Container.Resolve<PickUpPackageAction>());
         agentFactory.AddBikerAction(Container.Resolve<DeliverPackageAction>());
         agentFactory.AddBikerAction(Container.Resolve<ReservePackageAction>());
@@ -138,7 +119,9 @@ public class MainInstaller : MonoInstaller
         actionProvider.WalkAction = Container.Resolve<WalkAction>();
         actionProvider.Init();
 
+        PedestrianTargetStore pedestrianTargetStore = Container.ParentContainers[0].Resolve<PedestrianTargetStore>();
         PathCache pathCache = Container.Resolve<PathCache>();
+        pathCache.SetPedestrianTargetStore(pedestrianTargetStore);
         pathCache.Init();
 
         SceneLoader sceneLoader = Container.Resolve<SceneLoader>();
