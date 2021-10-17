@@ -1,18 +1,14 @@
-﻿
-using Service;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 
 namespace Scenes
 {
     public class SceneLoader
     {
         private string activeMapScene;
-        private EventService eventService;
         private SceneChangeHandler sceneChangeHandler;
 
-        public SceneLoader(EventService eventService, SceneChangeHandler sceneChangeHandler)
+        public SceneLoader(SceneChangeHandler sceneChangeHandler)
         {
-            this.eventService = eventService;
             this.sceneChangeHandler = sceneChangeHandler;
         }
 
@@ -25,7 +21,7 @@ namespace Scenes
         {
             string sceneName = "Map" + index + "Scene";
             activeMapScene = sceneName;
-            sceneChangeHandler.SceneChanged();
+            sceneChangeHandler.ClearPrevScene();
             SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         }
 

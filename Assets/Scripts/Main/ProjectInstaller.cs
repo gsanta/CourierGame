@@ -20,7 +20,7 @@ namespace Main
         {
             Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
             Container.Bind<Timer>().AsSingle();
-            Container.Bind<PanelManager>().AsSingle();
+            Container.Bind<PanelStore>().AsSingle();
             Container.Bind<BikerStore>().AsSingle().NonLazy();
             Container.Bind<BikerService>().AsSingle();
             Container.Bind<RoleService>().AsSingle();

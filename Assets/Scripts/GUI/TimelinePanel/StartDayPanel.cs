@@ -12,14 +12,14 @@ public class StartDayPanel : MonoBehaviour
     private TMP_Text dayLabel;
 
     private Timer timer;
-    private PanelManager panelManager;
+    private PanelStore panelStore;
     private SceneLoader sceneLoader;
 
     [Inject]
-    public void Construct(Timer timer, PanelManager panelManager, SceneLoader sceneLoader)
+    public void Construct(Timer timer, PanelStore panelStore, SceneLoader sceneLoader)
     {
         this.timer = timer;
-        this.panelManager = panelManager;
+        this.panelStore = panelStore;
         this.sceneLoader = sceneLoader;
 
         timer.DayPassed += HandleDayPassed;
@@ -42,7 +42,6 @@ public class StartDayPanel : MonoBehaviour
 
     public void OnLoadScene()
     {
-        Debug.Log("loading scene");
         this.sceneLoader.LoadMapScene(1);
     }
 
@@ -62,13 +61,13 @@ public class StartDayPanel : MonoBehaviour
 
     private void HidePanels()
     {
-        panelManager.HidePanel(panelManager.GetPanel<DeliveryPanel>(typeof(DeliveryPanel)).gameObject, 0f);
-        panelManager.HidePanel(panelManager.GetPanel<BikerPanel>(typeof(BikerPanel)).gameObject, 0f);
+        panelStore.HidePanel(panelStore.GetPanel<DeliveryPanel>(typeof(DeliveryPanel)).gameObject, 0f);
+        panelStore.HidePanel(panelStore.GetPanel<BikerPanel>(typeof(BikerPanel)).gameObject, 0f);
     }
 
     private void DisplayPanels()
     {
-        panelManager.ShowPanel(panelManager.GetPanel<DeliveryPanel>(typeof(DeliveryPanel)).gameObject, 0.5f);
-        panelManager.ShowPanel(panelManager.GetPanel<BikerPanel>(typeof(BikerPanel)).gameObject, 1f);
+        panelStore.ShowPanel(panelStore.GetPanel<DeliveryPanel>(typeof(DeliveryPanel)).gameObject, 0.5f);
+        panelStore.ShowPanel(panelStore.GetPanel<BikerPanel>(typeof(BikerPanel)).gameObject, 1f);
     }
 }

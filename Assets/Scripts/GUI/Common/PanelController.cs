@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -13,9 +14,14 @@ namespace GUI
         private GameObject panelContainer;
 
         [Inject]
-        public void Construct(PanelManager panelManager)
+        public void Construct(PanelStore panelStore)
         {
-            panelManager.AddController(this);
+            panelStore.AddController(this);
+        }
+
+        private void Start()
+        {
+            
         }
 
         public T GetPanel<T>(Type type) where T : class
@@ -37,6 +43,18 @@ namespace GUI
         {
             yield return new WaitForSeconds(delay);
             panel.SetActive(show);
+        }
+
+        public List<GameObject> GetAllPanel()
+        {
+            List<GameObject> children = new List<GameObject>();
+
+            foreach (Transform child in transform)
+            {
+                children.Add(child.gameObject);
+            }
+
+            return children;
         }
     }
 }
