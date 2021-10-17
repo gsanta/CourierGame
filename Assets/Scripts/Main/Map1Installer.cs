@@ -40,6 +40,10 @@ public class Map1Installer : MonoInstaller
     private PavementStoreController pavementStoreController;
     [SerializeField]
     private ReconciliationController reconciliationController;
+    [SerializeField]
+    private SceneLoaderController sceneLoaderController;
+    [SerializeField]
+    private SceneInitializer sceneInitializer;
 
     public override void InstallBindings()
     {
@@ -82,6 +86,9 @@ public class Map1Installer : MonoInstaller
         Container.Bind<RouteSetup>().AsSingle().NonLazy();
 
         Container.Bind<ReconciliationController>().FromInstance(reconciliationController).AsSingle();
+
+        Container.Bind<SceneLoaderController>().FromInstance(sceneLoaderController).AsSingle();
+        Container.Bind<SceneInitializer>().FromInstance(sceneInitializer).AsSingle();
 
         // actions
         Container.Bind<PickUpPackageAction>().AsSingle().NonLazy();

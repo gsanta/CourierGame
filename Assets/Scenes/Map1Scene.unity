@@ -5551,7 +5551,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 307fe96e77068a242a93955a18befe4a, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 307fe96e77068a242a93955a18befe4a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5846,7 +5846,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0577d68c894188c42abbfe7e164382ec, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0577d68c894188c42abbfe7e164382ec, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7957,7 +7957,7 @@ Transform:
   m_LocalScale: {x: 10.647228, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1115958306
 GameObject:
@@ -10055,19 +10055,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelController: {fileID: 0}
-  inputHandlerController: {fileID: 0}
-  packageStoreController: {fileID: 0}
-  packageSpawnPointStoreController: {fileID: 0}
-  packageTargetPointStoreController: {fileID: 0}
-  packageInstantiator: {fileID: 0}
-  bikerInstantiator: {fileID: 0}
+  inputHandlerController: {fileID: 255134886}
+  packageStoreController: {fileID: 1623530492}
+  packageSpawnPointStoreController: {fileID: 984434542}
+  packageTargetPointStoreController: {fileID: 1069018591}
+  packageInstantiator: {fileID: 134403457}
+  bikerInstantiator: {fileID: 429484018}
   mainCamera: {fileID: 0}
-  pedestrianInstantiator: {fileID: 0}
-  pedestrainTargetStoreController: {fileID: 0}
-  pedestrainConfigController: {fileID: 0}
-  roadStoreController: {fileID: 0}
-  pavementStoreController: {fileID: 0}
-  reconciliationController: {fileID: 0}
+  pedestrianInstantiator: {fileID: 843492922}
+  pedestrainTargetStoreController: {fileID: 1884901325}
+  pedestrainConfigController: {fileID: 723091783}
+  roadStoreController: {fileID: 1150777096}
+  pavementStoreController: {fileID: 756340197}
+  reconciliationController: {fileID: 342527827}
 --- !u!114 &1426414573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10112,7 +10112,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1428971136
 PrefabInstance:
