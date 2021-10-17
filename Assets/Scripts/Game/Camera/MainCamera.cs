@@ -1,5 +1,5 @@
 ﻿using Bikers;
-using Model;
+using Service;
 using System;
 using UnityEngine;
 using Zenject;
@@ -15,7 +15,7 @@ namespace Cameras
 
 
         [Inject]
-        public void Construct(IEventService eventService, BikerService bikerService)
+        public void Construct(EventService eventService, BikerService bikerService)
         {
             this.bikerService = bikerService;
 

@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Bikers;
+using Core;
 
 namespace Delivery
 {
-    public class PackageStore
+    public class PackageStore : IClearableStore
     {
         private List<Package> packages = new List<Package>();
 
@@ -110,6 +111,15 @@ namespace Delivery
             {
                 handler(this, e);
             }
+        }
+
+        public void Clear()
+        {
+            packages = new List<Package>();
+            packageTemplate = null;
+            packageTargetTemplate = null;
+            packageMinimapTemplate = null;
+            packageTargetMinimapTemplate = null;
         }
     }
 

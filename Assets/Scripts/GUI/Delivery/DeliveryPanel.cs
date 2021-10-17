@@ -1,6 +1,7 @@
 using Bikers;
 using Delivery;
 using Model;
+using Service;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,13 +15,13 @@ namespace UI
         [SerializeField] private DeliveryListItem deliveryListItemTemplate;
         private PackageStore packageStore;
         private BikerService bikerService;
-        private IEventService eventService;
+        private EventService eventService;
         private IDeliveryService deliveryService;
 
         private List<DeliveryListItem> activeDeliveryItems = new List<DeliveryListItem>();
 
         [Inject]
-        public void Construct(IDeliveryService deliveryService, PackageStore packageStore, BikerService bikerService, IEventService eventService)
+        public void Construct(IDeliveryService deliveryService, PackageStore packageStore, BikerService bikerService, EventService eventService)
         {
             this.deliveryService = deliveryService;
             this.packageStore = packageStore;

@@ -5,6 +5,7 @@ using System;
 using Model;
 using Delivery;
 using AI;
+using Service;
 
 namespace Bikers
 {
@@ -23,7 +24,7 @@ namespace Bikers
         private CurrentRole currentRole = CurrentRole.NONE;
         private bool isPaused = false;
 
-        private IEventService eventService;
+        private EventService eventService;
         private AgentFactory agentFactory;
 
         public GoapAgent<Biker> agent;
@@ -31,7 +32,7 @@ namespace Bikers
 
         public NavMeshAgent navMeshAgent;
 
-        public void Construct(IEventService eventService, AgentFactory agentFactory)
+        public void Construct(EventService eventService, AgentFactory agentFactory)
         {
             this.eventService = eventService;
             this.agentFactory = agentFactory;

@@ -1,10 +1,11 @@
 ﻿using AI;
+using Core;
 using System;
 using System.Collections.Generic;
 
 namespace Route
 {
-    public class RoadStore : IRoadLikeStore
+    public class RoadStore : IRoadLikeStore, IClearableStore
     {
         private List<Waypoint> waypoints = new List<Waypoint>();    
 
@@ -14,6 +15,11 @@ namespace Route
         {
             this.waypoints = waypoints;
             Initialized?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Clear()
+        {
+            waypoints = new List<Waypoint>();
         }
 
         public event EventHandler Initialized;

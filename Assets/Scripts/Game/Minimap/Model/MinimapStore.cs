@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Core;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Minimap
 {
-    public class MinimapStore
+    public class MinimapStore : IClearableStore
     {
         private List<GameObject> visiblePackages = new List<GameObject>();
         private List<GameObject> visiblePackageTargets = new List<GameObject>();
@@ -32,5 +33,11 @@ namespace Minimap
         }
 
         public event EventHandler StoreChanged;
+
+        public void Clear()
+        {
+            visiblePackages = new List<GameObject>();
+            visiblePackageTargets = new List<GameObject>();
+        }
     }
 }

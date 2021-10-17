@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Core;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Bikers
 {
-    public class BikerStore
+    public class BikerStore : IClearableStore
     {
         private List<Biker> bikers = new List<Biker>();
         private MinimapBiker minimapBiker;
@@ -66,6 +67,14 @@ namespace Bikers
             {
                 handler(this, new CourierAddedEventArgs(biker));
             }
+        }
+
+        public void Clear()
+        {
+            bikers = new List<Biker>();
+            minimapBiker = null;
+            spawnPoints = null;
+            bikerTemplate = null;
         }
     }
 

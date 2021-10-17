@@ -14,14 +14,14 @@ namespace Bikers
         private Dictionary<string, int> idMap = new Dictionary<string, int>();
         private List<GoapAction<Biker>> bikerActions = new List<GoapAction<Biker>>();
         private List<GoapAction<Pedestrian>> pedestrianActions = new List<GoapAction<Pedestrian>>();
-        private readonly ActionProvider actionProvider;
+        private readonly ActionStore actionStore;
         private readonly PedestrianTargetStore pedestrianTargetStore;
 
-        public AgentFactory(ActionProvider actionProvider, PedestrianTargetStore pedestrianTargetStore)
+        public AgentFactory(ActionStore actionStore, PedestrianTargetStore pedestrianTargetStore)
         {
             idMap.Add("biker", 1);
             idMap.Add("pedestrian", 1);
-            this.actionProvider = actionProvider;
+            this.actionStore = actionStore;
             this.pedestrianTargetStore = pedestrianTargetStore;
         }
 
@@ -42,13 +42,13 @@ namespace Bikers
 
             List<GoapAction<Pedestrian>> actions = new List<GoapAction<Pedestrian>>();
                 
-            actionProvider.GetWalkActions().ForEach(action => actions.Add(action));
+            actionStore.GetWalkActions().ForEach(action => actions.Add(action));
 
             Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
 
             var goalProvider = new GoalProvider(pedestrianTargetStore);
 
-            var agent = new GoapAgent<Pedestrian>(id, pedestrian, pedestrian.navMeshAgent, pedestrian, goalProvider, new PedestrianPlanner(actionProvider));
+            var agent = new GoapAgent<Pedestrian>(id, pedestrian, pedestrian.navMeshAgent, pedestrian, goalProvider, new PedestrianPlanner(actionStore));
             agent.SetActions(actions);
 
             return agent;

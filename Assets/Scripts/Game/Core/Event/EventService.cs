@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Service
 {
-    public class EventService : IEventService
+    public class EventService
     {
         public EventService()
         {
@@ -24,7 +24,12 @@ namespace Service
         {
             BikerCurrentRoleChanged?.Invoke(this, new BikerCurrentRoleChangedEventArgs(biker));
         }
-
         public event EventHandler<BikerCurrentRoleChangedEventArgs> BikerCurrentRoleChanged;
+
+        public void EmitMapSceneChanged()
+        {
+            MapSceneChanged?.Invoke(this, EventArgs.Empty);
+        }
+        public event EventHandler MapSceneChanged;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Bikers;
 using Delivery;
 using Model;
+using Service;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,13 +11,13 @@ namespace Minimap
 {
     public class MinimapPackageProvider
     {
-        private readonly IEventService eventService;
+        private readonly EventService eventService;
         private readonly MinimapStore minimapStore;
         private readonly PackageStore packageStore;
         private readonly BikerService bikerService;
 
         [Inject]
-        public MinimapPackageProvider(IEventService eventService, MinimapStore minimapStore, PackageStore packageStore, BikerService bikerService)
+        public MinimapPackageProvider(EventService eventService, MinimapStore minimapStore, PackageStore packageStore, BikerService bikerService)
         {
             this.eventService = eventService;
             this.minimapStore = minimapStore;

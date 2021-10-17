@@ -1,9 +1,10 @@
 ﻿
+using Core;
 using System.Collections.Generic;
 
 namespace Pedestrians
 {
-    public class PedestrianTargetStore
+    public class PedestrianTargetStore : IClearableStore
     {
         private List<PedestrianTarget> targets = new List<PedestrianTarget>();
 
@@ -20,6 +21,11 @@ namespace Pedestrians
         public PedestrianTarget GetByName(string name)
         {
             return targets.Find(goal => goal.name == name);
+        }
+
+        public void Clear()
+        {
+            targets = new List<PedestrianTarget>();
         }
     }
 }

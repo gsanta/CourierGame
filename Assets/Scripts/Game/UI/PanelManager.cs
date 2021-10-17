@@ -18,6 +18,11 @@ namespace UI
             return panelController.GetPanel<T>(type);
         }
 
+        public void Start()
+        {
+
+        }
+
         public void HidePanel(GameObject panel, float delay)
         {
             if (panelController != null)

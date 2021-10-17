@@ -6,11 +6,11 @@ namespace Pedestrians
 {
     public class PedestrianPlanner : IPlanner<Pedestrian>
     {
-        private readonly ActionProvider actionProvider;
+        private readonly ActionStore actionStore;
 
-        public PedestrianPlanner(ActionProvider actionProvider)
+        public PedestrianPlanner(ActionStore actionStore)
         {
-            this.actionProvider = actionProvider;
+            this.actionStore = actionStore;
         }
 
         public Queue<GoapAction<Pedestrian>> plan(List<GoapAction<Pedestrian>> actions, Dictionary<string, int> goal, WorldStates states)
@@ -19,7 +19,7 @@ namespace Pedestrians
             enumerator.MoveNext();
 
             KeyValuePair<string, int> firstGoal = enumerator.Current;
-            var action = actionProvider.GetByAfterEffect(firstGoal.Key);
+            var action = actionStore.GetByAfterEffect(firstGoal.Key);
             return new Queue<GoapAction<Pedestrian>>(new List<GoapAction<Pedestrian>> { action });
         }
     }

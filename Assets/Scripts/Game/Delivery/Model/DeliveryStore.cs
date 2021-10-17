@@ -1,11 +1,12 @@
 using Bikers;
+using Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Delivery
 {
-    public class DeliveryStore
+    public class DeliveryStore : IClearableStore
     {
         private Dictionary<Biker, Package> packageMap = new Dictionary<Biker, Package>();
         private Dictionary<Package, Biker> reversePackageMap = new Dictionary<Package, Biker>();
@@ -72,6 +73,13 @@ namespace Delivery
             reversePackageMap.TryGetValue(package, out courier);
 
             return courier;
+        }
+
+        public void Clear()
+        {
+            packageMap = new Dictionary<Biker, Package>();
+            reversePackageMap = new Dictionary<Package, Biker>();
+            packageStore = null;
         }
 
         public event EventHandler OnDeliveryStatusChanged;

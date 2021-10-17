@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Core;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Delivery
 {
-    public class PackageSpawnPointStore
+    public class PackageSpawnPointStore : IClearableStore
     {
         private List<GameObject> spawnPoints = new List<GameObject>();
         
@@ -15,6 +16,11 @@ namespace Delivery
         public void Add(GameObject spawnPoint)
         {
             spawnPoints.Add(spawnPoint);
+        }
+
+        public void Clear()
+        {
+            spawnPoints = new List<GameObject>();
         }
 
         public int Size

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Core;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pedestrians
 {
-    public class PedestrianStore
+    public class PedestrianStore : IClearableStore
     {
 
         private Pedestrian pedestrianTemplate;
@@ -39,6 +40,13 @@ namespace Pedestrians
         public List<Pedestrian> GetAll()
         {
             return pedestrians;
+        }
+
+        public void Clear()
+        {
+            pedestrianTemplate = null;
+            pedestrianContainer = null;
+            pedestrians = new List<Pedestrian>();
         }
     }
 }

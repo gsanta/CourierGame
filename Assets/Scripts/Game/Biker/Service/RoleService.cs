@@ -1,5 +1,5 @@
 ﻿using Delivery;
-using Model;
+using Service;
 using Zenject;
 
 namespace Bikers
@@ -8,10 +8,10 @@ namespace Bikers
     {
         private readonly BikerService bikerService;
         private readonly PackageStore packageStore;
-        private readonly IEventService eventService;
+        private readonly EventService eventService;
 
         [Inject]
-        public RoleService(BikerService bikerService, PackageStore packageStore, IEventService eventService)
+        public RoleService(BikerService bikerService, PackageStore packageStore, EventService eventService)
         {
             this.bikerService = bikerService;
             this.packageStore = packageStore;

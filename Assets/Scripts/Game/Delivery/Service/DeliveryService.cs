@@ -1,5 +1,5 @@
 ﻿using Bikers;
-using Model;
+using Service;
 using Stats;
 using UnityEngine;
 
@@ -7,11 +7,11 @@ namespace Delivery
 {
     public class DeliveryService : IDeliveryService
     {
-        private readonly IEventService eventService;
+        private readonly EventService eventService;
         private readonly PackageStore packageStore;
         private readonly MoneyStore moneyStore;
 
-        public DeliveryService(IEventService eventService, PackageStore packageStore, MoneyStore moneyStore)
+        public DeliveryService(EventService eventService, PackageStore packageStore, MoneyStore moneyStore)
         {
             this.eventService = eventService;
             this.packageStore = packageStore;

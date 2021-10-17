@@ -1,18 +1,18 @@
 ﻿using Delivery;
-using Model;
+using Service;
 
 namespace Bikers
 {
     public class BikerFactory : ItemFactory<BikerConfig, Biker>
     {
-        private IEventService eventService;
+        private EventService eventService;
         private PackageStore packageStore;
         private IDeliveryService deliveryService;
         private InputHandler inputHandler;
         private AgentFactory agentFactory;
         private IBikerInstantiator bikerInstantiator;
 
-        public BikerFactory(AgentFactory agentFactory, IEventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler)
+        public BikerFactory(AgentFactory agentFactory, EventService eventService, PackageStore packageStore, IDeliveryService deliveryService, InputHandler inputHandler)
         {
             this.agentFactory = agentFactory;
             this.eventService = eventService;

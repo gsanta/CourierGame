@@ -16,12 +16,12 @@ namespace UI
 
         private BikerStore bikerStore;
         private BikerService bikerService;
-        private IEventService eventService;
+        private EventService eventService;
         private RoleService roleService;
         private BikerListItem prevActiveItem;
 
         [Inject]
-        public void Construct(BikerStore bikerStore, BikerService bikerService, RoleService roleService, IEventService eventService)
+        public void Construct(BikerStore bikerStore, BikerService bikerService, RoleService roleService, EventService eventService)
         {
             this.bikerStore = bikerStore;
             this.bikerService = bikerService;

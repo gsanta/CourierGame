@@ -4,7 +4,6 @@ using System;
 using TMPro;
 using UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 public class StartDayPanel : MonoBehaviour

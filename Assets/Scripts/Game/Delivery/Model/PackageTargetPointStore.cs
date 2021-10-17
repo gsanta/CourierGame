@@ -1,10 +1,11 @@
 ﻿
+using Core;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Delivery
 {
-    public class PackageTargetPointStore
+    public class PackageTargetPointStore : IClearableStore
     {
         private List<GameObject> targetPoints = new List<GameObject>();
 
@@ -16,6 +17,11 @@ namespace Delivery
         public void Add(GameObject targetPoint)
         {
             targetPoints.Add(targetPoint);
+        }
+
+        public void Clear()
+        {
+            targetPoints = new List<GameObject>();
         }
 
         public int Size
