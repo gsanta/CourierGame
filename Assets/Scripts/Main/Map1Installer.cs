@@ -6,11 +6,12 @@ using GUI;
 using Minimap;
 using Pedestrians;
 using Route;
+using Scenes;
 using Stats;
 using UnityEngine;
 using Zenject;
 
-public class Map1Installer : MonoInstaller
+public class Map1Installer : MonoInstaller, ISceneSetup
 {
     [SerializeField]
     private PanelController panelController;
@@ -90,7 +91,7 @@ public class Map1Installer : MonoInstaller
         Container.Bind<ReconciliationController>().FromInstance(reconciliationController).AsSingle();
 
         Container.Bind<SceneLoaderController>().FromInstance(sceneLoaderController).AsSingle();
-        Container.Bind<SceneInitializer>().FromInstance(sceneInitializer).AsSingle();
+        Container.Bind<SceneInitializer>().FromInstance(sceneInitializer).AsSingle().NonLazy();
         Container.Bind<TimerController>().FromInstance(timerController).AsSingle();
 
         // actions
@@ -100,15 +101,11 @@ public class Map1Installer : MonoInstaller
         Container.Bind<WalkAction>().AsSingle().NonLazy();
 
         Container.Bind<PathCache>().AsSingle().NonLazy();
-    }
-    override public void Start()
-    {
-        base.Start();
 
-        Invoke("RunSetups", 0.5f);
+        Container.Resolve<SceneInitializer>().SetSceneSetup(this);
     }
 
-    private void RunSetups()
+    public void SetupScene()
     {
         BikerSetup bikerSetup = Container.Resolve<BikerSetup>();
         bikerSetup.Setup();
@@ -133,4 +130,11 @@ public class Map1Installer : MonoInstaller
         pathCache.SetPedestrianTargetStore(pedestrianTargetStore);
         pathCache.Init();
     }
+
+    //override public void Start()
+    //{
+    //    base.Start();
+
+    //    Invoke("RunSetups", 0.5f);
+    //}
 }

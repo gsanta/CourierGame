@@ -17,6 +17,8 @@ namespace Main
         private BikerPanelController bikerPanelController;
         [SerializeField]
         private MenuWidget menuWidget;
+        [SerializeField]
+        private TopPanelController topPanelController;
 
         public override void InstallBindings()
         {
@@ -26,6 +28,7 @@ namespace Main
             Container.Bind<TimelineSlider>().FromInstance(timelineController.slider).AsSingle();
             Container.Bind<BikerPanelController>().FromInstance(bikerPanelController).AsSingle();
             Container.Bind<MenuWidget>().FromInstance(menuWidget).AsSingle();
+            Container.Bind<TopPanelController>().FromInstance(topPanelController).AsSingle();
         }
     }
 }

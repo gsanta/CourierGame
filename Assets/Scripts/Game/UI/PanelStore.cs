@@ -7,10 +7,16 @@ namespace UI
     public class PanelStore
     {
         private IPanelController panelController;
+        private IWidgetController widgetController;
 
-        public void AddController(IPanelController panelController)
+        public void AddPanelController(IPanelController panelController)
         {
             this.panelController = panelController;
+        }
+
+        public void AddWidgetController(IWidgetController widgetController)
+        {
+            this.widgetController = widgetController;
         }
 
         public T GetPanel<T>(Type type) where T : class
@@ -20,7 +26,17 @@ namespace UI
 
         public List<GameObject> GetAllPanels()
         {
-            return panelController.GetAllPanel();
+            return panelController.GetAllPanels();
+        }
+
+        public T GetWidget<T>(Type type) where T : class
+        {
+            return widgetController.GetWidget<T>(type);
+        }
+
+        public List<GameObject> GetAllWidgets()
+        {
+            return widgetController.GetAllWidgets();
         }
 
         public void HidePanel(GameObject panel, float delay)

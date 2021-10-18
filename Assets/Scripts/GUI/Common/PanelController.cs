@@ -16,12 +16,13 @@ namespace GUI
         [Inject]
         public void Construct(PanelStore panelStore)
         {
-            panelStore.AddController(this);
+            panelStore.AddPanelController(this);
         }
 
         private void Start()
         {
-            
+            GetAllPanels().ForEach(panel => panel.SetActive(false));
+            GetPanel<MenuPanel>(typeof(MenuPanel)).gameObject.SetActive(true);
         }
 
         public T GetPanel<T>(Type type) where T : class
@@ -45,7 +46,7 @@ namespace GUI
             panel.SetActive(show);
         }
 
-        public List<GameObject> GetAllPanel()
+        public List<GameObject> GetAllPanels()
         {
             List<GameObject> children = new List<GameObject>();
 

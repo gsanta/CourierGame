@@ -24,7 +24,7 @@ namespace GUI
             this.bikerStore = bikerStore;
         }
 
-        private void Start()
+        private void Awake()
         {
             List<GameObject> spawnPoints = new List<GameObject>();
             
