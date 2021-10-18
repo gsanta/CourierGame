@@ -45,6 +45,7 @@ namespace Main
             Container.Bind<ActionStore>().AsSingle().NonLazy();
             Container.Bind<InputHandler>().AsSingle();
             Container.Bind<SceneChangeHandler>().AsSingle().NonLazy();
+            Container.Bind<BikerPanel>().AsSingle();
         }
 
         override public void Start()

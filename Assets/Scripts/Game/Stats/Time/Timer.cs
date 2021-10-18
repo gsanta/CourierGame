@@ -7,7 +7,6 @@ namespace Stats
 {
     public class Timer : IDirty
     {
-        [SerializeField]
         private int secondsPerDay = 100;
 
         private ITimeProvider timeProvider;
@@ -40,8 +39,7 @@ namespace Stats
             }
         }
 
-        [Inject]
-        public void Construct(ITimeProvider timeProvider)
+        public Timer(ITimeProvider timeProvider)
         {
             this.timeProvider = timeProvider;
             Elapsed = 0;

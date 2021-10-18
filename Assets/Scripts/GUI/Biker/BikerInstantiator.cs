@@ -18,7 +18,7 @@ namespace GUI
 
         public Biker InstantiateBiker()
         {
-            return Instantiate(bikerStore.GetBikerTemplate());
+            return Instantiate(bikerStore.GetBikerTemplate(), bikerStore.GetBikerContainer().transform);
         }
 
         public MinimapBiker InstantiateMinimapBiker()

@@ -44,6 +44,8 @@ public class Map1Installer : MonoInstaller
     private SceneLoaderController sceneLoaderController;
     [SerializeField]
     private SceneInitializer sceneInitializer;
+    [SerializeField]
+    private TimerController timerController;
 
     public override void InstallBindings()
     {
@@ -89,6 +91,7 @@ public class Map1Installer : MonoInstaller
 
         Container.Bind<SceneLoaderController>().FromInstance(sceneLoaderController).AsSingle();
         Container.Bind<SceneInitializer>().FromInstance(sceneInitializer).AsSingle();
+        Container.Bind<TimerController>().FromInstance(timerController).AsSingle();
 
         // actions
         Container.Bind<PickUpPackageAction>().AsSingle().NonLazy();

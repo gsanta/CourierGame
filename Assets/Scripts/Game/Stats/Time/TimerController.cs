@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Stats
 {
-    public class TimerGameObject : MonoBehaviour
+    public class TimerController : MonoBehaviour
     {
         private Timer timer;
 

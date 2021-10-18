@@ -3,15 +3,17 @@ using Core;
 using Scenes;
 using UI;
 using UnityEngine;
+using Zenject;
 
 namespace GUI
 {
     public class SceneInitializer : MonoBehaviour, ISceneInitializer
     {
-        private readonly PanelStore panelStore;
-        private readonly SceneChangeHandler sceneChangeHandler;
+        private PanelStore panelStore;
+        private SceneChangeHandler sceneChangeHandler;
 
-        public SceneInitializer(PanelStore panelStore, SceneChangeHandler sceneChangeHandler)
+        [Inject]
+        public void Construct(PanelStore panelStore, SceneChangeHandler sceneChangeHandler)
         {
             this.panelStore = panelStore;
             this.sceneChangeHandler = sceneChangeHandler;
@@ -19,7 +21,7 @@ namespace GUI
 
         private void Awake()
         {
-            sceneChangeHandler.
+            sceneChangeHandler.SetSceneInitializer(this);
         }
 
         public void InitializeScene()

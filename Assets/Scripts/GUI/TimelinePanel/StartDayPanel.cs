@@ -1,3 +1,4 @@
+using GUI;
 using Scenes;
 using Stats;
 using System;
@@ -40,11 +41,6 @@ public class StartDayPanel : MonoBehaviour
         timer.IsDayStarted = true;
     }
 
-    public void OnLoadScene()
-    {
-        this.sceneLoader.LoadMapScene(1);
-    }
-
     private void HandleDayPassed(object sender, EventArgs e)
     {
         timer.IsDayStarted = false;
@@ -62,12 +58,12 @@ public class StartDayPanel : MonoBehaviour
     private void HidePanels()
     {
         panelStore.HidePanel(panelStore.GetPanel<DeliveryPanel>(typeof(DeliveryPanel)).gameObject, 0f);
-        panelStore.HidePanel(panelStore.GetPanel<BikerPanel>(typeof(BikerPanel)).gameObject, 0f);
+        panelStore.HidePanel(panelStore.GetPanel<BikerPanelController>(typeof(BikerPanelController)).gameObject, 0f);
     }
 
     private void DisplayPanels()
     {
         panelStore.ShowPanel(panelStore.GetPanel<DeliveryPanel>(typeof(DeliveryPanel)).gameObject, 0.5f);
-        panelStore.ShowPanel(panelStore.GetPanel<BikerPanel>(typeof(BikerPanel)).gameObject, 1f);
+        panelStore.ShowPanel(panelStore.GetPanel<BikerPanelController>(typeof(BikerPanelController)).gameObject, 1f);
     }
 }

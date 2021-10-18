@@ -1,4 +1,5 @@
-﻿using UI;
+﻿using GUI;
+using UI;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +14,9 @@ namespace Main
         [SerializeField]
         private TimelineController timelineController;
         [SerializeField]
-        private BikerPanel bikerPanel;
+        private BikerPanelController bikerPanelController;
+        [SerializeField]
+        private MenuWidget menuWidget;
 
         public override void InstallBindings()
         {
@@ -21,7 +24,8 @@ namespace Main
             Container.Bind<DeliveryPanel>().FromInstance(deliveryPanel).AsSingle();
             Container.Bind<TimelineController>().FromInstance(timelineController).AsSingle();
             Container.Bind<TimelineSlider>().FromInstance(timelineController.slider).AsSingle();
-            Container.Bind<BikerPanel>().FromInstance(bikerPanel).AsSingle();
+            Container.Bind<BikerPanelController>().FromInstance(bikerPanelController).AsSingle();
+            Container.Bind<MenuWidget>().FromInstance(menuWidget).AsSingle();
         }
     }
 }

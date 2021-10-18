@@ -11,6 +11,7 @@ namespace Bikers
         private MinimapBiker minimapBiker;
         private GameObject[] spawnPoints;
         private Biker bikerTemplate;
+        private GameObject bikerContainer;
 
         public MinimapBiker GetMinimapBiker()
         {
@@ -45,6 +46,16 @@ namespace Bikers
         public Biker GetBikerTemplate()
         {
             return bikerTemplate;
+        }
+
+        public void SetBikerContainer(GameObject bikerContainer)
+        {
+            this.bikerContainer = bikerContainer;
+        }
+
+        public GameObject GetBikerContainer()
+        {
+            return bikerContainer;
         }
 
         public void Add(Biker biker)

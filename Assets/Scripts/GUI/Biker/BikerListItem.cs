@@ -1,6 +1,4 @@
 ﻿using Bikers;
-using Model;
-using Service;
 using System;
 using TMPro;
 using UnityEngine;
@@ -8,8 +6,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    // TODO: Create controller
-    public class BikerListItem : MonoBehaviour
+    public class BikerListItem : MonoBehaviour, IBikerListItem
     {
         public TMP_Text courierNameText;
         [SerializeField]
@@ -21,13 +18,15 @@ namespace UI
         private RoleService roleService;
         private bool isResetting = false;
 
-        public Biker Biker { 
-            set {
-                biker = value;
-                biker.CurrentRoleChanged += HandleCurrentRoleChanged;
-            }
+        public void SetBiker(Biker biker)
+        {
+            this.biker = biker;
+            biker.CurrentRoleChanged += HandleCurrentRoleChanged;
+        }
 
-            get => biker;
+        public Biker GetBiker()
+        {
+            return biker;
         }
 
         public RoleService RoleService { set => roleService = value; }
@@ -36,7 +35,7 @@ namespace UI
         {
             if (!isResetting)
             {
-                SetCourierState(biker, false, followButton.isOn);
+                SetBikerState(biker, false, followButton.isOn);
             }
         }
 
@@ -44,7 +43,7 @@ namespace UI
         {
             if (!isResetting)
             {
-                SetCourierState(biker, playButton.isOn, false);
+                SetBikerState(biker, playButton.isOn, false);
             }
         }
 
@@ -63,7 +62,7 @@ namespace UI
             //}
         }
 
-        private void SetCourierState(Biker biker, bool isPlayer, bool isFollow)
+        private void SetBikerState(Biker biker, bool isPlayer, bool isFollow)
         {
             // TODO maybe the role should come as a parameter and no need for the ifs
             if (isPlayer)
