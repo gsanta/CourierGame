@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Agents
 {
-    public class ActionStore : IClearableStore
+    public class ActionStore : IClearable
     {
         private readonly PedestrianTargetStore pedestrianTargetStore;
         private List<WalkAction> walkActions = new List<WalkAction>();

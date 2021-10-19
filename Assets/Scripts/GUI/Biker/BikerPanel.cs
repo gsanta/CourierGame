@@ -1,22 +1,25 @@
 ﻿using Bikers;
+using Core;
 using Service;
 using System;
 using System.Collections.Generic;
 
 namespace UI
 {
-    public class BikerPanel
+    public class BikerPanel : IClearable
     {
         private List<IBikerListItem> bikerList = new List<IBikerListItem>();
         private IBikerListItemInstantiator bikerListItemInstantiator;
 
         private BikerService bikerService;
+        private BikerStore bikerStore;
 
         private IBikerListItem prevActiveItem;
 
         public BikerPanel(BikerStore bikerStore, BikerService bikerService, EventService eventService)
         {
             this.bikerService = bikerService;
+            this.bikerStore = bikerStore;
 
             bikerStore.OnBikerAdded += HandleBikerAdded;
             eventService.BikerCurrentRoleChanged += HandleBikerRoleChanged;
@@ -27,6 +30,8 @@ namespace UI
         public void SetBikerListItemInstantiator(IBikerListItemInstantiator bikerListItemInstantiator)
         {
             this.bikerListItemInstantiator = bikerListItemInstantiator;
+            ClearBikerItems();
+            bikerStore.GetAll().ForEach(biker => AddBiker(biker));
         }
 
         private void HandleBikerAdded(object sender, CourierAddedEventArgs args)
@@ -36,7 +41,21 @@ namespace UI
 
         private void AddBiker(Biker biker)
         {
-            IBikerListItem bikerListItem = bikerListItemInstantiator.Instantiate(biker); 
+            if (bikerListItemInstantiator != null)
+            {
+                CreateBikerItem(biker);
+            }
+        }
+    
+        private void ClearBikerItems()
+        {
+            bikerList.ForEach(item => item.Destroy());
+            bikerList.Clear();
+        }
+
+        private void CreateBikerItem(Biker biker)
+        {
+            IBikerListItem bikerListItem = bikerListItemInstantiator.Instantiate(biker);
 
             bikerList.Add(bikerListItem);
         }
@@ -58,6 +77,11 @@ namespace UI
                 var listItem = bikerList.Find(item => item.GetBiker() == activeBiker);
                 prevActiveItem = listItem;
             }
+        }
+
+        public void Clear()
+        {
+            ClearBikerItems();
         }
     }
 }

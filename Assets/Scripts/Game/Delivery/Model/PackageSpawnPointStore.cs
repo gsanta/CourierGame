@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Delivery
 {
-    public class PackageSpawnPointStore : IClearableStore
+    public class PackageSpawnPointStore : IClearable
     {
         private List<GameObject> spawnPoints = new List<GameObject>();
         

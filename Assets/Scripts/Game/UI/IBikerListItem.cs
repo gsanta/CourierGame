@@ -6,5 +6,6 @@ namespace UI
     {
         void ResetToggleButtons(bool isFollow, bool isPlay);
         Biker GetBiker();
+        void Destroy();
     }
 }

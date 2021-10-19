@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Delivery
 {
-    public class PackageTargetPointStore : IClearableStore
+    public class PackageTargetPointStore : IClearable
     {
         private List<GameObject> targetPoints = new List<GameObject>();
 

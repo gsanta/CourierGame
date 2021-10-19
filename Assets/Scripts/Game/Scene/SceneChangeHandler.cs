@@ -6,7 +6,7 @@ namespace Scenes
 {
     public class SceneChangeHandler
     {
-        private List<IClearableStore> clearableStores = new List<IClearableStore>();
+        private List<IClearable> clearableStores = new List<IClearable>();
         private ISceneInitializer sceneInitializer;
 
         public void ClearPrevScene()
@@ -19,7 +19,7 @@ namespace Scenes
             sceneInitializer.InitializeScene();
         }
 
-        public void AddClearableStore(IClearableStore store)
+        public void AddClearableStore(IClearable store)
         {
             clearableStores.Add(store);
         }

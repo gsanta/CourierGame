@@ -1,5 +1,6 @@
 using Bikers;
 using Delivery;
+using Game;
 using Model;
 using Service;
 using System;
@@ -10,15 +11,15 @@ using Zenject;
 
 namespace UI
 {
-    public class DeliveryPanel : MonoBehaviour
+    public class DeliveryPanel
     {
-        [SerializeField] private DeliveryListItem deliveryListItemTemplate;
         private PackageStore packageStore;
         private BikerService bikerService;
         private EventService eventService;
         private IDeliveryService deliveryService;
+        private IDeliveryListItemInstantiator deliveryListItemInstantiator;
 
-        private List<DeliveryListItem> activeDeliveryItems = new List<DeliveryListItem>();
+        private List<IDeliveryListItem> deliveryListItems = new List<IDeliveryListItem>();
 
         [Inject]
         public void Construct(IDeliveryService deliveryService, PackageStore packageStore, BikerService bikerService, EventService eventService)
@@ -27,6 +28,34 @@ namespace UI
             this.packageStore = packageStore;
             this.bikerService = bikerService;
             this.eventService = eventService;
+        }
+
+        public void SetDeliveryListItemInstantiator(IDeliveryListItemInstantiator deliveryListItemInstantiator)
+        {
+            this.deliveryListItemInstantiator = deliveryListItemInstantiator;
+            ClearDeliveryListItems();
+            packageStore.GetAll().ForEach(package => AddPackage(package));
+        }
+
+        private void AddPackage(Package package)
+        {
+            if (deliveryListItemInstantiator != null)
+            {
+                CreateDeliveryListItem(package);
+            }
+        }
+
+        private void CreateDeliveryListItem(Package package)
+        {
+            IDeliveryListItem deliveryListItem = deliveryListItemInstantiator.Instantiate(package);
+
+            deliveryListItems.Add(deliveryListItem);
+        }
+
+        private void ClearDeliveryListItems()
+        {
+            deliveryListItems.ForEach(item => item.Destroy());
+            deliveryListItems.Clear();
         }
 
         void Start()
@@ -39,16 +68,7 @@ namespace UI
         private void HandlePackageAdded(object sender, PackageAddedEventArgs args)
         {
             Package package = args.Package;
-
-            DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
-            deliveryListItem.gameObject.SetActive(true);
-        
-            var controller = new DeliveryListItemController(deliveryListItem, bikerService, deliveryService);
-            deliveryListItem.controller = controller;
-            deliveryListItem.packageName.text = package.Name;
-            controller.Package = package;
-            activeDeliveryItems.Add(deliveryListItem);
-
+            AddPackage(package);
         }
 
         private void HandlePackageStatusChanged(object sender, PackageStatusChangedEventArgs e)
@@ -69,8 +89,8 @@ namespace UI
         private IEnumerator RemovePackageAfterTimeout(int delay, Package package)
         {
             yield return new WaitForSeconds(delay);
-            var item = activeDeliveryItems.Find(item => item.controller.Package == package);
-            activeDeliveryItems.Remove(item);
+            var item = deliveryListItems.Find(item => item.controller.Package == package);
+            deliveryListItems.Remove(item);
             item.gameObject.SetActive(false);
             Destroy(item.gameObject);
         }
@@ -79,8 +99,9 @@ namespace UI
         {
             var courier = bikerService.FindPlayRole();
             bool isReservationEnabled = courier != null && courier.GetPackage() == null;
-            activeDeliveryItems.ForEach(item => item.controller.SetReservationEnabled(isReservationEnabled));
+            deliveryListItems.ForEach(item => item.controller.SetReservationEnabled(isReservationEnabled));
         }
     }
 
 }
+ 

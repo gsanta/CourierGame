@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Pedestrians
 {
-    public class PedestrianTargetStore : IClearableStore
+    public class PedestrianTargetStore : IClearable
     {
         private List<PedestrianTarget> targets = new List<PedestrianTarget>();
 

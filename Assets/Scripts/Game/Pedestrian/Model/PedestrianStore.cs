@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Pedestrians
 {
-    public class PedestrianStore : IClearableStore
+    public class PedestrianStore : IClearable
     {
 
         private Pedestrian pedestrianTemplate;

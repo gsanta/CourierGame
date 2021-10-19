@@ -3,20 +3,55 @@ using TMPro;
 using UI;
 using UnityEngine;
 
-public class DeliveryListItem : MonoBehaviour
+public class DeliveryListItem : MonoBehaviour, IDeliveryListItem
 {
     [SerializeField]
-    public TMP_Text packageName;
+    private TMP_Text packageName;
     [SerializeField]
-    public TMP_Text playerName;
+    private TMP_Text playerName;
     [SerializeField]
-    public TMP_Text packagePrice;
+    private TMP_Text packagePrice;
     [SerializeField]
-    public TMP_Text packageStatus;
+    private TMP_Text packageStatus;
     [SerializeField]
-    public GameObject reserveButton;
+    private GameObject reserveButton;
 
-    public DeliveryListItemController controller;
+    private DeliveryListItemController controller;
+
+    public TMP_Text GetPackageName()
+    {
+        return packageName;
+    }
+
+    public TMP_Text GetPlayerName()
+    {
+        return playerName;
+    }
+
+    public TMP_Text GetPackagePrice()
+    {
+        return packagePrice;
+    }
+
+    public TMP_Text GetPackageStatus()
+    {
+        return packageStatus;
+    }
+
+    public GameObject GetReservedButton()
+    {
+        return reserveButton;
+    }
+
+    public void SetDeliveryListItemController(DeliveryListItemController controller)
+    {
+        this.controller = controller;
+    }
+
+    public DeliveryListItemController GetDeliveryListItemController()
+    {
+        return controller;
+    }
 
     public void HandleReserveButtonClick()
     {
@@ -24,6 +59,11 @@ public class DeliveryListItem : MonoBehaviour
         {
             controller.HandleReserveButtonClick();
         }
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 
     public event EventHandler OnReserveButtonClick;

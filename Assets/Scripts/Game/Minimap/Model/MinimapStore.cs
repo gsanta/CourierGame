@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Minimap
 {
-    public class MinimapStore : IClearableStore
+    public class MinimapStore : IClearable
     {
         private List<GameObject> visiblePackages = new List<GameObject>();
         private List<GameObject> visiblePackageTargets = new List<GameObject>();

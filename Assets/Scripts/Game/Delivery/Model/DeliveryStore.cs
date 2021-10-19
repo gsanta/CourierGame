@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Delivery
 {
-    public class DeliveryStore : IClearableStore
+    public class DeliveryStore : IClearable
     {
         private Dictionary<Biker, Package> packageMap = new Dictionary<Biker, Package>();
         private Dictionary<Package, Biker> reversePackageMap = new Dictionary<Package, Biker>();

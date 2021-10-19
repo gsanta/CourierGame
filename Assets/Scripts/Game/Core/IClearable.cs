@@ -1,7 +1,7 @@
 ﻿
 namespace Core
 {
-    public interface IClearableStore
+    public interface IClearable
     {
         public void Clear();
     }

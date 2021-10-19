@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Route
 {
-    public class RoadStore : IRoadLikeStore, IClearableStore
+    public class RoadStore : IRoadLikeStore, IClearable
     {
         private List<Waypoint> waypoints = new List<Waypoint>();    
 

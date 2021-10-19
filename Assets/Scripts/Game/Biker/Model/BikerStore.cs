@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Bikers
 {
-    public class BikerStore : IClearableStore
+    public class BikerStore : IClearable
     {
         private List<Biker> bikers = new List<Biker>();
         private MinimapBiker minimapBiker;

@@ -97,5 +97,10 @@ namespace UI
                 isResetting = false;
             }
         }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
     }
 }

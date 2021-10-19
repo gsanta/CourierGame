@@ -45,7 +45,7 @@ namespace Main
             Container.Bind<ActionStore>().AsSingle().NonLazy();
             Container.Bind<InputHandler>().AsSingle();
             Container.Bind<SceneChangeHandler>().AsSingle().NonLazy();
-            Container.Bind<BikerPanel>().AsSingle();
+            Container.Bind<BikerPanel>().AsSingle().NonLazy();
         }
 
         override public void Start()
@@ -70,7 +70,7 @@ namespace Main
             sceneChangeHandler.AddClearableStore(Container.Resolve<RoadStore>());
             sceneChangeHandler.AddClearableStore(Container.Resolve<PavementStore>());
             sceneChangeHandler.AddClearableStore(Container.Resolve<ActionStore>());
-
+            sceneChangeHandler.AddClearableStore(Container.Resolve<BikerPanel>());
         }
     }
 }

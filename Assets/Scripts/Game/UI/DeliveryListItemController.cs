@@ -5,13 +5,13 @@ namespace UI
 {
     public class DeliveryListItemController
     {
-        private readonly DeliveryListItem deliveryListItem;
+        private readonly IDeliveryListItem deliveryListItem;
         private readonly BikerService courierService;
         private readonly IDeliveryService deliveryService;
         private Package package;
         private bool isReservationEnabled = false;
 
-        public DeliveryListItemController(DeliveryListItem deliveryListItem, BikerService courierService, IDeliveryService deliveryService)
+        public DeliveryListItemController(IDeliveryListItem deliveryListItem, BikerService courierService, IDeliveryService deliveryService)
         {
             this.deliveryListItem = deliveryListItem;
             this.courierService = courierService;
@@ -29,7 +29,7 @@ namespace UI
             set
             {
                 package = value;
-                deliveryListItem.packagePrice.text = package.Price.ToString() + " $";
+                deliveryListItem.GetPackagePrice().text = package.Price.ToString() + " $";
 
                 UpdateReservationButtonStatus();
             }
@@ -39,16 +39,16 @@ namespace UI
 
         private void UpdateReservationButtonStatus()
         {
-            deliveryListItem.packageStatus.text = package.Status.GetDescription();
+            deliveryListItem.GetPackageStatus().text = package.Status.GetDescription();
             if (package.Status == DeliveryStatus.UNASSIGNED && isReservationEnabled)
             {
-                deliveryListItem.packageStatus.gameObject.SetActive(false);
-                deliveryListItem.reserveButton.gameObject.SetActive(true);
+                deliveryListItem.GetPackageStatus().gameObject.SetActive(false);
+                deliveryListItem.GetReservedButton().gameObject.SetActive(true);
             }
             else
             {
-                deliveryListItem.packageStatus.gameObject.SetActive(true);
-                deliveryListItem.reserveButton.gameObject.SetActive(false);
+                deliveryListItem.GetPackageStatus().gameObject.SetActive(true);
+                deliveryListItem.GetReservedButton().gameObject.SetActive(false);
             }
         }
 

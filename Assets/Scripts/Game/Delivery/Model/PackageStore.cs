@@ -8,7 +8,7 @@ using Core;
 
 namespace Delivery
 {
-    public class PackageStore : IClearableStore
+    public class PackageStore : IClearable
     {
         private List<Package> packages = new List<Package>();
 
