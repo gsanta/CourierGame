@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Delivery
 {
-    public class DeliveryService : IDeliveryService
+    public class DeliveryService
     {
         private readonly EventService eventService;
         private readonly PackageStore packageStore;

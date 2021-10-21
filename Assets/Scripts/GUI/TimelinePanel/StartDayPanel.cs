@@ -57,13 +57,13 @@ public class StartDayPanel : MonoBehaviour
 
     private void HidePanels()
     {
-        panelStore.HidePanel(panelStore.GetPanel<DeliveryPanel>(typeof(DeliveryPanel)).gameObject, 0f);
+        panelStore.HidePanel(panelStore.GetPanel<DeliveryPanelController>(typeof(DeliveryPanelController)).gameObject, 0f);
         panelStore.HidePanel(panelStore.GetPanel<BikerPanelController>(typeof(BikerPanelController)).gameObject, 0f);
     }
 
     private void DisplayPanels()
     {
-        panelStore.ShowPanel(panelStore.GetPanel<DeliveryPanel>(typeof(DeliveryPanel)).gameObject, 0.5f);
+        panelStore.ShowPanel(panelStore.GetPanel<DeliveryPanelController>(typeof(DeliveryPanelController)).gameObject, 0.5f);
         panelStore.ShowPanel(panelStore.GetPanel<BikerPanelController>(typeof(BikerPanelController)).gameObject, 1f);
     }
 }

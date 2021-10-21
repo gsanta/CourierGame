@@ -7,11 +7,11 @@ namespace UI
     {
         private readonly IDeliveryListItem deliveryListItem;
         private readonly BikerService courierService;
-        private readonly IDeliveryService deliveryService;
+        private readonly DeliveryService deliveryService;
         private Package package;
         private bool isReservationEnabled = false;
 
-        public DeliveryListItemController(IDeliveryListItem deliveryListItem, BikerService courierService, IDeliveryService deliveryService)
+        public DeliveryListItemController(IDeliveryListItem deliveryListItem, BikerService courierService, DeliveryService deliveryService)
         {
             this.deliveryListItem = deliveryListItem;
             this.courierService = courierService;

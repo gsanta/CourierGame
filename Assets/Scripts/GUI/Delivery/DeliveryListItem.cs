@@ -43,12 +43,12 @@ public class DeliveryListItem : MonoBehaviour, IDeliveryListItem
         return reserveButton;
     }
 
-    public void SetDeliveryListItemController(DeliveryListItemController controller)
+    public void SetController(DeliveryListItemController controller)
     {
         this.controller = controller;
     }
 
-    public DeliveryListItemController GetDeliveryListItemController()
+    public DeliveryListItemController GetController()
     {
         return controller;
     }

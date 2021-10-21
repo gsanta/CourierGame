@@ -2,26 +2,32 @@
 using Delivery;
 using Game;
 using System.Collections;
-using System.Collections.Generic;
 using UI;
 using UnityEngine;
 using Zenject;
 
 namespace GUI
 {
-    public class DeliveryPanelController : MonoBehaviour, IDeliveryListItemInstantiator
+    public class DeliveryPanelController : MonoBehaviour, IDeliveryPanelController
     {
         [SerializeField]
         private DeliveryListItem deliveryListItemTemplate;
 
         private BikerService bikerService;
         private DeliveryService deliveryService;
+        private DeliveryPanel deliveryPanel;
 
         [Inject]
-        public void Construct(BikerService bikerService, DeliveryService deliveryService)
+        public void Construct(DeliveryPanel deliveryPanel, BikerService bikerService, DeliveryService deliveryService)
         {
+            this.deliveryPanel = deliveryPanel;
             this.bikerService = bikerService;
             this.deliveryService = deliveryService;
+        }
+
+        private void Awake()
+        {
+            deliveryPanel.SetDeliveryListItemInstantiator(this);
         }
 
         public IDeliveryListItem Instantiate(Package package)
@@ -30,21 +36,18 @@ namespace GUI
             deliveryListItem.gameObject.SetActive(true);
 
             var controller = new DeliveryListItemController(deliveryListItem, bikerService, deliveryService);
-            deliveryListItem.controller = controller;
-            deliveryListItem.packageName.text = package.Name;
+            deliveryListItem.SetController(controller);
+            deliveryListItem.GetPackageName().text = package.Name;
             controller.Package = package;
-
 
             return deliveryListItem;
         }
 
-        private IEnumerator RemovePackageAfterTimeout(int delay, Package package, List<IDeliveryListItem> deliveryListItems)
+
+        public IEnumerator Destroy(int delay, IDeliveryListItem deliveryListItem)
         {
             yield return new WaitForSeconds(delay);
-            var item = deliveryListItems.Find(item => item.Package == package);
-            deliveryListItems.Remove(item);
-            item.gameObject.SetActive(false);
-            Destroy(item.gameObject);
+            Destroy(((DeliveryListItem) deliveryListItem).gameObject);
         }
 
     }

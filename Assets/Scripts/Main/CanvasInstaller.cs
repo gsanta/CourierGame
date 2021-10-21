@@ -1,5 +1,4 @@
 ﻿using GUI;
-using UI;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +9,7 @@ namespace Main
         [SerializeField]
         private StartDayPanel startDayPanel;
         [SerializeField]
-        private DeliveryPanel deliveryPanel;
+        private DeliveryPanelController deliveryPanelController;
         [SerializeField]
         private TimelineController timelineController;
         [SerializeField]
@@ -23,7 +22,7 @@ namespace Main
         public override void InstallBindings()
         {
             Container.Bind<StartDayPanel>().FromInstance(startDayPanel).AsSingle();
-            Container.Bind<DeliveryPanel>().FromInstance(deliveryPanel).AsSingle();
+            Container.Bind<DeliveryPanelController>().FromInstance(deliveryPanelController).AsSingle();
             Container.Bind<TimelineController>().FromInstance(timelineController).AsSingle();
             Container.Bind<TimelineSlider>().FromInstance(timelineController.slider).AsSingle();
             Container.Bind<BikerPanelController>().FromInstance(bikerPanelController).AsSingle();

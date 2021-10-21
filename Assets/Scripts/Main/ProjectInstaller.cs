@@ -2,14 +2,12 @@
 using Bikers;
 using Core;
 using Delivery;
-using Model;
 using Pedestrians;
 using Route;
 using Scenes;
 using Service;
 using Stats;
 using UI;
-using UnityEngine;
 using Zenject;
 
 namespace Main
@@ -26,7 +24,7 @@ namespace Main
             Container.Bind<RoleService>().AsSingle();
             Container.Bind<PackageStore>().AsSingle().NonLazy();
             Container.Bind<EventService>().AsSingle();
-            Container.Bind<IDeliveryService>().To<DeliveryService>().AsSingle();
+            Container.Bind<DeliveryService>().To<DeliveryService>().AsSingle();
             Container.Bind<MoneyStore>().AsSingle();
 
             Container.Bind<ReconciliationService>().AsSingle();
@@ -46,6 +44,7 @@ namespace Main
             Container.Bind<InputHandler>().AsSingle();
             Container.Bind<SceneChangeHandler>().AsSingle().NonLazy();
             Container.Bind<BikerPanel>().AsSingle().NonLazy();
+            Container.Bind<DeliveryPanel>().AsSingle();
         }
 
         override public void Start()

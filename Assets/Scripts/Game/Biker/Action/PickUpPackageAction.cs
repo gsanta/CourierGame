@@ -9,10 +9,10 @@ namespace Bikers
 {
     public class PickUpPackageAction : AbstractRouteAction<Biker>
     {
-        private readonly IDeliveryService deliveryService;
+        private readonly DeliveryService deliveryService;
         private readonly RouteFacade routeFacade;
 
-        public PickUpPackageAction(IDeliveryService deliveryService, RouteFacade routeFacade) : base(null, null)
+        public PickUpPackageAction(DeliveryService deliveryService, RouteFacade routeFacade) : base(null, null)
         {
             this.deliveryService = deliveryService;
             this.routeFacade = routeFacade;

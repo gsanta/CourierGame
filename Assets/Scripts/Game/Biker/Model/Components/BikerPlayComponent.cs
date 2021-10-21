@@ -1,5 +1,4 @@
 ﻿using Delivery;
-using Model;
 using UnityEngine;
 using Zenject;
 
@@ -15,16 +14,14 @@ namespace Bikers
         private float gravityMod = 2.5f;
 
         private InputHandler inputHandler;
-        private PackageStore packageStore;
-        private IDeliveryService deliveryService;
+        private DeliveryService deliveryService;
 
         private float activeMoveSpeed;
         private Vector3 moveDir, movement;
         private bool isActivated = false;
 
-        public void Construct(PackageStore packageStore, InputHandler inputHandler, IDeliveryService deliveryService)
+        public void Construct(InputHandler inputHandler, DeliveryService deliveryService)
         {
-            this.packageStore = packageStore;
             this.inputHandler = inputHandler;
             this.deliveryService = deliveryService;
         }

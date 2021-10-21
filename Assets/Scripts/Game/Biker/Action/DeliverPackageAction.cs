@@ -1,8 +1,7 @@
 ﻿using AI;
-using Delivery;
-using UnityEngine.AI;
-using Route;
 using Core;
+using Delivery;
+using Route;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,9 +9,9 @@ namespace Bikers
 {
     public class DeliverPackageAction : AbstractRouteAction<Biker>
     {
-        private IDeliveryService deliveryService;
+        private DeliveryService deliveryService;
         private RouteFacade routeFacade;
-        public DeliverPackageAction(IDeliveryService deliveryService, RouteFacade routeFacade) : base(null, null)
+        public DeliverPackageAction(DeliveryService deliveryService, RouteFacade routeFacade) : base(null, null)
         {
             this.deliveryService = deliveryService;
             this.routeFacade = routeFacade;

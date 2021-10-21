@@ -8,8 +8,8 @@ namespace UI
     {
         void Destroy();
 
-        void SetDeliveryListItemController(DeliveryListItemController controller);
-        DeliveryListItemController GetDeliveryListItemController();
+        void SetController(DeliveryListItemController controller);
+        DeliveryListItemController GetController();
 
         TMP_Text GetPackageName();
         TMP_Text GetPlayerName();

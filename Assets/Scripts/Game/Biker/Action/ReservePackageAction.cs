@@ -8,9 +8,9 @@ namespace Bikers
     {
 
         private PackageStore packageStore;
-        private readonly IDeliveryService deliveryService;
+        private readonly DeliveryService deliveryService;
 
-        public ReservePackageAction(PackageStore packageStore, IDeliveryService deliveryService) : base(null)
+        public ReservePackageAction(PackageStore packageStore, DeliveryService deliveryService) : base(null)
         {
             this.packageStore = packageStore;
             this.deliveryService = deliveryService;
