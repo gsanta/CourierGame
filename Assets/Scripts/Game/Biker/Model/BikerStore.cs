@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Bikers
 {
-    public class BikerStore : IClearable
+    public class BikerStore : IResetable
     {
         private List<Biker> bikers = new List<Biker>();
         private MinimapBiker minimapBiker;
@@ -80,7 +80,7 @@ namespace Bikers
             }
         }
 
-        public void Clear()
+        public void Reset()
         {
             bikers = new List<Biker>();
             minimapBiker = null;

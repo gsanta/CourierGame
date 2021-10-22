@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Delivery
 {
-    public class PackageSpawnPointStore : IClearable
+    public class PackageSpawnPointStore : IResetable
     {
         private List<GameObject> spawnPoints = new List<GameObject>();
         
@@ -18,7 +18,7 @@ namespace Delivery
             spawnPoints.Add(spawnPoint);
         }
 
-        public void Clear()
+        public void Reset()
         {
             spawnPoints = new List<GameObject>();
         }

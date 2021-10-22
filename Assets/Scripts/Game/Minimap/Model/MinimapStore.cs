@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Minimap
 {
-    public class MinimapStore : IClearable
+    public class MinimapStore : IResetable
     {
         private List<GameObject> visiblePackages = new List<GameObject>();
         private List<GameObject> visiblePackageTargets = new List<GameObject>();
@@ -34,7 +34,7 @@ namespace Minimap
 
         public event EventHandler StoreChanged;
 
-        public void Clear()
+        public void Reset()
         {
             visiblePackages = new List<GameObject>();
             visiblePackageTargets = new List<GameObject>();

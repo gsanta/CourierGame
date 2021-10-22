@@ -4,13 +4,18 @@ using UnityEngine;
 
 namespace Pedestrians
 {
-    public class PedestrianStore : IClearable
+    public class PedestrianStore : IResetable
     {
 
         private Pedestrian pedestrianTemplate;
         private GameObject pedestrianContainer;
 
         private List<Pedestrian> pedestrians = new List<Pedestrian>();
+
+        public PedestrianStore()
+        {
+            Debug.Log("abcd");
+        }
 
         public void SetPedestrianTemplate(Pedestrian pedestrian)
         {
@@ -42,7 +47,7 @@ namespace Pedestrians
             return pedestrians;
         }
 
-        public void Clear()
+        public void Reset()
         {
             pedestrianTemplate = null;
             pedestrianContainer = null;

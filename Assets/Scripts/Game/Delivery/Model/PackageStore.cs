@@ -8,7 +8,7 @@ using Core;
 
 namespace Delivery
 {
-    public class PackageStore : IClearable
+    public class PackageStore : IResetable
     {
         private List<Package> packages = new List<Package>();
 
@@ -113,7 +113,7 @@ namespace Delivery
             }
         }
 
-        public void Clear()
+        public void Reset()
         {
             packages = new List<Package>();
             packageTemplate = null;

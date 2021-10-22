@@ -20,7 +20,7 @@ namespace GUI
             this.pedestrianStore = pedestrianStore;
         }
 
-        private void Start()
+        private void Awake()
         {
             pedestrianStore.SetPedestrianTemplate(pedestrianTemplate);
             pedestrianStore.SetPedestrianContainer(pedestrianContainer);

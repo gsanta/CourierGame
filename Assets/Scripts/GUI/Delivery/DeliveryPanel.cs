@@ -1,4 +1,5 @@
 using Bikers;
+using Core;
 using Delivery;
 using Game;
 using Model;
@@ -9,11 +10,10 @@ using Zenject;
 
 namespace UI
 {
-    public class DeliveryPanel
+    public class DeliveryPanel : IResetable
     {
         private PackageStore packageStore;
         private BikerService bikerService;
-        private EventService eventService;
         private IDeliveryPanelController deliveryListItemInstantiator;
 
         private List<IDeliveryListItem> deliveryListItems = new List<IDeliveryListItem>();
@@ -23,7 +23,6 @@ namespace UI
         {
             this.packageStore = packageStore;
             this.bikerService = bikerService;
-            this.eventService = eventService;
 
             packageStore.OnPackageAdded += HandlePackageAdded;
             eventService.BikerCurrentRoleChanged += HandleCurrentRoleChanged;
@@ -86,6 +85,12 @@ namespace UI
             var courier = bikerService.FindPlayRole();
             bool isReservationEnabled = courier != null && courier.GetPackage() == null;
             deliveryListItems.ForEach(item => item.GetController().SetReservationEnabled(isReservationEnabled));
+        }
+
+        public void Reset()
+        {
+            deliveryListItems.ForEach(item => item.Destroy());
+            deliveryListItems.Clear();
         }
     }
 

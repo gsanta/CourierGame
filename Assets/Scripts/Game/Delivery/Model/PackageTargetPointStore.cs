@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Delivery
 {
-    public class PackageTargetPointStore : IClearable
+    public class PackageTargetPointStore : IResetable
     {
         private List<GameObject> targetPoints = new List<GameObject>();
 
@@ -19,7 +19,7 @@ namespace Delivery
             targetPoints.Add(targetPoint);
         }
 
-        public void Clear()
+        public void Reset()
         {
             targetPoints = new List<GameObject>();
         }

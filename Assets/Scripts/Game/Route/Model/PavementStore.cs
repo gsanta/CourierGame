@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Route
 {
-    public class PavementStore : IRoadLikeStore, IClearable
+    public class PavementStore : IRoadLikeStore, IResetable
     {
         private List<Waypoint> waypoints = new List<Waypoint>();   
 
@@ -17,7 +17,7 @@ namespace Route
             Initialized?.Invoke(this, EventArgs.Empty);
         }
 
-        public void Clear()
+        public void Reset()
         {
             waypoints = new List<Waypoint>();
         }

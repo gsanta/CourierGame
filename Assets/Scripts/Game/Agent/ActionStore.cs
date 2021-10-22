@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Agents
 {
-    public class ActionStore : IClearable
+    public class ActionStore : IResetable
     {
         private readonly PedestrianTargetStore pedestrianTargetStore;
         private List<WalkAction> walkActions = new List<WalkAction>();
@@ -46,7 +46,7 @@ namespace Agents
             });
         }
 
-        public void Clear()
+        public void Reset()
         {
             walkActions = new List<WalkAction>();
         }

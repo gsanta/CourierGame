@@ -1,5 +1,6 @@
 ﻿using Agents;
 using Bikers;
+using Cameras;
 using Core;
 using Delivery;
 using Pedestrians;
@@ -17,7 +18,7 @@ namespace Main
         public override void InstallBindings()
         {
             Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
-            Container.Bind<Timer>().AsSingle();
+            Container.Bind<Timer>().AsSingle().NonLazy();
             Container.Bind<PanelStore>().AsSingle();
             Container.Bind<BikerStore>().AsSingle().NonLazy();
             Container.Bind<BikerService>().AsSingle();
@@ -45,6 +46,7 @@ namespace Main
             Container.Bind<SceneChangeHandler>().AsSingle().NonLazy();
             Container.Bind<BikerPanel>().AsSingle().NonLazy();
             Container.Bind<DeliveryPanel>().AsSingle();
+            Container.Bind<CameraHandler>().AsSingle().NonLazy();
         }
 
         override public void Start()
@@ -60,16 +62,19 @@ namespace Main
             sceneLoader.LoadInitialScenes();
 
             SceneChangeHandler sceneChangeHandler = Container.Resolve<SceneChangeHandler>();
-            sceneChangeHandler.AddClearableStore(Container.Resolve<BikerStore>());
-            sceneChangeHandler.AddClearableStore(Container.Resolve<PackageStore>());
-            sceneChangeHandler.AddClearableStore(Container.Resolve<PackageSpawnPointStore>());
-            sceneChangeHandler.AddClearableStore(Container.Resolve<PackageTargetPointStore>());
-            sceneChangeHandler.AddClearableStore(Container.Resolve<PedestrianTargetStore>());
-            sceneChangeHandler.AddClearableStore(Container.Resolve<PedestrianStore>());
-            sceneChangeHandler.AddClearableStore(Container.Resolve<RoadStore>());
-            sceneChangeHandler.AddClearableStore(Container.Resolve<PavementStore>());
-            sceneChangeHandler.AddClearableStore(Container.Resolve<ActionStore>());
-            sceneChangeHandler.AddClearableStore(Container.Resolve<BikerPanel>());
+            sceneChangeHandler.AddResetable(Container.Resolve<BikerStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<PackageStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<PackageSpawnPointStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<PackageTargetPointStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<PedestrianTargetStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<PedestrianStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<RoadStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<PavementStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<ActionStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<BikerPanel>());
+            sceneChangeHandler.AddResetable(Container.Resolve<DeliveryPanel>());
+            sceneChangeHandler.AddResetable(Container.Resolve<Timer>());
+            sceneChangeHandler.AddResetable(Container.Resolve<CameraHandler>());
         }
     }
 }

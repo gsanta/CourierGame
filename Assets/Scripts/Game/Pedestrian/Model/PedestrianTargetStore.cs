@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Pedestrians
 {
-    public class PedestrianTargetStore : IClearable
+    public class PedestrianTargetStore : IResetable
     {
         private List<PedestrianTarget> targets = new List<PedestrianTarget>();
 
@@ -23,7 +23,7 @@ namespace Pedestrians
             return targets.Find(goal => goal.name == name);
         }
 
-        public void Clear()
+        public void Reset()
         {
             targets = new List<PedestrianTarget>();
         }

@@ -1,19 +1,17 @@
 ﻿using Core;
 using System;
-using UnityEngine;
-using Zenject;
 
 namespace Stats
 {
-    public class Timer : IDirty
+    public class Timer : IDirty, IResetable
     {
         private int secondsPerDay = 100;
 
         private ITimeProvider timeProvider;
-        private DateTime time = DateTime.MinValue;
-        private long milliSecondAccum = 0;
-        private bool isDayStarted = false;
-        private int currentDay = 1;
+        private DateTime time;
+        private long milliSecondAccum;
+        private bool isDayStarted;
+        private int currentDay;
         private int elapsed;
 
         private bool dirty = false;
@@ -42,7 +40,7 @@ namespace Stats
         public Timer(ITimeProvider timeProvider)
         {
             this.timeProvider = timeProvider;
-            Elapsed = 0;
+            Reset();
         }
 
         public int CurrentDay { get => currentDay; }
@@ -123,6 +121,15 @@ namespace Stats
         public void ClearDirty()
         {
             dirty = false;
+        }
+
+        public void Reset()
+        {
+            time = DateTime.MinValue;
+            milliSecondAccum = 0;
+            isDayStarted = false;
+            currentDay = 1;
+            Elapsed = 0;
         }
 
         public event EventHandler SecondPassed;

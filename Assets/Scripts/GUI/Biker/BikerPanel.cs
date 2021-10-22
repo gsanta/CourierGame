@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace UI
 {
-    public class BikerPanel : IClearable
+    public class BikerPanel : IResetable
     {
         private List<IBikerListItem> bikerList = new List<IBikerListItem>();
         private IBikerListItemInstantiator bikerListItemInstantiator;
@@ -79,7 +79,7 @@ namespace UI
             }
         }
 
-        public void Clear()
+        public void Reset()
         {
             ClearBikerItems();
         }

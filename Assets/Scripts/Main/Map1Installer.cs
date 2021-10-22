@@ -28,7 +28,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     [SerializeField]
     private BikerInstantiator bikerInstantiator;
     [SerializeField]
-    private MainCamera mainCamera;
+    private CameraController mainCamera;
     [SerializeField]
     private PedestrianInstantiator pedestrianInstantiator;
     [SerializeField]
@@ -75,9 +75,8 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<MinimapPackageProvider>().AsSingle();
         Container.Bind<MinimapPackageConsumer>().AsSingle();
 
-        Container.Bind<MainCamera>().FromInstance(mainCamera).AsSingle();
+        Container.Bind<CameraController>().FromInstance(mainCamera).AsSingle();
 
-        Container.Bind<PedestrianStore>().AsSingle();
         Container.Bind<IPedestrianInstantiator>().To<PedestrianInstantiator>().FromInstance(pedestrianInstantiator).AsSingle();
         Container.Bind<PedestrianSetup>().AsSingle();
         Container.Bind<PedestrianTargetStoreController>().FromInstance(pedestrainTargetStoreController).AsSingle();

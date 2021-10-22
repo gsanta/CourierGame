@@ -6,12 +6,12 @@ namespace Scenes
 {
     public class SceneChangeHandler
     {
-        private List<IClearable> clearableStores = new List<IClearable>();
+        private List<IResetable> resetableObjs = new List<IResetable>();
         private ISceneInitializer sceneInitializer;
 
         public void ClearPrevScene()
         {
-            clearableStores.ForEach(store => store.Clear());
+            resetableObjs.ForEach(store => store.Reset());
         }
 
         public void InitCurrentScene()
@@ -19,9 +19,9 @@ namespace Scenes
             sceneInitializer.InitializeScene();
         }
 
-        public void AddClearableStore(IClearable store)
+        public void AddResetable(IResetable obj)
         {
-            clearableStores.Add(store);
+            resetableObjs.Add(obj);
         }
 
         public void SetSceneInitializer(ISceneInitializer sceneInitializer)
