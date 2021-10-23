@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AI
 {
-    public class Node<T>
+    public class Node<T> where T : IGameObject
     {
         public Node<T> parent;
         public float cost;
@@ -19,7 +19,7 @@ namespace AI
         }
     }
 
-    public class GoapPlanner<T> : IPlanner<T>
+    public class GoapPlanner<T> : IPlanner<T> where T : IGameObject 
     {
         public Queue<GoapAction<T>> plan(List<GoapAction<T>> actions, Dictionary<string, int> goal, WorldStates states)
         {

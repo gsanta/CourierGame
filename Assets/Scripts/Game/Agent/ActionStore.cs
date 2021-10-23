@@ -11,7 +11,7 @@ namespace Agents
     public class ActionStore : IResetable
     {
         private readonly PedestrianTargetStore pedestrianTargetStore;
-        private List<WalkAction> walkActions = new List<WalkAction>();
+        private List<GoapAction<Pedestrian>> walkActions = new List<GoapAction<Pedestrian>>();
 
         public ActionStore(PedestrianTargetStore pedestrianTargetStore)
         {
@@ -25,9 +25,9 @@ namespace Agents
             get; set;
         }
 
-        public List<WalkAction> GetWalkActions()
+        public List<GoapAction<Pedestrian>> GetPedestrianActions()
         {
-            return walkActions.Select(action => (WalkAction) action.Clone()).ToList();
+            return walkActions.Select(action => action.Clone()).ToList();
         }
 
         public WalkAction GetByAfterEffect(string afterEffectName)
@@ -48,7 +48,7 @@ namespace Agents
 
         public void Reset()
         {
-            walkActions = new List<WalkAction>();
+            walkActions = new List<GoapAction<Pedestrian>>();
         }
     }
 }

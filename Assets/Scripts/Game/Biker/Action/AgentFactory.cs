@@ -4,7 +4,6 @@ using AI;
 using Pedestrians;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace Bikers
 {
@@ -42,29 +41,14 @@ namespace Bikers
 
             List<GoapAction<Pedestrian>> actions = new List<GoapAction<Pedestrian>>();
                 
-            actionStore.GetWalkActions().ForEach(action => actions.Add(action));
+            actionStore.GetPedestrianActions().ForEach(action => actions.Add(action));
 
             Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
 
-            var goalProvider = new GoalProvider(pedestrianTargetStore);
-
-            var agent = new GoapAgent<Pedestrian>(id, pedestrian, pedestrian.navMeshAgent, pedestrian, goalProvider, new PedestrianPlanner(actionStore));
+            var agent = new GoapAgent<Pedestrian>(id, pedestrian, new PedestrianPlanner(actionStore));
             agent.SetActions(actions);
 
             return agent;
-        }
-
-        private Dictionary<SubGoal, int> GetPedestrianGoals()
-        {
-            Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
-            goals.Add(new SubGoal("isDestinationReached", 1, true), 3);
-
-            return goals;
-        }
-
-        private List<GoapAction<Pedestrian>> ClonePedestrianActions()
-        {
-            return pedestrianActions.Select(action => action.Clone()).ToList();
         }
 
         public GoapAgent<Biker> CreateBikerAgent(Biker biker)
@@ -73,10 +57,7 @@ namespace Bikers
             string id = "biker-" + idMap["biker"];
             idMap["biker"]++;
 
-            var goalProvider = new BikerGoalProvider();
-
-
-            var agent = new GoapAgent<Biker>(id, biker, biker.navMeshAgent, biker, goalProvider, new GoapPlanner<Biker>());
+            var agent = new GoapAgent<Biker>(id, biker, new GoapPlanner<Biker>());
             agent.SetActions(actions);
 
             return agent;

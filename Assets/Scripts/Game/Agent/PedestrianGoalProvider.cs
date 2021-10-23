@@ -1,6 +1,7 @@
 ﻿
 using AI;
 using Pedestrians;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,15 +29,19 @@ namespace Agents
         }; 
     }
 
-    public class GoalProvider : IGoalProvider
+    public class PedestrianGoalProvider : IGoalProvider
     {
         private readonly PedestrianTargetStore pedestrianTargetStore;
         private List<SubGoal> goals = new List<SubGoal>();
+        private Pedestrian pedestrian;
 
-        public GoalProvider(PedestrianTargetStore pedestrianTargetStore)
+        public PedestrianGoalProvider(Pedestrian pedestrian, PedestrianTargetStore pedestrianTargetStore)
         {
+            this.pedestrian = pedestrian;
+            pedestrian.agent.ActionCompleted += HandleCompleteAction;
             this.pedestrianTargetStore = pedestrianTargetStore;
             Init();
+            SetGoal();
         }
 
         public List<SubGoal> GetGoals()
@@ -46,7 +51,7 @@ namespace Agents
 
         public SubGoal GetGoal()
         {
-            var goalIndex = Random.Range(0, goals.Count - 1);
+            var goalIndex = UnityEngine.Random.Range(0, goals.Count - 1);
             return goals[goalIndex];
         }
 
@@ -56,6 +61,16 @@ namespace Agents
             {
                 goals.Add(new SubGoal("goto" + target.name, target.priority, false));
             });
+        }
+
+        private void HandleCompleteAction(object sender, EventArgs args)
+        {
+            SetGoal();
+        }
+
+        private void SetGoal()
+        {
+            pedestrian.agent.SetGoals(new List<SubGoal> { GetGoal() }, false);
         }
     }
 }

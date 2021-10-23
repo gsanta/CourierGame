@@ -16,7 +16,7 @@ namespace GUI
             this.pedestrianFactory = pedestrianFactory;
         }
 
-        private void Start()
+        private void Awake()
         {
             pedestrianFactory.SetPedestrianInstantiator(this);
         }

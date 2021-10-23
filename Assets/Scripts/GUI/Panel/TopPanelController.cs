@@ -31,5 +31,10 @@ namespace GUI
         {
             return GetComponentsInChildren(type, true)[0] as T;
         }
+
+        public void Attack()
+        {
+            Debug.Log("Attack");
+        }
     }
 }

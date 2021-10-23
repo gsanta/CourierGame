@@ -47,6 +47,9 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     private SceneInitializer sceneInitializer;
     [SerializeField]
     private TimerController timerController;
+    [SerializeField]
+    private BuildingStoreController buildingStoreController;
+
 
     public override void InstallBindings()
     {
@@ -100,6 +103,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<WalkAction>().AsSingle().NonLazy();
 
         Container.Bind<PathCache>().AsSingle().NonLazy();
+        Container.Bind<BuildingStoreController>().AsSingle();
 
         Container.Resolve<SceneInitializer>().SetSceneSetup(this);
     }

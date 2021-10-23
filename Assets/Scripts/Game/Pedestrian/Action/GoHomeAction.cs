@@ -1,5 +1,6 @@
 ﻿using Agents;
 using AI;
+using Buildings;
 using Core;
 using Route;
 using System.Collections.Generic;
@@ -7,44 +8,24 @@ using UnityEngine;
 
 namespace Pedestrians
 {
-    public class WalkAction : AbstractRouteAction<Pedestrian>
+    public class GoHomeAction : AbstractRouteAction<Pedestrian>
     {
-        private PedestrianTargetStore pedestrianGoalStore;
+        private BuildingStore buildingStore;
         private RouteFacade routeFacade;
-        private float hideDuration = 0;
-        private GameObject Target;
+        public WorldState afterEffect;
 
-        public WalkAction(RouteFacade routeFacade, PedestrianTargetStore pedestrianGoalStore, PathCache pathCache) : base(null, pathCache)
+        public GoHomeAction(RouteFacade routeFacade, PathCache pathCache, BuildingStore buildingStore) : base(null, pathCache)
         {
             this.routeFacade = routeFacade;
-            this.pedestrianGoalStore = pedestrianGoalStore;
-        }
-
-        public WalkAction SetTarget(GameObject target)
-        {
-            Target = target;
-            return this;
-        }
-        public WalkAction SetHideDuration(float duration)
-        {
-            hideDuration = duration;
-            return this;
-        }
-
-        public WalkAction SetAfterEffect(WorldState worldState)
-        {
-            afterEffect = worldState;
-            return this;
+            this.buildingStore = buildingStore;
         }
 
         public override bool PrePerform()
         {
             Pedestrian agent = GoapAgent.Parent;
 
-            var goal = Target;
-
             var from = agent.transform;
-            var to = goal.transform;
+            var to = buildingStore.GetDoor(GoapAgent.Parent.pedestrianInfo.home).transform;
 
             StartRoute(from, to);
 
@@ -52,6 +33,7 @@ namespace Pedestrians
         }
         public override bool PostPerform()
         {
+            agent.Parent.gameObject.SetActive(false);
             return true;
         }
 
@@ -62,7 +44,7 @@ namespace Pedestrians
 
         protected override WorldState[] GetAfterEffects()
         {
-            return new WorldState[] { afterEffect };
+            return new WorldState[] { new WorldState("atHome", 3) };
         }
 
         public override bool PostAbort()
@@ -72,11 +54,8 @@ namespace Pedestrians
 
         public override GoapAction<Pedestrian> Clone(GoapAgent<Pedestrian> agent = null)
         {
-            var action = new WalkAction(routeFacade, pedestrianGoalStore, pathCache);
+            var action = new GoHomeAction(routeFacade, pathCache, buildingStore);
             action.agent = agent;
-            action.Target = Target;
-            action.hideDuration = hideDuration;
-            action.afterEffect = afterEffect;
             return action;
         }
 

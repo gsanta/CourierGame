@@ -5,44 +5,44 @@ using UnityEngine.AI;
 
 namespace AI
 {
-    public class GoapAgent<T>
+    public class GoapAgent<T> where T : IGameObject
     {
         public List<GoapAction<T>> actions = new List<GoapAction<T>>();
-        public GoapAction<T> currentAction;
-
         public WorldStates worldStates = new WorldStates();
-
         private Queue<GoapAction<T>> actionQueue;
-        private SubGoal currentGoal;
+        private List<SubGoal> goals = new List<SubGoal>();
 
         private string agentId;
         private T parent;
-        private MonoBehaviour monoBehaviour;
-        private readonly IGoalProvider goalProvider;
+        private GameObject gameObject;
         private readonly IPlanner<T> planner;
         private NavMeshAgent navMeshAgent;
         private bool isActive = false;
 
+        public GoapAction<T> currentAction;
         public GoapAction<T> prevAction;
 
-        public GoapAgent(string agentId, T parent, NavMeshAgent navMeshAgent, MonoBehaviour monoBehaviour, IGoalProvider goalProvider, IPlanner<T> planner)
+        public GoapAgent(string agentId, T parent, IPlanner<T> planner)
         {
             this.agentId = agentId;
             this.parent = parent;
-            this.monoBehaviour = monoBehaviour;
-            this.goalProvider = goalProvider;
             this.planner = planner;
-            this.navMeshAgent = navMeshAgent;
+            gameObject = parent.GetGameObject();
+            navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+        }
+
+        public void SetGoals(List<SubGoal> goals, bool abortCurrentAction)
+        {
+            this.goals = goals;
+            if (abortCurrentAction)
+            {
+                AbortAction();
+            }
         }
 
         public void SetActions(List<GoapAction<T>> actions)
         {
             this.actions = actions;
-            actions.ForEach(action => action.Init());
-        }
-
-        public void SetGoals()
-        {
             actions.ForEach(action => action.Init());
         }
 
@@ -67,8 +67,9 @@ namespace AI
                     }
                 }
             }
-
         }
+
+        public event EventHandler ActionCompleted;
 
         public void CompleteAction()
         {
@@ -81,6 +82,7 @@ namespace AI
                     currentAction = null;
                 }
                 invoked = false;
+                ActionCompleted?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -129,7 +131,7 @@ namespace AI
                 {
                     if (!invoked)
                     {
-                        monoBehaviour.Invoke("CompleteAction", currentAction.duration);
+                        gameObject.GetComponent<MonoBehaviour>().Invoke("CompleteAction", currentAction.duration);
                         invoked = true;
                     }
                 }
@@ -138,18 +140,15 @@ namespace AI
 
         private void FindAction()
         {
-            if (actionQueue == null)
+            if (actionQueue == null && goals.Count > 0)
             {
-                var subGoal = goalProvider.GetGoal();
+
+                var subGoal = goals[0];
+                goals.RemoveAt(0);
 
                 var startTime = DateTime.Now;
                 actionQueue = planner.plan(actions, subGoal.sgoals, worldStates);
                 Debug.Log((DateTime.Now - startTime).Milliseconds);
-
-                if (actionQueue != null)
-                {
-                    currentGoal = subGoal;
-                }
             }
 
             if (actionQueue != null && actionQueue.Count == 0)

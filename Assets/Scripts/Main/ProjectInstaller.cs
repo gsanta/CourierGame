@@ -1,5 +1,6 @@
 ﻿using Agents;
 using Bikers;
+using Buildings;
 using Cameras;
 using Core;
 using Delivery;
@@ -47,6 +48,7 @@ namespace Main
             Container.Bind<BikerPanel>().AsSingle().NonLazy();
             Container.Bind<DeliveryPanel>().AsSingle();
             Container.Bind<CameraHandler>().AsSingle().NonLazy();
+            Container.Bind<BuildingStore>().AsSingle().NonLazy();
         }
 
         override public void Start()
@@ -75,6 +77,7 @@ namespace Main
             sceneChangeHandler.AddResetable(Container.Resolve<DeliveryPanel>());
             sceneChangeHandler.AddResetable(Container.Resolve<Timer>());
             sceneChangeHandler.AddResetable(Container.Resolve<CameraHandler>());
+            sceneChangeHandler.AddResetable(Container.Resolve<BuildingStore>());
         }
     }
 }

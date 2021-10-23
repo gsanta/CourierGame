@@ -1,15 +1,13 @@
 ﻿
 using Agents;
 using AI;
-using Route;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Core
 {
-    public abstract class AbstractRouteAction<T>: GoapAction<T>
+    public abstract class AbstractRouteAction<T>: GoapAction<T> where T : IGameObject
     {
         private Queue<Vector3> route;
         protected PathCache pathCache;

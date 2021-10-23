@@ -18,7 +18,7 @@ namespace GUI
             this.pedestrianSpawner = pedestrianSpawner;            
         }
 
-        private void Start()
+        private void Awake()
         {
 
             pedestrianSpawner.SetPedestrianCount(pedestrianCount);

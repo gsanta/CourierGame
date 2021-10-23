@@ -2,14 +2,13 @@
 using UnityEngine.AI;
 using Zenject;
 using System;
-using Model;
 using Delivery;
 using AI;
 using Service;
 
 namespace Bikers
 {
-    public class Biker : MonoBehaviour
+    public class Biker : MonoBehaviour, IGameObject
     {
         [SerializeField]
         public Transform viewPoint;
@@ -26,23 +25,20 @@ namespace Bikers
 
         private EventService eventService;
         private AgentFactory agentFactory;
-
-        public GoapAgent<Biker> agent;
+        private GoapAgent<Biker> agent;
         private BikerPlayComponent player;
+        private IGoalProvider goalProvider;
 
         public NavMeshAgent navMeshAgent;
 
-        public void Construct(EventService eventService, AgentFactory agentFactory)
-        {
-            this.eventService = eventService;
-            this.agentFactory = agentFactory;
-        }
+        public GoapAgent<Biker> Agent { get => agent; set => agent = value; }
+        public EventService EventService { set => eventService = value; }
+        public IGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
 
-        protected void Start()
+        private void Awake()
         {
             player = GetComponent<BikerPlayComponent>();
             navMeshAgent = GetComponent<NavMeshAgent>();
-            agent = agentFactory.CreateBikerAgent(this);
         }
 
         public bool Paused

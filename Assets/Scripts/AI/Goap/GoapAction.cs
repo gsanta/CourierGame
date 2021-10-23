@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AI
 {
-    public abstract class GoapAction<T>
+    public abstract class GoapAction<T> where T : IGameObject
     {
         public string actionName = "Action";
         public float cost = 1.0f;
@@ -13,6 +13,8 @@ namespace AI
         public Dictionary<string, int> preConditionsDict;
         public Dictionary<string, int> effectsDict;
         public WorldStates agentBeliefs;
+        public WorldState afterEffect;
+
 
         public bool running = false;
         protected bool finished = false;

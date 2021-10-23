@@ -1,31 +1,25 @@
 ﻿using AI;
-using Bikers;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 
 namespace Pedestrians
 {
-    public class Pedestrian : MonoBehaviour
+    public class Pedestrian : MonoBehaviour, IGameObject
     {
         public GoapAgent<Pedestrian> agent;
-        private AgentFactory agentFactory;
         public NavMeshAgent navMeshAgent;
-
+        public PedestrianInfo pedestrianInfo;
+        private IGoalProvider goalProvider;
         public bool walked = false;
 
-        [Inject]
-        public void Construct(AgentFactory agentFactory)
-        {
-            this.agentFactory = agentFactory;
-        }
+        public IGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
+        public GoapAgent<Pedestrian> Agent { get => agent; set => agent = value; }
+
 
         private void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
-            var areaIndex = NavMesh.GetAreaFromName("road");
-            //navMeshAgent.SetAreaCost(areaIndex, 8);
-            agent = agentFactory.CreatePedestrianAgent(this);
             agent.Active = true;
         }
 
@@ -42,8 +36,23 @@ namespace Pedestrians
             }
         }
 
+        public GameObject GetGameObject()
+        {
+            return gameObject;
+        }
+
         public class Factory : PlaceholderFactory<Object, Pedestrian>
         {
+        }
+    }
+
+    public class PedestrianInfo
+    {
+        public readonly string home;
+
+        public PedestrianInfo(string home)
+        {
+            this.home = home;
         }
     }
 }
