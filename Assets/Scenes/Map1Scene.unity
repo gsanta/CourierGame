@@ -5674,7 +5674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b5c9c104c89214999b2aa682e1f851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pedestrianCount: 2
+  pedestrianCount: 20
 --- !u!1 &725363270
 GameObject:
   m_ObjectHideFlags: 0

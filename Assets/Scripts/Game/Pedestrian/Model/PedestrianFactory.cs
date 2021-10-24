@@ -38,8 +38,8 @@ namespace Pedestrians
 
         private PedestrianInfo CreatePedestrianInfo()
         {
-            var num = Random.Range(1, 5);
-            return new PedestrianInfo($"House {num}");
+            var num = Random.Range(1, 4);
+            return new PedestrianInfo($"Building {num}");
         }
 
         public void InitializeObj(Pedestrian pedestrian)

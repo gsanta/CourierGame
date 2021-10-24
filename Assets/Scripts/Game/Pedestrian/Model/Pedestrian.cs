@@ -41,6 +41,11 @@ namespace Pedestrians
             return gameObject;
         }
 
+        public MonoBehaviour GetMonoBehaviour()
+        {
+            return this;
+        }
+
         public class Factory : PlaceholderFactory<Object, Pedestrian>
         {
         }

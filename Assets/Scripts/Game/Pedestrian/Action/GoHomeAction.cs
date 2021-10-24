@@ -12,17 +12,19 @@ namespace Pedestrians
     {
         private BuildingStore buildingStore;
         private RouteFacade routeFacade;
-        public WorldState afterEffect;
 
         public GoHomeAction(RouteFacade routeFacade, PathCache pathCache, BuildingStore buildingStore) : base(null, pathCache)
         {
             this.routeFacade = routeFacade;
             this.buildingStore = buildingStore;
+            afterEffect = new WorldState("atHome", 3);
+            duration = 0;
         }
 
         public override bool PrePerform()
         {
             Pedestrian agent = GoapAgent.Parent;
+            agent.navMeshAgent.speed = 3;
 
             var from = agent.transform;
             var to = buildingStore.GetDoor(GoapAgent.Parent.pedestrianInfo.home).transform;

@@ -131,7 +131,7 @@ namespace AI
                 {
                     if (!invoked)
                     {
-                        gameObject.GetComponent<MonoBehaviour>().Invoke("CompleteAction", currentAction.duration);
+                        parent.GetMonoBehaviour().Invoke("CompleteAction", currentAction.duration);
                         invoked = true;
                     }
                 }

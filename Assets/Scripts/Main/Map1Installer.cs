@@ -101,11 +101,19 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<DeliverPackageAction>().AsSingle().NonLazy();
         Container.Bind<ReservePackageAction>().AsSingle().NonLazy();
         Container.Bind<WalkAction>().AsSingle().NonLazy();
+        Container.Bind<GoHomeAction>().AsSingle().NonLazy();
 
         Container.Bind<PathCache>().AsSingle().NonLazy();
         Container.Bind<BuildingStoreController>().AsSingle();
 
         Container.Resolve<SceneInitializer>().SetSceneSetup(this);
+
+
+        AgentFactory agentFactory = Container.Resolve<AgentFactory>();
+        agentFactory.AddBikerAction(Container.Resolve<PickUpPackageAction>());
+        agentFactory.AddBikerAction(Container.Resolve<DeliverPackageAction>());
+        agentFactory.AddBikerAction(Container.Resolve<ReservePackageAction>());
+        agentFactory.AddPedestrianAction(Container.Resolve<WalkAction>());
     }
 
     public void SetupScene()
@@ -118,14 +126,9 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Resolve<MinimapPackageProvider>();
         Container.Resolve<MinimapPackageConsumer>();
 
-        AgentFactory agentFactory = Container.Resolve<AgentFactory>();
-        agentFactory.AddBikerAction(Container.Resolve<PickUpPackageAction>());
-        agentFactory.AddBikerAction(Container.Resolve<DeliverPackageAction>());
-        agentFactory.AddBikerAction(Container.Resolve<ReservePackageAction>());
-        agentFactory.AddPedestrianAction(Container.Resolve<WalkAction>());
-
         ActionStore actionStore = Container.Resolve<ActionStore>();
         actionStore.WalkAction = Container.Resolve<WalkAction>();
+        actionStore.AddPedestrianAction(Container.Resolve<GoHomeAction>());
         actionStore.Init();
 
         PedestrianTargetStore pedestrianTargetStore = Container.ParentContainers[0].Resolve<PedestrianTargetStore>();

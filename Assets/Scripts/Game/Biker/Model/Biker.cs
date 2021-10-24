@@ -79,6 +79,11 @@ namespace Bikers
             return gameObject;
         }
 
+        public MonoBehaviour GetMonoBehaviour()
+        {
+            return this;
+        }
+
         public string GetId()
         {
             return agent.AgentId;

@@ -11,7 +11,7 @@ namespace Agents
     public class ActionStore : IResetable
     {
         private readonly PedestrianTargetStore pedestrianTargetStore;
-        private List<GoapAction<Pedestrian>> walkActions = new List<GoapAction<Pedestrian>>();
+        private List<GoapAction<Pedestrian>> pedestrianActions = new List<GoapAction<Pedestrian>>();
 
         public ActionStore(PedestrianTargetStore pedestrianTargetStore)
         {
@@ -20,6 +20,11 @@ namespace Agents
 
         public PickUpPackageAction PickUpPackageAction { get; set; }
 
+        public void AddPedestrianAction(GoapAction<Pedestrian> pedestrianAction)
+        {
+            pedestrianActions.Add(pedestrianAction);
+        }
+
         public WalkAction WalkAction
         {
             get; set;
@@ -27,12 +32,12 @@ namespace Agents
 
         public List<GoapAction<Pedestrian>> GetPedestrianActions()
         {
-            return walkActions.Select(action => action.Clone()).ToList();
+            return pedestrianActions.Select(action => action.Clone()).ToList();
         }
 
-        public WalkAction GetByAfterEffect(string afterEffectName)
+        public GoapAction<Pedestrian> GetByAfterEffect(string afterEffectName)
         {
-            return (WalkAction) walkActions.Find(action => action.afterEffect.key == afterEffectName).Clone();
+            return pedestrianActions.Find(action => action.afterEffect.key == afterEffectName).Clone();
         }
 
         public void Init()
@@ -42,13 +47,13 @@ namespace Agents
             {
                 var clone = (WalkAction)WalkAction.Clone();
                 clone.SetTarget(target.gameObject).SetHideDuration(target.hideDuration).SetAfterEffect(new WorldState("goto" + target.name, 3));
-                walkActions.Add(clone);
+                pedestrianActions.Add(clone);
             });
         }
 
         public void Reset()
         {
-            walkActions = new List<GoapAction<Pedestrian>>();
+            pedestrianActions = new List<GoapAction<Pedestrian>>();
         }
     }
 }
