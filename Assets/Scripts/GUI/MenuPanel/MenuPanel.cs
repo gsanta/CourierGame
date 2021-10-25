@@ -17,13 +17,13 @@ namespace GUI
         public void OnLoadMap1()
         {
             this.sceneLoader.UnLoadMapScene(2);
-            this.sceneLoader.LoadMapScene(1);
+            this.sceneLoader.LoadWorldScene(1);
         }
 
         public void OnLoadMap2()
         {
             this.sceneLoader.UnLoadMapScene(1);
-            this.sceneLoader.LoadMapScene(2);
+            this.sceneLoader.LoadWorldScene(2);
         }
     }
 }

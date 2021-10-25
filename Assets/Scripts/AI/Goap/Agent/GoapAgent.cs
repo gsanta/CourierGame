@@ -8,7 +8,7 @@ namespace AI
     public class GoapAgent<T> where T : IGameObject
     {
         public List<GoapAction<T>> actions = new List<GoapAction<T>>();
-        public WorldStates worldStates = new WorldStates();
+        public AIStates worldStates = new AIStates();
         private Queue<GoapAction<T>> actionQueue;
         private List<SubGoal> goals = new List<SubGoal>();
 

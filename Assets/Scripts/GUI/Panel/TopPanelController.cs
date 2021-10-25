@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using UI;
 using UnityEngine;
+using Worlds;
 using Zenject;
 
 namespace GUI
@@ -12,12 +13,14 @@ namespace GUI
     public class TopPanelController : MonoBehaviour, IWidgetController
     {
         private PedestrianStore pedestrianStore;
+        private WorldStore worldStore;
 
         [Inject]
-        public void Construct(PanelStore panelStore, PedestrianStore pedestrianStore)
+        public void Construct(PanelStore panelStore, PedestrianStore pedestrianStore, WorldStore worldStore)
         {
             panelStore.AddWidgetController(this);
             this.pedestrianStore = pedestrianStore;
+            this.worldStore = worldStore;
         }
 
         public List<GameObject> GetAllWidgets()
@@ -39,11 +42,7 @@ namespace GUI
 
         public void Attack()
         {
-            this.pedestrianStore.GetAll().ForEach(pedestrian =>
-            {
-                pedestrian.Agent.SetGoals(new List<SubGoal>() { new SubGoal("atHome", 3, true) }, true);
-            });
-            Debug.Log("Attack");
+            worldStore.GetActiveWorld().Curfew = !worldStore.GetActiveWorld().Curfew;
         }
     }
 }

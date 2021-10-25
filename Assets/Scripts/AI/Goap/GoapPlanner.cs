@@ -21,7 +21,7 @@ namespace AI
 
     public class GoapPlanner<T> : IPlanner<T> where T : IGameObject 
     {
-        public Queue<GoapAction<T>> plan(List<GoapAction<T>> actions, Dictionary<string, int> goal, WorldStates states)
+        public Queue<GoapAction<T>> plan(List<GoapAction<T>> actions, Dictionary<string, int> goal, AIStates states)
         {
             List<GoapAction<T>> usableActions = new List<GoapAction<T>>();
             foreach (GoapAction<T> a in actions)

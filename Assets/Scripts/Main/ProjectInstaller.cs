@@ -10,6 +10,7 @@ using Scenes;
 using Service;
 using Stats;
 using UI;
+using Worlds;
 using Zenject;
 
 namespace Main
@@ -49,6 +50,10 @@ namespace Main
             Container.Bind<DeliveryPanel>().AsSingle();
             Container.Bind<CameraHandler>().AsSingle().NonLazy();
             Container.Bind<BuildingStore>().AsSingle().NonLazy();
+            Container.Bind<WorldStore>().AsSingle();
+            Container.Bind<WorldHandlers>().AsSingle();
+            Container.Bind<CurfewHandler>().AsSingle();
+            Container.Bind<WorldStateCreator>().AsSingle().NonLazy();
         }
 
         override public void Start()
@@ -62,6 +67,9 @@ namespace Main
         {
             SceneLoader sceneLoader = Container.Resolve<SceneLoader>();
             sceneLoader.LoadInitialScenes();
+
+            WorldStateCreator worldStateCreator = Container.Resolve<WorldStateCreator>();
+            worldStateCreator.Init();
 
             SceneChangeHandler sceneChangeHandler = Container.Resolve<SceneChangeHandler>();
             sceneChangeHandler.AddResetable(Container.Resolve<BikerStore>());

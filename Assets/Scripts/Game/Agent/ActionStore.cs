@@ -46,7 +46,7 @@ namespace Agents
             pedestrianTargetStore.GetTargets().ForEach(target =>
             {
                 var clone = (WalkAction)WalkAction.Clone();
-                clone.SetTarget(target.gameObject).SetHideDuration(target.hideDuration).SetAfterEffect(new WorldState("goto" + target.name, 3));
+                clone.SetTarget(target.gameObject).SetHideDuration(target.hideDuration).SetAfterEffect(new AIState("goto" + target.name, 3));
                 pedestrianActions.Add(clone);
             });
         }

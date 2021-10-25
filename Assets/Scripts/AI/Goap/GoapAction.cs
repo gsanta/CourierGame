@@ -12,8 +12,8 @@ namespace AI
         public float duration = 1;
         public Dictionary<string, int> preConditionsDict;
         public Dictionary<string, int> effectsDict;
-        public WorldStates agentBeliefs;
-        public WorldState afterEffect;
+        public AIStates agentBeliefs;
+        public AIState afterEffect;
 
 
         public bool running = false;
@@ -39,12 +39,12 @@ namespace AI
 
         public void Init()
         {
-            foreach (WorldState w in GetPreConditions())
+            foreach (AIState w in GetPreConditions())
             {
                 preConditionsDict.Add(w.key, w.value);
             }
 
-            foreach (WorldState w in GetAfterEffects())
+            foreach (AIState w in GetAfterEffects())
             {
                 effectsDict.Add(w.key, w.value);
             }
@@ -67,8 +67,8 @@ namespace AI
             return true;
         }
 
-        protected abstract WorldState[] GetPreConditions();
-        protected abstract WorldState[] GetAfterEffects();
+        protected abstract AIState[] GetPreConditions();
+        protected abstract AIState[] GetAfterEffects();
         public abstract bool PrePerform();
         public abstract bool PostPerform();
         public abstract bool PostAbort();

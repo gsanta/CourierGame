@@ -3,11 +3,11 @@
     public sealed class GoapWorld
 	{
 		private static readonly GoapWorld instance = new GoapWorld();
-		private static WorldStates world;
+		private static AIStates world;
 
 		static GoapWorld()
 		{
-			world = new WorldStates();
+			world = new AIStates();
 		}
 
 		private GoapWorld() { }
@@ -17,7 +17,7 @@
 			get { return instance; }
         }
 
-		public WorldStates GetWorld()
+		public AIStates GetWorld()
         {
 			return world;
         }

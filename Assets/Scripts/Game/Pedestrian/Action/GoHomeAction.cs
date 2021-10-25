@@ -17,7 +17,7 @@ namespace Pedestrians
         {
             this.routeFacade = routeFacade;
             this.buildingStore = buildingStore;
-            afterEffect = new WorldState("atHome", 3);
+            afterEffect = new AIState("atHome", 3);
             duration = 0;
         }
 
@@ -39,14 +39,14 @@ namespace Pedestrians
             return true;
         }
 
-        protected override WorldState[] GetPreConditions()
+        protected override AIState[] GetPreConditions()
         {
-            return new WorldState[] { };
+            return new AIState[] { };
         }
 
-        protected override WorldState[] GetAfterEffects()
+        protected override AIState[] GetAfterEffects()
         {
-            return new WorldState[] { new WorldState("atHome", 3) };
+            return new AIState[] { new AIState("atHome", 3) };
         }
 
         public override bool PostAbort()

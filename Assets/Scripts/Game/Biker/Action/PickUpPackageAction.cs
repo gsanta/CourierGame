@@ -38,14 +38,14 @@ namespace Bikers
             return true;
         }
 
-        protected override WorldState[] GetPreConditions()
+        protected override AIState[] GetPreConditions()
         {
-            return new WorldState[] { new WorldState("isPackageReserved", 3) };
+            return new AIState[] { new AIState("isPackageReserved", 3) };
         }
 
-        protected override WorldState[] GetAfterEffects()
+        protected override AIState[] GetAfterEffects()
         {
-            return new WorldState[] { new WorldState("isPackagePickedUp", 3) };
+            return new AIState[] { new AIState("isPackagePickedUp", 3) };
         }
 
         public override bool PostAbort()

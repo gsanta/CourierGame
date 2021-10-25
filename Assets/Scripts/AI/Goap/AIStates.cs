@@ -4,23 +4,23 @@ namespace AI
 {
 
     [System.Serializable]
-    public class WorldState
+    public class AIState
     {
         public readonly string key;
         public readonly int value;
 
-        public WorldState(string key, int value)
+        public AIState(string key, int value)
         {
             this.key = key;
             this.value = value;
         }
     }
 
-    public class WorldStates
+    public class AIStates
     {
         private Dictionary<string, int> states;
 
-        public WorldStates()
+        public AIStates()
         {
             states = new Dictionary<string, int>();
         }

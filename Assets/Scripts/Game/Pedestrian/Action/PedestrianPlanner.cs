@@ -13,7 +13,7 @@ namespace Pedestrians
             this.actionStore = actionStore;
         }
 
-        public Queue<GoapAction<Pedestrian>> plan(List<GoapAction<Pedestrian>> actions, Dictionary<string, int> goal, WorldStates states)
+        public Queue<GoapAction<Pedestrian>> plan(List<GoapAction<Pedestrian>> actions, Dictionary<string, int> goal, AIStates states)
         {
             IEnumerator<KeyValuePair<string, int>> enumerator = goal.GetEnumerator();
             enumerator.MoveNext();

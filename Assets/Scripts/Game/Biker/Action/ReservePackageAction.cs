@@ -52,14 +52,14 @@ namespace Bikers
             return true;
         }
 
-        protected override WorldState[] GetAfterEffects()
+        protected override AIState[] GetAfterEffects()
         {
-            return new WorldState[] { new WorldState("isPackageReserved", 3) };
+            return new AIState[] { new AIState("isPackageReserved", 3) };
         }
 
-        protected override WorldState[] GetPreConditions()
+        protected override AIState[] GetPreConditions()
         {
-            return new WorldState[0];
+            return new AIState[0];
         }
 
         public override GoapAction<Biker> Clone(GoapAgent<Biker> agent = null)

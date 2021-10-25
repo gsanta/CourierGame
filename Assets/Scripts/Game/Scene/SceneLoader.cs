@@ -1,4 +1,5 @@
 ﻿using UnityEngine.SceneManagement;
+using Worlds;
 
 namespace Scenes
 {
@@ -6,10 +7,12 @@ namespace Scenes
     {
         private string activeMapScene;
         private SceneChangeHandler sceneChangeHandler;
+        private WorldStore worldStore;
 
-        public SceneLoader(SceneChangeHandler sceneChangeHandler)
+        public SceneLoader(SceneChangeHandler sceneChangeHandler, WorldStore worldStore)
         {
             this.sceneChangeHandler = sceneChangeHandler;
+            this.worldStore = worldStore;
         }
 
         public void LoadInitialScenes()
@@ -17,9 +20,10 @@ namespace Scenes
             SceneManager.LoadSceneAsync("CanvasScene", LoadSceneMode.Additive);
         }
 
-        public void LoadMapScene(int index)
+        public void LoadWorldScene(int index)
         {
-            string sceneName = "Map" + index + "Scene";
+            string sceneName = WorldState.GenerateWorldName(index);
+            worldStore.SetActiveWorld(sceneName);
             activeMapScene = sceneName;
             sceneChangeHandler.ClearPrevScene();
             SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);

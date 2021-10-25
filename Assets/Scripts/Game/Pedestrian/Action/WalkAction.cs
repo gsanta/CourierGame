@@ -31,7 +31,7 @@ namespace Pedestrians
             return this;
         }
 
-        public WalkAction SetAfterEffect(WorldState worldState)
+        public WalkAction SetAfterEffect(AIState worldState)
         {
             afterEffect = worldState;
             return this;
@@ -55,14 +55,14 @@ namespace Pedestrians
             return true;
         }
 
-        protected override WorldState[] GetPreConditions()
+        protected override AIState[] GetPreConditions()
         {
-            return new WorldState[] { };
+            return new AIState[] { };
         }
 
-        protected override WorldState[] GetAfterEffects()
+        protected override AIState[] GetAfterEffects()
         {
-            return new WorldState[] { afterEffect };
+            return new AIState[] { afterEffect };
         }
 
         public override bool PostAbort()
