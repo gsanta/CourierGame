@@ -5,9 +5,11 @@ using UnityEngine;
 
 namespace UI
 {
-    public interface IWidgetController
+    public interface IToolbarController
     {
         T GetWidget<T>(Type type) where T : class;
         List<GameObject> GetAllWidgets();
+
+        void UpdateButtonStates();
     }
 }

@@ -1,26 +1,27 @@
-﻿
-using AI;
-using Pedestrians;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UI;
 using UnityEngine;
+using UnityEngine.UI;
 using Worlds;
 using Zenject;
 
 namespace GUI
 {
-    public class TopPanelController : MonoBehaviour, IWidgetController
+    public class TopPanelController : MonoBehaviour, IToolbarController
     {
-        private PedestrianStore pedestrianStore;
+        [SerializeField]
+        private Button button;
         private WorldStore worldStore;
+        private CurfewButton curfewButton;
 
         [Inject]
-        public void Construct(PanelStore panelStore, PedestrianStore pedestrianStore, WorldStore worldStore)
+        public void Construct(PanelStore panelStore, WorldStore worldStore, CurfewButton curfewButton)
         {
             panelStore.AddWidgetController(this);
-            this.pedestrianStore = pedestrianStore;
             this.worldStore = worldStore;
+            this.curfewButton = curfewButton;
+            curfewButton.SetToolbarController(this);
         }
 
         public List<GameObject> GetAllWidgets()
@@ -43,6 +44,11 @@ namespace GUI
         public void Attack()
         {
             worldStore.GetActiveWorld().Curfew = !worldStore.GetActiveWorld().Curfew;
+        }
+
+        public void UpdateButtonStates()
+        {
+            button.GetComponent<Image>().color = curfewButton.color;
         }
     }
 }

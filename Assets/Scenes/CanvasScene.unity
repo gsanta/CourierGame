@@ -816,6 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d369e25eb1701f54aa110149c3d47211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  button: {fileID: 761261600}
 --- !u!222 &391946349
 CanvasRenderer:
   m_ObjectHideFlags: 0

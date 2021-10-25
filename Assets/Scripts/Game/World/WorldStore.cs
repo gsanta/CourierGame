@@ -6,9 +6,10 @@ namespace Worlds
     {
         private Dictionary<string, IWorldState> worlds = new Dictionary<string, IWorldState>();
         private IWorldState activeWorld;
-        private readonly WorldHandlers worldHandlers;
+        private WorldHandlers worldHandlers;
 
-        public WorldStore(WorldHandlers worldHandlers)
+        // avoiding circular deps it is passed here instead of in the constructor
+        public void SetWorldHandlers(WorldHandlers worldHandlers)
         {
             this.worldHandlers = worldHandlers;
         }

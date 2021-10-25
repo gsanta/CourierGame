@@ -7,14 +7,14 @@ namespace UI
     public class PanelStore
     {
         private IPanelController panelController;
-        private IWidgetController widgetController;
+        private IToolbarController widgetController;
 
         public void AddPanelController(IPanelController panelController)
         {
             this.panelController = panelController;
         }
 
-        public void AddWidgetController(IWidgetController widgetController)
+        public void AddWidgetController(IToolbarController widgetController)
         {
             this.widgetController = widgetController;
         }

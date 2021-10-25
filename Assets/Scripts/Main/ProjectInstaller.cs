@@ -50,10 +50,13 @@ namespace Main
             Container.Bind<DeliveryPanel>().AsSingle();
             Container.Bind<CameraHandler>().AsSingle().NonLazy();
             Container.Bind<BuildingStore>().AsSingle().NonLazy();
-            Container.Bind<WorldStore>().AsSingle();
-            Container.Bind<WorldHandlers>().AsSingle();
+            Container.Bind<WorldStore>().AsSingle().NonLazy();
+            Container.Bind<WorldHandlers>().AsSingle().NonLazy();
             Container.Bind<CurfewHandler>().AsSingle();
             Container.Bind<WorldStateCreator>().AsSingle().NonLazy();
+
+            // ui
+            Container.Bind<CurfewButton>().AsSingle();
         }
 
         override public void Start()
@@ -65,6 +68,10 @@ namespace Main
 
         private void RunSetups()
         {
+            WorldStore worldStore = Container.Resolve<WorldStore>();
+            WorldHandlers worldHandlers = Container.Resolve<WorldHandlers>();
+            worldStore.SetWorldHandlers(worldHandlers);
+
             SceneLoader sceneLoader = Container.Resolve<SceneLoader>();
             sceneLoader.LoadInitialScenes();
 

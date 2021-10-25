@@ -2,6 +2,7 @@
 using AI;
 using Pedestrians;
 using System.Collections.Generic;
+using UI;
 
 namespace Worlds
 {
@@ -9,10 +10,12 @@ namespace Worlds
     {
         private IWorldState worldState;
         private PedestrianStore pedestrianStore;
+        private readonly CurfewButton curfewButton;
 
-        public CurfewHandler(PedestrianStore pedestrianStore)
+        public CurfewHandler(PedestrianStore pedestrianStore, CurfewButton curfewButton)
         {
             this.pedestrianStore = pedestrianStore;
+            this.curfewButton = curfewButton;
         }
 
         public void SetWorldState(IWorldState worldState)
@@ -34,11 +37,12 @@ namespace Worlds
         private void CurfewOn()
         {
             pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.SetGoals(new List<SubGoal>() { new SubGoal("atHome", 3, true) }, true));
+            curfewButton.UpdateColor();
         }
 
         private void CurfewOff()
         {
-
+            curfewButton.UpdateColor();
         }
     }
 }
