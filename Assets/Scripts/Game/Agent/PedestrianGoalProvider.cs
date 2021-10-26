@@ -44,6 +44,12 @@ namespace Agents
             SetGoal();
         }
 
+        public List<SubGoal> CreateWalkGoal()
+        {
+            var goalIndex = UnityEngine.Random.Range(0, goals.Count - 1);
+            return new List<SubGoal> { goals[goalIndex] };
+        }
+
         public List<SubGoal> GetGoals()
         {
             return goals;
@@ -65,7 +71,7 @@ namespace Agents
 
         private void HandleCompleteAction(object sender, EventArgs args)
         {
-            SetGoal();
+            //SetGoal();
         }
 
         private void SetGoal()

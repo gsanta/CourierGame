@@ -21,6 +21,11 @@ namespace Bikers
             return goal;
         }
 
+        public List<SubGoal> GetGoals()
+        {
+            return new List<SubGoal>() { goal };
+        }
+
         private void HandleCompleteAction(object sender, EventArgs args)
         {
             SetGoal();

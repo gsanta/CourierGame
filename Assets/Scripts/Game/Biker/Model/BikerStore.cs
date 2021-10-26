@@ -9,7 +9,6 @@ namespace Bikers
     {
         private List<Biker> bikers = new List<Biker>();
         private MinimapBiker minimapBiker;
-        private GameObject[] spawnPoints;
         private Biker bikerTemplate;
         private GameObject bikerContainer;
 
@@ -26,16 +25,6 @@ namespace Bikers
         public BikerStore()
         {
             Debug.Log("bikerStore");
-        }
-
-        public GameObject[] GetSpawnPoints() 
-        {
-            return spawnPoints;
-        }
-
-        public void SetSpawnPoints(GameObject[] spawnPoints)
-        {
-            this.spawnPoints = spawnPoints;
         }
 
         public void SetBikerTemplate(Biker bikerTemplate)
@@ -84,7 +73,6 @@ namespace Bikers
         {
             bikers = new List<Biker>();
             minimapBiker = null;
-            spawnPoints = null;
             bikerTemplate = null;
         }
     }

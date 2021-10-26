@@ -40,6 +40,7 @@ namespace Pedestrians
         public override bool PrePerform()
         {
             Pedestrian agent = GoapAgent.Parent;
+            agent.navMeshAgent.speed = 2;
 
             var goal = Target;
 
@@ -52,6 +53,8 @@ namespace Pedestrians
         }
         public override bool PostPerform()
         {
+            var goals = agent.Parent.GoalProvider.CreateWalkGoal();
+            agent.SetGoals(goals, false);
             return true;
         }
 

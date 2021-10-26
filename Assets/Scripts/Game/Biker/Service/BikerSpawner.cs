@@ -1,6 +1,4 @@
 ﻿using AI;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Bikers
@@ -9,11 +7,13 @@ namespace Bikers
     {
         private BikerStore bikerStore;
         private BikerFactory bikerFactory;
+        private BikerHomeStore bikerHomeStore;
 
-        public BikerSpawner(BikerFactory bikerFactory, BikerStore bikerStore)
+        public BikerSpawner(BikerFactory bikerFactory, BikerStore bikerStore, BikerHomeStore bikerHomeStore)
         {
             this.bikerFactory = bikerFactory;
             this.bikerStore = bikerStore;
+            this.bikerHomeStore = bikerHomeStore;
         }
 
         override public void StartSpawning()
@@ -23,28 +23,13 @@ namespace Bikers
 
         public void Spawn()
         {
-            List<GameObject> usedSpawnPoints = new List<GameObject>();
-
             for (int i = 0; i < 3; i++)
             {
-                //GameObject spawnPoint = ChooseSpawnPoint(usedSpawnPoints);
-                GameObject spawnPoint = bikerStore.GetSpawnPoints()[2];
+                GameObject spawnPoint = bikerHomeStore.ChooseHome();
                 BikerConfig config = new BikerConfig(spawnPoint, new SubGoal("isPackageDropped", 1, true), $"Courier-{i}");
                 Biker courier = bikerFactory.Create(config);
                 bikerStore.Add(courier);
             }
-        }
-
-        private GameObject ChooseSpawnPoint(List<GameObject> usedSpawnPoints)
-        {
-            var freeSpawnPoints = bikerStore.GetSpawnPoints().Where(spawnPoint => usedSpawnPoints.Contains(spawnPoint) == false).ToArray();
-            int randomIndex = Random.Range(0, freeSpawnPoints.Length);
-
-            var spawnPoint = freeSpawnPoints[randomIndex];
-
-            usedSpawnPoints.Add(spawnPoint);
-
-            return spawnPoint;
         }
     }
 }

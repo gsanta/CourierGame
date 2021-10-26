@@ -33,6 +33,7 @@ namespace AI
 
         public void SetGoals(List<SubGoal> goals, bool abortCurrentAction)
         {
+            parent.GetGameObject().SetActive(true);
             this.goals = goals;
             if (abortCurrentAction)
             {

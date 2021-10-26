@@ -24,7 +24,7 @@ namespace Pedestrians
         public override bool PrePerform()
         {
             Pedestrian agent = GoapAgent.Parent;
-            agent.navMeshAgent.speed = 3;
+            agent.navMeshAgent.speed = 4;
 
             var from = agent.transform;
             var to = buildingStore.GetDoor(GoapAgent.Parent.pedestrianInfo.home).transform;

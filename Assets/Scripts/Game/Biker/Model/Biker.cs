@@ -165,4 +165,14 @@ namespace Bikers
         {
         }
     }
+
+    public class BikerInfo
+    {
+        public readonly string home;
+
+        public BikerInfo(string home)
+        {
+            this.home = home;
+        }
+    }
 }

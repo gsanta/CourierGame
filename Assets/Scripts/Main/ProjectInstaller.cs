@@ -57,6 +57,7 @@ namespace Main
 
             // ui
             Container.Bind<CurfewButton>().AsSingle();
+            Container.Bind<BikerHomeStore>().AsSingle();
         }
 
         override public void Start()

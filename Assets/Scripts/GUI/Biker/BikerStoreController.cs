@@ -34,7 +34,6 @@ namespace GUI
                 spawnPoints.Add(child.gameObject);
             }
 
-            bikerStore.SetSpawnPoints(spawnPoints.ToArray());
             bikerStore.SetBikerTemplate(bikerTemplate);
             bikerStore.SetMinimapBiker(minimapBiker);
             bikerStore.SetBikerContainer(bikerContainer);

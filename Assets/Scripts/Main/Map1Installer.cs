@@ -28,6 +28,8 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     [SerializeField]
     private BikerInstantiator bikerInstantiator;
     [SerializeField]
+    private BikerHomeStoreController bikerHomeStoreController;
+    [SerializeField]
     private CameraController mainCamera;
     [SerializeField]
     private PedestrianInstantiator pedestrianInstantiator;
@@ -105,6 +107,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         Container.Bind<PathCache>().AsSingle().NonLazy();
         Container.Bind<BuildingStoreController>().AsSingle();
+        Container.Bind<BikerHomeStoreController>().AsSingle();
 
         Container.Resolve<SceneInitializer>().SetSceneSetup(this);
 

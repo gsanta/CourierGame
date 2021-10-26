@@ -42,6 +42,7 @@ namespace Worlds
 
         private void CurfewOff()
         {
+            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.SetGoals(pedestrian.GoalProvider.CreateWalkGoal(), true));
             curfewButton.UpdateColor();
         }
     }

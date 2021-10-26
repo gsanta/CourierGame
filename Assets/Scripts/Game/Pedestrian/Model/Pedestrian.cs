@@ -1,4 +1,5 @@
-﻿using AI;
+﻿using Agents;
+using AI;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
@@ -10,10 +11,10 @@ namespace Pedestrians
         public GoapAgent<Pedestrian> agent;
         public NavMeshAgent navMeshAgent;
         public PedestrianInfo pedestrianInfo;
-        private IGoalProvider goalProvider;
+        private PedestrianGoalProvider goalProvider;
         public bool walked = false;
 
-        public IGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
+        public PedestrianGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
         public GoapAgent<Pedestrian> Agent { get => agent; set => agent = value; }
 
 
