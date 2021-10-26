@@ -1,6 +1,7 @@
 ﻿
 using Agents;
 using AI;
+using Enemies;
 using Pedestrians;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Bikers
         {
             idMap.Add("biker", 1);
             idMap.Add("pedestrian", 1);
+            idMap.Add("enemy", 1);
             this.actionStore = actionStore;
             this.pedestrianTargetStore = pedestrianTargetStore;
         }
@@ -32,6 +34,22 @@ namespace Bikers
         public void AddPedestrianAction(GoapAction<Pedestrian> action)
         {
             pedestrianActions.Add(action);
+        }
+
+        public GoapAgent<Enemy> CreateEnemyAgent(Enemy enemy)
+        {
+            string id = "enemy-" + idMap["enemy"];
+            idMap["enemy"]++;
+
+            List<GoapAction<Enemy>> actions = new List<GoapAction<Enemy>>();
+
+
+            Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
+
+            var agent = new GoapAgent<Enemy>(id, enemy, null);
+            agent.SetActions(actions);
+
+            return agent;
         }
 
         public GoapAgent<Pedestrian> CreatePedestrianAgent(Pedestrian pedestrian)
