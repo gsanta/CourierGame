@@ -12,9 +12,6 @@ GameObject:
   - component: {fileID: 8575618206237545015}
   - component: {fileID: 8575618206237545012}
   - component: {fileID: 8575618206237545013}
-  - component: {fileID: 8496156412431153410}
-  - component: {fileID: 1221894700258713044}
-  - component: {fileID: 5794767504772231193}
   - component: {fileID: 2902610570975193907}
   - component: {fileID: 6195329513134689117}
   - component: {fileID: 8772476996781926769}
@@ -103,50 +100,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8496156412431153410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8575618206237545019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb40271077a002847b2082d1a84ac5a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 1
-  rotationSpeed: 120
-  stopDistance: 1.5
-  destination: {x: 0, y: 0, z: 0}
-  reachedDestination: 0
---- !u!114 &1221894700258713044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8575618206237545019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75c5e080a64d26343b019b0926eebb2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 0}
-  currentWaypoint: {fileID: 0}
-  direction: -1
---- !u!114 &5794767504772231193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8575618206237545019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0b46efd6adfe144eb23f815c58328ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2902610570975193907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,6 +211,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: dd9d1e3738887b444a7c7a5f9ac3a678, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dd9d1e3738887b444a7c7a5f9ac3a678, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd9d1e3738887b444a7c7a5f9ac3a678, type: 3}

@@ -8,7 +8,7 @@ namespace Pedestrians
 {
     public class Pedestrian : MonoBehaviour, IGameObject
     {
-        public GoapAgent<Pedestrian> agent;
+        private GoapAgent<Pedestrian> agent;
         public NavMeshAgent navMeshAgent;
         public PedestrianInfo pedestrianInfo;
         private PedestrianGoalProvider goalProvider;
@@ -16,7 +16,6 @@ namespace Pedestrians
 
         public PedestrianGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
         public GoapAgent<Pedestrian> Agent { get => agent; set => agent = value; }
-
 
         private void Start()
         {

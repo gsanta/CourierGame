@@ -1,11 +1,9 @@
-﻿using Agents;
-using AI;
+﻿using AI;
 using Bikers;
-using UnityEngine;
 
 namespace Enemies
 {
-    public class EnemyFactory : ItemFactory<EnemyConfig, Enemy>
+    public class EnemyFactory : ItemFactory<EnemyData, Enemy>
     {
         private AgentFactory agentFactory;
         private IEnemyInstantiator enemyInstantiator;
@@ -20,7 +18,7 @@ namespace Enemies
             this.enemyInstantiator = enemyInstantiator;
         }
 
-        public Enemy Create(EnemyConfig config)
+        public Enemy Create(EnemyData config)
         {
             Enemy enemy = enemyInstantiator.InstantiateEnemy();
             enemy.agent = agentFactory.CreateEnemyAgent(enemy);

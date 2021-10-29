@@ -55,6 +55,7 @@ namespace Main
             Container.Bind<WorldHandlers>().AsSingle().NonLazy();
             Container.Bind<CurfewHandler>().AsSingle();
             Container.Bind<WorldStateCreator>().AsSingle().NonLazy();
+            Container.Bind<EnemiesConfig>().AsSingle();
 
             // ui
             Container.Bind<CurfewButton>().AsSingle();

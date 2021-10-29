@@ -38,7 +38,7 @@ namespace Agents
         public PedestrianGoalProvider(Pedestrian pedestrian, WalkTargetStore walkTargetStore)
         {
             this.pedestrian = pedestrian;
-            pedestrian.agent.ActionCompleted += HandleCompleteAction;
+            pedestrian.Agent.ActionCompleted += HandleCompleteAction;
             this.walkTargetStore = walkTargetStore;
             Init();
             SetGoal();
@@ -76,7 +76,7 @@ namespace Agents
 
         private void SetGoal()
         {
-            pedestrian.agent.SetGoals(new List<SubGoal> { GetGoal() }, false);
+            pedestrian.Agent.SetGoals(new List<SubGoal> { GetGoal() }, false);
         }
     }
 }

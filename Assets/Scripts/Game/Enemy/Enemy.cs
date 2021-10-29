@@ -11,7 +11,6 @@ namespace Enemies {
 
         public GoapAgent<Enemy> Agent { get => agent; set => agent = value; }
 
-
         private void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();

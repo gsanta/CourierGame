@@ -56,6 +56,9 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     [SerializeField]
     private TargetStoreController enemySpawnPointsStoreController;
 
+    [SerializeField]
+    private EnemiesConfigController enemiesConfigController;
+
     public override void InstallBindings()
     {
         Container.Bind<InputHandlerController>().FromInstance(inputHandlerController).AsSingle();
@@ -111,6 +114,8 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<PathCache>().AsSingle().NonLazy();
         Container.Bind<BuildingStoreController>().AsSingle();
 
+        Container.Bind<EnemiesConfigController>().FromInstance(enemiesConfigController).AsSingle();
+
         Container.Resolve<SceneInitializer>().SetSceneSetup(this);
 
 
@@ -128,6 +133,10 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         EnemySpawnPointStore enemySpawnPointStore = Container.Resolve<EnemySpawnPointStore>();
         enemySpawnPointsStoreController.SetupStore(enemySpawnPointStore);
+
+        EnemiesConfigController enemiesConfigController = Container.Resolve<EnemiesConfigController>();
+        EnemiesConfig enemiesConfig = Container.Resolve<EnemiesConfig>();
+        enemiesConfigController.SetupConfig(enemiesConfig);
 
         BikerSetup bikerSetup = Container.Resolve<BikerSetup>();
         bikerSetup.Setup();

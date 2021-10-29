@@ -26,11 +26,11 @@ namespace Pedestrians
         {
             Pedestrian pedestrian = pedestrianInstantiator.InstantiatePedestrian();
             pedestrian.pedestrianInfo = CreatePedestrianInfo();
-            pedestrian.agent = agentFactory.CreatePedestrianAgent(pedestrian);
+            pedestrian.Agent = agentFactory.CreatePedestrianAgent(pedestrian);
             pedestrian.GoalProvider = new PedestrianGoalProvider(pedestrian, walkTargetStore);
 
             Transform child = config.spawnPoint.transform;
-            pedestrian.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
+            //pedestrian.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
             pedestrian.transform.position = child.position;
 
             return pedestrian;

@@ -2,11 +2,11 @@
 
 namespace Enemies
 {
-    public struct EnemyConfig
+    public struct EnemyData
     {
         public readonly GameObject spawnPoint;
 
-        public EnemyConfig(GameObject spawnPoint)
+        public EnemyData(GameObject spawnPoint)
         {
             this.spawnPoint = spawnPoint;
         }

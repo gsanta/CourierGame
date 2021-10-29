@@ -25,14 +25,13 @@ namespace Enemies
         {
             int count = 0;
 
-            while (count < enemyCount)
+            while (count < 3)
             {
+                var waypoint = pavementStore.GetWaypoints()[Random.Range(0, pavementStore.GetWaypoints().Count - 1)];
 
-                //var waypoint = enemyStore.GetWaypoints()[Random.Range(0, pavementStore.GetWaypoints().Count - 1)];
-
-                //var pedestrian = pedestrianFactory.Create(new PedestrianConfig(waypoint.gameObject));
-                //pedestrian.gameObject.SetActive(true);
-                //pedestrianStore.Add(pedestrian);
+                var pedestrian = enemyFactory.Create(new EnemyData(waypoint.gameObject));
+                pedestrian.gameObject.SetActive(true);
+                enemyStore.Add(pedestrian);
 
                 count++;
             }
