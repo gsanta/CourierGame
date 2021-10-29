@@ -9,11 +9,13 @@ namespace Enemies
 
         private EnemyStore enemyStore;
         private EnemyFactory enemyFactory;
+        private EnemySpawnPointStore enemySpawnPointStore;
 
-        public EnemySpawner(EnemyStore enemyStore, EnemyFactory enemyFactory)
+        public EnemySpawner(EnemyStore enemyStore, EnemyFactory enemyFactory, EnemySpawnPointStore enemySpawnPointStore)
         {
             this.enemyStore = enemyStore;
             this.enemyFactory = enemyFactory;
+            this.enemySpawnPointStore = enemySpawnPointStore;
         }
 
         public void SetEnemyCount(int enemyCount)
@@ -27,9 +29,9 @@ namespace Enemies
 
             while (count < 3)
             {
-                var waypoint = pavementStore.GetWaypoints()[Random.Range(0, pavementStore.GetWaypoints().Count - 1)];
+                var spawnPoint = enemySpawnPointStore.GetRandomSpawnPoint();
 
-                var pedestrian = enemyFactory.Create(new EnemyData(waypoint.gameObject));
+                var pedestrian = enemyFactory.Create(new EnemyData(spawnPoint));
                 pedestrian.gameObject.SetActive(true);
                 enemyStore.Add(pedestrian);
 

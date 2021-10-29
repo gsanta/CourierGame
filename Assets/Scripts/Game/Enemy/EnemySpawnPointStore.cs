@@ -13,5 +13,11 @@ namespace Enemies
         {
             spawnPoints = targets;
         }
+
+        public GameObject GetRandomSpawnPoint()
+        {
+            int index = Random.Range(0, spawnPoints.Count - 1);
+            return spawnPoints[index];
+        }
     }
 }

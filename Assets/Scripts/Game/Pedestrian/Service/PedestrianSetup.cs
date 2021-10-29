@@ -13,6 +13,5 @@
         {
             this.pedestrianSpawner.Spawn();
         }
-
     }
 }

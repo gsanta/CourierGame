@@ -214,6 +214,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Spawn Point (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8110478151504799422, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
 --- !u!4 &12722074 stripped
@@ -334,6 +338,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Spawn Point
       objectReference: {fileID: 0}
+    - target: {fileID: 8110478151504799422, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
 --- !u!4 &34431732 stripped
@@ -379,6 +387,10 @@ PrefabInstance:
     - target: {fileID: 8110478151504799422, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Point (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110478151504799422, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
@@ -4443,6 +4455,49 @@ Transform:
   m_Father: {fileID: 143423838}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &501179248
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 501179250}
+  - component: {fileID: 501179249}
+  m_Layer: 0
+  m_Name: Enemy Instantiator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &501179249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501179248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ee249dad369c344a8ea473175c3a55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &501179250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501179248}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 966508767}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &505933436
 GameObject:
   m_ObjectHideFlags: 0
@@ -7802,6 +7857,7 @@ Transform:
   - {fileID: 174765433}
   - {fileID: 562659842}
   - {fileID: 1229428216}
+  - {fileID: 501179250}
   m_Father: {fileID: 2036532615}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9643,6 +9699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTemplate: {fileID: 1761886176335623013}
+  enemyContainer: {fileID: 174765432}
 --- !u!1001 &1243345847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10861,6 +10918,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Spawn Point (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8110478151504799422, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
 --- !u!4 &1405282532 stripped
@@ -11022,6 +11083,7 @@ MonoBehaviour:
   bikerHomeStoreController: {fileID: 262665511}
   enemySpawnPointsStoreController: {fileID: 1704732831}
   enemiesConfigController: {fileID: 1229428217}
+  enemyInstantiator: {fileID: 501179249}
 --- !u!114 &1426414573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18038,7 +18100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5372422195661838551, guid: 5f70cc5d6ebcba3468f47a1625734df5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f70cc5d6ebcba3468f47a1625734df5, type: 3}

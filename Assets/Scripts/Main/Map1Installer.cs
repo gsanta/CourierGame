@@ -58,6 +58,10 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
     [SerializeField]
     private EnemiesConfigController enemiesConfigController;
+    [SerializeField]
+    private EnemyInstantiator enemyInstantiator;
+
+    public EnemyInstantiator EnemyInstantiator { get => enemyInstantiator; set => enemyInstantiator = value; }
 
     public override void InstallBindings()
     {
@@ -115,6 +119,8 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<BuildingStoreController>().AsSingle();
 
         Container.Bind<EnemiesConfigController>().FromInstance(enemiesConfigController).AsSingle();
+        Container.Bind<EnemySetup>().AsSingle();
+        Container.Bind<EnemyInstantiator>().FromInstance(enemyInstantiator).AsSingle();
 
         Container.Resolve<SceneInitializer>().SetSceneSetup(this);
 
@@ -142,6 +148,9 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         bikerSetup.Setup();
         PedestrianSetup pedestrianSetup = Container.Resolve<PedestrianSetup>();
         pedestrianSetup.Setup();
+        EnemySetup enemySetup = Container.Resolve<EnemySetup>();
+        enemySetup.Setup();
+
         Container.Resolve<DayService>();
         Container.Resolve<MinimapPackageProvider>();
         Container.Resolve<MinimapPackageConsumer>();

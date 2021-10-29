@@ -61,6 +61,9 @@ namespace Main
             Container.Bind<CurfewButton>().AsSingle();
             Container.Bind<BikerHomeStore>().AsSingle();
             Container.Bind<EnemySpawnPointStore>().AsSingle();
+            Container.Bind<EnemySpawner>().AsSingle();
+            Container.Bind<EnemyStore>().AsSingle();
+            Container.Bind<EnemyFactory>().AsSingle();
         }
 
         override public void Start()

@@ -1,5 +1,6 @@
 ﻿using AI;
 using Bikers;
+using UnityEngine;
 
 namespace Enemies
 {
@@ -23,9 +24,8 @@ namespace Enemies
             Enemy enemy = enemyInstantiator.InstantiateEnemy();
             enemy.agent = agentFactory.CreateEnemyAgent(enemy);
 
-            //Transform child = config.spawnPoint.transform;
-            //enemy.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();
-            //enemy.transform.position = child.position;
+            Transform transform = config.spawnPoint.transform;
+            enemy.transform.position = transform.position;
 
             return enemy;
         }
