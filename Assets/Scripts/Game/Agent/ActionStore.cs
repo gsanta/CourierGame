@@ -2,58 +2,77 @@
 using AI;
 using Bikers;
 using Core;
+using Enemies;
 using Pedestrians;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Agents
 {
     public class ActionStore : IResetable
     {
-        private readonly WalkTargetStore walkTargetStore;
         private List<GoapAction<Pedestrian>> pedestrianActions = new List<GoapAction<Pedestrian>>();
-
-        public ActionStore(WalkTargetStore walkTargetStore)
-        {
-            this.walkTargetStore = walkTargetStore;
-        }
+        private WalkAction<Enemy> enemyWalkAction;
+        private WalkAction<Pedestrian> pedestrianWalkAction;
+        private GoHomeAction goHomeAction;
+        private Dictionary<Type, IActionCreator<IGameObject>> actionCreators = new Dictionary<Type, IActionCreator<IGameObject>>();
+        private IActionCreator<Pedestrian> pedestrianActionCreator;
 
         public PickUpPackageAction PickUpPackageAction { get; set; }
 
-        public void AddPedestrianAction(GoapAction<Pedestrian> pedestrianAction)
+        public void AddPedestrianActionCreator(IActionCreator<Pedestrian> pedestrianActionCreator)
         {
-            pedestrianActions.Add(pedestrianAction);
-        }
-
-        public WalkAction WalkAction
-        {
-            get; set;
+            this.pedestrianActionCreator = pedestrianActionCreator;
         }
 
         public List<GoapAction<Pedestrian>> GetPedestrianActions()
         {
-            return pedestrianActions.Select(action => action.Clone()).ToList();
+            return pedestrianActionCreator.GetActions();
         }
 
-        public GoapAction<Pedestrian> GetByAfterEffect(string afterEffectName)
+        public void SetEnemyWalkAction(WalkAction<Enemy> walkAction)
         {
-            return pedestrianActions.Find(action => action.afterEffect.key == afterEffectName).Clone();
+            enemyWalkAction = walkAction;
         }
 
-        public void Init()
+        public void SetGoHomeAction(GoHomeAction goHomeAction)
         {
-
-            walkTargetStore.GetTargets().ForEach(target =>
-            {
-                var clone = (WalkAction)WalkAction.Clone();
-                clone.SetTarget(target.gameObject).SetHideDuration(target.hideDuration).SetAfterEffect(new AIState("goto" + target.name, 3));
-                pedestrianActions.Add(clone);
-            });
+            this.goHomeAction = goHomeAction;
         }
+
+        public GoHomeAction GetGoHomeAction()
+        {
+            return goHomeAction;
+        }
+
+        public WalkAction<Enemy> GetEnemyWalkAction()
+        {
+            return enemyWalkAction;
+        }
+
+        public void SetPedestrianWalkAction(WalkAction<Pedestrian> walkAction)
+        {
+            pedestrianWalkAction = walkAction;
+        }
+
+        public WalkAction<Pedestrian> GetPedestrianWalkAction()
+        {
+            return (WalkAction <Pedestrian>) pedestrianWalkAction.Clone();
+        }
+
+        //public void Init()
+        //{
+
+        //    walkTargetStore.GetTargets().ForEach(target =>
+        //    {
+        //        var clone = (WalkAction)WalkAction.Clone();
+        //        clone.SetTarget(target.gameObject).SetHideDuration(target.hideDuration).SetAfterEffect(new AIState("goto" + target.name, 3));
+        //        pedestrianActions.Add(clone);
+        //    });
+        //}
 
         public void Reset()
         {
-            pedestrianActions = new List<GoapAction<Pedestrian>>();
         }
     }
 }

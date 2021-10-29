@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace AI
 {
@@ -7,5 +8,7 @@ namespace AI
     {
         GameObject GetGameObject();
         MonoBehaviour GetMonoBehaviour();
+        NavMeshAgent GetNavMeshAgent();
+        IGoalProvider GetGoalProvider();
     }
 }

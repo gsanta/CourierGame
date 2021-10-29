@@ -40,6 +40,16 @@ namespace Enemies {
             return this;
         }
 
+        public NavMeshAgent GetNavMeshAgent()
+        {
+            return navMeshAgent;
+        }
+
+        public IGoalProvider GetGoalProvider()
+        {
+            return null;
+        }
+
         public class Factory : PlaceholderFactory<Object, Enemy>
         {
         }

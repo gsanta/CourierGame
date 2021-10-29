@@ -11,10 +11,10 @@ namespace Pedestrians
         private GoapAgent<Pedestrian> agent;
         public NavMeshAgent navMeshAgent;
         public PedestrianInfo pedestrianInfo;
-        private PedestrianGoalProvider goalProvider;
+        private IGoalProvider goalProvider;
         public bool walked = false;
 
-        public PedestrianGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
+        public IGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
         public GoapAgent<Pedestrian> Agent { get => agent; set => agent = value; }
 
         private void Start()
@@ -44,6 +44,16 @@ namespace Pedestrians
         public MonoBehaviour GetMonoBehaviour()
         {
             return this;
+        }
+
+        public NavMeshAgent GetNavMeshAgent()
+        {
+            return navMeshAgent;
+        }
+
+        public IGoalProvider GetGoalProvider()
+        {
+            return goalProvider;
         }
 
         public class Factory : PlaceholderFactory<Object, Pedestrian>

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Pedestrians
 {
-    public class walkTarget : MonoBehaviour
+    public class WalkTarget : MonoBehaviour
     {
         [Range(0, 5)]
         public int priority = 0;

@@ -43,7 +43,7 @@ namespace AI
             {
                 preConditionsDict.Add(w.key, w.value);
             }
-
+            effectsDict = new Dictionary<string, int>();
             foreach (AIState w in GetAfterEffects())
             {
                 effectsDict.Add(w.key, w.value);

@@ -7,31 +7,32 @@ using UnityEngine;
 
 namespace Pedestrians
 {
-    public class WalkAction : AbstractRouteAction<Pedestrian>
+    public class WalkAction<T> : AbstractRouteAction<T> where T : IGameObject
     {
-        private WalkTargetStore pedestrianGoalStore;
+        private WalkTargetStore walkTargetStore;
         private RouteFacade routeFacade;
         private float hideDuration = 0;
         private GameObject Target;
 
-        public WalkAction(RouteFacade routeFacade, WalkTargetStore pedestrianGoalStore, PathCache pathCache) : base(null, pathCache)
+        public WalkAction(RouteFacade routeFacade, WalkTargetStore walkTargetStore, PathCache pathCache) : base(null, pathCache)
         {
             this.routeFacade = routeFacade;
-            this.pedestrianGoalStore = pedestrianGoalStore;
+            this.walkTargetStore = walkTargetStore;
         }
 
-        public WalkAction SetTarget(GameObject target)
+        public WalkAction<T> SetTarget(GameObject target)
         {
             Target = target;
             return this;
         }
-        public WalkAction SetHideDuration(float duration)
+
+        public WalkAction<T> SetHideDuration(float duration)
         {
             hideDuration = duration;
             return this;
         }
 
-        public WalkAction SetAfterEffect(AIState worldState)
+        public WalkAction<T> SetAfterEffect(AIState worldState)
         {
             afterEffect = worldState;
             return this;
@@ -39,12 +40,12 @@ namespace Pedestrians
 
         public override bool PrePerform()
         {
-            Pedestrian agent = GoapAgent.Parent;
-            agent.navMeshAgent.speed = 2;
+            T agent = GoapAgent.Parent;
+            agent.GetNavMeshAgent().speed = 2;
 
             var goal = Target;
 
-            var from = agent.transform;
+            var from = agent.GetGameObject().transform;
             var to = goal.transform;
 
             StartRoute(from, to);
@@ -53,7 +54,7 @@ namespace Pedestrians
         }
         public override bool PostPerform()
         {
-            var goals = agent.Parent.GoalProvider.CreateWalkGoal();
+            var goals = agent.Parent.GetGoalProvider().CreateGoal();
             agent.SetGoals(goals, false);
             return true;
         }
@@ -65,7 +66,7 @@ namespace Pedestrians
 
         protected override AIState[] GetAfterEffects()
         {
-            return new AIState[] { afterEffect };
+            return afterEffect == null ? new AIState[] { } : new AIState[] { afterEffect };
         }
 
         public override bool PostAbort()
@@ -73,9 +74,9 @@ namespace Pedestrians
             return true;
         }
 
-        public override GoapAction<Pedestrian> Clone(GoapAgent<Pedestrian> agent = null)
+        public override GoapAction<T> Clone(GoapAgent<T> agent = null)
         {
-            var action = new WalkAction(routeFacade, pedestrianGoalStore, pathCache);
+            var action = new WalkAction<T>(routeFacade, walkTargetStore, pathCache);
             action.agent = agent;
             action.Target = Target;
             action.hideDuration = hideDuration;

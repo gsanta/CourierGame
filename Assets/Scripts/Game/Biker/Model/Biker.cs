@@ -159,6 +159,16 @@ namespace Bikers
             agent.CompleteAction();
         }
 
+        public NavMeshAgent GetNavMeshAgent()
+        {
+            return navMeshAgent;
+        }
+
+        public IGoalProvider GetGoalProvider()
+        {
+            return goalProvider;
+        }
+
         public event EventHandler CurrentRoleChanged;
 
         public class Factory : PlaceholderFactory<UnityEngine.Object, Biker>

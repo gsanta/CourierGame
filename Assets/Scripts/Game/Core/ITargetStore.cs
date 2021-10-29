@@ -1,11 +1,10 @@
 ﻿
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Core
 {
-    public interface ITargetStore
+    public interface ITargetStore<T>
     {
-        void SetTargets(List<GameObject> targets);
+        void SetTargets(List<T> targets);
     }
 }

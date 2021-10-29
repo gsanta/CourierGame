@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public class EnemySpawnPointStore : ITargetStore
+    public class EnemySpawnPointStore : ITargetStore<GameObject>
     {
         private List<GameObject> spawnPoints;
 

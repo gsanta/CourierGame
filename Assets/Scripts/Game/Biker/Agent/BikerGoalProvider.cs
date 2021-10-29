@@ -16,6 +16,11 @@ namespace Bikers
             SetGoal();
         }
 
+        public List<SubGoal> CreateGoal()
+        {
+            throw new NotImplementedException();
+        }
+
         public SubGoal GetGoal()
         {
             return goal;

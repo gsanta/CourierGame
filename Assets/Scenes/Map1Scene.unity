@@ -11071,7 +11071,6 @@ MonoBehaviour:
   bikerInstantiator: {fileID: 429484018}
   mainCamera: {fileID: 221115925}
   pedestrianInstantiator: {fileID: 843492922}
-  pedestrainTargetStoreController: {fileID: 1884901325}
   pedestrainConfigController: {fileID: 723091783}
   roadStoreController: {fileID: 1150777096}
   pavementStoreController: {fileID: 756340197}
@@ -11082,6 +11081,7 @@ MonoBehaviour:
   buildingStoreController: {fileID: 1847372527}
   bikerHomeStoreController: {fileID: 262665511}
   enemySpawnPointsStoreController: {fileID: 1704732831}
+  walkTargetStoreController: {fileID: 1884901325}
   enemiesConfigController: {fileID: 1229428217}
   enemyInstantiator: {fileID: 501179249}
 --- !u!114 &1426414573
@@ -15754,7 +15754,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1884901323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed7233a8669d88a4aa2b3ba40f256282, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a692a036ef1d0e4a9064940edcd3b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetContainer: {fileID: 1626424474}

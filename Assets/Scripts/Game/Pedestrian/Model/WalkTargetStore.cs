@@ -3,28 +3,28 @@ using System.Collections.Generic;
 
 namespace Pedestrians
 {
-    public class WalkTargetStore : IResetable
+    public class WalkTargetStore : IResetable, ITargetStore<WalkTarget>
     {
-        private List<walkTarget> targets = new List<walkTarget>();
+        private List<WalkTarget> targets = new List<WalkTarget>();
 
-        public List<walkTarget> GetTargets()
+        public List<WalkTarget> GetTargets()
         {
             return targets;
         }
 
-        public void SetTargets(List<walkTarget> targets)
-        {
-            this.targets = targets;
-        }
-
-        public walkTarget GetByName(string name)
+        public WalkTarget GetByName(string name)
         {
             return targets.Find(goal => goal.name == name);
         }
 
         public void Reset()
         {
-            targets = new List<walkTarget>();
+            targets = new List<WalkTarget>();
+        }
+
+        public void SetTargets(List<WalkTarget> targets)
+        {
+            this.targets = targets;
         }
     }
 }

@@ -3,7 +3,6 @@ using AI;
 using Pedestrians;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Agents
 {
@@ -44,7 +43,7 @@ namespace Agents
             SetGoal();
         }
 
-        public List<SubGoal> CreateWalkGoal()
+        public List<SubGoal> CreateGoal()
         {
             var goalIndex = UnityEngine.Random.Range(0, goals.Count - 1);
             return new List<SubGoal> { goals[goalIndex] };

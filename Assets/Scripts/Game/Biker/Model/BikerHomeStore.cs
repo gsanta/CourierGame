@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Bikers
 {
-    public class BikerHomeStore : IResetable, ITargetStore
+    public class BikerHomeStore : IResetable, ITargetStore<GameObject>
     {
         private List<GameObject> homes;
         private Dictionary<GameObject, int> homeUsers = new Dictionary<GameObject, int>();
