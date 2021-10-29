@@ -26,7 +26,7 @@ namespace GUI
                 homes.Add(obj.gameObject);
             }
 
-            bikerHomeStore.SetHomes(homes);
+            bikerHomeStore.SetTargets(homes);
         }
     }
 }

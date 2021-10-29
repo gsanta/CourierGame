@@ -12,11 +12,6 @@ namespace Pedestrians
 
         private List<Pedestrian> pedestrians = new List<Pedestrian>();
 
-        public PedestrianStore()
-        {
-            Debug.Log("abcd");
-        }
-
         public void SetPedestrianTemplate(Pedestrian pedestrian)
         {
             pedestrianTemplate = pedestrian;

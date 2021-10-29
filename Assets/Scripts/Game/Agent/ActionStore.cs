@@ -10,12 +10,12 @@ namespace Agents
 {
     public class ActionStore : IResetable
     {
-        private readonly PedestrianTargetStore pedestrianTargetStore;
+        private readonly WalkTargetStore walkTargetStore;
         private List<GoapAction<Pedestrian>> pedestrianActions = new List<GoapAction<Pedestrian>>();
 
-        public ActionStore(PedestrianTargetStore pedestrianTargetStore)
+        public ActionStore(WalkTargetStore walkTargetStore)
         {
-            this.pedestrianTargetStore = pedestrianTargetStore;
+            this.walkTargetStore = walkTargetStore;
         }
 
         public PickUpPackageAction PickUpPackageAction { get; set; }
@@ -43,7 +43,7 @@ namespace Agents
         public void Init()
         {
 
-            pedestrianTargetStore.GetTargets().ForEach(target =>
+            walkTargetStore.GetTargets().ForEach(target =>
             {
                 var clone = (WalkAction)WalkAction.Clone();
                 clone.SetTarget(target.gameObject).SetHideDuration(target.hideDuration).SetAfterEffect(new AIState("goto" + target.name, 3));

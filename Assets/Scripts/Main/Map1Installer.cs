@@ -2,6 +2,7 @@ using Agents;
 using Bikers;
 using Cameras;
 using Delivery;
+using Enemies;
 using GUI;
 using Minimap;
 using Pedestrians;
@@ -28,13 +29,11 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     [SerializeField]
     private BikerInstantiator bikerInstantiator;
     [SerializeField]
-    private BikerHomeStoreController bikerHomeStoreController;
-    [SerializeField]
     private CameraController mainCamera;
     [SerializeField]
     private PedestrianInstantiator pedestrianInstantiator;
     [SerializeField]
-    private PedestrianTargetStoreController pedestrainTargetStoreController;
+    private WalkTargetStoreController pedestrainTargetStoreController;
     [SerializeField]
     private PedestrainConfigController pedestrainConfigController;
     [SerializeField]
@@ -51,7 +50,11 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     private TimerController timerController;
     [SerializeField]
     private BuildingStoreController buildingStoreController;
-
+    
+    [SerializeField]
+    private TargetStoreController bikerHomeStoreController;
+    [SerializeField]
+    private TargetStoreController enemySpawnPointsStoreController;
 
     public override void InstallBindings()
     {
@@ -84,7 +87,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         Container.Bind<IPedestrianInstantiator>().To<PedestrianInstantiator>().FromInstance(pedestrianInstantiator).AsSingle();
         Container.Bind<PedestrianSetup>().AsSingle();
-        Container.Bind<PedestrianTargetStoreController>().FromInstance(pedestrainTargetStoreController).AsSingle();
+        Container.Bind<WalkTargetStoreController>().FromInstance(pedestrainTargetStoreController).AsSingle();
         Container.Bind<PedestrainConfigController>().FromInstance(pedestrainConfigController).AsSingle();
 
         Container.Bind<RoadStoreController>().FromInstance(roadStoreController).AsSingle();
@@ -107,7 +110,6 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         Container.Bind<PathCache>().AsSingle().NonLazy();
         Container.Bind<BuildingStoreController>().AsSingle();
-        Container.Bind<BikerHomeStoreController>().AsSingle();
 
         Container.Resolve<SceneInitializer>().SetSceneSetup(this);
 
@@ -121,6 +123,12 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
     public void SetupScene()
     {
+        BikerHomeStore bikerHomeStore = Container.Resolve<BikerHomeStore>();
+        bikerHomeStoreController.SetupStore(bikerHomeStore);
+
+        EnemySpawnPointStore enemySpawnPointStore = Container.Resolve<EnemySpawnPointStore>();
+        enemySpawnPointsStoreController.SetupStore(enemySpawnPointStore);
+
         BikerSetup bikerSetup = Container.Resolve<BikerSetup>();
         bikerSetup.Setup();
         PedestrianSetup pedestrianSetup = Container.Resolve<PedestrianSetup>();
@@ -134,16 +142,9 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         actionStore.AddPedestrianAction(Container.Resolve<GoHomeAction>());
         actionStore.Init();
 
-        PedestrianTargetStore pedestrianTargetStore = Container.ParentContainers[0].Resolve<PedestrianTargetStore>();
+        WalkTargetStore walkTargetStore = Container.ParentContainers[0].Resolve<WalkTargetStore>();
         PathCache pathCache = Container.Resolve<PathCache>();
-        pathCache.SetPedestrianTargetStore(pedestrianTargetStore);
+        pathCache.SetWalkTargetStore(walkTargetStore);
         pathCache.Init();
     }
-
-    //override public void Start()
-    //{
-    //    base.Start();
-
-    //    Invoke("RunSetups", 0.5f);
-    //}
 }

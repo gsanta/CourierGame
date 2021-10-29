@@ -15,15 +15,13 @@ namespace Bikers
         private List<GoapAction<Biker>> bikerActions = new List<GoapAction<Biker>>();
         private List<GoapAction<Pedestrian>> pedestrianActions = new List<GoapAction<Pedestrian>>();
         private readonly ActionStore actionStore;
-        private readonly PedestrianTargetStore pedestrianTargetStore;
 
-        public AgentFactory(ActionStore actionStore, PedestrianTargetStore pedestrianTargetStore)
+        public AgentFactory(ActionStore actionStore)
         {
             idMap.Add("biker", 1);
             idMap.Add("pedestrian", 1);
             idMap.Add("enemy", 1);
             this.actionStore = actionStore;
-            this.pedestrianTargetStore = pedestrianTargetStore;
         }
 
         public void AddBikerAction(GoapAction<Biker> action)

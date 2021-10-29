@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace Bikers
 {
-    public class BikerHomeStore : IResetable
+    public class BikerHomeStore : IResetable, ITargetStore
     {
         private List<GameObject> homes;
         private Dictionary<GameObject, int> homeUsers = new Dictionary<GameObject, int>();
 
-        public void SetHomes(List<GameObject> homes)
+        public void SetTargets(List<GameObject> targets)
         {
-            this.homes = homes;
+            homes = targets;
             homes.ForEach(home => homeUsers.Add(home, 0));
         }
 

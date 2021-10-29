@@ -4,6 +4,7 @@ using Buildings;
 using Cameras;
 using Core;
 using Delivery;
+using Enemies;
 using Pedestrians;
 using Route;
 using Scenes;
@@ -38,7 +39,7 @@ namespace Main
             Container.Bind<BikerFactory>().AsSingle();
             Container.Bind<PedestrianFactory>().AsSingle();
             Container.Bind<PedestrianSpawner>().AsSingle();
-            Container.Bind<PedestrianTargetStore>().AsSingle().NonLazy();
+            Container.Bind<WalkTargetStore>().AsSingle().NonLazy();
             Container.Bind<PedestrianStore>().AsSingle().NonLazy();
             Container.Bind<RoadStore>().AsSingle().NonLazy();
             Container.Bind<PavementStore>().AsSingle().NonLazy();
@@ -58,6 +59,7 @@ namespace Main
             // ui
             Container.Bind<CurfewButton>().AsSingle();
             Container.Bind<BikerHomeStore>().AsSingle();
+            Container.Bind<EnemySpawnPointStore>().AsSingle();
         }
 
         override public void Start()
@@ -84,7 +86,7 @@ namespace Main
             sceneChangeHandler.AddResetable(Container.Resolve<PackageStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PackageSpawnPointStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PackageTargetPointStore>());
-            sceneChangeHandler.AddResetable(Container.Resolve<PedestrianTargetStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<WalkTargetStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PedestrianStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<RoadStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PavementStore>());

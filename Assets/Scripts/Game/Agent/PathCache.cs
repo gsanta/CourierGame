@@ -7,12 +7,12 @@ namespace Agents
 {
     public class PathCache
     {
-        private PedestrianTargetStore pedestrianTargetStore;
+        private WalkTargetStore walkTargetStore;
         private Dictionary<(Vector3, Vector3), NavMeshPath> pathes = new Dictionary<(Vector3, Vector3), NavMeshPath>();
 
-        public void SetPedestrianTargetStore(PedestrianTargetStore pedestrianTargetStore)
+        public void SetWalkTargetStore(WalkTargetStore walkTargetStore)
         {
-            this.pedestrianTargetStore = pedestrianTargetStore;
+            this.walkTargetStore = walkTargetStore;
         }
 
         public NavMeshPath GetPath((Vector3, Vector3) sourceDest)
@@ -22,7 +22,7 @@ namespace Agents
 
         public void Init()
         {
-            var targets = pedestrianTargetStore.GetTargets();
+            var targets = walkTargetStore.GetTargets();
         
             foreach(var source in targets)
             {

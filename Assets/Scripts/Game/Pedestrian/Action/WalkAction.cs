@@ -9,12 +9,12 @@ namespace Pedestrians
 {
     public class WalkAction : AbstractRouteAction<Pedestrian>
     {
-        private PedestrianTargetStore pedestrianGoalStore;
+        private WalkTargetStore pedestrianGoalStore;
         private RouteFacade routeFacade;
         private float hideDuration = 0;
         private GameObject Target;
 
-        public WalkAction(RouteFacade routeFacade, PedestrianTargetStore pedestrianGoalStore, PathCache pathCache) : base(null, pathCache)
+        public WalkAction(RouteFacade routeFacade, WalkTargetStore pedestrianGoalStore, PathCache pathCache) : base(null, pathCache)
         {
             this.routeFacade = routeFacade;
             this.pedestrianGoalStore = pedestrianGoalStore;

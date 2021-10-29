@@ -9,12 +9,12 @@ namespace Pedestrians
     {
         private AgentFactory agentFactory;
         private IPedestrianInstantiator pedestrianInstantiator;
-        private PedestrianTargetStore pedestrianTargetStore;
+        private WalkTargetStore walkTargetStore;
 
-        public PedestrianFactory(AgentFactory agentFactory, PedestrianTargetStore pedestrianTargetStore)
+        public PedestrianFactory(AgentFactory agentFactory, WalkTargetStore walkTargetStore)
         {
             this.agentFactory = agentFactory;
-            this.pedestrianTargetStore = pedestrianTargetStore;
+            this.walkTargetStore = walkTargetStore;
         }
 
         public void SetPedestrianInstantiator(IPedestrianInstantiator pedestrianInstantiator)
@@ -27,7 +27,7 @@ namespace Pedestrians
             Pedestrian pedestrian = pedestrianInstantiator.InstantiatePedestrian();
             pedestrian.pedestrianInfo = CreatePedestrianInfo();
             pedestrian.agent = agentFactory.CreatePedestrianAgent(pedestrian);
-            pedestrian.GoalProvider = new PedestrianGoalProvider(pedestrian, pedestrianTargetStore);
+            pedestrian.GoalProvider = new PedestrianGoalProvider(pedestrian, walkTargetStore);
 
             Transform child = config.spawnPoint.transform;
             pedestrian.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();

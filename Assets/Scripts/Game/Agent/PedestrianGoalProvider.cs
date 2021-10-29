@@ -31,15 +31,15 @@ namespace Agents
 
     public class PedestrianGoalProvider : IGoalProvider
     {
-        private readonly PedestrianTargetStore pedestrianTargetStore;
+        private readonly WalkTargetStore walkTargetStore;
         private List<SubGoal> goals = new List<SubGoal>();
         private Pedestrian pedestrian;
 
-        public PedestrianGoalProvider(Pedestrian pedestrian, PedestrianTargetStore pedestrianTargetStore)
+        public PedestrianGoalProvider(Pedestrian pedestrian, WalkTargetStore walkTargetStore)
         {
             this.pedestrian = pedestrian;
             pedestrian.agent.ActionCompleted += HandleCompleteAction;
-            this.pedestrianTargetStore = pedestrianTargetStore;
+            this.walkTargetStore = walkTargetStore;
             Init();
             SetGoal();
         }
@@ -63,7 +63,7 @@ namespace Agents
 
         private void Init()
         {
-            pedestrianTargetStore.GetTargets().ForEach(target =>
+            walkTargetStore.GetTargets().ForEach(target =>
             {
                 goals.Add(new SubGoal("goto" + target.name, target.priority, false));
             });
