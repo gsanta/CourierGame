@@ -1,7 +1,6 @@
 using Agents;
 using Bikers;
 using Buildings;
-using Cameras;
 using Delivery;
 using Enemies;
 using GUI;
@@ -28,11 +27,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     [SerializeField]
     private PackageInstantiator packageInstantiator;
     [SerializeField]
-    private BikerInstantiator bikerInstantiator;
-    [SerializeField]
     private CameraController mainCamera;
-    [SerializeField]
-    private PedestrianInstantiator pedestrianInstantiator;
     [SerializeField]
     private PedestrainConfigController pedestrainConfigController;
     [SerializeField]
@@ -51,18 +46,13 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     private BuildingStoreController buildingStoreController;
     
     [SerializeField]
-    private TargetStoreController bikerHomeStoreController;
-    [SerializeField]
-    private TargetStoreController enemySpawnPointsStoreController;
-    [SerializeField]
     private TargetStoreController walkTargetStoreController;
 
     [SerializeField]
-    private EnemiesConfigController enemiesConfigController;
-    [SerializeField]
-    private EnemyInstantiator enemyInstantiator;
+    private BikersConfigController bikersConfigController;
 
-    public EnemyInstantiator EnemyInstantiator { get => enemyInstantiator; set => enemyInstantiator = value; }
+    [SerializeField]
+    private EnemiesConfigController enemiesConfigController;
 
     public override void InstallBindings()
     {
@@ -71,12 +61,12 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         Container.Bind<DayService>().AsSingle();
 
+        Container.Bind<BikersConfigController>().FromInstance(bikersConfigController).AsSingle();
         Container.Bind<BikerSpawner>().AsSingle();
         Container.Bind<BikerSetup>().AsSingle();
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
         Container.BindFactory<Object, BikerPlayComponent, BikerPlayComponent.Factory>().FromFactory<PrefabFactory<BikerPlayComponent>>();
         Container.BindFactory<Object, Pedestrian, Pedestrian.Factory>().FromFactory<PrefabFactory<Pedestrian>>();
-        Container.Bind<BikerInstantiator>().FromInstance(bikerInstantiator).AsSingle();
 
         Container.Bind<PackageStoreController>().FromInstance(packageStoreController).AsSingle();
         Container.Bind<PackageSpawnPointStoreController>().FromInstance(packageSpawnPointStoreController).AsSingle();
@@ -93,7 +83,6 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         Container.Bind<CameraController>().FromInstance(mainCamera).AsSingle();
 
-        Container.Bind<IPedestrianInstantiator>().To<PedestrianInstantiator>().FromInstance(pedestrianInstantiator).AsSingle();
         Container.Bind<PedestrianSetup>().AsSingle();
         Container.Bind<PedestrainConfigController>().FromInstance(pedestrainConfigController).AsSingle();
 
@@ -113,15 +102,17 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<DeliverPackageAction>().AsSingle().NonLazy();
         Container.Bind<ReservePackageAction>().AsSingle().NonLazy();
         Container.Bind<WalkAction<Pedestrian>>().AsSingle().NonLazy();
+        Container.Bind<WalkAction<Enemy>>().AsSingle().NonLazy();
         Container.Bind<GoHomeAction>().AsSingle().NonLazy();
         Container.Bind<PedestrianActionCreator>().AsSingle();
+        Container.Bind<EnemyActionCreator>().AsSingle();
 
         Container.Bind<PathCache>().AsSingle().NonLazy();
         Container.Bind<BuildingStoreController>().AsSingle();
 
         Container.Bind<EnemiesConfigController>().FromInstance(enemiesConfigController).AsSingle();
         Container.Bind<EnemySetup>().AsSingle();
-        Container.Bind<EnemyInstantiator>().FromInstance(enemyInstantiator).AsSingle();
+        //Container.Bind<EnemyInstantiator>().FromInstance(enemyInstantiator).AsSingle();
 
         Container.Resolve<SceneInitializer>().SetSceneSetup(this);
 
@@ -134,15 +125,16 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     public void SetupScene()
     {
         BikerHomeStore bikerHomeStore = Container.Resolve<BikerHomeStore>();
-        bikerHomeStoreController.SetupStoreWithGameObjects(bikerHomeStore);
+        bikersConfigController.GetComponent<TargetStoreController>().SetupStoreWithGameObjects(bikerHomeStore);
+
+        EnemiesConfigController enemiesConfigController = Container.Resolve<EnemiesConfigController>();
 
         EnemySpawnPointStore enemySpawnPointStore = Container.Resolve<EnemySpawnPointStore>();
-        enemySpawnPointsStoreController.SetupStoreWithGameObjects(enemySpawnPointStore);
+        enemiesConfigController.GetComponent<TargetStoreController>().SetupStoreWithGameObjects(enemySpawnPointStore);
 
         WalkTargetStore walkTargetStore = Container.Resolve<WalkTargetStore>();
         walkTargetStoreController.SetupStore(walkTargetStore);
 
-        EnemiesConfigController enemiesConfigController = Container.Resolve<EnemiesConfigController>();
         EnemiesConfig enemiesConfig = Container.Resolve<EnemiesConfig>();
         enemiesConfigController.SetupConfig(enemiesConfig);
 
@@ -156,7 +148,8 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         RouteFacade routeFacade = Container.Resolve<RouteFacade>();
         ActionStore actionStore = Container.Resolve<ActionStore>();
-        actionStore.AddPedestrianActionCreator(Container.Resolve<PedestrianActionCreator>());
+        actionStore.SetPedestrianActionCreator(Container.Resolve<PedestrianActionCreator>());
+        actionStore.SetEnemyActionCreator(Container.Resolve<EnemyActionCreator>());
         BuildingStore buildingStore = Container.Resolve<BuildingStore>();
 
         actionStore.SetEnemyWalkAction(new WalkAction<Enemy>(routeFacade, walkTargetStore, pathCache));

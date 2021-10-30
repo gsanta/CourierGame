@@ -8,7 +8,9 @@ namespace Enemies {
     {
         public GoapAgent<Enemy> agent;
         public NavMeshAgent navMeshAgent;
+        private IGoalProvider goalProvider;
 
+        public IGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
         public GoapAgent<Enemy> Agent { get => agent; set => agent = value; }
 
         private void Start()
@@ -47,7 +49,7 @@ namespace Enemies {
 
         public IGoalProvider GetGoalProvider()
         {
-            return null;
+            return goalProvider;
         }
 
         public class Factory : PlaceholderFactory<Object, Enemy>

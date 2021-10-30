@@ -1,5 +1,7 @@
-﻿using AI;
+﻿using Agents;
+using AI;
 using Bikers;
+using Pedestrians;
 using UnityEngine;
 
 namespace Enemies
@@ -8,10 +10,12 @@ namespace Enemies
     {
         private AgentFactory agentFactory;
         private IEnemyInstantiator enemyInstantiator;
+        private WalkTargetStore walkTargetStore;
 
-        public EnemyFactory(AgentFactory agentFactory)
+        public EnemyFactory(AgentFactory agentFactory, WalkTargetStore walkTargetStore)
         {
             this.agentFactory = agentFactory;
+            this.walkTargetStore = walkTargetStore;
         }
 
         public void SetPedestrianInstantiator(IEnemyInstantiator enemyInstantiator)
@@ -22,7 +26,9 @@ namespace Enemies
         public Enemy Create(EnemyData config)
         {
             Enemy enemy = enemyInstantiator.InstantiateEnemy();
-            enemy.agent = agentFactory.CreateEnemyAgent(enemy);
+            enemy.Agent = agentFactory.CreateEnemyAgent(enemy);
+            enemy.GoalProvider = new EnemyGoalProvider(enemy, walkTargetStore);
+
 
             Transform transform = config.spawnPoint.transform;
             enemy.transform.position = transform.position;

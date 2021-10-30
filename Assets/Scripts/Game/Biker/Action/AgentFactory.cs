@@ -33,13 +33,9 @@ namespace Bikers
             string id = "enemy-" + idMap["enemy"];
             idMap["enemy"]++;
 
-            List<GoapAction<Enemy>> actions = new List<GoapAction<Enemy>>();
 
-
-            Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
-
-            var agent = new GoapAgent<Enemy>(id, enemy, null);
-            agent.SetActions(actions);
+            var agent = new GoapAgent<Enemy>(id, enemy, new SimplePlanner<Enemy>());
+            agent.SetActions(actionStore.GetEnemyActions());
 
             return agent;
         }
@@ -49,7 +45,7 @@ namespace Bikers
             string id = "pedestrian-" + idMap["pedestrian"];
             idMap["pedestrian"]++;
 
-            var agent = new GoapAgent<Pedestrian>(id, pedestrian, new PedestrianPlanner());
+            var agent = new GoapAgent<Pedestrian>(id, pedestrian, new SimplePlanner<Pedestrian>());
             agent.SetActions(actionStore.GetPedestrianActions());
 
             return agent;

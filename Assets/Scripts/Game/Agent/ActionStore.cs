@@ -17,10 +17,11 @@ namespace Agents
         private GoHomeAction goHomeAction;
         private Dictionary<Type, IActionCreator<IGameObject>> actionCreators = new Dictionary<Type, IActionCreator<IGameObject>>();
         private IActionCreator<Pedestrian> pedestrianActionCreator;
+        private IActionCreator<Enemy> enemyActionCreator;
 
         public PickUpPackageAction PickUpPackageAction { get; set; }
 
-        public void AddPedestrianActionCreator(IActionCreator<Pedestrian> pedestrianActionCreator)
+        public void SetPedestrianActionCreator(IActionCreator<Pedestrian> pedestrianActionCreator)
         {
             this.pedestrianActionCreator = pedestrianActionCreator;
         }
@@ -28,6 +29,16 @@ namespace Agents
         public List<GoapAction<Pedestrian>> GetPedestrianActions()
         {
             return pedestrianActionCreator.GetActions();
+        }
+
+        public void SetEnemyActionCreator(IActionCreator<Enemy> enemyActionCreator)
+        {
+            this.enemyActionCreator = enemyActionCreator;
+        }
+
+        public List<GoapAction<Enemy>> GetEnemyActions()
+        {
+            return enemyActionCreator.GetActions();
         }
 
         public void SetEnemyWalkAction(WalkAction<Enemy> walkAction)
