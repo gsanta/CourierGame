@@ -13,10 +13,10 @@ TagManager:
   - UI
   - Minimap
   - MainMap
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - PlayerAttackRadius
+  - Enemy
+  - EnemyAttackRadius
   - 
   - 
   - 

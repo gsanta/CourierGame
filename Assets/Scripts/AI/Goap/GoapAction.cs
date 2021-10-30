@@ -69,9 +69,18 @@ namespace AI
 
         protected abstract AIState[] GetPreConditions();
         protected abstract AIState[] GetAfterEffects();
-        public abstract bool PrePerform();
-        public abstract bool PostPerform();
-        public abstract bool PostAbort();
+        public virtual bool PrePerform()
+        {
+            return true;
+        }
+        public virtual bool PostPerform()
+        {
+            return true;
+        }
+        public virtual bool PostAbort()
+        {
+            return true;
+        }
         public virtual void Update() { }
         public abstract GoapAction<T> Clone(GoapAgent<T> agent = null);
     }

@@ -87,7 +87,6 @@ namespace Pedestrians
         protected override Queue<Vector3> BuildRoute(Transform from, Transform to)
         {
             return new Queue<Vector3>(new List<Vector3>() { to.position });
-            //return routeFacade.BuildPavementRoute(from, to);   
         }
     }
 }
