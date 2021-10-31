@@ -5,10 +5,12 @@ using Cameras;
 using Core;
 using Delivery;
 using Enemies;
+using GameObjects;
 using Pedestrians;
 using Route;
 using Scenes;
 using Service;
+using States;
 using Stats;
 using UI;
 using Worlds;
@@ -64,6 +66,12 @@ namespace Main
             Container.Bind<EnemySpawner>().AsSingle();
             Container.Bind<EnemyStore>().AsSingle();
             Container.Bind<EnemyFactory>().AsSingle();
+
+            // Game object
+            Container.Bind<OutlineGameObjectSelector>().AsTransient();
+
+            // State
+            Container.Bind<SelectionStore>().AsSingle();
         }
 
         override public void Start()

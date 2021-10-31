@@ -1,13 +1,14 @@
-﻿using Agents;
-using AI;
+﻿using AI;
 using Attacks;
+using GameObjects;
+using Shaders;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 
 namespace Pedestrians
 {
-    public class Pedestrian : MonoBehaviour, IGameObject, IDamageable
+    public class Pedestrian : MonoBehaviour, IGameObject, IDamageable, ISelectableGameObject
     {
         private GoapAgent<Pedestrian> agent;
         public NavMeshAgent navMeshAgent;
@@ -17,6 +18,13 @@ namespace Pedestrians
         [SerializeField]
         private AttackRadius attackRadius;
         private int health = 100;
+        private IGameObjectSelector gameObjectSelector;
+
+        [Inject]
+        public void Construct(OutlineGameObjectSelector gameObjectSelector)
+        {
+            this.gameObjectSelector = gameObjectSelector;
+        }
 
         public IGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
         public GoapAgent<Pedestrian> Agent { get => agent; set => agent = value; }
@@ -82,6 +90,11 @@ namespace Pedestrians
         public Transform GetTransform()
         {
             return transform;
+        }
+
+        public IGameObjectSelector GetGameObjectSelector()
+        {
+            return gameObjectSelector;
         }
 
         public class Factory : PlaceholderFactory<Object, Pedestrian>
