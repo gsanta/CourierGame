@@ -8,12 +8,14 @@ namespace GUI
     {
         private PedestrianStore pedestrianStore;
         private PedestrianFactory pedestrianFactory;
+        private Pedestrian.Factory gameObjectFactory;
 
         [Inject]
-        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory)
+        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, Pedestrian.Factory gameObjectFactory)
         {
             this.pedestrianStore = pedestrianStore;
             this.pedestrianFactory = pedestrianFactory;
+            this.gameObjectFactory = gameObjectFactory;
         }
 
         private void Awake()
@@ -23,7 +25,8 @@ namespace GUI
 
         public Pedestrian InstantiatePedestrian()
         {
-            return Instantiate(pedestrianStore.GetPedestrianTemplate(), pedestrianStore.GetPedestrianContainer().transform);
+            return gameObjectFactory.Create(pedestrianStore.GetPedestrianTemplate());
+            //return Instantiate(pedestrianStore.GetPedestrianTemplate(), pedestrianStore.GetPedestrianContainer().transform);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using GUI;
+﻿using Controls;
+using GUI;
 using UnityEngine;
 using Zenject;
 
@@ -18,6 +19,8 @@ namespace Main
         private MenuWidget menuWidget;
         [SerializeField]
         private TopPanelController topPanelController;
+        [SerializeField]
+        private SelectionBox selectionBox;
 
         public override void InstallBindings()
         {
@@ -28,6 +31,7 @@ namespace Main
             Container.Bind<BikerPanelController>().FromInstance(bikerPanelController).AsSingle();
             Container.Bind<MenuWidget>().FromInstance(menuWidget).AsSingle();
             Container.Bind<TopPanelController>().FromInstance(topPanelController).AsSingle();
+            Container.Bind<SelectionBox>().FromInstance(selectionBox).AsSingle();
         }
     }
 }

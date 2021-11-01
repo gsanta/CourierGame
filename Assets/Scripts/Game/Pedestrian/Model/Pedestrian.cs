@@ -18,7 +18,7 @@ namespace Pedestrians
         [SerializeField]
         private AttackRadius attackRadius;
         private int health = 100;
-        private IGameObjectSelector gameObjectSelector;
+        private OutlineGameObjectSelector gameObjectSelector;
 
         [Inject]
         public void Construct(OutlineGameObjectSelector gameObjectSelector)
@@ -31,6 +31,8 @@ namespace Pedestrians
 
         private void Awake()
         {
+            gameObjectSelector.SetGameObject(this);
+            gameObjectSelector.SetOutlineGameObject(transform.GetChild(0).gameObject);
             attackRadius.OnAttack += OnAttack;
         }
 
