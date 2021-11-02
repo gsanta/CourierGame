@@ -3,7 +3,7 @@ using GameObjects;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Controls
+namespace GUI
 {
     public class ObjectClicker : MonoBehaviour
     {

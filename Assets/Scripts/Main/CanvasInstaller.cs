@@ -1,4 +1,4 @@
-﻿using Controls;
+﻿using GUI;
 using GUI;
 using UnityEngine;
 using Zenject;
