@@ -3,7 +3,7 @@ using Bikers;
 using UnityEngine;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class BikerInstantiator : MonoBehaviour, IBikerInstantiator
     {

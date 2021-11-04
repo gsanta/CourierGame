@@ -1371,7 +1371,7 @@ MonoBehaviour:
   bikerPanelController: {fileID: 1428814390}
   menuWidget: {fileID: 1732419600}
   topPanelController: {fileID: 391946348}
-  selectionBox: {fileID: 1949986716}
+  selectionBoxComponent: {fileID: 0}
 --- !u!1001 &643924308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5143,10 +5143,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1949986712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 295abb57f2bbd904aadd0fd6338770db, type: 3}
+  m_Script: {fileID: 11500000, guid: 948c4817e1499084d93125db9f99a177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionBox: {fileID: 1949986713}
+  rectTransform: {fileID: 1949986713}
 --- !u!1 &1998653111
 GameObject:
   m_ObjectHideFlags: 0

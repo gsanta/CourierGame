@@ -6,7 +6,7 @@ using UI;
 using UnityEngine;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class DeliveryPanelController : MonoBehaviour, IDeliveryPanelController
     {

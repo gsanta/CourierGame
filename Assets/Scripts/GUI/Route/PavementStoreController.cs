@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class PavementStoreController : MonoBehaviour
     {

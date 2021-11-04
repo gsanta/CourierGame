@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GUI
+namespace Controls
 {
     public class TargetStoreController : MonoBehaviour
     {

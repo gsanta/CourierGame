@@ -4,7 +4,7 @@ using UI;
 using UnityEngine;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class BikerPanelController : MonoBehaviour, IBikerListItemInstantiator
     {

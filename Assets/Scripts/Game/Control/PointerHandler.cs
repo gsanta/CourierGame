@@ -1,67 +1,55 @@
 ﻿
 using System.Collections.Generic;
 
-namespace GUI
+namespace Controls
 {
     public class PointerHandler
     {
 
-        private List<Tool> tools = new List<Tool>();
-        private Tool activeTool;
+        //private List<Tool> tools = new List<Tool>();
+        //private Tool activeTool;
+        private readonly SelectionTool selectionTool;
+        private readonly CommandTool commandTool;
 
-        public void AddTool(Tool tool)
+        public PointerHandler(SelectionTool selectionTool, CommandTool commandTool)
         {
-            tools.Add(tool);
+            this.selectionTool = selectionTool;
+            this.commandTool = commandTool;
         }
 
-        public void SetActiveTool(ToolName name)
-        {
-            activeTool = tools.Find(tool => tool.name == name);
-        }
+        //public void AddTool(Tool tool)
+        //{
+        //    tools.Add(tool);
+        //}
+
+        //public void SetActiveTool(ToolName name)
+        //{
+        //    activeTool = tools.Find(tool => tool.name == name);
+        //}
 
         public void PointerDown()
         {
-            if (activeTool == null)
-            {
-                return;
-            }
-
-            activeTool.Down();
+            selectionTool.Down();
         }
 
         public void PointerUp()
         {
-            if (activeTool == null)
-            {
-                return;
-            }
-
-            activeTool.Up();
+            selectionTool.Up();
         }
 
         public void PointerClick()
         {
-            if (activeTool == null)
-            {
-                return;
-            }
+            selectionTool.Click();
+        }
 
-            activeTool.Click();
+        public void PointerRightClick()
+        {
+            commandTool.RightClick();
         }
 
         public void PointerDrag()
         {
-            if (activeTool == null)
-            {
-                return;
-            }
-
-            activeTool.Drag();
-        }
-
-        public Tool GetActiveTool()
-        {
-            return activeTool;
+            selectionTool.Drag();
         }
     }
 }

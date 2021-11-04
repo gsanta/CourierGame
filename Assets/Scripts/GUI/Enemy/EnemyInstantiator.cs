@@ -3,7 +3,7 @@ using Enemies;
 using UnityEngine;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class EnemyInstantiator : MonoBehaviour, IEnemyInstantiator
     {

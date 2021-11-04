@@ -1,37 +1,29 @@
 ﻿
 using GameObjects;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace GUI
+namespace Controls
 {
-    public class ObjectClicker : MonoBehaviour
+    public class ObjectClicker
     {
-        private List<GameObject> selection = new List<GameObject>();
         private string selectableTag = "Selectable";
 
-        private void Update()
+        public void Click()
         {
-            if (Input.GetMouseButtonDown(0))
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
             {
-                if (Camera.main)
+                var selection = hit.transform;
+                if (selection.CompareTag(selectableTag))
                 {
-                    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
 
-                    if (Physics.Raycast(ray, out hit))
-                    {
-                        var selection = hit.transform;
-                        if (selection.CompareTag(selectableTag))
-                        {
+                    var selectableGameObject = selection.GetComponent<ISelectableGameObject>();// transform.GetChild(0).GetComponent<Renderer>();
 
-                            var selectableGameObject = selection.GetComponent<ISelectableGameObject>();// transform.GetChild(0).GetComponent<Renderer>();
-
-                            selectableGameObject.GetGameObjectSelector().Deselect();
-                        }
-                    }
+                    selectableGameObject.GetGameObjectSelector().Select();
                 }
             }
-        }
+        }        
     }
 }

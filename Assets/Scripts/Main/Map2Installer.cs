@@ -1,5 +1,5 @@
 ﻿
-using GUI;
+using Controls;
 using Scenes;
 using UnityEngine;
 using Zenject;

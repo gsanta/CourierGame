@@ -20,6 +20,7 @@ namespace GameObjects
         public void SetOutlineGameObject(GameObject gameObject)
         {
             outlineGameObject = gameObject;
+            Deselect();
         }
 
         public void SetGameObject(ISelectableGameObject selectableGameObject)
@@ -32,7 +33,6 @@ namespace GameObjects
             var renderer = outlineGameObject.GetComponent<Renderer>();
 
             renderer.material.SetFloat("_OutlineWidth", hiddenWidth);
-            selectionStore.Remove(selectableGameObject);
         }
 
         public void Select()

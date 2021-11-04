@@ -1,5 +1,5 @@
 ﻿
-namespace GUI
+namespace Controls
 {
     public abstract class Tool
     {
@@ -11,6 +11,7 @@ namespace GUI
 
         public virtual void Down() { }
         public virtual void Click() { }
+        public virtual void RightClick() { }
         public virtual void Drag() { }
         public virtual void Up() { }
     }

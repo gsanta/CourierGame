@@ -3,7 +3,7 @@ using Core;
 using UnityEngine;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class ReconciliationController : MonoBehaviour
     {

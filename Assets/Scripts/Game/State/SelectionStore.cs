@@ -15,6 +15,12 @@ namespace States
         public void Remove(ISelectableGameObject gameObject)
         {
             selection.Remove(gameObject);
-        }        
+        }
+        
+        public void Clear()
+        {
+            selection.ForEach(selectable => selectable.GetGameObjectSelector().Deselect());
+            selection.Clear();
+        }
     }
 }

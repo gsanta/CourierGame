@@ -1,47 +1,52 @@
 ﻿using UnityEngine;
-using Zenject;
 
-namespace GUI
+namespace Controls
 {
-    public class SelectionBox : MonoBehaviour, ISelectionBox
+    public struct SelectionRect
     {
-        public RectTransform selectionBox;
-        private Vector2 startPos;
-        private SelectionTool selectionTool;
+        public readonly Vector2 min;
+        public readonly Vector2 max;
 
-        [Inject]
-        public void Construct(SelectionTool selectionTool)
+        public SelectionRect(Vector2 min, Vector2 max)
         {
-            this.selectionTool = selectionTool;
+            this.min = min;
+            this.max = max;
         }
+    }
 
-        private void Awake()
+    public class SelectionBox
+    {
+        public RectTransform rectTransform;
+        private Vector2 startPos;
+
+        public void SetRectTransform(RectTransform rectTransform)
         {
-            selectionTool.SetSelectionBox(this);
-            selectionBox.gameObject.SetActive(false);
+            this.rectTransform = rectTransform;
+            rectTransform.gameObject.SetActive(false);
         }
 
         public void StartSelect()
         {
             startPos = Input.mousePosition;
-            selectionBox.gameObject.SetActive(true);
+            rectTransform.gameObject.SetActive(true);
         }
 
         public void UpdateSelect()
         {
+            Debug.Log("update select");
             Vector2 currentMousePosition = Input.mousePosition;
             float width = currentMousePosition.x - startPos.x;
             float height = currentMousePosition.y - startPos.y;
-            selectionBox.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
-            selectionBox.anchoredPosition = startPos + new Vector2(width / 2, height / 2);
+            rectTransform.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
+            rectTransform.anchoredPosition = startPos + new Vector2(width / 2, height / 2);
         }
 
         public SelectionRect EndSelect()
         {
-            selectionBox.gameObject.SetActive(false);
+            rectTransform.gameObject.SetActive(false);
 
-            Vector2 min = selectionBox.anchoredPosition - (selectionBox.sizeDelta / 2);
-            Vector2 max = selectionBox.anchoredPosition + (selectionBox.sizeDelta / 2);
+            Vector2 min = rectTransform.anchoredPosition - (rectTransform.sizeDelta / 2);
+            Vector2 max = rectTransform.anchoredPosition + (rectTransform.sizeDelta / 2);
 
             return new SelectionRect(min, max);
         }

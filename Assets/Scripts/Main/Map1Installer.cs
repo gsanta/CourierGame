@@ -3,7 +3,7 @@ using Bikers;
 using Buildings;
 using Delivery;
 using Enemies;
-using GUI;
+using Controls;
 using Minimap;
 using Pedestrians;
 using Route;

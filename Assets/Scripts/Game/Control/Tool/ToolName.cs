@@ -1,7 +1,8 @@
-﻿namespace GUI
+﻿namespace Controls
 {
     public enum ToolName
     {
-        SELECTION
+        SELECTION,
+        COMMAND
     }
 }

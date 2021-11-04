@@ -2,7 +2,7 @@
 using Enemies;
 using UnityEngine;
 
-namespace GUI
+namespace Controls
 {
     public class EnemiesConfigController : MonoBehaviour
     {

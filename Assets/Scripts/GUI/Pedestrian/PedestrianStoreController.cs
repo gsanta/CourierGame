@@ -3,7 +3,7 @@ using Pedestrians;
 using UnityEngine;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class PedestrianStoreController : MonoBehaviour
     {

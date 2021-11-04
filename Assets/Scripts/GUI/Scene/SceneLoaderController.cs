@@ -3,7 +3,7 @@ using Scenes;
 using UnityEngine;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class SceneLoaderController : MonoBehaviour
     {

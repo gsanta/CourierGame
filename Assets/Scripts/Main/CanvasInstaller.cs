@@ -1,5 +1,4 @@
-﻿using GUI;
-using GUI;
+﻿using Controls;
 using UnityEngine;
 using Zenject;
 
@@ -20,7 +19,7 @@ namespace Main
         [SerializeField]
         private TopPanelController topPanelController;
         [SerializeField]
-        private SelectionBox selectionBox;
+        private SelectionBoxComponent selectionBoxComponent;
 
         public override void InstallBindings()
         {
@@ -31,7 +30,7 @@ namespace Main
             Container.Bind<BikerPanelController>().FromInstance(bikerPanelController).AsSingle();
             Container.Bind<MenuWidget>().FromInstance(menuWidget).AsSingle();
             Container.Bind<TopPanelController>().FromInstance(topPanelController).AsSingle();
-            Container.Bind<SelectionBox>().FromInstance(selectionBox).AsSingle();
+            Container.Bind<SelectionBoxComponent>().FromInstance(selectionBoxComponent).AsSingle();
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Worlds;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class TopPanelController : MonoBehaviour, IToolbarController
     {

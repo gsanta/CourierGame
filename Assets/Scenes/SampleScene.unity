@@ -199,7 +199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613305ac179d232489e9c032ef29819e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectClicker: {fileID: 1162118112}
   mouseController: {fileID: 0}
 --- !u!1 &696117881
 GameObject:
@@ -473,27 +472,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1162118113}
-  - component: {fileID: 1162118112}
   - component: {fileID: 1162118114}
   m_Layer: 0
-  m_Name: Object Clicker
+  m_Name: Mouse Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1162118112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1162118111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f59759a5268f2344bc1273528d62323, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1162118113
 Transform:
   m_ObjectHideFlags: 0

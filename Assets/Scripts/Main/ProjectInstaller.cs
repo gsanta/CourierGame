@@ -2,7 +2,7 @@
 using Bikers;
 using Buildings;
 using Cameras;
-using GUI;
+using Controls;
 using Core;
 using Delivery;
 using Enemies;
@@ -69,6 +69,8 @@ namespace Main
             Container.Bind<EnemyFactory>().AsSingle();
             Container.Bind<PointerHandler>().AsSingle();
             Container.Bind<SelectionTool>().AsSingle();
+            Container.Bind<SelectionBox>().AsSingle();
+            Container.Bind<ObjectClicker>().AsSingle();
 
             // Game object
             Container.Bind<OutlineGameObjectSelector>().AsTransient();
@@ -119,9 +121,6 @@ namespace Main
         {
             PointerHandler pointerHandler = Container.Resolve<PointerHandler>();
             SelectionTool selectionTool = Container.Resolve<SelectionTool>();
-
-            pointerHandler.AddTool(selectionTool);
-            pointerHandler.SetActiveTool(ToolName.SELECTION);
         }
     }
 }

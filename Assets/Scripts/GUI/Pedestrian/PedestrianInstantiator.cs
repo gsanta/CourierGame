@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class PedestrianInstantiator : MonoBehaviour, IPedestrianInstantiator
     {

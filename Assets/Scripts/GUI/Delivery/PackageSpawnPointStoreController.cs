@@ -3,7 +3,7 @@ using Delivery;
 using UnityEngine;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class PackageSpawnPointStoreController : MonoBehaviour
     {

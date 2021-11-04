@@ -2,12 +2,12 @@
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class MouseController : MonoBehaviour
     {
-        private float downClickTime;
-        private float ClickDeltaTime = 0.5f;
+        private Vector2 downPoint;
+        private bool isDragging = false;
 
         private PointerHandler pointerHandler;
 
@@ -19,6 +19,14 @@ namespace GUI
 
         private void Update()
         {
+            if (Input.GetMouseButtonUp(0))
+            {
+                HandleMouseUp();
+            } else if (Input.GetMouseButtonUp(1))
+            {
+                HandleRightButtonUp();
+            }
+
             if (EventSystem.current.IsPointerOverGameObject())
             {
                 return;
@@ -26,42 +34,53 @@ namespace GUI
 
             if (Input.GetMouseButtonDown(0))
             {
-                HandleMouseDown();
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                HandleMouseUp();
+                HandleLeftMouseDown();
             }
 
             if (Input.GetMouseButton(0))
             {
-                HandleMouseDrag();
+                HandleMouseMove();
             }
         }
 
         private void HandleMouseUp()
         {
-            if (Time.time - downClickTime <= ClickDeltaTime)
+            if (!isDragging)
             {
-                pointerHandler.PointerClick();
+                if (!EventSystem.current.IsPointerOverGameObject()) {
+                    pointerHandler.PointerClick();
+                }
             } else
             {
                 pointerHandler.PointerUp();
             }
         }
 
-        private void HandleMouseDrag()
+        private void HandleMouseMove()
         {
-            if (Time.time - downClickTime >= ClickDeltaTime)
+            Vector2 currPoint = Input.mousePosition;
+            if (!isDragging && Vector2.Distance(downPoint, currPoint) > 5)
+            {
+                isDragging = true;
+            }
+            if (isDragging)
             {
                 pointerHandler.PointerDrag();
             }
         }
 
-        private void HandleMouseDown()
+        private void HandleRightButtonUp()
         {
-            downClickTime = Time.time;
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                pointerHandler.PointerRightClick();
+            }
+        }
+
+        private void HandleLeftMouseDown()
+        {
+            isDragging = false;
+            downPoint = Input.mousePosition;
             pointerHandler.PointerDown();
         }
     }

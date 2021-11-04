@@ -5,7 +5,7 @@ using UI;
 using UnityEngine;
 using Zenject;
 
-namespace GUI
+namespace Controls
 {
     public class SceneInitializer : MonoBehaviour, ISceneInitializer
     {
