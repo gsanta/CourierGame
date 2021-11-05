@@ -10,7 +10,7 @@ namespace Bikers
         private PackageStore packageStore;
         private readonly DeliveryService deliveryService;
 
-        public ReservePackageAction(PackageStore packageStore, DeliveryService deliveryService) : base(null)
+        public ReservePackageAction(PackageStore packageStore, DeliveryService deliveryService) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.PACKAGE_IS_RESERVED })
         {
             this.packageStore = packageStore;
             this.deliveryService = deliveryService;
@@ -38,7 +38,7 @@ namespace Bikers
                 int selectedIndex = UnityEngine.Random.Range(0, packages.Count);
                 Package selectedPackage = packages[selectedIndex];
 
-                GoapAgent.worldStates.AddState("isPackageReserved", 3);
+                GoapAgent.worldStates.AddStates(GetAfterEffects());
                 deliveryService.ReservePackage(selectedPackage, GoapAgent.Parent);
 
                 //target = selectedPackage.gameObject.transform.position;
@@ -51,17 +51,6 @@ namespace Bikers
         {
             return true;
         }
-
-        protected override AIState[] GetAfterEffects()
-        {
-            return new AIState[] { new AIState("isPackageReserved", 3) };
-        }
-
-        protected override AIState[] GetPreConditions()
-        {
-            return new AIState[0];
-        }
-
         public override GoapAction<Biker> Clone(GoapAgent<Biker> agent = null)
         {
             var action = new ReservePackageAction(packageStore, deliveryService);

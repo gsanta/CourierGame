@@ -12,7 +12,7 @@ namespace Core
         private Queue<Vector3> route;
         protected PathCache pathCache;
 
-        public AbstractRouteAction(GoapAgent<T> agent, PathCache pathCache) : base(agent)
+        public AbstractRouteAction(AIStateName[] preconditions, AIStateName[] afterEffects, PathCache pathCache = null) : base(preconditions, afterEffects)
         {
             this.pathCache = pathCache;
         }        

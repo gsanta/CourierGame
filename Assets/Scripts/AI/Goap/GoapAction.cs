@@ -10,22 +10,19 @@ namespace AI
         public Vector3 currentTarget;
         public string targetTag;
         public float duration = 1;
-        public Dictionary<string, int> preConditionsDict;
-        public Dictionary<string, int> effectsDict;
+        private AIStateName[] preconditions;
+        private AIStateName[] afterEffects;
         public AIStates agentBeliefs;
-        public AIState afterEffect;
-
 
         public bool running = false;
         protected bool finished = false;
 
         protected GoapAgent<T> agent;
 
-        public GoapAction(GoapAgent<T> agent)
+        public GoapAction(AIStateName[] preconditions, AIStateName[] afterEffects)
         {
-            this.agent = agent;
-            preConditionsDict = new Dictionary<string, int>();
-            effectsDict = new Dictionary<string, int>();
+            this.preconditions = preconditions;
+            this.afterEffects = afterEffects;
         }
 
         public bool Finished { get => finished; set => finished = value; }
@@ -37,29 +34,16 @@ namespace AI
             this.agent = agent;
         }
 
-        public void Init()
-        {
-            foreach (AIState w in GetPreConditions())
-            {
-                preConditionsDict.Add(w.key, w.value);
-            }
-            effectsDict = new Dictionary<string, int>();
-            foreach (AIState w in GetAfterEffects())
-            {
-                effectsDict.Add(w.key, w.value);
-            }
-        }
-
         public bool IsAchievable()
         {
             return true;
         }
 
-        public bool IsAchievableGiven(Dictionary<string, int> conditions)
+        public bool IsAchievableGiven(ISet<AIStateName> states)
         {
-            foreach (KeyValuePair<string, int> p in preConditionsDict)
+            foreach (AIStateName name in preconditions)
             {
-                if (!conditions.ContainsKey(p.Key))
+                if (!states.Contains(name))
                 {
                     return false;
                 }
@@ -67,8 +51,15 @@ namespace AI
             return true;
         }
 
-        protected abstract AIState[] GetPreConditions();
-        protected abstract AIState[] GetAfterEffects();
+        public AIStateName[] GetPreConditions()
+        {
+            return preconditions;
+        }
+        public AIStateName[] GetAfterEffects()
+        {
+            return afterEffects;
+        }
+
         public virtual bool PrePerform()
         {
             return true;

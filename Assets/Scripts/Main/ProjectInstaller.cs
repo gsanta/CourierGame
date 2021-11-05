@@ -69,6 +69,7 @@ namespace Main
             Container.Bind<EnemyFactory>().AsSingle();
             Container.Bind<PointerHandler>().AsSingle();
             Container.Bind<SelectionTool>().AsSingle();
+            Container.Bind<CommandTool>().AsSingle();
             Container.Bind<SelectionBox>().AsSingle();
             Container.Bind<ObjectClicker>().AsSingle();
 

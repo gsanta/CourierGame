@@ -31,7 +31,7 @@ namespace Agents
     public class PedestrianGoalProvider : IGoalProvider
     {
         private readonly WalkTargetStore walkTargetStore;
-        private List<SubGoal> goals = new List<SubGoal>();
+        private List<Goal> goals = new List<Goal>();
         private Pedestrian pedestrian;
 
         public PedestrianGoalProvider(Pedestrian pedestrian, WalkTargetStore walkTargetStore)
@@ -43,18 +43,18 @@ namespace Agents
             SetGoal();
         }
 
-        public List<SubGoal> CreateGoal()
+        public List<Goal> CreateGoal()
         {
             var goalIndex = UnityEngine.Random.Range(0, goals.Count - 1);
-            return new List<SubGoal> { goals[goalIndex] };
+            return new List<Goal> { goals[goalIndex] };
         }
 
-        public List<SubGoal> GetGoals()
+        public List<Goal> GetGoals()
         {
             return goals;
         }
 
-        public SubGoal GetGoal()
+        public Goal GetGoal()
         {
             var goalIndex = UnityEngine.Random.Range(0, goals.Count - 1);
             return goals[goalIndex];
@@ -64,7 +64,7 @@ namespace Agents
         {
             walkTargetStore.GetTargets().ForEach(target =>
             {
-                goals.Add(new SubGoal("goto" + target.name, target.priority, false));
+                goals.Add(new Goal(AIStateName.DESTINATION_REACHED, false, target.transform));
             });
         }
 
@@ -75,7 +75,7 @@ namespace Agents
 
         private void SetGoal()
         {
-            pedestrian.Agent.SetGoals(new List<SubGoal> { GetGoal() }, false);
+            pedestrian.Agent.SetGoals(new List<Goal> { GetGoal() }, false);
         }
     }
 }

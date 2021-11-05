@@ -7,21 +7,21 @@ namespace AI
     {
         public Node<T> parent;
         public float cost;
-        public Dictionary<string, int> state;
+        public ISet<AIStateName> states;
         public GoapAction<T> action;
 
-        public Node(Node<T> parent, float cost, Dictionary<string, int> allStates, GoapAction<T> action)
+        public Node(Node<T> parent, float cost, ISet<AIStateName> states, GoapAction<T> action)
         {
             this.parent = parent;
             this.cost = cost;
-            this.state = new Dictionary<string, int>(allStates);
+            this.states = new HashSet<AIStateName>(states);
             this.action = action;
         }
     }
 
     public class GoapPlanner<T> : IPlanner<T> where T : IGameObject 
     {
-        public Queue<GoapAction<T>> plan(List<GoapAction<T>> actions, Dictionary<string, int> goal, AIStates states)
+        public Queue<GoapAction<T>> plan(List<GoapAction<T>> actions, Goal goal, AIStates states)
         {
             List<GoapAction<T>> usableActions = new List<GoapAction<T>>();
             foreach (GoapAction<T> a in actions)
@@ -33,7 +33,7 @@ namespace AI
             }
 
             List<Node<T>> leaves = new List<Node<T>>();
-            Node<T> start = new Node<T>(null, 0, states.ToDictionary(), null);
+            Node<T> start = new Node<T>(null, 0, states.GetStates(), null);
 
             bool success = BuildGraph(start, leaves, usableActions, goal);
 
@@ -77,26 +77,26 @@ namespace AI
             return queue;
         }
 
-        private bool BuildGraph(Node<T> parent, List<Node<T>> leaves, List<GoapAction<T>> usableActions, Dictionary<string, int> goal)
+        private bool BuildGraph(Node<T> parent, List<Node<T>> leaves, List<GoapAction<T>> usableActions, Goal goal)
         {
             bool foundPath = false;
 
             foreach (GoapAction<T> action in usableActions)
             {
-                if (action.IsAchievableGiven(parent.state))
+                if (action.IsAchievableGiven(parent.states))
                 {
-                    Dictionary<string, int> currentState = new Dictionary<string, int>(parent.state);
-                    foreach (KeyValuePair<string, int> eff in action.effectsDict)
+                    ISet<AIStateName> currentStates = new HashSet<AIStateName>(parent.states);
+                    foreach (AIStateName eff in action.GetAfterEffects())
                     {
-                        if (!currentState.ContainsKey(eff.Key))
+                        if (!currentStates.Contains(eff))
                         {
-                            currentState.Add(eff.Key, eff.Value);
+                            currentStates.Add(eff);
                         }
                     }
 
-                    Node<T> node = new Node<T>(parent, parent.cost + action.cost, currentState, action);
+                    Node<T> node = new Node<T>(parent, parent.cost + action.cost, currentStates, action);
 
-                    if (GoalAchieved(goal, currentState))
+                    if (GoalAchieved(goal, currentStates))
                     {
                         leaves.Add(node);
                         foundPath = true;
@@ -116,11 +116,11 @@ namespace AI
             return foundPath;
         }
 
-        private bool GoalAchieved(Dictionary<string, int> goal, Dictionary<string, int> state)
+        private bool GoalAchieved(Goal goal, ISet<AIStateName> states)
         {
-            foreach(KeyValuePair<string, int> g in goal)
+            foreach(AIStateName state in goal.states)
             {
-                if (!state.ContainsKey(g.Key))
+                if (!states.Contains(state))
                 {
                     return false;
                 }

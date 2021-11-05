@@ -36,7 +36,7 @@ namespace Worlds
 
         private void CurfewOn()
         {
-            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.SetGoals(new List<SubGoal>() { new SubGoal("atHome", 3, true) }, true));
+            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.SetGoals(new List<Goal>() { new Goal(AIStateName.AT_HOME, false) }, true));
             curfewButton.UpdateColor();
         }
 

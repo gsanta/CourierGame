@@ -10,7 +10,7 @@ namespace AI
         public List<GoapAction<T>> actions = new List<GoapAction<T>>();
         public AIStates worldStates = new AIStates();
         private Queue<GoapAction<T>> actionQueue;
-        private List<SubGoal> goals = new List<SubGoal>();
+        private List<Goal> goals = new List<Goal>();
 
         private string agentId;
         private T parent;
@@ -21,6 +21,7 @@ namespace AI
 
         public GoapAction<T> currentAction;
         public GoapAction<T> prevAction;
+        private Goal currentGoal;
 
         public GoapAgent(string agentId, T parent, IPlanner<T> planner)
         {
@@ -31,7 +32,12 @@ namespace AI
             navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
         }
 
-        public void SetGoals(List<SubGoal> goals, bool abortCurrentAction)
+        public Goal GetCurrentGoal()
+        {
+            return currentGoal;
+        }
+
+        public void SetGoals(List<Goal> goals, bool abortCurrentAction)
         {
             parent.GetGameObject().SetActive(true);
             this.goals = goals;
@@ -41,10 +47,14 @@ namespace AI
             }
         }
 
+        public void SetGoals(Goal goal, bool abortCurrentAction)
+        {
+            SetGoals(new List<Goal> { goal }, abortCurrentAction);
+        }
+
         public void SetActions(List<GoapAction<T>> actions)
         {
             this.actions = actions;
-            actions.ForEach(action => action.Init());
         }
 
         public T Parent { get => parent; }
@@ -143,12 +153,12 @@ namespace AI
         {
             if (actionQueue == null && goals.Count > 0)
             {
-
+                currentGoal = goals[0];
                 var subGoal = goals[0];
                 goals.RemoveAt(0);
 
                 var startTime = DateTime.Now;
-                actionQueue = planner.plan(actions, subGoal.sgoals, worldStates);
+                actionQueue = planner.plan(actions, subGoal, worldStates);
                 Debug.Log((DateTime.Now - startTime).Milliseconds);
             }
 

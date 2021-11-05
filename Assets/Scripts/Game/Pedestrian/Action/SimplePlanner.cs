@@ -21,13 +21,9 @@ namespace Pedestrians
         //    return null;
         //}
 
-        public Queue<GoapAction<T>> plan(List<GoapAction<T>> actions, Dictionary<string, int> goal, AIStates states)
+        public Queue<GoapAction<T>> plan(List<GoapAction<T>> actions, Goal goal, AIStates states)
         {
-            IEnumerator<KeyValuePair<string, int>> enumerator = goal.GetEnumerator();
-            enumerator.MoveNext();
-
-            KeyValuePair<string, int> firstGoal = enumerator.Current;
-            var action = actions.Find(action => action.afterEffect.key == firstGoal.Key);
+            var action = actions.Find(action => action.IsAchievableGiven(goal.states));
 
             if (action != null)
             {

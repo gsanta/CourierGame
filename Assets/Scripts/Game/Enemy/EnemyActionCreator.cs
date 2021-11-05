@@ -29,7 +29,7 @@ namespace Enemies
             walkTargetStore.GetTargets().ForEach(target =>
             {
                 var clone = (WalkAction<Enemy>)walkAction.Clone();
-                clone.SetTarget(target.gameObject).SetHideDuration(target.hideDuration).SetAfterEffect(new AIState("goto" + target.name, 3));
+                clone.SetHideDuration(target.hideDuration);
                 actions.Add(clone);
             });
         }

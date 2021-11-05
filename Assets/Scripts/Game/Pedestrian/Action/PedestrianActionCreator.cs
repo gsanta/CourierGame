@@ -18,6 +18,7 @@ namespace Pedestrians
             this.walkAction = walkAction;
             this.goHomeAction = goHomeAction;
 
+            actions.Add(walkAction);
             actions.Add(goHomeAction);
             Init();
         }
@@ -32,7 +33,7 @@ namespace Pedestrians
             walkTargetStore.GetTargets().ForEach(target =>
             {
                 var clone = (WalkAction<Pedestrian>) walkAction.Clone();
-                clone.SetTarget(target.gameObject).SetHideDuration(target.hideDuration).SetAfterEffect(new AIState("goto" + target.name, 3));
+                clone.SetHideDuration(target.hideDuration);
                 actions.Add(clone);
             });
         }

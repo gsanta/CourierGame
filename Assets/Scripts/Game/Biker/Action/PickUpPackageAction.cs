@@ -12,7 +12,7 @@ namespace Bikers
         private readonly DeliveryService deliveryService;
         private readonly RouteFacade routeFacade;
 
-        public PickUpPackageAction(DeliveryService deliveryService, RouteFacade routeFacade) : base(null, null)
+        public PickUpPackageAction(DeliveryService deliveryService, RouteFacade routeFacade) : base(new AIStateName[] { AIStateName.PACKAGE_IS_RESERVED }, new AIStateName[] { AIStateName.PACKAGE_IS_PICKED })
         {
             this.deliveryService = deliveryService;
             this.routeFacade = routeFacade;
@@ -33,19 +33,9 @@ namespace Bikers
             Biker courierAgent = GoapAgent.Parent;
             Package package = courierAgent.GetPackage();
 
-            GoapAgent.worldStates.AddState("isPackagePickedUp", 3);
+            GoapAgent.worldStates.AddStates(GetAfterEffects());
             deliveryService.AssignPackage(package);
             return true;
-        }
-
-        protected override AIState[] GetPreConditions()
-        {
-            return new AIState[] { new AIState("isPackageReserved", 3) };
-        }
-
-        protected override AIState[] GetAfterEffects()
-        {
-            return new AIState[] { new AIState("isPackagePickedUp", 3) };
         }
 
         public override bool PostAbort()

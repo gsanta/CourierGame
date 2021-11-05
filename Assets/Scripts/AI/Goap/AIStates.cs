@@ -2,68 +2,42 @@
 
 namespace AI
 {
-
-    [System.Serializable]
-    public class AIState
-    {
-        public readonly string key;
-        public readonly int value;
-
-        public AIState(string key, int value)
-        {
-            this.key = key;
-            this.value = value;
-        }
-    }
-
     public class AIStates
     {
-        private Dictionary<string, int> states;
+        private ISet<AIStateName> states;
 
         public AIStates()
         {
-            states = new Dictionary<string, int>();
+            states = new HashSet<AIStateName>();
         }
 
-        public bool HasState(string key)
+        public bool HasState(AIStateName state)
         {
-            return states.ContainsKey(key);
+            return states.Contains(state);
         }
 
-        public void AddState(string key, int value)
+        public void AddState(AIStateName state)
         {
-            states.Add(key, value);
+            states.Add(state);
         }
 
-        public void ModifyState(string key, int value)
+        public void AddStates(AIStateName[] newStates)
         {
-            states[key] += value;
-            if (states[key] <= 0)
+            foreach(AIStateName state in newStates)
             {
-                RemoveState(key);
+                states.Add(state);
             }
         }
 
-        public void RemoveState(string key)
+        public void RemoveState(AIStateName state)
         {
-            if (states.ContainsKey(key))
+            if (states.Contains(state))
             {
-                states.Remove(key);
+                states.Remove(state);
             }
         }
 
-        public void SetState(string key, int value)
-        {
-            if (states.ContainsKey(key))
-            {
-                states[key] = value;
-            } else
-            {
-                states.Add(key, value);
-            }
-        }
-
-        public Dictionary<string, int> ToDictionary()
+        public ISet<AIStateName> GetStates()
         {
             return states;
         }

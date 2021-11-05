@@ -12,18 +12,11 @@ namespace Pedestrians
         private WalkTargetStore walkTargetStore;
         private RouteFacade routeFacade;
         private float hideDuration = 0;
-        private GameObject Target;
 
-        public WalkAction(RouteFacade routeFacade, WalkTargetStore walkTargetStore, PathCache pathCache) : base(null, pathCache)
+        public WalkAction(AIStateName[] preconditions, AIStateName[] afterEffects, RouteFacade routeFacade, WalkTargetStore walkTargetStore, PathCache pathCache) : base(preconditions, afterEffects, pathCache)
         {
             this.routeFacade = routeFacade;
             this.walkTargetStore = walkTargetStore;
-        }
-
-        public WalkAction<T> SetTarget(GameObject target)
-        {
-            Target = target;
-            return this;
         }
 
         public WalkAction<T> SetHideDuration(float duration)
@@ -32,21 +25,14 @@ namespace Pedestrians
             return this;
         }
 
-        public WalkAction<T> SetAfterEffect(AIState worldState)
-        {
-            afterEffect = worldState;
-            return this;
-        }
-
         public override bool PrePerform()
         {
             T agent = GoapAgent.Parent;
             agent.GetNavMeshAgent().speed = 2;
-
-            var goal = Target;
+            Goal goal = GoapAgent.GetCurrentGoal();
 
             var from = agent.GetGameObject().transform;
-            var to = goal.transform;
+            var to = goal.target;
 
             StartRoute(from, to);
 
@@ -59,16 +45,6 @@ namespace Pedestrians
             return true;
         }
 
-        protected override AIState[] GetPreConditions()
-        {
-            return new AIState[] { };
-        }
-
-        protected override AIState[] GetAfterEffects()
-        {
-            return afterEffect == null ? new AIState[] { } : new AIState[] { afterEffect };
-        }
-
         public override bool PostAbort()
         {
             return true;
@@ -76,11 +52,9 @@ namespace Pedestrians
 
         public override GoapAction<T> Clone(GoapAgent<T> agent = null)
         {
-            var action = new WalkAction<T>(routeFacade, walkTargetStore, pathCache);
+            var action = new WalkAction<T>(GetPreConditions(), GetAfterEffects(), routeFacade, walkTargetStore, pathCache);
             action.agent = agent;
-            action.Target = Target;
             action.hideDuration = hideDuration;
-            action.afterEffect = afterEffect;
             return action;
         }
 

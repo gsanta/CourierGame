@@ -5,8 +5,8 @@ namespace AI
 {
     public interface IGoalProvider
     {
-        List<SubGoal> CreateGoal();
-        List<SubGoal> GetGoals();
-        SubGoal GetGoal();
+        List<Goal> CreateGoal();
+        List<Goal> GetGoals();
+        Goal GetGoal();
     }
 }

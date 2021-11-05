@@ -7,7 +7,7 @@ namespace Bikers
     public class BikerGoalProvider : IGoalProvider
     {
         private readonly Biker biker;
-        private SubGoal goal = new SubGoal("isPackageDropped", 1, true);
+        private Goal goal = new Goal(AIStateName.PACKAGE_IS_DROPPED, true);
 
         public BikerGoalProvider(Biker biker)
         {
@@ -16,19 +16,19 @@ namespace Bikers
             SetGoal();
         }
 
-        public List<SubGoal> CreateGoal()
+        public List<Goal> CreateGoal()
         {
             throw new NotImplementedException();
         }
 
-        public SubGoal GetGoal()
+        public Goal GetGoal()
         {
             return goal;
         }
 
-        public List<SubGoal> GetGoals()
+        public List<Goal> GetGoals()
         {
-            return new List<SubGoal>() { goal };
+            return new List<Goal>() { goal };
         }
 
         private void HandleCompleteAction(object sender, EventArgs args)
@@ -38,7 +38,7 @@ namespace Bikers
 
         private void SetGoal()
         {
-            biker.Agent.SetGoals(new List<SubGoal> { goal }, false);
+            biker.Agent.SetGoals(new List<Goal> { goal }, false);
         }
     }
 }

@@ -11,6 +11,7 @@ using Scenes;
 using Stats;
 using UnityEngine;
 using Zenject;
+using AI;
 
 public class Map1Installer : MonoInstaller, ISceneSetup
 {
@@ -152,8 +153,8 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         actionStore.SetEnemyActionCreator(Container.Resolve<EnemyActionCreator>());
         BuildingStore buildingStore = Container.Resolve<BuildingStore>();
 
-        actionStore.SetEnemyWalkAction(new WalkAction<Enemy>(routeFacade, walkTargetStore, pathCache));
-        actionStore.SetPedestrianWalkAction(new WalkAction<Pedestrian>(routeFacade, walkTargetStore, pathCache));
+        actionStore.SetEnemyWalkAction(new WalkAction<Enemy>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, routeFacade, walkTargetStore, pathCache));
+        actionStore.SetPedestrianWalkAction(new WalkAction<Pedestrian>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, routeFacade, walkTargetStore, pathCache));
         actionStore.SetGoHomeAction(new GoHomeAction(routeFacade, pathCache, buildingStore));
 
         BikerSetup bikerSetup = Container.Resolve<BikerSetup>();

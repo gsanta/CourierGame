@@ -28,6 +28,7 @@ namespace Pedestrians
             pedestrian.pedestrianInfo = CreatePedestrianInfo();
             pedestrian.Agent = agentFactory.CreatePedestrianAgent(pedestrian);
             pedestrian.GoalProvider = new PedestrianGoalProvider(pedestrian, walkTargetStore);
+            pedestrian.Agent.SetGoals(pedestrian.GoalProvider.CreateGoal(), false);
 
             Transform child = config.spawnPoint.transform;
             //pedestrian.GetComponent<WaypointNavigator>().currentWaypoint = child.GetComponent<Waypoint>();

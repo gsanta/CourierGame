@@ -13,11 +13,10 @@ namespace Pedestrians
         private BuildingStore buildingStore;
         private RouteFacade routeFacade;
 
-        public GoHomeAction(RouteFacade routeFacade, PathCache pathCache, BuildingStore buildingStore) : base(null, pathCache)
+        public GoHomeAction(RouteFacade routeFacade, PathCache pathCache, BuildingStore buildingStore) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.AT_HOME })
         {
             this.routeFacade = routeFacade;
             this.buildingStore = buildingStore;
-            afterEffect = new AIState("atHome", 3);
             duration = 0;
         }
 
@@ -39,16 +38,6 @@ namespace Pedestrians
             return true;
         }
 
-        protected override AIState[] GetPreConditions()
-        {
-            return new AIState[] { };
-        }
-
-        protected override AIState[] GetAfterEffects()
-        {
-            return new AIState[] { new AIState("atHome", 3) };
-        }
-
         public override bool PostAbort()
         {
             return true;
@@ -64,7 +53,6 @@ namespace Pedestrians
         protected override Queue<Vector3> BuildRoute(Transform from, Transform to)
         {
             return new Queue<Vector3>(new List<Vector3>() { to.position });
-            //return routeFacade.BuildPavementRoute(from, to);   
         }
     }
 }

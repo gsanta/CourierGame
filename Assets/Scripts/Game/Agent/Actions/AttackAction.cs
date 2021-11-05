@@ -10,7 +10,7 @@ namespace Agents
     {
         private RouteFacade routeFacade;
 
-        public AttackAction(RouteFacade routeFacade, PathCache pathCache) : base(null, pathCache)
+        public AttackAction(RouteFacade routeFacade, AIStateName[] preconditions, AIStateName[] afterEffects,  PathCache pathCache = null) : base(preconditions, afterEffects, pathCache)
         {
             this.routeFacade = routeFacade;
         }
@@ -18,16 +18,6 @@ namespace Agents
         protected override Queue<Vector3> BuildRoute(Transform from, Transform to)
         {
             return new Queue<Vector3>(new List<Vector3>() { to.position });
-        }
-
-        protected override AIState[] GetAfterEffects()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected override AIState[] GetPreConditions()
-        {
-            throw new System.NotImplementedException();
         }
 
         public override GoapAction<T> Clone(GoapAgent<T> agent = null)

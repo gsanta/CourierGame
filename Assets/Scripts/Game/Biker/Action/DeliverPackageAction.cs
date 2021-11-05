@@ -11,7 +11,7 @@ namespace Bikers
     {
         private DeliveryService deliveryService;
         private RouteFacade routeFacade;
-        public DeliverPackageAction(DeliveryService deliveryService, RouteFacade routeFacade) : base(null, null)
+        public DeliverPackageAction(DeliveryService deliveryService, RouteFacade routeFacade) : base(new AIStateName[] { AIStateName.PACKAGE_IS_PICKED }, new AIStateName[] { AIStateName.PACKAGE_IS_DROPPED })
         {
             this.deliveryService = deliveryService;
             this.routeFacade = routeFacade;
@@ -41,20 +41,10 @@ namespace Bikers
 
             deliveryService.DeliverPackage(package, false);
 
-            GoapAgent.worldStates.RemoveState("isPackagePickedUp");
-            GoapAgent.worldStates.RemoveState("isPackageReserved");
+            GoapAgent.worldStates.RemoveState(AIStateName.PACKAGE_IS_PICKED);
+            GoapAgent.worldStates.RemoveState(AIStateName.PACKAGE_IS_RESERVED);
 
             return true;
-        }
-
-        protected override AIState[] GetPreConditions()
-        {
-            return new AIState[] { new AIState("isPackagePickedUp", 3) };
-        }
-
-        protected override AIState[] GetAfterEffects()
-        {
-            return new AIState[] { new AIState("isPackageDropped", 3) };
         }
 
         public override bool PostAbort()

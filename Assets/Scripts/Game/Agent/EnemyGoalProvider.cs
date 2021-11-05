@@ -8,7 +8,7 @@ namespace Agents
     public class EnemyGoalProvider : IGoalProvider
     {
         private readonly WalkTargetStore walkTargetStore;
-        private List<SubGoal> goals = new List<SubGoal>();
+        private List<Goal> goals = new List<Goal>();
         private Enemy enemy;
 
         public EnemyGoalProvider(Enemy enemy, WalkTargetStore walkTargetStore)
@@ -19,18 +19,18 @@ namespace Agents
             SetGoal();
         }
 
-        public List<SubGoal> CreateGoal()
+        public List<Goal> CreateGoal()
         {
             var goalIndex = UnityEngine.Random.Range(0, goals.Count - 1);
-            return new List<SubGoal> { goals[goalIndex] };
+            return new List<Goal> { goals[goalIndex] };
         }
 
-        public List<SubGoal> GetGoals()
+        public List<Goal> GetGoals()
         {
             return goals;
         }
 
-        public SubGoal GetGoal()
+        public Goal GetGoal()
         {
             var goalIndex = UnityEngine.Random.Range(0, goals.Count - 1);
             return goals[goalIndex];
@@ -40,13 +40,13 @@ namespace Agents
         {
             walkTargetStore.GetTargets().ForEach(target =>
             {
-                goals.Add(new SubGoal("goto" + target.name, target.priority, false));
+                goals.Add(new Goal(AIStateName.DESTINATION_REACHED, false, target.transform));
             });
         }
 
         private void SetGoal()
         {
-            enemy.Agent.SetGoals(new List<SubGoal> { GetGoal() }, false);
+            enemy.Agent.SetGoals(new List<Goal> { GetGoal() }, false);
         }
     }
 }
