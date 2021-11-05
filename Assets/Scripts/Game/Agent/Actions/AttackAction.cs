@@ -15,9 +15,9 @@ namespace Agents
             this.routeFacade = routeFacade;
         }
 
-        protected override Queue<Vector3> BuildRoute(Transform from, Transform to)
+        protected override Queue<Vector3> BuildRoute(Vector3 from, Vector3 to)
         {
-            return new Queue<Vector3>(new List<Vector3>() { to.position });
+            return new Queue<Vector3>(new List<Vector3>() { to });
         }
 
         public override GoapAction<T> Clone(GoapAgent<T> agent = null)

@@ -1,7 +1,5 @@
 ﻿
-using AI;
 using Pedestrians;
-using System.Collections.Generic;
 using UI;
 
 namespace Worlds
@@ -11,11 +9,13 @@ namespace Worlds
         private IWorldState worldState;
         private PedestrianStore pedestrianStore;
         private readonly CurfewButton curfewButton;
+        private PedestrianGoalFactory pedestrianGoalFactory;
 
-        public CurfewHandler(PedestrianStore pedestrianStore, CurfewButton curfewButton)
+        public CurfewHandler(PedestrianStore pedestrianStore, PedestrianGoalFactory pedestrianGoalFactory, CurfewButton curfewButton)
         {
             this.pedestrianStore = pedestrianStore;
             this.curfewButton = curfewButton;
+            this.pedestrianGoalFactory = pedestrianGoalFactory;
         }
 
         public void SetWorldState(IWorldState worldState)
@@ -36,7 +36,7 @@ namespace Worlds
 
         private void CurfewOn()
         {
-            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.SetGoals(new List<Goal>() { new Goal(AIStateName.AT_HOME, false) }, true));
+            pedestrianStore.GetAll().ForEach(pedestrian => pedestrianGoalFactory.GoHome(pedestrian));
             curfewButton.UpdateColor();
         }
 

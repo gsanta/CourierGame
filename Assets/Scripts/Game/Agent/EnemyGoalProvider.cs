@@ -40,7 +40,7 @@ namespace Agents
         {
             walkTargetStore.GetTargets().ForEach(target =>
             {
-                goals.Add(new Goal(AIStateName.DESTINATION_REACHED, false, target.transform));
+                goals.Add(new Goal(AIStateName.DESTINATION_REACHED, false, target.transform.position));
             });
         }
 

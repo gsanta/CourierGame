@@ -46,16 +46,6 @@ namespace Agents
             enemyWalkAction = walkAction;
         }
 
-        public void SetGoHomeAction(GoHomeAction goHomeAction)
-        {
-            this.goHomeAction = goHomeAction;
-        }
-
-        public GoHomeAction GetGoHomeAction()
-        {
-            return goHomeAction;
-        }
-
         public WalkAction<Enemy> GetEnemyWalkAction()
         {
             return enemyWalkAction;

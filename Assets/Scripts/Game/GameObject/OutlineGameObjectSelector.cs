@@ -40,7 +40,6 @@ namespace GameObjects
             var renderer = outlineGameObject.GetComponent<Renderer>();
 
             renderer.material.SetFloat("_OutlineWidth", width);
-            selectionStore.Add(selectableGameObject);
         }
     }
 }

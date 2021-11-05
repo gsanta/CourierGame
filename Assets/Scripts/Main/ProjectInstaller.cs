@@ -42,6 +42,7 @@ namespace Main
             Container.Bind<BikerFactory>().AsSingle();
             Container.Bind<PedestrianFactory>().AsSingle();
             Container.Bind<PedestrianSpawner>().AsSingle();
+            Container.Bind<PedestrianGoalFactory>().AsSingle();
             Container.Bind<WalkTargetStore>().AsSingle().NonLazy();
             Container.Bind<PedestrianStore>().AsSingle().NonLazy();
             Container.Bind<RoadStore>().AsSingle().NonLazy();

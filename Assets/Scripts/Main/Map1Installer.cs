@@ -12,6 +12,7 @@ using Stats;
 using UnityEngine;
 using Zenject;
 using AI;
+using System.Collections.Generic;
 
 public class Map1Installer : MonoInstaller, ISceneSetup
 {
@@ -149,13 +150,18 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         RouteFacade routeFacade = Container.Resolve<RouteFacade>();
         ActionStore actionStore = Container.Resolve<ActionStore>();
-        actionStore.SetPedestrianActionCreator(Container.Resolve<PedestrianActionCreator>());
-        actionStore.SetEnemyActionCreator(Container.Resolve<EnemyActionCreator>());
         BuildingStore buildingStore = Container.Resolve<BuildingStore>();
+
+        PedestrianActionCreator pedestrianActionCreator = Container.Resolve<PedestrianActionCreator>();
+        pedestrianActionCreator.SetActions(new List<GoapAction<Pedestrian>>() {
+            new WalkAction<Pedestrian>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, routeFacade, walkTargetStore, pathCache),
+            new GoHomeAction(routeFacade, pathCache, buildingStore)
+        });
+        actionStore.SetPedestrianActionCreator(pedestrianActionCreator);
+        actionStore.SetEnemyActionCreator(Container.Resolve<EnemyActionCreator>());
 
         actionStore.SetEnemyWalkAction(new WalkAction<Enemy>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, routeFacade, walkTargetStore, pathCache));
         actionStore.SetPedestrianWalkAction(new WalkAction<Pedestrian>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, routeFacade, walkTargetStore, pathCache));
-        actionStore.SetGoHomeAction(new GoHomeAction(routeFacade, pathCache, buildingStore));
 
         BikerSetup bikerSetup = Container.Resolve<BikerSetup>();
         bikerSetup.Setup();

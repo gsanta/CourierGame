@@ -1,9 +1,9 @@
-﻿using Shaders;
-
+﻿
 namespace GameObjects
 {
     public interface ISelectableGameObject
     {
-        IGameObjectSelector GetGameObjectSelector();
+        public void Select();
+        public void Deselect();
     }
 }

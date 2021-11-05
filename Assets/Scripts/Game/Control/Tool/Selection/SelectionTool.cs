@@ -60,7 +60,7 @@ namespace Controls
 
                 if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
                 {
-                    pedestrian.GetGameObjectSelector().Select();
+                    pedestrian.Select();
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace Controls
                 if (minDistance < 2)
                 {
                     var selectableGameObject = minDistPedestrian.GetComponent<ISelectableGameObject>();
-                    selectableGameObject.GetGameObjectSelector().Select();
+                    selectableGameObject.Select();
                 }
             }
         }

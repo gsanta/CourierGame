@@ -31,13 +31,13 @@ namespace Core
             return navMeshAgent.hasPath && navMeshAgent.remainingDistance < 1f;
         }
 
-        protected void StartRoute(Transform from, Transform to)
+        protected void StartRoute(Vector3 from, Vector3 to)
         {
             route = BuildRoute(from, to);
             UpdateDestination();
         }
 
-        protected abstract Queue<Vector3> BuildRoute(Transform from, Transform to);
+        protected abstract Queue<Vector3> BuildRoute(Vector3 from, Vector3 to);
 
         private void UpdateDestination()
         {

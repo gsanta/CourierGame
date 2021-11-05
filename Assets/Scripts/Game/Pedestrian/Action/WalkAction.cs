@@ -32,9 +32,9 @@ namespace Pedestrians
             Goal goal = GoapAgent.GetCurrentGoal();
 
             var from = agent.GetGameObject().transform;
-            var to = goal.target;
+            var to = (Vector3) goal.target;
 
-            StartRoute(from, to);
+            StartRoute(from.position, to);
 
             return true;
         }
@@ -58,9 +58,9 @@ namespace Pedestrians
             return action;
         }
 
-        protected override Queue<Vector3> BuildRoute(Transform from, Transform to)
+        protected override Queue<Vector3> BuildRoute(Vector3 from, Vector3 to)
         {
-            return new Queue<Vector3>(new List<Vector3>() { to.position });
+            return new Queue<Vector3>(new List<Vector3>() { to });
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Controls
 
                     var selectableGameObject = selection.GetComponent<ISelectableGameObject>();// transform.GetChild(0).GetComponent<Renderer>();
 
-                    selectableGameObject.GetGameObjectSelector().Select();
+                    selectableGameObject.Select();
                 }
             }
         }        

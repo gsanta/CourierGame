@@ -1,6 +1,7 @@
 ﻿using Agents;
 using AI;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pedestrians
 {
@@ -23,7 +24,8 @@ namespace Pedestrians
 
         public Queue<GoapAction<T>> plan(List<GoapAction<T>> actions, Goal goal, AIStates states)
         {
-            var action = actions.Find(action => action.IsAchievableGiven(goal.states));
+            AIStateName state = goal.states.ToList()[0];
+            var action = actions.Find(action => action.GetAfterEffectsSet().Contains(state));
 
             if (action != null)
             {

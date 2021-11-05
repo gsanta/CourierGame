@@ -5,12 +5,12 @@ namespace AI
 {
     public class Goal {
         public readonly bool remove;
-        public readonly Transform? target;
+        public readonly Vector3? target;
         public readonly ISet<AIStateName> states;
         
         public int Priority { get; set; }
 
-        public Goal(ISet<AIStateName> states, bool remove, Transform? target = null)
+        public Goal(ISet<AIStateName> states, bool remove, Vector3? target = null)
         {
             this.states = states;
             this.remove = remove;
@@ -18,7 +18,7 @@ namespace AI
             Priority = 1;
         }
 
-        public Goal(AIStateName state, bool remove, Transform? target = null): this(new HashSet<AIStateName>(new AIStateName[] { state }), remove, target)
+        public Goal(AIStateName state, bool remove, Vector3? target = null): this(new HashSet<AIStateName>(new AIStateName[] { state }), remove, target)
         {
        
         }

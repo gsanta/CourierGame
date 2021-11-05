@@ -14,12 +14,12 @@ namespace Route
             pavementRouteBuilder = new RouteBuilder(pavementStore);
         }
 
-        public Queue<Vector3> BuildRoadRoute(Transform from, Transform to)
+        public Queue<Vector3> BuildRoadRoute(Vector3 from, Vector3 to)
         {
             return roadRouteBuilder.BuildRoute(from, to);
         }
 
-        public Queue<Vector3> BuildPavementRoute(Transform from, Transform to)
+        public Queue<Vector3> BuildPavementRoute(Vector3 from, Vector3 to)
         {
             return pavementRouteBuilder.BuildRoute(from, to);
         }

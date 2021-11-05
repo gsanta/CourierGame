@@ -1,26 +1,27 @@
 ﻿using GameObjects;
+using Pedestrians;
 using System.Collections.Generic;
 
 namespace States
 {
     public class SelectionStore
     {
-        List<ISelectableGameObject> selection = new List<ISelectableGameObject>();
+        List<Pedestrian> pedestrians = new List<Pedestrian>();
 
-        public void Add(ISelectableGameObject gameObject)
+        public void AddPedestrian(Pedestrian pedestrian)
         {
-            selection.Add(gameObject);
+            pedestrians.Add(pedestrian);
         }
 
-        public void Remove(ISelectableGameObject gameObject)
-        {
-            selection.Remove(gameObject);
-        }
-        
         public void Clear()
         {
-            selection.ForEach(selectable => selectable.GetGameObjectSelector().Deselect());
-            selection.Clear();
+            pedestrians.ForEach(pedestrian => pedestrian.GetGameObjectSelector().Deselect());
+            pedestrians.Clear();
+        }
+
+        public List<Pedestrian> GetPedestrians()
+        {
+            return pedestrians;
         }
     }
 }

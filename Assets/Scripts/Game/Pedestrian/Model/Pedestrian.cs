@@ -2,6 +2,7 @@
 using Attacks;
 using GameObjects;
 using Shaders;
+using States;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
@@ -19,11 +20,13 @@ namespace Pedestrians
         private AttackRadius attackRadius;
         private int health = 100;
         private OutlineGameObjectSelector gameObjectSelector;
+        private SelectionStore selectionStore;
 
         [Inject]
-        public void Construct(OutlineGameObjectSelector gameObjectSelector)
+        public void Construct(OutlineGameObjectSelector gameObjectSelector, SelectionStore selectionStore)
         {
             this.gameObjectSelector = gameObjectSelector;
+            this.selectionStore = selectionStore;
         }
 
         public IGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
@@ -97,6 +100,18 @@ namespace Pedestrians
         public IGameObjectSelector GetGameObjectSelector()
         {
             return gameObjectSelector;
+        }
+
+        public void Select()
+        {
+            selectionStore.AddPedestrian(this);
+            gameObjectSelector.Select();
+
+        }
+
+        public void Deselect()
+        {
+            gameObjectSelector.Deselect();
         }
 
         public class Factory : PlaceholderFactory<Object, Pedestrian>

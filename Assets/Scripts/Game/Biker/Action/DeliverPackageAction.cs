@@ -27,7 +27,7 @@ namespace Bikers
             var from = agent.Parent.transform;
             var to = package.Target.gameObject.transform;
 
-            StartRoute(from, to);
+            StartRoute(from.position, to.position);
 
 
             return true;
@@ -59,7 +59,7 @@ namespace Bikers
             return action;
         }
 
-        protected override Queue<Vector3> BuildRoute(Transform from, Transform to)
+        protected override Queue<Vector3> BuildRoute(Vector3 from, Vector3 to)
         {
             return routeFacade.BuildRoadRoute(from, to);
         }

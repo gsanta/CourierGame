@@ -12,7 +12,7 @@ namespace Route
         private readonly IRoadLikeStore roadLikeStore;
         private DirectedGraph<Waypoint, object> graph;
         private RouteFinder<Waypoint, object> routeFinder;
-        private NearestItemCalc<Transform, Waypoint> nearestItemCalc;
+        private NearestItemCalc<Vector3, Waypoint> nearestItemCalc;
 
 
         public RouteBuilder(IRoadLikeStore roadLikeStore)
@@ -20,7 +20,7 @@ namespace Route
             this.roadLikeStore = roadLikeStore;
         }
 
-        public Queue<Vector3> BuildRoute(Transform from, Transform to)
+        public Queue<Vector3> BuildRoute(Vector3 from, Vector3 to)
         {
             if (graph == null)
             {
@@ -36,7 +36,7 @@ namespace Route
                 routePoints.RemoveAt(0);
                 routePoints.RemoveAt(routePoints.Count - 1);
             }
-            routePoints.Add(to.position);
+            routePoints.Add(to);
 
             return new Queue<Vector3>(routePoints);
         }
@@ -45,7 +45,7 @@ namespace Route
         {
             graph = new DirectedGraph<Waypoint, object>();
             routeFinder = new RouteFinder<Waypoint, object>(graph, new WaypointScorer(), new WaypointScorer());
-            nearestItemCalc = new NearestItemCalc<Transform, Waypoint>(x => x.position, x => x.transform.position);
+            nearestItemCalc = new NearestItemCalc<Vector3, Waypoint>(x => x, x => x.transform.position);
 
             WaypointGraphBuilder builder = new WaypointGraphBuilder();
             builder.BuildGraph(roadLikeStore.GetWaypoints(), graph);

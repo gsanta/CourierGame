@@ -12,6 +12,7 @@ namespace AI
         public float duration = 1;
         private AIStateName[] preconditions;
         private AIStateName[] afterEffects;
+        private ISet<AIStateName> afterEffectsSet = new HashSet<AIStateName>();
         public AIStates agentBeliefs;
 
         public bool running = false;
@@ -23,6 +24,11 @@ namespace AI
         {
             this.preconditions = preconditions;
             this.afterEffects = afterEffects;
+
+            foreach (var afterEffect in afterEffects)
+            {
+                afterEffectsSet.Add(afterEffect);
+            }
         }
 
         public bool Finished { get => finished; set => finished = value; }
@@ -58,6 +64,11 @@ namespace AI
         public AIStateName[] GetAfterEffects()
         {
             return afterEffects;
+        }
+
+        public ISet<AIStateName> GetAfterEffectsSet()
+        {
+            return afterEffectsSet;
         }
 
         public virtual bool PrePerform()
