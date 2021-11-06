@@ -1873,6 +1873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb4877bbeaf13f42b136417e9e435b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bikerCount: 0
 --- !u!1 &221115924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,9 +1905,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16865ee11d2fd2e41bdae7f0bda67e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 0}
   movementSpeed: 0
   movementTime: 0
+  rotationAmount: 0
+  zoomAmount: {x: 0, y: 0, z: 0}
   newPosition: {x: 0, y: 0, z: 0}
+  newRotation: {x: 0, y: 0, z: 0, w: 0}
+  newZoom: {x: 0, y: 0, z: 0}
+  boundary: 50
 --- !u!81 &221115926
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4329,7 +4336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b5c9c104c89214999b2aa682e1f851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pedestrianCount: 20
+  pedestrianCount: 0
 --- !u!1 &483943493
 GameObject:
   m_ObjectHideFlags: 0
@@ -7612,6 +7619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTemplate: {fileID: 1761886176335623013}
   enemyContainer: {fileID: 174765432}
+  enemyCount: 3
 --- !u!114 &966508769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17774,6 +17782,10 @@ PrefabInstance:
     - target: {fileID: 5372422195661838551, guid: 5f70cc5d6ebcba3468f47a1625734df5, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372422195661838551, guid: 5f70cc5d6ebcba3468f47a1625734df5, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5372422195661838551, guid: 5f70cc5d6ebcba3468f47a1625734df5, type: 3}
       propertyPath: m_IsActive

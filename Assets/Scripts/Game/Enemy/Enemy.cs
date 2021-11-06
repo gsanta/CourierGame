@@ -19,7 +19,7 @@ namespace Enemies {
 
         private void Awake()
         {
-            attackRadius.OnAttack += OnAttack;
+            //attackRadius.OnAttack += OnAttack;
         }
 
         private void OnAttack(IDamageable target)

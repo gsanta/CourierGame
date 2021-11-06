@@ -28,7 +28,7 @@ namespace Enemies
             Enemy enemy = enemyInstantiator.InstantiateEnemy();
             enemy.Agent = agentFactory.CreateEnemyAgent(enemy);
             enemy.GoalProvider = new EnemyGoalProvider(enemy, walkTargetStore);
-
+            enemy.Agent.SetGoals(enemy.GoalProvider.CreateGoal(), false);
 
             Transform transform = config.spawnPoint.transform;
             enemy.transform.position = transform.position;

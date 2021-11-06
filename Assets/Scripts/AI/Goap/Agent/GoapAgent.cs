@@ -159,7 +159,6 @@ namespace AI
 
                 var startTime = DateTime.Now;
                 actionQueue = planner.plan(actions, subGoal, worldStates);
-                Debug.Log((DateTime.Now - startTime).Milliseconds);
             }
 
             if (actionQueue != null && actionQueue.Count == 0)

@@ -1,33 +1,23 @@
-﻿using Route;
-using UnityEngine;
-
-namespace Enemies
+﻿namespace Enemies
 {
     public class EnemySpawner
     {
-        private int enemyCount;
-
         private EnemyStore enemyStore;
         private EnemyFactory enemyFactory;
         private EnemySpawnPointStore enemySpawnPointStore;
+        private EnemiesConfig enemiesConfig;
 
-        public EnemySpawner(EnemyStore enemyStore, EnemyFactory enemyFactory, EnemySpawnPointStore enemySpawnPointStore)
+        public EnemySpawner(EnemyStore enemyStore, EnemyFactory enemyFactory, EnemySpawnPointStore enemySpawnPointStore, EnemiesConfig enemiesConfig)
         {
             this.enemyStore = enemyStore;
             this.enemyFactory = enemyFactory;
             this.enemySpawnPointStore = enemySpawnPointStore;
-        }
-
-        public void SetEnemyCount(int enemyCount)
-        {
-            this.enemyCount = enemyCount;
+            this.enemiesConfig = enemiesConfig;
         }
 
         public void Spawn()
         {
-            int count = 0;
-
-            while (count < 3)
+            for (int i = 0; i < enemiesConfig.EnemyCount; i++)
             {
                 var spawnPoint = enemySpawnPointStore.GetRandomSpawnPoint();
 
@@ -35,7 +25,6 @@ namespace Enemies
                 pedestrian.gameObject.SetActive(true);
                 enemyStore.Add(pedestrian);
 
-                count++;
             }
         }
     }

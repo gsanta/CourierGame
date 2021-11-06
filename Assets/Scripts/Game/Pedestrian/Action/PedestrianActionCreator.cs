@@ -7,13 +7,7 @@ namespace Pedestrians
 {
     public class PedestrianActionCreator : IActionCreator<Pedestrian>
     {
-        private readonly WalkTargetStore walkTargetStore;
         private List<GoapAction<Pedestrian>> actions = new List<GoapAction<Pedestrian>>();
-
-        public PedestrianActionCreator(WalkTargetStore walkTargetStore)
-        {
-            this.walkTargetStore = walkTargetStore;
-        }
 
         public void SetActions(List<GoapAction<Pedestrian>> actions)
         {

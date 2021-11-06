@@ -29,7 +29,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     [SerializeField]
     private PackageInstantiator packageInstantiator;
     [SerializeField]
-    private CameraController mainCamera;
+    private CameraHandler mainCamera;
     [SerializeField]
     private PedestrainConfigController pedestrainConfigController;
     [SerializeField]
@@ -83,7 +83,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<MinimapPackageProvider>().AsSingle();
         Container.Bind<MinimapPackageConsumer>().AsSingle();
 
-        Container.Bind<CameraController>().FromInstance(mainCamera).AsSingle();
+        Container.Bind<CameraHandler>().FromInstance(mainCamera).AsSingle();
 
         Container.Bind<PedestrianSetup>().AsSingle();
         Container.Bind<PedestrainConfigController>().FromInstance(pedestrainConfigController).AsSingle();
@@ -137,9 +137,6 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         WalkTargetStore walkTargetStore = Container.Resolve<WalkTargetStore>();
         walkTargetStoreController.SetupStore(walkTargetStore);
 
-        EnemiesConfig enemiesConfig = Container.Resolve<EnemiesConfig>();
-        enemiesConfigController.SetupConfig(enemiesConfig);
-
         Container.Resolve<DayService>();
         Container.Resolve<MinimapPackageProvider>();
         Container.Resolve<MinimapPackageConsumer>();
@@ -157,8 +154,15 @@ public class Map1Installer : MonoInstaller, ISceneSetup
             new WalkAction<Pedestrian>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, routeFacade, walkTargetStore, pathCache),
             new GoHomeAction(routeFacade, pathCache, buildingStore)
         });
+
+        EnemyActionCreator enemyActionCreator = Container.Resolve<EnemyActionCreator>();
+        enemyActionCreator.SetActions(new List<GoapAction<Enemy>>()
+        {
+            new WalkAction<Enemy>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, routeFacade, walkTargetStore, pathCache),
+        });
+
         actionStore.SetPedestrianActionCreator(pedestrianActionCreator);
-        actionStore.SetEnemyActionCreator(Container.Resolve<EnemyActionCreator>());
+        actionStore.SetEnemyActionCreator(enemyActionCreator);
 
         actionStore.SetEnemyWalkAction(new WalkAction<Enemy>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, routeFacade, walkTargetStore, pathCache));
         actionStore.SetPedestrianWalkAction(new WalkAction<Pedestrian>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, routeFacade, walkTargetStore, pathCache));

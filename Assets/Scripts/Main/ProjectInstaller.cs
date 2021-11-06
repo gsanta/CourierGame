@@ -53,13 +53,14 @@ namespace Main
             Container.Bind<SceneChangeHandler>().AsSingle().NonLazy();
             Container.Bind<BikerPanel>().AsSingle().NonLazy();
             Container.Bind<DeliveryPanel>().AsSingle();
-            Container.Bind<CameraHandler>().AsSingle().NonLazy();
+            Container.Bind<CameraController>().AsSingle().NonLazy();
             Container.Bind<BuildingStore>().AsSingle().NonLazy();
             Container.Bind<WorldStore>().AsSingle().NonLazy();
             Container.Bind<WorldHandlers>().AsSingle().NonLazy();
             Container.Bind<CurfewHandler>().AsSingle();
             Container.Bind<WorldStateCreator>().AsSingle().NonLazy();
             Container.Bind<EnemiesConfig>().AsSingle();
+            Container.Bind<BikersConfig>().AsSingle();
 
             // ui
             Container.Bind<CurfewButton>().AsSingle();
@@ -113,7 +114,7 @@ namespace Main
             sceneChangeHandler.AddResetable(Container.Resolve<BikerPanel>());
             sceneChangeHandler.AddResetable(Container.Resolve<DeliveryPanel>());
             sceneChangeHandler.AddResetable(Container.Resolve<Timer>());
-            sceneChangeHandler.AddResetable(Container.Resolve<CameraHandler>());
+            sceneChangeHandler.AddResetable(Container.Resolve<CameraController>());
             sceneChangeHandler.AddResetable(Container.Resolve<BuildingStore>());
 
             SetupControl();

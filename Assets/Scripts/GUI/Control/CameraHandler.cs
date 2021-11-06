@@ -4,7 +4,12 @@ using Zenject;
 
 namespace Controls
 {
-    public class CameraController : MonoBehaviour
+    public enum CameraDirection
+    {
+        UP, RIGHT, DOWN, LEFT
+    }
+
+    public class CameraHandler : MonoBehaviour
     {
         public Transform cameraTransform;
         public float movementSpeed;
@@ -15,24 +20,31 @@ namespace Controls
         public Quaternion newRotation;
         public Vector3 newZoom;
         public int boundary = 50;
+        private CameraController cameraController;
 
-        private int screenWidth;
-        private int screenHeight;
+        [Inject]
+        public void Construct(CameraController cameraController)
+        {
+            this.cameraController = cameraController;
+        }
+
+        private void Awake()
+        {
+            
+        }
 
         private void Start()
         {
             newPosition = transform.position;
             newRotation = transform.rotation;
             newZoom = cameraTransform.localPosition;
-            screenWidth = Screen.width;
-            screenHeight = Screen.height;
         }
 
 
         private void Update()
         {
             HandleMovementInput();
-            HandleMouseInput();
+            //HandleMouseInput();
         }
 
         private void HandleMovementInput()
@@ -77,32 +89,50 @@ namespace Controls
             transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * movementTime);
             cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, newZoom, Time.deltaTime * movementTime);
-        
         }
 
-        private void HandleMouseInput()
+        public void Pan(CameraDirection cameraDirection)
         {
-            float x = Input.mousePosition.x;
-            float y = Input.mousePosition.y;
-
-            if (x > screenWidth - boundary && x < screenWidth)
+            switch(cameraDirection)
             {
-                newPosition += transform.right * movementSpeed;
-            } 
-            else if (x < boundary && x > 0)
-            {
-                newPosition += transform.right * -movementSpeed;
-            }
-
-            if (y > screenHeight - boundary && y < screenHeight)
-            {
-                newPosition += transform.forward * movementSpeed;
-            }
-            else  if (y < boundary && y > 0)
-            {
-                newPosition += transform.forward * -movementSpeed;
+                case CameraDirection.UP:
+                    newPosition += transform.forward * -movementSpeed;
+                    break;
+                case CameraDirection.DOWN:
+                    newPosition += transform.forward * movementSpeed;
+                    break;
+                case CameraDirection.LEFT:
+                    newPosition += transform.right * -movementSpeed;
+                    break;
+                case CameraDirection.RIGHT:
+                    newPosition += transform.right * movementSpeed;
+                    break;
             }
         }
+
+        //private void HandleMouseInput()
+        //{
+        //    float x = Input.mousePosition.x;
+        //    float y = Input.mousePosition.y;
+
+        //    if (x > screenWidth - boundary && x < screenWidth)
+        //    {
+        //        newPosition += transform.right * movementSpeed;
+        //    } 
+        //    else if (x < boundary && x > 0)
+        //    {
+        //        newPosition += transform.right * -movementSpeed;
+        //    }
+
+        //    if (y > screenHeight - boundary && y < screenHeight)
+        //    {
+        //        newPosition += transform.forward * movementSpeed;
+        //    }
+        //    else  if (y < boundary && y > 0)
+        //    {
+        //        newPosition += transform.forward * -movementSpeed;
+        //    }
+        //}
     }
 }
 
