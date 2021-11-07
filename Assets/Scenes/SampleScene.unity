@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 1725699167}
   - component: {fileID: 1725699168}
   m_Layer: 0
-  m_Name: Camera Rig
+  m_Name: Camera Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -538,14 +538,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 963194228}
-  movementSpeed: 0.5
-  movementTime: 5
+  movementSpeed: 0.1
+  timeFactor: 5
   rotationAmount: 0.5
-  zoomAmount: {x: 0, y: -0.5, z: 0.5}
-  newPosition: {x: 0, y: 0, z: 0}
-  newRotation: {x: 0, y: 0, z: 0, w: 0}
-  newZoom: {x: 0, y: 0, z: 0}
-  boundary: 50
+  zoomAmount: {x: 0, y: -1, z: 1}
 --- !u!1 &1995967663
 GameObject:
   m_ObjectHideFlags: 0

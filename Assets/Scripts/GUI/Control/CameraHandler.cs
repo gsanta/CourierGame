@@ -4,23 +4,17 @@ using Zenject;
 
 namespace Controls
 {
-    public enum CameraDirection
-    {
-        UP, RIGHT, DOWN, LEFT
-    }
 
-    public class CameraHandler : MonoBehaviour
+    public class CameraHandler : MonoBehaviour, ICameraConfig
     {
         public Transform cameraTransform;
         public float movementSpeed;
-        public float movementTime;
+        public float timeFactor;
         public float rotationAmount;
         public Vector3 zoomAmount;
-        public Vector3 newPosition;
-        public Quaternion newRotation;
-        public Vector3 newZoom;
-        public int boundary = 50;
         private CameraController cameraController;
+        private Vector3 rotateStartPosition;
+        private Vector3 rotateCurrentPosition;
 
         [Inject]
         public void Construct(CameraController cameraController)
@@ -28,111 +22,54 @@ namespace Controls
             this.cameraController = cameraController;
         }
 
+        public Transform CameraTransform { get => cameraTransform; }
+        public float MovementSpeed { get => movementSpeed; }
+        public float TimeFactor { get => timeFactor; }
+        public float RotationAmount { get => rotationAmount; }
+        public Vector3 ZoomAmount { get => zoomAmount; }
+
+        public Transform CameraHandleTransform => transform;
+
         private void Awake()
         {
-            
+            cameraController.SetCameraConfig(this);
         }
-
-        private void Start()
-        {
-            newPosition = transform.position;
-            newRotation = transform.rotation;
-            newZoom = cameraTransform.localPosition;
-        }
-
 
         private void Update()
         {
-            HandleMovementInput();
-            //HandleMouseInput();
+            HandleZoom();
+            HandleRotate();
+            cameraController.Update();
         }
 
-        private void HandleMovementInput()
+        private void HandleZoom()
         {
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            if (Input.mouseScrollDelta.y != 0)
             {
-                newPosition += transform.forward * movementSpeed;
+                cameraController.Zoom(Input.mouseScrollDelta.y * ZoomAmount);
             }
-            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-            {
-                newPosition += transform.forward * -movementSpeed;
-            }
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            {
-                newPosition += transform.right * movementSpeed; 
-            }
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            {
-                newPosition += transform.right * -movementSpeed;
-            }
-
-            if (Input.GetKey(KeyCode.Q))
-            {
-                newRotation *= Quaternion.Euler(Vector3.up * rotationAmount);
-            }
-
-            if (Input.GetKey(KeyCode.E))
-            {
-                newRotation *= Quaternion.Euler(Vector3.up * -rotationAmount);
-            }
-
-            if (Input.GetKey(KeyCode.R))
-            {
-                newZoom += zoomAmount;
-            }
-
-            if (Input.GetKey(KeyCode.F))
-            {
-                newZoom -= zoomAmount;
-            }
-
-            transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * movementTime);
-            cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, newZoom, Time.deltaTime * movementTime);
         }
 
-        public void Pan(CameraDirection cameraDirection)
+        private void HandleRotate()
         {
-            switch(cameraDirection)
-            {
-                case CameraDirection.UP:
-                    newPosition += transform.forward * -movementSpeed;
-                    break;
-                case CameraDirection.DOWN:
-                    newPosition += transform.forward * movementSpeed;
-                    break;
-                case CameraDirection.LEFT:
-                    newPosition += transform.right * -movementSpeed;
-                    break;
-                case CameraDirection.RIGHT:
-                    newPosition += transform.right * movementSpeed;
-                    break;
+            if (Input.GetMouseButtonDown(2)) {
+                rotateStartPosition = Input.mousePosition;
             }
+
+            if (Input.GetMouseButton(2))
+            {
+                rotateCurrentPosition = Input.mousePosition;
+
+                Vector3 difference = rotateStartPosition - rotateCurrentPosition;
+
+                rotateStartPosition = rotateCurrentPosition;
+
+                Quaternion newRotation = Quaternion.Euler(Vector3.up * (-difference.x / 5f));
+                
+                cameraController.Rotate(newRotation);
+            }
+
         }
-
-        //private void HandleMouseInput()
-        //{
-        //    float x = Input.mousePosition.x;
-        //    float y = Input.mousePosition.y;
-
-        //    if (x > screenWidth - boundary && x < screenWidth)
-        //    {
-        //        newPosition += transform.right * movementSpeed;
-        //    } 
-        //    else if (x < boundary && x > 0)
-        //    {
-        //        newPosition += transform.right * -movementSpeed;
-        //    }
-
-        //    if (y > screenHeight - boundary && y < screenHeight)
-        //    {
-        //        newPosition += transform.forward * movementSpeed;
-        //    }
-        //    else  if (y < boundary && y > 0)
-        //    {
-        //        newPosition += transform.forward * -movementSpeed;
-        //    }
-        //}
     }
 }
 

@@ -114,7 +114,6 @@ namespace Main
             sceneChangeHandler.AddResetable(Container.Resolve<BikerPanel>());
             sceneChangeHandler.AddResetable(Container.Resolve<DeliveryPanel>());
             sceneChangeHandler.AddResetable(Container.Resolve<Timer>());
-            sceneChangeHandler.AddResetable(Container.Resolve<CameraController>());
             sceneChangeHandler.AddResetable(Container.Resolve<BuildingStore>());
 
             SetupControl();
