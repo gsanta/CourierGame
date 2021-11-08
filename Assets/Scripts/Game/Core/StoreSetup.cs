@@ -1,16 +1,12 @@
 ﻿using Core;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Controls
 {
-    public class TargetStoreController : MonoBehaviour
+    public class StoreSetup
     {
-        [SerializeField]
-        private GameObject targetContainer;
-
-        public void SetupStore<T>(ITargetStore<T> targetStore)
+        public void SetupStore<T>(GameObject targetContainer, ITargetStore<T> targetStore)
         {
             List<T> list = new List<T>();
             foreach (Transform obj in targetContainer.transform)
@@ -21,7 +17,7 @@ namespace Controls
             targetStore.SetTargets(list);
         }
 
-        public void SetupStoreWithGameObjects(ITargetStore<GameObject> targetStore)
+        public void SetupStoreWithGameObjects(GameObject targetContainer, ITargetStore<GameObject> targetStore)
         {
             List<GameObject> list = new List<GameObject>();
             foreach (Transform obj in targetContainer.transform)

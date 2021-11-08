@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Controls
 {
-    public class BuildingStoreController : MonoBehaviour
+    public class BuildingConfigHandler : MonoBehaviour
     {
         [SerializeField]
         private GameObject buildingContainer;

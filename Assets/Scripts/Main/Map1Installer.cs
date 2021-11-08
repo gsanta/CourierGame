@@ -31,12 +31,6 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     [SerializeField]
     private CameraHandler mainCamera;
     [SerializeField]
-    private PedestrainConfigController pedestrainConfigController;
-    [SerializeField]
-    private RoadStoreController roadStoreController;
-    [SerializeField]
-    private PavementStoreController pavementStoreController;
-    [SerializeField]
     private ReconciliationController reconciliationController;
     [SerializeField]
     private SceneLoaderHandler sceneLoaderController;
@@ -44,17 +38,13 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     private SceneInitializer sceneInitializer;
     [SerializeField]
     private TimerController timerController;
-    [SerializeField]
-    private BuildingStoreController buildingStoreController;
-    
-    [SerializeField]
-    private TargetStoreController walkTargetStoreController;
 
     [SerializeField]
-    private BikersConfigController bikersConfigController;
-
+    private GameObject roadSystem;
     [SerializeField]
-    private EnemiesConfigController enemiesConfigController;
+    private GameObject staticObjects;
+    [SerializeField]
+    private GameObject characters;
 
     public override void InstallBindings()
     {
@@ -63,7 +53,6 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         Container.Bind<DayService>().AsSingle();
 
-        Container.Bind<BikersConfigController>().FromInstance(bikersConfigController).AsSingle();
         Container.Bind<BikerSpawner>().AsSingle();
         Container.Bind<BikerSetup>().AsSingle();
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
@@ -85,11 +74,15 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         Container.Bind<CameraHandler>().FromInstance(mainCamera).AsSingle();
 
+        //characters
         Container.Bind<PedestrianSetup>().AsSingle();
-        Container.Bind<PedestrainConfigController>().FromInstance(pedestrainConfigController).AsSingle();
+        Container.Bind<PedestrianConfigHandler>().FromInstance(characters.GetComponent<PedestrianConfigHandler>()).AsSingle();
+        Container.Bind<BikersConfigHandler>().FromInstance(characters.GetComponent<BikersConfigHandler>()).AsSingle();
+        Container.Bind<EnemiesConfigHandler>().FromInstance(characters.GetComponent<EnemiesConfigHandler>()).AsSingle();
 
-        Container.Bind<RoadStoreController>().FromInstance(roadStoreController).AsSingle();
-        Container.Bind<PavementStoreController>().FromInstance(pavementStoreController).AsSingle();
+        // static objects
+
+        // road system
         Container.Bind<RouteFacade>().AsSingle();
         Container.Bind<RouteSetup>().AsSingle().NonLazy();
 
@@ -110,9 +103,8 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<EnemyActionCreator>().AsSingle();
 
         Container.Bind<PathCache>().AsSingle().NonLazy();
-        Container.Bind<BuildingStoreController>().AsSingle();
+        Container.Bind<BuildingConfigHandler>().AsSingle();
 
-        Container.Bind<EnemiesConfigController>().FromInstance(enemiesConfigController).AsSingle();
         Container.Bind<EnemySetup>().AsSingle();
         //Container.Bind<EnemyInstantiator>().FromInstance(enemyInstantiator).AsSingle();
 
@@ -126,16 +118,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
     public void SetupScene()
     {
-        BikerHomeStore bikerHomeStore = Container.Resolve<BikerHomeStore>();
-        bikersConfigController.GetComponent<TargetStoreController>().SetupStoreWithGameObjects(bikerHomeStore);
-
-        EnemiesConfigController enemiesConfigController = Container.Resolve<EnemiesConfigController>();
-
-        EnemySpawnPointStore enemySpawnPointStore = Container.Resolve<EnemySpawnPointStore>();
-        enemiesConfigController.GetComponent<TargetStoreController>().SetupStoreWithGameObjects(enemySpawnPointStore);
-
         WalkTargetStore walkTargetStore = Container.Resolve<WalkTargetStore>();
-        walkTargetStoreController.SetupStore(walkTargetStore);
 
         Container.Resolve<DayService>();
         Container.Resolve<MinimapPackageProvider>();

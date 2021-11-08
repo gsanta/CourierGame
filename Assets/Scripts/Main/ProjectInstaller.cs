@@ -60,6 +60,7 @@ namespace Main
             Container.Bind<CurfewHandler>().AsSingle();
             Container.Bind<EnemiesConfig>().AsSingle();
             Container.Bind<BikersConfig>().AsSingle();
+            Container.Bind<StoreSetup>().AsSingle();
 
             // ui
             Container.Bind<CurfewButton>().AsSingle();

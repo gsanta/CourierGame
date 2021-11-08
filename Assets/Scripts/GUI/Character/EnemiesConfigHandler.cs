@@ -5,20 +5,27 @@ using Zenject;
 
 namespace Controls
 {
-    public class EnemiesConfigController : MonoBehaviour
+    public class EnemiesConfigHandler : MonoBehaviour
     {
+        [SerializeField]
+        private int enemyCount;
         [SerializeField]
         private Enemy enemyTemplate;
         [SerializeField]
         private GameObject enemyContainer;
         [SerializeField]
-        private int enemyCount;
+        private GameObject enemySpawnPointContainer;
+
         private EnemiesConfig enemiesConfig;
+        private StoreSetup storeSetup;
+        private EnemySpawnPointStore enemySpawnPointStore;
 
         [Inject]
-        public void Construct(EnemiesConfig enemiesConfig)
+        public void Construct(EnemiesConfig enemiesConfig, EnemySpawnPointStore enemySpawnPointStore, StoreSetup storeSetup)
         {
             this.enemiesConfig = enemiesConfig;
+            this.enemySpawnPointStore = enemySpawnPointStore;
+            this.storeSetup = storeSetup;
         }
 
         private void Awake()
@@ -26,6 +33,7 @@ namespace Controls
             enemiesConfig.enemyTemplate = enemyTemplate;
             enemiesConfig.enemyContainer = enemyContainer;
             enemiesConfig.EnemyCount = enemyCount;
+            storeSetup.SetupStoreWithGameObjects(enemySpawnPointContainer, enemySpawnPointStore);
         }
     }
 }
