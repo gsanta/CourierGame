@@ -1,12 +1,12 @@
 ﻿
 namespace Worlds
 {
-    public class WorldStateReporterDecorator : IWorldState
+    public class WorldStateReporterDecorator : IMapState
     {
-        private readonly IWorldState baseState;
+        private readonly IMapState baseState;
         private readonly WorldHandlers worldHandlers;
 
-        public WorldStateReporterDecorator(IWorldState baseState, WorldHandlers worldHandlers)
+        public WorldStateReporterDecorator(IMapState baseState, WorldHandlers worldHandlers)
         {
             this.baseState = baseState;
             this.worldHandlers = worldHandlers;

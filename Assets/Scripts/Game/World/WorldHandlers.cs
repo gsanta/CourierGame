@@ -14,7 +14,7 @@ namespace Worlds
             handlers.Add(curfewHandler);
         }
 
-        public void SetWorldState(IWorldState worldState)
+        public void SetWorldState(IMapState worldState)
         {
             handlers.ForEach(handler => handler.SetWorldState(worldState));
         }

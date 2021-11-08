@@ -5,8 +5,9 @@ using Zenject;
 
 namespace Controls
 {
-    public class SceneLoaderController : MonoBehaviour
+    public class SceneLoaderHandler : MonoBehaviour
     {
+
         private SceneChangeHandler sceneChangeHandler;
 
         [Inject]

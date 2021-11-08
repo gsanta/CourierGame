@@ -1,7 +1,7 @@
 ﻿
 namespace Worlds
 {
-    public class WorldState : IWorldState
+    public class MapState : IMapState
     {
         private bool curfew = false;
         private string name;

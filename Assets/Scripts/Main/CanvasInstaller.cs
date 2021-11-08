@@ -19,17 +19,6 @@ namespace Main
         private MenuWidget menuWidget;
         [SerializeField]
         private TopPanelController topPanelController;
-        [SerializeField]
-        private SelectionBoxComponent selectionBoxComponent;
-
-        [SerializeField]
-        private PanHandler panHandlerLeft;
-        [SerializeField]
-        private PanHandler panHandlerRight;
-        [SerializeField]
-        private PanHandler panHandlerTop;
-        [SerializeField]
-        private PanHandler panHandlerBottom;
 
         public override void InstallBindings()
         {
@@ -40,11 +29,6 @@ namespace Main
             Container.Bind<BikerPanelController>().FromInstance(bikerPanelController).AsSingle();
             Container.Bind<MenuWidget>().FromInstance(menuWidget).AsSingle();
             Container.Bind<TopPanelController>().FromInstance(topPanelController).AsSingle();
-            Container.Bind<SelectionBoxComponent>().FromInstance(selectionBoxComponent).AsSingle();
-            Container.Bind<PanHandler>().FromInstance(panHandlerLeft);
-            Container.Bind<PanHandler>().FromInstance(panHandlerRight);
-            Container.Bind<PanHandler>().FromInstance(panHandlerTop);
-            Container.Bind<PanHandler>().FromInstance(panHandlerBottom);
         }
     }
 }

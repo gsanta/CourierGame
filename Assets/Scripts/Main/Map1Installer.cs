@@ -39,7 +39,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
     [SerializeField]
     private ReconciliationController reconciliationController;
     [SerializeField]
-    private SceneLoaderController sceneLoaderController;
+    private SceneLoaderHandler sceneLoaderController;
     [SerializeField]
     private SceneInitializer sceneInitializer;
     [SerializeField]
@@ -95,7 +95,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         Container.Bind<ReconciliationController>().FromInstance(reconciliationController).AsSingle();
 
-        Container.Bind<SceneLoaderController>().FromInstance(sceneLoaderController).AsSingle();
+        Container.Bind<SceneLoaderHandler>().FromInstance(sceneLoaderController).AsSingle();
         Container.Bind<SceneInitializer>().FromInstance(sceneInitializer).AsSingle().NonLazy();
         Container.Bind<TimerController>().FromInstance(timerController).AsSingle();
 

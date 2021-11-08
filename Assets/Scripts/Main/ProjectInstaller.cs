@@ -58,7 +58,6 @@ namespace Main
             Container.Bind<WorldStore>().AsSingle().NonLazy();
             Container.Bind<WorldHandlers>().AsSingle().NonLazy();
             Container.Bind<CurfewHandler>().AsSingle();
-            Container.Bind<WorldStateCreator>().AsSingle().NonLazy();
             Container.Bind<EnemiesConfig>().AsSingle();
             Container.Bind<BikersConfig>().AsSingle();
 
@@ -97,9 +96,6 @@ namespace Main
 
             SceneLoader sceneLoader = Container.Resolve<SceneLoader>();
             sceneLoader.LoadInitialScenes();
-
-            WorldStateCreator worldStateCreator = Container.Resolve<WorldStateCreator>();
-            worldStateCreator.Init();
 
             SceneChangeHandler sceneChangeHandler = Container.Resolve<SceneChangeHandler>();
             sceneChangeHandler.AddResetable(Container.Resolve<BikerStore>());

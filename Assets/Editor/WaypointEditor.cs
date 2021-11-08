@@ -1,6 +1,7 @@
 ﻿using Editor;
 using AI;
 using UnityEditor;
+using UnityEngine;
 
 [InitializeOnLoad()]
 class WaypointEditor

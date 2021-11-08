@@ -6,7 +6,7 @@ namespace Worlds
 {
     public class CurfewHandler : IWorldStateChangeHandler
     {
-        private IWorldState worldState;
+        private IMapState worldState;
         private PedestrianStore pedestrianStore;
         private readonly CurfewButton curfewButton;
         private PedestrianGoalFactory pedestrianGoalFactory;
@@ -18,7 +18,7 @@ namespace Worlds
             this.pedestrianGoalFactory = pedestrianGoalFactory;
         }
 
-        public void SetWorldState(IWorldState worldState)
+        public void SetWorldState(IMapState worldState)
         {
             this.worldState = worldState;
         }

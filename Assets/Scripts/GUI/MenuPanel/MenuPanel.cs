@@ -16,14 +16,14 @@ namespace Controls
 
         public void OnLoadMap1()
         {
-            this.sceneLoader.UnLoadMapScene(2);
-            this.sceneLoader.LoadWorldScene(1);
+            this.sceneLoader.UnLoadMapScene(1);
+            this.sceneLoader.LoadMapScene(0);
         }
 
         public void OnLoadMap2()
         {
-            this.sceneLoader.UnLoadMapScene(1);
-            this.sceneLoader.LoadWorldScene(2);
+            this.sceneLoader.UnLoadMapScene(0);
+            this.sceneLoader.LoadMapScene(1);
         }
     }
 }

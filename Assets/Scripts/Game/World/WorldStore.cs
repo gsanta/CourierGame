@@ -4,8 +4,8 @@ namespace Worlds
 {
     public class WorldStore
     {
-        private Dictionary<string, IWorldState> worlds = new Dictionary<string, IWorldState>();
-        private IWorldState activeWorld;
+        private Dictionary<string, IMapState> worlds = new Dictionary<string, IMapState>();
+        private IMapState activeWorld;
         private WorldHandlers worldHandlers;
 
         // avoiding circular deps it is passed here instead of in the constructor
@@ -14,12 +14,12 @@ namespace Worlds
             this.worldHandlers = worldHandlers;
         }
 
-        public void AddWorld(WorldState worldState)
+        public void AddWorld(MapState worldState)
         {
             worlds.Add(worldState.Name, worldState);
         }
 
-        public IWorldState GetWorld(string name)
+        public IMapState GetWorld(string name)
         {
             return worlds[name];
         }
@@ -30,7 +30,7 @@ namespace Worlds
             worldHandlers.SetWorldState(activeWorld);
         }
 
-        public IWorldState GetActiveWorld()
+        public IMapState GetActiveWorld()
         {
             return activeWorld;
         }

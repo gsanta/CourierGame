@@ -9,20 +9,39 @@ namespace Scenes
         private SceneChangeHandler sceneChangeHandler;
         private WorldStore worldStore;
 
+        private string[] initialScenes;
+        private string[] mapScenes;
+
         public SceneLoader(SceneChangeHandler sceneChangeHandler, WorldStore worldStore)
         {
             this.sceneChangeHandler = sceneChangeHandler;
             this.worldStore = worldStore;
         }
 
-        public void LoadInitialScenes()
+        public void SetScenes(string[] initialScenes, string[] mapScenes)
         {
-            SceneManager.LoadSceneAsync("CanvasScene", LoadSceneMode.Additive);
+            this.initialScenes = initialScenes;
+            this.mapScenes = mapScenes;
+
+            foreach (var mapScene in mapScenes)
+            {
+                var map = new MapState();
+                map.Name = $"{mapScene}Scene";
+                worldStore.AddWorld(map);
+            }
         }
 
-        public void LoadWorldScene(int index)
+        public void LoadInitialScenes()
         {
-            string sceneName = WorldState.GenerateWorldName(index);
+            foreach (var scene in initialScenes)
+            {
+                SceneManager.LoadSceneAsync($"{scene}Scene", LoadSceneMode.Additive);
+            }
+        }
+
+        public void LoadMapScene(int index)
+        {
+            string sceneName = $"{mapScenes[index]}Scene";
             worldStore.SetActiveWorld(sceneName);
             activeMapScene = sceneName;
             sceneChangeHandler.ClearPrevScene();
@@ -31,7 +50,7 @@ namespace Scenes
 
         public void UnLoadMapScene(int index)
         {
-            string sceneName = "Map" + index + "Scene";
+            string sceneName = $"{mapScenes[index]}Scene";
             if (activeMapScene == sceneName)
             {
                 SceneManager.UnloadSceneAsync(sceneName);

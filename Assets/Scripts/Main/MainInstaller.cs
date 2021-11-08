@@ -1,4 +1,4 @@
-﻿using Controls;
+﻿using GUI;
 using UnityEngine;
 using Zenject;
 
@@ -7,11 +7,11 @@ namespace Main
     public class MainInstaller : MonoInstaller
     {
         [SerializeField]
-        private MouseController mouseController;
+        SceneHandler sceneHandler;
 
         public override void InstallBindings()
         {
-            Container.Bind<MouseController>().FromInstance(mouseController).AsSingle();
+            Container.Bind<SceneHandler>().FromInstance(sceneHandler).AsSingle();
         }
     }
 }
