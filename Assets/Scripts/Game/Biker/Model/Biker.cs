@@ -26,7 +26,6 @@ namespace Bikers
         private EventService eventService;
         private AgentFactory agentFactory;
         private GoapAgent<Biker> agent;
-        private BikerPlayComponent player;
         private IGoalProvider goalProvider;
 
         public NavMeshAgent navMeshAgent;
@@ -37,7 +36,6 @@ namespace Bikers
 
         private void Awake()
         {
-            player = GetComponent<BikerPlayComponent>();
             navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
@@ -143,14 +141,12 @@ namespace Bikers
         {
             gameObject.GetComponent<NavMeshAgent>().enabled = true;
             agent.Active = true;
-            player.SetActivated(false);
         }
 
         private void InitPlayRole()
         {
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
 
-            player.SetActivated(true);
             agent.Active = false;
         }
 

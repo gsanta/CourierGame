@@ -49,7 +49,6 @@ namespace Main
             Container.Bind<PavementStore>().AsSingle().NonLazy();
             Container.Bind<AgentFactory>().AsSingle().NonLazy();
             Container.Bind<ActionStore>().AsSingle().NonLazy();
-            Container.Bind<InputHandler>().AsSingle();
             Container.Bind<SceneChangeHandler>().AsSingle().NonLazy();
             Container.Bind<BikerPanel>().AsSingle().NonLazy();
             Container.Bind<DeliveryPanel>().AsSingle();

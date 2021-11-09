@@ -17,28 +17,9 @@ using System.Collections.Generic;
 public class Map1Installer : MonoInstaller, ISceneSetup
 {
     [SerializeField]
-    private PanelController panelController;
-    [SerializeField]
-    private InputHandlerController inputHandlerController;
-    [SerializeField]
-    private PackageStoreController packageStoreController;
-    [SerializeField]
-    private PackageSpawnPointStoreController packageSpawnPointStoreController;
-    [SerializeField]
-    private PackageTargetPointStoreController packageTargetPointStoreController;
-    [SerializeField]
-    private PackageInstantiator packageInstantiator;
-    [SerializeField]
     private CameraHandler mainCamera;
     [SerializeField]
-    private ReconciliationController reconciliationController;
-    [SerializeField]
-    private SceneLoaderHandler sceneLoaderController;
-    [SerializeField]
     private SceneInitializer sceneInitializer;
-    [SerializeField]
-    private TimerController timerController;
-
     [SerializeField]
     private GameObject roadSystem;
     [SerializeField]
@@ -48,22 +29,14 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
     public override void InstallBindings()
     {
-        Container.Bind<InputHandlerController>().FromInstance(inputHandlerController).AsSingle();
-        Container.Bind<PanelController>().FromInstance(panelController).AsSingle();
-
         Container.Bind<DayService>().AsSingle();
 
         Container.Bind<BikerSpawner>().AsSingle();
         Container.Bind<BikerSetup>().AsSingle();
         Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
-        Container.BindFactory<Object, BikerPlayComponent, BikerPlayComponent.Factory>().FromFactory<PrefabFactory<BikerPlayComponent>>();
         Container.BindFactory<Object, Pedestrian, Pedestrian.Factory>().FromFactory<PrefabFactory<Pedestrian>>();
 
-        Container.Bind<PackageStoreController>().FromInstance(packageStoreController).AsSingle();
-        Container.Bind<PackageSpawnPointStoreController>().FromInstance(packageSpawnPointStoreController).AsSingle();
-        Container.Bind<PackageTargetPointStoreController>().FromInstance(packageTargetPointStoreController).AsSingle();
         Container.Bind<ISpawner<PackageConfig>>().To<PackageSpawner>().AsSingle().NonLazy();
-        Container.Bind<PackageInstantiator>().FromInstance(packageInstantiator).AsSingle();
         Container.BindFactory<Object, Package, Package.Factory>().FromFactory<PrefabFactory<Package>>();
 
         Container.Bind<DeliveryStore>().AsSingle();
@@ -85,12 +58,8 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         // road system
         Container.Bind<RouteFacade>().AsSingle();
         Container.Bind<RouteSetup>().AsSingle().NonLazy();
-
-        Container.Bind<ReconciliationController>().FromInstance(reconciliationController).AsSingle();
-
-        Container.Bind<SceneLoaderHandler>().FromInstance(sceneLoaderController).AsSingle();
+        
         Container.Bind<SceneInitializer>().FromInstance(sceneInitializer).AsSingle().NonLazy();
-        Container.Bind<TimerController>().FromInstance(timerController).AsSingle();
 
         // actions
         Container.Bind<PickUpPackageAction>().AsSingle().NonLazy();
@@ -108,7 +77,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<EnemySetup>().AsSingle();
         //Container.Bind<EnemyInstantiator>().FromInstance(enemyInstantiator).AsSingle();
 
-        Container.Resolve<SceneInitializer>().SetSceneSetup(this);
+        Container.ParentContainers[0].Resolve<SceneInitializer>().SetSceneSetup(this);
 
         AgentFactory agentFactory = Container.Resolve<AgentFactory>();
         agentFactory.AddBikerAction(Container.Resolve<PickUpPackageAction>());

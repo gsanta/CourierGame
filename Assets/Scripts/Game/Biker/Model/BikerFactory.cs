@@ -7,16 +7,14 @@ namespace Bikers
     {
         private EventService eventService;
         private DeliveryService deliveryService;
-        private InputHandler inputHandler;
         private AgentFactory agentFactory;
         private IBikerInstantiator bikerInstantiator;
 
-        public BikerFactory(AgentFactory agentFactory, EventService eventService, DeliveryService deliveryService, InputHandler inputHandler)
-        {
+        public BikerFactory(AgentFactory agentFactory, EventService eventService, DeliveryService deliveryService)
+        {                                                                                                          
             this.agentFactory = agentFactory;
             this.eventService = eventService;
             this.deliveryService = deliveryService;
-            this.inputHandler = inputHandler;
         }
 
         public void SetBikerInstantiator(IBikerInstantiator bikerInstantiator)
@@ -31,8 +29,6 @@ namespace Bikers
             biker.EventService = eventService;
             biker.Agent = agentFactory.CreateBikerAgent(biker);
             biker.GoalProvider = new BikerGoalProvider(biker);
-
-            biker.GetComponent<BikerPlayComponent>().Construct(inputHandler, deliveryService);
 
             biker.transform.position = config.spawnPoint.transform.position;
             biker.SetName(config.name);
