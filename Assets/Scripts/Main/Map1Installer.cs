@@ -17,9 +17,7 @@ using System.Collections.Generic;
 public class Map1Installer : MonoInstaller, ISceneSetup
 {
     [SerializeField]
-    private CameraHandler mainCamera;
-    [SerializeField]
-    private SceneInitializer sceneInitializer;
+    private GameObject scripts;
     [SerializeField]
     private GameObject roadSystem;
     [SerializeField]
@@ -45,8 +43,6 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<MinimapPackageProvider>().AsSingle();
         Container.Bind<MinimapPackageConsumer>().AsSingle();
 
-        Container.Bind<CameraHandler>().FromInstance(mainCamera).AsSingle();
-
         //characters
         Container.Bind<PedestrianSetup>().AsSingle();
         Container.Bind<PedestrianConfigHandler>().FromInstance(characters.GetComponent<PedestrianConfigHandler>()).AsSingle();
@@ -58,8 +54,8 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         // road system
         Container.Bind<RouteFacade>().AsSingle();
         Container.Bind<RouteSetup>().AsSingle().NonLazy();
-        
-        Container.Bind<SceneInitializer>().FromInstance(sceneInitializer).AsSingle().NonLazy();
+
+        Container.Bind<SceneInitializer>().FromInstance(scripts.GetComponent<SceneInitializer>()).AsSingle().NonLazy();
 
         // actions
         Container.Bind<PickUpPackageAction>().AsSingle().NonLazy();
@@ -77,7 +73,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<EnemySetup>().AsSingle();
         //Container.Bind<EnemyInstantiator>().FromInstance(enemyInstantiator).AsSingle();
 
-        Container.ParentContainers[0].Resolve<SceneInitializer>().SetSceneSetup(this);
+        Container.Resolve<SceneInitializer>().SetSceneSetup(this);
 
         AgentFactory agentFactory = Container.Resolve<AgentFactory>();
         agentFactory.AddBikerAction(Container.Resolve<PickUpPackageAction>());
