@@ -234,6 +234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialScenes:
   - Canvas
+  - Control
   mapScenes:
   - Map1
   - Map2

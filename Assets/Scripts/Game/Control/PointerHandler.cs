@@ -1,6 +1,4 @@
 ﻿
-using System.Collections.Generic;
-
 namespace Controls
 {
     public class PointerHandler
@@ -10,11 +8,15 @@ namespace Controls
         //private Tool activeTool;
         private readonly SelectionTool selectionTool;
         private readonly CommandTool commandTool;
+        private readonly RouteTool routeTool;
+        private Tool activeTool;
 
-        public PointerHandler(SelectionTool selectionTool, CommandTool commandTool)
+        public PointerHandler(SelectionTool selectionTool, CommandTool commandTool, RouteTool routeTool)
         {
             this.selectionTool = selectionTool;
             this.commandTool = commandTool;
+            this.routeTool = routeTool;
+            activeTool = routeTool;
         }
 
         //public void AddTool(Tool tool)
@@ -29,17 +31,17 @@ namespace Controls
 
         public void PointerDown()
         {
-            selectionTool.Down();
+            activeTool.Down();
         }
 
         public void PointerUp()
         {
-            selectionTool.Up();
+            activeTool.Up();
         }
 
         public void PointerClick()
         {
-            selectionTool.Click();
+            activeTool.Click();
         }
 
         public void PointerRightClick()
@@ -49,7 +51,7 @@ namespace Controls
 
         public void PointerDrag()
         {
-            selectionTool.Drag();
+            activeTool.Drag();
         }
     }
 }

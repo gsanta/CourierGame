@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Editor
 {
-    public class WaypointRenderer
+    public class EditorWaypointRenderer
     {
         private static Color LightGreen = new Color(0.611f, 0.878f, 0.529f);
         private static Color LightRed = new Color(0.968f, 0.494f, 0.494f);

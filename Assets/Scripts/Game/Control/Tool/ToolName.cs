@@ -3,6 +3,7 @@
     public enum ToolName
     {
         SELECTION,
-        COMMAND
+        COMMAND,
+        ROUTE
     }
 }

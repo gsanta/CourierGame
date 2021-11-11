@@ -550,7 +550,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &162560971
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1543,11 +1543,6 @@ MonoBehaviour:
   bikerPanelController: {fileID: 1428814390}
   menuWidget: {fileID: 1732419600}
   topPanelController: {fileID: 391946348}
-  selectionBoxComponent: {fileID: 0}
-  panHandlerLeft: {fileID: 0}
-  panHandlerRight: {fileID: 0}
-  panHandlerTop: {fileID: 0}
-  panHandlerBottom: {fileID: 0}
 --- !u!1001 &643924308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5493,7 +5488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1949986713
 RectTransform:
   m_ObjectHideFlags: 0

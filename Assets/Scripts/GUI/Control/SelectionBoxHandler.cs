@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Controls
 {
-    public class SelectionBoxComponent : MonoBehaviour
+    public class SelectionBoxHandler : MonoBehaviour
     {
         [SerializeField]
         private RectTransform rectTransform;

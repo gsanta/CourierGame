@@ -6,7 +6,7 @@ using UnityEngine;
 [InitializeOnLoad()]
 class WaypointEditor
 {
-    private static WaypointRenderer waypointRenderer = new WaypointRenderer();
+    private static EditorWaypointRenderer waypointRenderer = new EditorWaypointRenderer();
 
     [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected | GizmoType.Pickable)]
     public static void OnDrawSceneGizmo(Waypoint waypoint, GizmoType gizmoType)

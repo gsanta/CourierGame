@@ -24,6 +24,19 @@ namespace AI
         [Range(0f, 1f)]
         public float branchRatio = 0.5f;
 
+        private WaypointRenderer waypointRenderer;
+
+        private void Awake()
+        {
+            LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
+            waypointRenderer = new WaypointRenderer(this, lineRenderer);
+            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            sphere.transform.SetParent(transform);
+            sphere.transform.position = transform.position;
+            sphere.gameObject.layer = LayerMask.NameToLayer("Route");
+            //sphere.gameObject.layer = LayerMask.NameToLayer("Route");
+        }
+
         public Waypoint PrevWayPoint { get => previousWaypoint; set => previousWaypoint = (Waypoint) value; }
         public Waypoint NextWayPoint { get => nextWaypoint; set => nextWaypoint = (Waypoint) value; }
 
@@ -57,20 +70,21 @@ namespace AI
 
         private void Start()
         {
-            if (nextWaypoint == null)
-            {
-                return;
-            }
+            waypointRenderer.Render();
+            //if (nextWaypoint == null)
+            //{
+            //    return;
+            //}
 
-            LineRenderer l = gameObject.AddComponent<LineRenderer>();
+            //LineRenderer l = gameObject.AddComponent<LineRenderer>();
 
-            List<Vector3> pos = new List<Vector3>();
-            pos.Add(transform.position);
-            pos.Add(NextWayPoint.transform.position);
-            l.startWidth = 1f;
-            l.endWidth = 1f;
-            l.SetPositions(pos.ToArray());
-            l.useWorldSpace = true;
+            //List<Vector3> pos = new List<Vector3>();
+            //pos.Add(transform.position);
+            //pos.Add(NextWayPoint.transform.position);
+            //l.startWidth = 1f;
+            //l.endWidth = 1f;
+            //l.SetPositions(pos.ToArray());
+            //l.useWorldSpace = true;
         }
     }
 }
