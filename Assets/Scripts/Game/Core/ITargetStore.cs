@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
-namespace Core
+namespace Scenes
 {
     public interface ITargetStore<T>
     {

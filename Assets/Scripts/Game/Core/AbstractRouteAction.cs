@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Core
+namespace Scenes
 {
     public abstract class AbstractRouteAction<T>: GoapAction<T> where T : IGameObject
     {

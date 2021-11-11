@@ -54,5 +54,23 @@ namespace AI
         {
             return Vector3.Distance(wp1.Position, wp2.Position);
         }
+
+        private void Start()
+        {
+            if (nextWaypoint == null)
+            {
+                return;
+            }
+
+            LineRenderer l = gameObject.AddComponent<LineRenderer>();
+
+            List<Vector3> pos = new List<Vector3>();
+            pos.Add(transform.position);
+            pos.Add(NextWayPoint.transform.position);
+            l.startWidth = 1f;
+            l.endWidth = 1f;
+            l.SetPositions(pos.ToArray());
+            l.useWorldSpace = true;
+        }
     }
 }

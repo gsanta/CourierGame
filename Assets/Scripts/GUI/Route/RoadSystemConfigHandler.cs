@@ -18,12 +18,12 @@ namespace GUI
         private GameObject walkTargets;
 
         private StoreSetup storeSetup;
-        private RoadStore roadStore;
-        private PavementStore pavementStore;
+        private RouteStore roadStore;
+        private RouteStore pavementStore;
         private WalkTargetStore walkTargetStore;
 
         [Inject]
-        public void Construct(StoreSetup storeSetup, RoadStore roadStore, PavementStore pavementStore, WalkTargetStore walkTargetStore)
+        public void Construct(StoreSetup storeSetup, [Inject(Id = "RoadStore")] RouteStore roadStore, [Inject(Id = "PavementStore")] RouteStore pavementStore, WalkTargetStore walkTargetStore)
         {
             this.storeSetup = storeSetup;
             this.roadStore = roadStore;

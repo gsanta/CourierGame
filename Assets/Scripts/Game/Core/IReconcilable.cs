@@ -1,4 +1,4 @@
-﻿namespace Core
+﻿namespace Scenes
 {
     public interface IReconcilable
     {

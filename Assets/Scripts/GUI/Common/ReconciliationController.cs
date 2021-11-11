@@ -1,5 +1,5 @@
 ﻿
-using Core;
+using Scenes;
 using UnityEngine;
 using Zenject;
 

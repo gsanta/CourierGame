@@ -1,21 +1,22 @@
 ﻿using Agents;
 using AI;
-using Core;
 using Route;
+using Scenes;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Pedestrians
 {
     public class WalkAction<T> : AbstractRouteAction<T> where T : IGameObject
     {
         private WalkTargetStore walkTargetStore;
-        private RouteFacade routeFacade;
+        private RouteStore routeStore;
         private float hideDuration = 0;
 
-        public WalkAction(AIStateName[] preconditions, AIStateName[] afterEffects, RouteFacade routeFacade, WalkTargetStore walkTargetStore, PathCache pathCache) : base(preconditions, afterEffects, pathCache)
+        public WalkAction(AIStateName[] preconditions, AIStateName[] afterEffects, [Inject(Id = "PavementStore")] RouteStore routeStore, WalkTargetStore walkTargetStore, PathCache pathCache) : base(preconditions, afterEffects, pathCache)
         {
-            this.routeFacade = routeFacade;
+            this.routeStore = routeStore;
             this.walkTargetStore = walkTargetStore;
         }
 
@@ -52,7 +53,7 @@ namespace Pedestrians
 
         public override GoapAction<T> Clone(GoapAgent<T> agent = null)
         {
-            var action = new WalkAction<T>(GetPreConditions(), GetAfterEffects(), routeFacade, walkTargetStore, pathCache);
+            var action = new WalkAction<T>(GetPreConditions(), GetAfterEffects(), routeStore, walkTargetStore, pathCache);
             action.agent = agent;
             action.hideDuration = hideDuration;
             return action;

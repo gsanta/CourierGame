@@ -1,5 +1,5 @@
 ﻿using AI;
-using Core;
+using Scenes;
 using Route;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,11 +8,8 @@ namespace Agents
 {
     public class AttackAction<T> : AbstractRouteAction<T> where T : IGameObject
     {
-        private RouteFacade routeFacade;
-
-        public AttackAction(RouteFacade routeFacade, AIStateName[] preconditions, AIStateName[] afterEffects,  PathCache pathCache = null) : base(preconditions, afterEffects, pathCache)
+        public AttackAction(AIStateName[] preconditions, AIStateName[] afterEffects,  PathCache pathCache = null) : base(preconditions, afterEffects, pathCache)
         {
-            this.routeFacade = routeFacade;
         }
 
         protected override Queue<Vector3> BuildRoute(Vector3 from, Vector3 to)

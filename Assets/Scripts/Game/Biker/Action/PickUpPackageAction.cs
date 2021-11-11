@@ -1,21 +1,22 @@
 ﻿using AI;
-using Core;
+using Scenes;
 using Delivery;
 using Route;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Bikers
 {
     public class PickUpPackageAction : AbstractRouteAction<Biker>
     {
         private readonly DeliveryService deliveryService;
-        private readonly RouteFacade routeFacade;
+        private RouteStore roadStore;
 
-        public PickUpPackageAction(DeliveryService deliveryService, RouteFacade routeFacade) : base(new AIStateName[] { AIStateName.PACKAGE_IS_RESERVED }, new AIStateName[] { AIStateName.PACKAGE_IS_PICKED })
+        public PickUpPackageAction(DeliveryService deliveryService, [Inject(Id = "RoadStore")] RouteStore roadStore) : base(new AIStateName[] { AIStateName.PACKAGE_IS_RESERVED }, new AIStateName[] { AIStateName.PACKAGE_IS_PICKED })
         {
             this.deliveryService = deliveryService;
-            this.routeFacade = routeFacade;
+            this.roadStore = roadStore;
         }
 
         public override bool PrePerform()
@@ -45,14 +46,14 @@ namespace Bikers
 
         public override GoapAction<Biker> Clone(GoapAgent<Biker> agent = null)
         {
-            var action = new PickUpPackageAction(deliveryService, routeFacade);
+            var action = new PickUpPackageAction(deliveryService, roadStore);
             action.agent = agent;
             return action;
         }
 
         protected override Queue<Vector3> BuildRoute(Vector3 from, Vector3 to)
         {
-            return routeFacade.BuildRoadRoute(from, to);
+            return roadStore.BuildRoute(from, to);
         }
     }
 }

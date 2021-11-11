@@ -1,21 +1,22 @@
 ﻿using Agents;
 using AI;
 using Buildings;
-using Core;
+using Scenes;
 using Route;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Pedestrians
 {
     public class GoHomeAction : AbstractRouteAction<Pedestrian>
     {
         private BuildingStore buildingStore;
-        private RouteFacade routeFacade;
+        private RouteStore roadStore;
 
-        public GoHomeAction(RouteFacade routeFacade, PathCache pathCache, BuildingStore buildingStore) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.AT_HOME })
+        public GoHomeAction([Inject(Id = "PavementStore")] RouteStore roadStore, PathCache pathCache, BuildingStore buildingStore) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.AT_HOME })
         {
-            this.routeFacade = routeFacade;
+            this.roadStore = roadStore;
             this.buildingStore = buildingStore;
             duration = 0;
         }
@@ -45,7 +46,7 @@ namespace Pedestrians
 
         public override GoapAction<Pedestrian> Clone(GoapAgent<Pedestrian> agent = null)
         {
-            var action = new GoHomeAction(routeFacade, pathCache, buildingStore);
+            var action = new GoHomeAction(roadStore, pathCache, buildingStore);
             action.agent = agent;
             return action;
         }

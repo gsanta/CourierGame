@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 434d2ee8dd1d9934b857cd82d8204124, type: 2}
 --- !u!4 &8173316 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9545456a0149b114298f24222c79a0cf, type: 3}
@@ -659,6 +659,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b882a4924e02b494db847cd3af8aabf4, type: 3}
       propertyPath: m_Name
       value: Building
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b882a4924e02b494db847cd3af8aabf4, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b882a4924e02b494db847cd3af8aabf4, type: 3}
@@ -5498,6 +5502,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: piac01_02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9545456a0149b114298f24222c79a0cf, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9545456a0149b114298f24222c79a0cf, type: 3}
 --- !u!1 &692110512
@@ -6415,6 +6423,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9545456a0149b114298f24222c79a0cf, type: 3}
       propertyPath: m_Name
       value: piac01_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9545456a0149b114298f24222c79a0cf, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9545456a0149b114298f24222c79a0cf, type: 3}
@@ -9303,6 +9315,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: piac01_02 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9545456a0149b114298f24222c79a0cf, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9545456a0149b114298f24222c79a0cf, type: 3}
 --- !u!1 &1289361181
@@ -9951,6 +9967,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9545456a0149b114298f24222c79a0cf, type: 3}
       propertyPath: m_Name
       value: piac01_02 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9545456a0149b114298f24222c79a0cf, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9545456a0149b114298f24222c79a0cf, type: 3}
@@ -11269,6 +11289,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a6c90467311899d43a058116b1356497, type: 3}
       propertyPath: m_Name
       value: haz03
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a6c90467311899d43a058116b1356497, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6c90467311899d43a058116b1356497, type: 3}

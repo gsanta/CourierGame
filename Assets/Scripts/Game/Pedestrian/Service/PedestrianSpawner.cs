@@ -1,5 +1,6 @@
 using Route;
 using UnityEngine;
+using Zenject;
 
 namespace Pedestrians
 {
@@ -9,9 +10,9 @@ namespace Pedestrians
 
         private PedestrianStore pedestrianStore;
         private PedestrianFactory pedestrianFactory;
-        private PavementStore pavementStore;
+        private RouteStore pavementStore;
 
-        public PedestrianSpawner(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, PavementStore pavementStore)
+        public PedestrianSpawner(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, [Inject(Id = "PavementStore")] RouteStore pavementStore)
         {
             this.pedestrianStore = pedestrianStore;
             this.pedestrianFactory = pedestrianFactory;

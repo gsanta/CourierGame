@@ -1,5 +1,5 @@
 ﻿
-namespace Core
+namespace Scenes
 {
     public interface IResetable
     {
