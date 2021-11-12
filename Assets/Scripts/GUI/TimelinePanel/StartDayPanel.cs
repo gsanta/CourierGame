@@ -13,11 +13,11 @@ public class StartDayPanel : MonoBehaviour
     private TMP_Text dayLabel;
 
     private Timer timer;
-    private PanelStore panelStore;
+    private CanvasStore panelStore;
     private SceneLoader sceneLoader;
 
     [Inject]
-    public void Construct(Timer timer, PanelStore panelStore, SceneLoader sceneLoader)
+    public void Construct(Timer timer, CanvasStore panelStore, SceneLoader sceneLoader)
     {
         this.timer = timer;
         this.panelStore = panelStore;
@@ -58,12 +58,12 @@ public class StartDayPanel : MonoBehaviour
     private void HidePanels()
     {
         panelStore.HidePanel(panelStore.GetPanel<DeliveryPanelController>(typeof(DeliveryPanelController)).gameObject, 0f);
-        panelStore.HidePanel(panelStore.GetPanel<BikerPanelController>(typeof(BikerPanelController)).gameObject, 0f);
+        panelStore.HidePanel(panelStore.GetPanel<BikerPanelHandler>(typeof(BikerPanelHandler)).gameObject, 0f);
     }
 
     private void DisplayPanels()
     {
         panelStore.ShowPanel(panelStore.GetPanel<DeliveryPanelController>(typeof(DeliveryPanelController)).gameObject, 0.5f);
-        panelStore.ShowPanel(panelStore.GetPanel<BikerPanelController>(typeof(BikerPanelController)).gameObject, 1f);
+        panelStore.ShowPanel(panelStore.GetPanel<BikerPanelHandler>(typeof(BikerPanelHandler)).gameObject, 1f);
     }
 }

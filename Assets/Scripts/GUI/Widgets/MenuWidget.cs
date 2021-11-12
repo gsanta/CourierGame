@@ -7,10 +7,10 @@ namespace Controls
 {
     public class MenuWidget : MonoBehaviour
     {
-        private PanelStore panelStore;
+        private CanvasStore panelStore;
 
         [Inject]
-        public void Construct(PanelStore panelStore)
+        public void Construct(CanvasStore panelStore)
         {
             this.panelStore = panelStore;
         }

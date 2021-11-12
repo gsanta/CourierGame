@@ -6,18 +6,20 @@ using Zenject;
 
 namespace Controls
 {
-    public class BikerPanelController : MonoBehaviour, IBikerListItemInstantiator
+    public class BikerPanelHandler : MonoBehaviour, IBikerListItemInstantiator
     {
         [SerializeField]
         private BikerListItem bikerListTemplate;
         private RoleService roleService;
         private BikerPanel bikerPanel;
+        private BikerListItem.Factory bikerListItemFactory;
 
         [Inject]
-        public void Construct(BikerPanel bikerPanel, RoleService roleService)
+        public void Construct(BikerPanel bikerPanel, RoleService roleService, BikerListItem.Factory bikerListItemFactory)
         {
             this.bikerPanel = bikerPanel;
             this.roleService = roleService;
+            this.bikerListItemFactory = bikerListItemFactory;
         }
 
         private void Awake()
@@ -27,7 +29,9 @@ namespace Controls
 
         public IBikerListItem Instantiate(Biker biker)
         {
-            BikerListItem bikerListItem = Instantiate(bikerListTemplate, bikerListTemplate.transform.parent);
+            BikerListItem bikerListItem = bikerListItemFactory.Create(bikerListTemplate);
+            //bikerListTemplate.transform.parent
+            bikerListItem.transform.SetParent(bikerListTemplate.transform.parent);
             bikerListItem.courierNameText.text = biker.GetName();
             bikerListItem.gameObject.SetActive(true);
             bikerListItem.RoleService = roleService;

@@ -28,7 +28,7 @@ namespace Bikers
             for (int i = 0; i < bikersConfig.BikerCount; i++)
             {
                 GameObject spawnPoint = bikerHomeStore.ChooseHome();
-                BikerConfig config = new BikerConfig(spawnPoint, new Goal(AIStateName.PACKAGE_IS_DROPPED, false), $"Courier-{i}");
+                BikerConfig config = new BikerConfig(spawnPoint, new Goal(AIStateName.PACKAGE_IS_DROPPED, false), $"Player-{i}");
                 Biker courier = bikerFactory.Create(config);
                 bikerStore.Add(courier);
             }

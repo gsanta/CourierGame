@@ -4,14 +4,20 @@ using UnityEngine;
 
 namespace UI
 {
-    public class PanelStore
+    public class CanvasStore
     {
         private IPanelController panelController;
         private IToolbarController widgetController;
+        private Dictionary<string, GameObject> panelMap = new Dictionary<string, GameObject>();
 
-        public void AddPanelController(IPanelController panelController)
+        public void SetCanvas(GameObject canvas)
         {
-            this.panelController = panelController;
+            panelController = canvas.GetComponent<IPanelController>();
+
+            foreach (Transform child in canvas.transform)
+            {
+                panelMap.Add(child.gameObject.name, child.gameObject);
+            }
         }
 
         public void AddWidgetController(IToolbarController widgetController)
@@ -27,6 +33,11 @@ namespace UI
         public List<GameObject> GetAllPanels()
         {
             return panelController.GetAllPanels();
+        }
+
+        public GameObject GetPanelByName(string name)
+        {
+            return panelMap[name];
         }
 
         public T GetWidget<T>(Type type) where T : class

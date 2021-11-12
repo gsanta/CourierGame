@@ -278,7 +278,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 152960287}
-  - component: {fileID: 152960286}
   - component: {fileID: 152960285}
   - component: {fileID: 152960284}
   m_Layer: 0
@@ -302,7 +301,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialScenes:
   - Control
+  - Canvas
   mapScenes: []
+  initialPanels:
+  - Biker Panel
 --- !u!114 &152960285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,18 +315,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfa1ce05b456d41428af48311d1379cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &152960286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 152960283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7332593941308e143a968b11e3473c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &152960287
@@ -592,6 +582,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1512156273}
+  - {fileID: 1672724513}
   m_Father: {fileID: 1472724303}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -983,7 +974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613305ac179d232489e9c032ef29819e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneHandler: {fileID: 152960284}
+  sceneHandler: {fileID: 0}
 --- !u!114 &714170042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2070,7 +2061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8110478151504799422, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
       propertyPath: m_Name
-      value: Biker Spawn Point (4)
+      value: Biker Spawn Point
       objectReference: {fileID: 0}
     - target: {fileID: 8110478151504799422, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
       propertyPath: m_Layer
@@ -2501,6 +2492,80 @@ Transform:
   m_Father: {fileID: 946986513}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1001 &1672724512
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 359520036}
+    m_Modifications:
+    - target: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 31.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857719269292431251, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110478151504799422, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_Name
+      value: Biker Spawn Point (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110478151504799422, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110478151504799422, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+--- !u!4 &1672724513 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5487839466133063132, guid: fe2e3406c733e23498adce6a241457d7, type: 3}
+  m_PrefabInstance: {fileID: 1672724512}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1756944399
 GameObject:
   m_ObjectHideFlags: 0
@@ -2710,7 +2775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb4877bbeaf13f42b136417e9e435b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bikerCount: 0
+  bikerCount: 1
   minimapBiker: {fileID: 2002414043}
   spawnPointContainer: {fileID: 359520035}
   bikerTemplate: {fileID: 758168435}

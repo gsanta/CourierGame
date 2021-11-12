@@ -8,21 +8,26 @@ using Zenject;
 
 namespace Controls
 {
-    public class PanelController : MonoBehaviour, IPanelController
+    public class CanvasHandler : MonoBehaviour, IPanelController
     {
         [SerializeField]
         private GameObject panelContainer;
 
+        private CanvasInitializer canvasInitializer;
+
         [Inject]
-        public void Construct(PanelStore panelStore)
+        public void Construct(CanvasStore canvasStore, CanvasInitializer canvasInitializer)
         {
-            panelStore.AddPanelController(this);
+            canvasStore.SetCanvas(this.gameObject);
+            this.canvasInitializer = canvasInitializer;
         }
 
         private void Start()
         {
             GetAllPanels().ForEach(panel => panel.SetActive(false));
-            GetPanel<MenuPanel>(typeof(MenuPanel)).gameObject.SetActive(true);
+
+            canvasInitializer.Initialize();
+            //GetPanel<MenuPanel>(typeof(MenuPanel)).gameObject.SetActive(true);
         }
 
         public T GetPanel<T>(Type type) where T : class

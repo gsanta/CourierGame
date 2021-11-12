@@ -7,11 +7,11 @@ namespace Main
     public class MainInstaller : MonoInstaller
     {
         [SerializeField]
-        SceneHandler sceneHandler;
+        SceneLoaderHandler sceneHandler;
 
         public override void InstallBindings()
         {
-            Container.Bind<SceneHandler>().FromInstance(sceneHandler).AsSingle();
+            Container.Bind<SceneLoaderHandler>().FromInstance(sceneHandler).AsSingle();
         }
     }
 }

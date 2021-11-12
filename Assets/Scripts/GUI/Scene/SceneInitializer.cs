@@ -9,12 +9,12 @@ namespace Controls
 {
     public class SceneInitializer : MonoBehaviour, ISceneInitializer
     {
-        private PanelStore panelStore;
+        private CanvasStore panelStore;
         private SceneChangeHandler sceneChangeHandler;
         private ISceneSetup sceneSetup;
 
         [Inject]
-        public void Construct(PanelStore panelStore, SceneChangeHandler sceneChangeHandler)
+        public void Construct(CanvasStore panelStore, SceneChangeHandler sceneChangeHandler)
         {
             this.panelStore = panelStore;
             this.sceneChangeHandler = sceneChangeHandler;

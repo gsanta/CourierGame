@@ -5,12 +5,25 @@ using UnityEngine;
 
 namespace Bikers
 {
-    public class BikerStore : IResetable
+    public class BikerStoreInfo
     {
-        private List<Biker> bikers = new List<Biker>();
+        public enum Type
+        {
+            ACTIVATED
+        }
+
+        public Type type;
+    }
+
+    public class BikerStore : IResetable, IObservable<BikerStoreInfo>
+    {
+        private List<Biker> players = new List<Biker>();
         private MinimapBiker minimapBiker;
         private Biker bikerTemplate;
         private GameObject bikerContainer;
+        private Biker activePlayer;
+
+        private List<IObserver<BikerStoreInfo>> observers = new List<IObserver<BikerStoreInfo>>();
 
         public MinimapBiker GetMinimapBiker()
         {
@@ -20,11 +33,6 @@ namespace Bikers
         public void SetMinimapBiker(MinimapBiker minimapBiker)
         {
             this.minimapBiker = minimapBiker;
-        }
-
-        public BikerStore()
-        {
-            Debug.Log("bikerStore");
         }
 
         public void SetBikerTemplate(Biker bikerTemplate)
@@ -47,15 +55,33 @@ namespace Bikers
             return bikerContainer;
         }
 
-        public void Add(Biker biker)
+        public void Add(Biker player)
         {
-            bikers.Add(biker);
-            TriggerCourierAdded(biker);
+            if (activePlayer == null)
+            {
+                SetActivePlayer(player);
+            }
+            players.Add(player);
+            TriggerCourierAdded(player);
+        }
+
+        public void SetActivePlayer(Biker player)
+        {
+            this.activePlayer = player;
+
+            var info = new BikerStoreInfo { type = BikerStoreInfo.Type.ACTIVATED };
+            foreach (var observer in observers)
+                observer.OnNext(info);
+        }
+
+        public Biker GetActivePlayer()
+        {
+            return activePlayer;
         }
 
         public List<Biker> GetAll()
         {
-            return bikers;
+            return players;
         }
 
         public event EventHandler<CourierAddedEventArgs> OnBikerAdded;
@@ -71,9 +97,19 @@ namespace Bikers
 
         public void Reset()
         {
-            bikers = new List<Biker>();
+            players = new List<Biker>();
             minimapBiker = null;
             bikerTemplate = null;
+        }
+
+        public IDisposable Subscribe(IObserver<BikerStoreInfo> observer)
+        {
+            if (!observers.Contains(observer))
+            {
+                observers.Add(observer);
+            }
+
+            return null;
         }
     }
 

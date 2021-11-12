@@ -10,12 +10,9 @@ namespace Main
     {
         [SerializeField]
         private SceneInitializer sceneInitializer;
-        [SerializeField]
-        private SceneLoaderHandler sceneLoaderController;
 
         public override void InstallBindings()
         {
-            Container.Bind<SceneLoaderHandler>().FromInstance(sceneLoaderController).AsSingle();
             Container.Bind<SceneInitializer>().FromInstance(sceneInitializer).AsSingle();
 
             Container.Resolve<SceneInitializer>().SetSceneSetup(this);

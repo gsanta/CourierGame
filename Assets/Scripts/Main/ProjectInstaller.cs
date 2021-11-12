@@ -25,7 +25,7 @@ namespace Main
         {
             Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
             Container.Bind<Timer>().AsSingle().NonLazy();
-            Container.Bind<PanelStore>().AsSingle();
+            Container.Bind<CanvasStore>().AsSingle();
             Container.Bind<BikerStore>().AsSingle().NonLazy();
             Container.Bind<BikerService>().AsSingle();
             Container.Bind<RoleService>().AsSingle();
@@ -74,6 +74,7 @@ namespace Main
             Container.Bind<RouteTool>().AsSingle();
             Container.Bind<SelectionBox>().AsSingle();
             Container.Bind<ObjectClicker>().AsSingle();
+            Container.Bind<CanvasInitializer>().AsSingle();
 
             // Game object
             Container.Bind<OutlineGameObjectSelector>().AsTransient();

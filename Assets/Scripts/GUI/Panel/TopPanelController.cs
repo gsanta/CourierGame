@@ -16,7 +16,7 @@ namespace Controls
         private CurfewButton curfewButton;
 
         [Inject]
-        public void Construct(PanelStore panelStore, WorldStore worldStore, CurfewButton curfewButton)
+        public void Construct(CanvasStore panelStore, WorldStore worldStore, CurfewButton curfewButton)
         {
             panelStore.AddWidgetController(this);
             this.worldStore = worldStore;
