@@ -11,8 +11,8 @@ namespace Bikers
     public class DeliverPackageAction : AbstractRouteAction<Biker>
     {
         private DeliveryService deliveryService;
-        private RouteStore roadStore;
-        public DeliverPackageAction(DeliveryService deliveryService, [Inject(Id = "RoadStore")] RouteStore roadStore) : base(new AIStateName[] { AIStateName.PACKAGE_IS_PICKED }, new AIStateName[] { AIStateName.PACKAGE_IS_DROPPED })
+        private RoadStore roadStore;
+        public DeliverPackageAction(DeliveryService deliveryService, [Inject(Id = "RoadStore")] RoadStore roadStore) : base(new AIStateName[] { AIStateName.PACKAGE_IS_PICKED }, new AIStateName[] { AIStateName.PACKAGE_IS_DROPPED })
         {
             this.deliveryService = deliveryService;
             this.roadStore = roadStore;

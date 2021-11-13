@@ -22,6 +22,11 @@ namespace Controls
             this.bikerListItemFactory = bikerListItemFactory;
         }
 
+        public void Play()
+        {
+            bikerPanel.Play();
+        }
+
         private void Awake()
         {
             bikerPanel.SetBikerListItemInstantiator(this);

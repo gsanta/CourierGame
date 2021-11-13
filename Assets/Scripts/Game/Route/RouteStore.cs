@@ -1,41 +1,26 @@
-﻿using AI;
-using Scenes;
-using System;
+﻿using Bikers;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Route
+namespace Routes
 {
-    public class RouteStore : IResetable
+    public class RouteStore
     {
-        private List<Waypoint> waypoints = new List<Waypoint>();
-        private DirectedGraph<Waypoint, object> graph = new DirectedGraph<Waypoint, object>();
-        private RouteBuilder routeBuilder;
+        private Dictionary<Biker, List<Vector3>> routes = new Dictionary<Biker, List<Vector3>>();
 
-        public List<Waypoint> GetWaypoints() { return waypoints; }
-        public DirectedGraph<Waypoint, object> GetGraph() { return graph; }
-
-        public void SetWaypoints(List<Waypoint> waypoints)
+        public void AddRoute(Biker player, List<Vector3> points)
         {
-            this.waypoints = waypoints;
-            Initialized?.Invoke(this, EventArgs.Empty);
-
-            WaypointGraphBuilder builder = new WaypointGraphBuilder();
-            builder.BuildGraph(waypoints, graph);
-
-            routeBuilder = new RouteBuilder(this);
-            routeBuilder.Setup();
-        }
-        public Queue<Vector3> BuildRoute(Vector3 from, Vector3 to)
-        {
-            return routeBuilder.BuildRoute(from, to);
+            routes.Add(player, points);
         }
 
-        public void Reset()
+        public Dictionary<Biker, List<Vector3>> GetRoutes()
         {
-            waypoints = new List<Waypoint>();
+            return routes;
         }
 
-        public event EventHandler Initialized;
+        public void Clear()
+        {
+            routes = new Dictionary<Biker, List<Vector3>>();
+        }
     }
 }

@@ -1,18 +1,26 @@
 ﻿using Controls;
+using Routes;
 using UnityEngine;
 using Zenject;
 
 namespace GUI
 {
-    public class RouteHandler : MonoBehaviour
+    public class RouteHandler : MonoBehaviour, IRouteHandler
     {
-        private RouteTool routeTool;
+        [SerializeField]
+        private GameObject routeRenderer;
 
         [Inject]
         public void Construct(RouteTool routeTool)
         {
-            this.routeTool = routeTool;
-            routeTool.SetGameObject(gameObject);
+            routeTool.SetRouteHandler(this);
+        }
+
+        public LineRenderer InstantiateLinerRenderer()
+        {
+            GameObject clone = Instantiate(routeRenderer, transform);
+            clone.SetActive(true);
+            return clone.GetComponent<LineRenderer>();
         }
     }
 }

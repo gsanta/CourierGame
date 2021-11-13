@@ -79,6 +79,22 @@ namespace Bikers
             return activePlayer;
         }
 
+        public Biker GetFirstPlayer()
+        {
+            return players[0];
+        }
+
+        public Biker GetLastPlayer()
+        {
+            return players[players.Count - 1];
+        }
+
+        public void SetNextPlayer()
+        {
+            var newActivePlayer = activePlayer == players[players.Count - 1] ? players[0] : players[players.IndexOf(activePlayer) + 1];
+            SetActivePlayer(newActivePlayer);
+        }
+
         public List<Biker> GetAll()
         {
             return players;

@@ -12,9 +12,9 @@ namespace Pedestrians
     public class GoHomeAction : AbstractRouteAction<Pedestrian>
     {
         private BuildingStore buildingStore;
-        private RouteStore roadStore;
+        private RoadStore roadStore;
 
-        public GoHomeAction([Inject(Id = "PavementStore")] RouteStore roadStore, PathCache pathCache, BuildingStore buildingStore) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.AT_HOME })
+        public GoHomeAction([Inject(Id = "PavementStore")] RoadStore roadStore, PathCache pathCache, BuildingStore buildingStore) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.AT_HOME })
         {
             this.roadStore = roadStore;
             this.buildingStore = buildingStore;

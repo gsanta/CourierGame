@@ -57,6 +57,11 @@ namespace AI
             this.actions = actions;
         }
 
+        public void SetActions(GoapAction<T> action)
+        {
+            actions = new List<GoapAction<T>> { action };
+        }
+
         public T Parent { get => parent; }
 
         public NavMeshAgent NavMeshAgent { get => navMeshAgent; }
@@ -168,7 +173,7 @@ namespace AI
 
             if (actionQueue != null && actionQueue.Count > 0)
             {
-                currentAction = actionQueue.Dequeue().Clone(this);
+                currentAction = actionQueue.Dequeue();
             }
 
         }

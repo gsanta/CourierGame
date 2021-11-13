@@ -8,12 +8,12 @@ namespace Route
 {
     public class RouteBuilder
     {
-        private readonly RouteStore routeStore;
+        private readonly RoadStore routeStore;
         //private DirectedGraph<Waypoint, object> graph;
         private RouteFinder<Waypoint, object> routeFinder;
         private NearestItemCalc<Vector3, Waypoint> nearestItemCalc;
 
-        public RouteBuilder(RouteStore routeStore)
+        public RouteBuilder(RoadStore routeStore)
         {
             this.routeStore = routeStore;
         }

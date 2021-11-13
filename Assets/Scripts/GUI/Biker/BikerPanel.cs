@@ -1,4 +1,8 @@
-﻿using Bikers;
+﻿using Actions;
+using AI;
+using Bikers;
+using Controls;
+using Routes;
 using Scenes;
 using Service;
 using System;
@@ -12,13 +16,20 @@ namespace UI
         private IBikerListItemInstantiator bikerListItemInstantiator;
 
         private BikerService bikerService;
+        private readonly RouteTool routeTool;
+        private readonly ActionFactory actionFactory;
+        private readonly RouteStore routeStore;
         private BikerStore bikerStore;
+        private bool isPlayMode = false;
 
         private IBikerListItem prevActiveItem;
 
-        public BikerPanel(BikerStore bikerStore, BikerService bikerService, EventService eventService)
+        public BikerPanel(BikerStore bikerStore, BikerService bikerService, EventService eventService, RouteTool routeTool, ActionFactory actionFactory, RouteStore routeStore)
         {
             this.bikerService = bikerService;
+            this.routeTool = routeTool;
+            this.actionFactory = actionFactory;
+            this.routeStore = routeStore;
             this.bikerStore = bikerStore;
 
             bikerStore.OnBikerAdded += HandleBikerAdded;
@@ -32,6 +43,30 @@ namespace UI
             this.bikerListItemInstantiator = bikerListItemInstantiator;
             ClearBikerItems();
             bikerStore.GetAll().ForEach(biker => AddBiker(biker));
+        }
+
+        public void Play()
+        {
+            if (!isPlayMode && bikerStore.GetActivePlayer() == bikerStore.GetLastPlayer())
+            {
+                isPlayMode = true;
+            }
+
+            if (!isPlayMode) 
+            {
+                routeStore.AddRoute(bikerStore.GetActivePlayer(), routeTool.GetPoints());
+                bikerStore.SetNextPlayer();
+                routeTool.Step();
+            } else
+            {
+
+            }
+            //var player = bikerStore.GetActivePlayer();
+            //player.Agent.Active = true;
+            //var points = routeTool.GetPoints();
+            //points.RemoveAt(0);
+            //player.Agent.SetActions(actionFactory.CreatePlayerWalkAction(player.Agent, points));
+            //player.Agent.SetGoals(new Goal(AIStateName.WALK_FINISHED, false), false);
         }
 
         private void HandleBikerAdded(object sender, CourierAddedEventArgs args)

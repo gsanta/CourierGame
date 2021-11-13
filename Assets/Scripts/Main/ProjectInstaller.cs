@@ -16,6 +16,8 @@ using Stats;
 using UI;
 using Worlds;
 using Zenject;
+using Actions;
+using Routes;
 
 namespace Main
 {
@@ -45,8 +47,8 @@ namespace Main
             Container.Bind<PedestrianGoalFactory>().AsSingle();
             Container.Bind<WalkTargetStore>().AsSingle().NonLazy();
             Container.Bind<PedestrianStore>().AsSingle().NonLazy();
-            Container.Bind<RouteStore>().WithId("RoadStore").AsCached().NonLazy();
-            Container.Bind<RouteStore>().WithId("PavementStore").AsCached().NonLazy();
+            Container.Bind<RoadStore>().WithId("RoadStore").AsCached().NonLazy();
+            Container.Bind<RoadStore>().WithId("PavementStore").AsCached().NonLazy();
             Container.Bind<AgentFactory>().AsSingle().NonLazy();
             Container.Bind<ActionStore>().AsSingle().NonLazy();
             Container.Bind<SceneChangeHandler>().AsSingle().NonLazy();
@@ -60,6 +62,14 @@ namespace Main
             Container.Bind<EnemiesConfig>().AsSingle();
             Container.Bind<BikersConfig>().AsSingle();
             Container.Bind<StoreSetup>().AsSingle();
+
+            //actions
+            Container.Bind<RouteStore>().AsSingle();
+            Container.Bind<PlayerWalkAction>().AsSingle();
+            Container.Bind<PlayerWalkActionCreator>().AsSingle();
+            Container.Bind<ActionFactory>().AsSingle();
+            Container.Bind<ActionCreators>().AsSingle();
+            SetupActionFactory();
 
             // ui
             Container.Bind<CurfewButton>().AsSingle();
@@ -106,8 +116,8 @@ namespace Main
             sceneChangeHandler.AddResetable(Container.Resolve<PackageTargetPointStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<WalkTargetStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PedestrianStore>());
-            sceneChangeHandler.AddResetable(Container.ResolveId<RouteStore>("RoadStore"));
-            sceneChangeHandler.AddResetable(Container.ResolveId<RouteStore>("PavementStore"));
+            sceneChangeHandler.AddResetable(Container.ResolveId<RoadStore>("RoadStore"));
+            sceneChangeHandler.AddResetable(Container.ResolveId<RoadStore>("PavementStore"));
             sceneChangeHandler.AddResetable(Container.Resolve<ActionStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<BikerPanel>());
             sceneChangeHandler.AddResetable(Container.Resolve<DeliveryPanel>());
@@ -115,6 +125,12 @@ namespace Main
             sceneChangeHandler.AddResetable(Container.Resolve<BuildingStore>());
 
             SetupControl();
+        }
+
+        private void SetupActionFactory()
+        {
+            var actionFactoryBuilder = Container.Resolve<ActionFactory>();
+            actionFactoryBuilder.actionCreators.PlayerWalkActionCreator = Container.Resolve<PlayerWalkActionCreator>();
         }
 
         private void SetupControl()

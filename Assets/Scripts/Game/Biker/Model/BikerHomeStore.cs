@@ -16,6 +16,11 @@ namespace Bikers
             homes.ForEach(home => homeUsers.Add(home, 0));
         }
 
+        public List<GameObject> GetHomes()
+        {
+            return homes;
+        }
+
         public GameObject ChooseHome()
         {
             var homeIndex = Random.Range(0, homes.Count - 1);

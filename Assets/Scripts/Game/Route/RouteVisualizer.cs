@@ -5,10 +5,10 @@ namespace Route
 {
     public class RouteVisualizer : MonoBehaviour
     {
-        private RouteStore routeStore;
+        private RoadStore routeStore;
 
         [Inject]
-        public void Construct(RouteStore pavementStore)
+        public void Construct(RoadStore pavementStore)
         {
             this.routeStore = pavementStore;
         }

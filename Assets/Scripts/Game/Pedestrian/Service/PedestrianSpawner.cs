@@ -10,9 +10,9 @@ namespace Pedestrians
 
         private PedestrianStore pedestrianStore;
         private PedestrianFactory pedestrianFactory;
-        private RouteStore pavementStore;
+        private RoadStore pavementStore;
 
-        public PedestrianSpawner(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, [Inject(Id = "PavementStore")] RouteStore pavementStore)
+        public PedestrianSpawner(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, [Inject(Id = "PavementStore")] RoadStore pavementStore)
         {
             this.pedestrianStore = pedestrianStore;
             this.pedestrianFactory = pedestrianFactory;

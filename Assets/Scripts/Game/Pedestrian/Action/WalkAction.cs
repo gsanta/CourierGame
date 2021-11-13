@@ -11,10 +11,10 @@ namespace Pedestrians
     public class WalkAction<T> : AbstractRouteAction<T> where T : IGameObject
     {
         private WalkTargetStore walkTargetStore;
-        private RouteStore routeStore;
+        private RoadStore routeStore;
         private float hideDuration = 0;
 
-        public WalkAction(AIStateName[] preconditions, AIStateName[] afterEffects, [Inject(Id = "PavementStore")] RouteStore routeStore, WalkTargetStore walkTargetStore, PathCache pathCache) : base(preconditions, afterEffects, pathCache)
+        public WalkAction(AIStateName[] preconditions, AIStateName[] afterEffects, [Inject(Id = "PavementStore")] RoadStore routeStore, WalkTargetStore walkTargetStore, PathCache pathCache) : base(preconditions, afterEffects, pathCache)
         {
             this.routeStore = routeStore;
             this.walkTargetStore = walkTargetStore;
