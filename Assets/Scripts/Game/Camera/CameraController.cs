@@ -43,6 +43,11 @@ namespace Cameras
             newZoom += zoom;
         }
 
+        public void PanTo(Vector3 position)
+        {
+            newPosition = position;
+        }
+
         public void Pan(CameraDirection cameraDirection)
         {
             Transform transform = cameraConfig.CameraHandleTransform;

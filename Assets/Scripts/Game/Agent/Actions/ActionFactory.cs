@@ -1,5 +1,6 @@
 ﻿using AI;
 using Bikers;
+using Pedestrians;
 using Route;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,11 @@ namespace Actions
         public PlayerWalkAction CreatePlayerWalkAction(GoapAgent<Biker> agent, List<Vector3> points)
         {
             return actionCreators.PlayerWalkActionCreator.Create(agent, points, routeStore);
+        }
+
+        public WalkAction<Pedestrian> CreatePedestrianWalkAction(GoapAgent<Pedestrian> agent)
+        {
+            return actionCreators.PedestrianWalkActionCreator.Create(agent, new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED });
         }
     }
 }

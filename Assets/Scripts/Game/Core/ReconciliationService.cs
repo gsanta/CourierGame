@@ -20,17 +20,17 @@ namespace Scenes
         public void ReconcileAll()
         {
 
-            foreach (var item in map)
-            {
-                if (item.Key.IsDirty())
-                {
-                    item.Key.ClearDirty();
-                    item.Value.ForEach(val =>
-                    {
-                        val.Reconcile();
-                    });
-                }
-            }
+            //foreach (var item in map)
+            //{
+            //    if (item.Key.IsDirty())
+            //    {
+            //        item.Key.ClearDirty();
+            //        item.Value.ForEach(val =>
+            //        {
+            //            val.Reconcile();
+            //        });
+            //    }
+            //}
         }
     }
 }

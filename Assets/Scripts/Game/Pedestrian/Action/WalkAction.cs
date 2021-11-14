@@ -14,8 +14,9 @@ namespace Pedestrians
         private RoadStore routeStore;
         private float hideDuration = 0;
 
-        public WalkAction(AIStateName[] preconditions, AIStateName[] afterEffects, [Inject(Id = "PavementStore")] RoadStore routeStore, WalkTargetStore walkTargetStore, PathCache pathCache) : base(preconditions, afterEffects, pathCache)
+        public WalkAction(GoapAgent<T> agent, AIStateName[] preconditions, AIStateName[] afterEffects, [Inject(Id = "PavementStore")] RoadStore routeStore, WalkTargetStore walkTargetStore, PathCache pathCache) : base(preconditions, afterEffects, pathCache)
         {
+            this.agent = agent;
             this.routeStore = routeStore;
             this.walkTargetStore = walkTargetStore;
         }
@@ -53,7 +54,7 @@ namespace Pedestrians
 
         public override GoapAction<T> Clone(GoapAgent<T> agent = null)
         {
-            var action = new WalkAction<T>(GetPreConditions(), GetAfterEffects(), routeStore, walkTargetStore, pathCache);
+            var action = new WalkAction<T>(GoapAgent, GetPreConditions(), GetAfterEffects(), routeStore, walkTargetStore, pathCache);
             action.agent = agent;
             action.hideDuration = hideDuration;
             return action;
@@ -62,6 +63,23 @@ namespace Pedestrians
         protected override Queue<Vector3> BuildRoute(Vector3 from, Vector3 to)
         {
             return new Queue<Vector3>(new List<Vector3>() { to });
+        }
+    }
+
+    public class PedestrianWalkActionCreator
+    {
+        private readonly RoadStore routeStore;
+        private readonly WalkTargetStore walkTargetStore;
+
+        public PedestrianWalkActionCreator([Inject(Id = "PavementStore")] RoadStore routeStore, WalkTargetStore walkTargetStore)
+        {
+            this.routeStore = routeStore;
+            this.walkTargetStore = walkTargetStore;
+        }
+
+        public WalkAction<Pedestrian> Create(GoapAgent<Pedestrian> agent, AIStateName[] preconditions, AIStateName[] afterEffects)
+        {
+            return new WalkAction<Pedestrian>(agent, preconditions, afterEffects, routeStore, walkTargetStore, null);
         }
     }
 }

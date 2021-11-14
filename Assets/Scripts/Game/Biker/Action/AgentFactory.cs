@@ -1,4 +1,5 @@
 ﻿
+using Actions;
 using Agents;
 using AI;
 using Enemies;
@@ -14,12 +15,14 @@ namespace Bikers
         private Dictionary<string, int> idMap = new Dictionary<string, int>();
         private List<GoapAction<Biker>> bikerActions = new List<GoapAction<Biker>>();
         private readonly ActionStore actionStore;
+        private ActionFactory actionFactory;
 
-        public AgentFactory(ActionStore actionStore)
+        public AgentFactory(ActionStore actionStore, ActionFactory actionFactory)
         {
             idMap.Add("biker", 1);
             idMap.Add("pedestrian", 1);
             idMap.Add("enemy", 1);
+            this.actionFactory = actionFactory;
             this.actionStore = actionStore;
         }
 
@@ -46,7 +49,8 @@ namespace Bikers
             idMap["pedestrian"]++;
 
             var agent = new GoapAgent<Pedestrian>(id, pedestrian, new SimplePlanner<Pedestrian>());
-            agent.SetActions(actionStore.GetPedestrianActions());
+            agent.SetActions(actionFactory.CreatePedestrianWalkAction(agent));
+            agent.Active = false;
 
             return agent;
         }

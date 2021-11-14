@@ -1,6 +1,5 @@
 ﻿
 using Scenes;
-using Scenes;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -33,13 +32,14 @@ namespace Controls
         private void Start()
         {
             sceneSetup.SetupScene();
+            panelStore.GetAllPanels().ForEach(panel => panel.SetActive(false));
+            panelStore.GetPanel<StartDayPanel>(typeof(StartDayPanel)).gameObject.SetActive(true);
+            panelStore.GetPanel<TopPanelController>(typeof(TopPanelController)).gameObject.SetActive(true);
         }
 
         public void InitializeScene()
         {
-            panelStore.GetAllPanels().ForEach(panel => panel.SetActive(false));
-            panelStore.GetPanel<StartDayPanel>(typeof(StartDayPanel)).gameObject.SetActive(true);
-            panelStore.GetPanel<TopPanelController>(typeof(TopPanelController)).gameObject.SetActive(true);
+
         }
     }
 }

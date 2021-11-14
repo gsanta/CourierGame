@@ -55,8 +55,8 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<PickUpPackageAction>().AsSingle().NonLazy();
         Container.Bind<DeliverPackageAction>().AsSingle().NonLazy();
         Container.Bind<ReservePackageAction>().AsSingle().NonLazy();
-        Container.Bind<WalkAction<Pedestrian>>().AsSingle().NonLazy();
-        Container.Bind<WalkAction<Enemy>>().AsSingle().NonLazy();
+        //Container.Bind<WalkAction<Pedestrian>>().AsSingle().NonLazy();
+        //Container.Bind<WalkAction<Enemy>>().AsSingle().NonLazy();
         Container.Bind<GoHomeAction>().AsSingle().NonLazy();
         Container.Bind<PedestrianActionCreator>().AsSingle();
         Container.Bind<EnemyActionCreator>().AsSingle();
@@ -70,9 +70,9 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Resolve<ISceneInitializer>().SetSceneSetup(this);
 
         AgentFactory agentFactory = Container.Resolve<AgentFactory>();
-        agentFactory.AddBikerAction(Container.Resolve<PickUpPackageAction>());
-        agentFactory.AddBikerAction(Container.Resolve<DeliverPackageAction>());
-        agentFactory.AddBikerAction(Container.Resolve<ReservePackageAction>());
+        //agentFactory.AddBikerAction(Container.Resolve<PickUpPackageAction>());
+        //agentFactory.AddBikerAction(Container.Resolve<DeliverPackageAction>());
+        //agentFactory.AddBikerAction(Container.Resolve<ReservePackageAction>());
     }
 
     public void SetupScene()
@@ -92,22 +92,22 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         BuildingStore buildingStore = Container.Resolve<BuildingStore>();
 
         PedestrianActionCreator pedestrianActionCreator = Container.Resolve<PedestrianActionCreator>();
-        pedestrianActionCreator.SetActions(new List<GoapAction<Pedestrian>>() {
-            new WalkAction<Pedestrian>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache),
-            new GoHomeAction(pavementStore, pathCache, buildingStore)
-        });
+        //pedestrianActionCreator.SetActions(new List<GoapAction<Pedestrian>>() {
+        //    new WalkAction<Pedestrian>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache),
+        //    new GoHomeAction(pavementStore, pathCache, buildingStore)
+        //});
 
         EnemyActionCreator enemyActionCreator = Container.Resolve<EnemyActionCreator>();
-        enemyActionCreator.SetActions(new List<GoapAction<Enemy>>()
-        {
-            new WalkAction<Enemy>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache),
-        });
+        //enemyActionCreator.SetActions(new List<GoapAction<Enemy>>()
+        //{
+        //    new WalkAction<Enemy>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache),
+        //});
 
         actionStore.SetPedestrianActionCreator(pedestrianActionCreator);
         actionStore.SetEnemyActionCreator(enemyActionCreator);
 
-        actionStore.SetEnemyWalkAction(new WalkAction<Enemy>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache));
-        actionStore.SetPedestrianWalkAction(new WalkAction<Pedestrian>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache));
+        //actionStore.SetEnemyWalkAction(new WalkAction<Enemy>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache));
+        //actionStore.SetPedestrianWalkAction(new WalkAction<Pedestrian>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache));
 
         BikerSetup bikerSetup = Container.Resolve<BikerSetup>();
         bikerSetup.Setup();

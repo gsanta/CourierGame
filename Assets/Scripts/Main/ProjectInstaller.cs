@@ -67,6 +67,7 @@ namespace Main
             Container.Bind<RouteStore>().AsSingle();
             Container.Bind<PlayerWalkAction>().AsSingle();
             Container.Bind<PlayerWalkActionCreator>().AsSingle();
+            Container.Bind<PedestrianWalkActionCreator>().AsSingle();
             Container.Bind<ActionFactory>().AsSingle();
             Container.Bind<ActionCreators>().AsSingle();
             SetupActionFactory();
@@ -129,8 +130,9 @@ namespace Main
 
         private void SetupActionFactory()
         {
-            var actionFactoryBuilder = Container.Resolve<ActionFactory>();
-            actionFactoryBuilder.actionCreators.PlayerWalkActionCreator = Container.Resolve<PlayerWalkActionCreator>();
+            var actionFactory = Container.Resolve<ActionFactory>();
+            actionFactory.actionCreators.PlayerWalkActionCreator = Container.Resolve<PlayerWalkActionCreator>();
+            actionFactory.actionCreators.PedestrianWalkActionCreator = Container.Resolve<PedestrianWalkActionCreator>();
         }
 
         private void SetupControl()
