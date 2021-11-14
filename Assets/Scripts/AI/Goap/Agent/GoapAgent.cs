@@ -86,6 +86,7 @@ namespace AI
         }
 
         public event EventHandler ActionCompleted;
+        public event EventHandler<GoalReachedEventArgs<T>> GoalReached;
 
         public void CompleteAction()
         {
@@ -168,6 +169,8 @@ namespace AI
 
             if (actionQueue != null && actionQueue.Count == 0)
             {
+                GoalReached?.Invoke(this, new GoalReachedEventArgs<T>(this));
+
                 actionQueue = null;
             }
 
@@ -176,6 +179,16 @@ namespace AI
                 currentAction = actionQueue.Dequeue();
             }
 
+        }
+    }
+
+    public class GoalReachedEventArgs<T> where T : IGameObject
+    {
+        public readonly GoapAgent<T> agent;
+
+        public GoalReachedEventArgs(GoapAgent<T> agent)
+        {
+            this.agent = agent;
         }
     }
 }

@@ -16347,7 +16347,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2059239817}
-  - component: {fileID: 2059239819}
   - component: {fileID: 2059239818}
   m_Layer: 0
   m_Name: Scripts
@@ -16380,18 +16379,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84aeee64f93439049bbb4a1d57593f1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2059239819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2059239816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7332593941308e143a968b11e3473c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2060673398

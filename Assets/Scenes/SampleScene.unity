@@ -238,6 +238,13 @@ MonoBehaviour:
   mapScenes:
   - Map1
   - Map2
+  initialPanels:
+  - Menu Panel
+  - Biker Panel
+  - Delivery Panel
+  - Minimap Panel
+  - Start Day Panel
+  - Top Panel
 --- !u!4 &447189922
 Transform:
   m_ObjectHideFlags: 0

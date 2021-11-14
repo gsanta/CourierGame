@@ -50,6 +50,9 @@ namespace UI
             if (!isPlayMode && bikerStore.GetActivePlayer() == bikerStore.GetLastPlayer())
             {
                 isPlayMode = true;
+                bikerStore.GetAll().ForEach(player => player.Agent.GoalReached += HandleGoalReached);
+                routeStore.AddRoute(bikerStore.GetActivePlayer(), routeTool.GetPoints());
+                bikerStore.SetNextPlayer();
             }
 
             if (!isPlayMode) 
@@ -59,14 +62,30 @@ namespace UI
                 routeTool.Step();
             } else
             {
-
+                var player = bikerStore.GetActivePlayer();
+                player.Agent.Active = true;
+                var points = routeStore.GetRoutes()[player];
+                points.RemoveAt(0);
+                player.Agent.SetActions(actionFactory.CreatePlayerWalkAction(player.Agent, points));
+                player.Agent.SetGoals(new Goal(AIStateName.WALK_FINISHED, false), false);
             }
-            //var player = bikerStore.GetActivePlayer();
-            //player.Agent.Active = true;
-            //var points = routeTool.GetPoints();
-            //points.RemoveAt(0);
-            //player.Agent.SetActions(actionFactory.CreatePlayerWalkAction(player.Agent, points));
-            //player.Agent.SetGoals(new Goal(AIStateName.WALK_FINISHED, false), false);
+        }
+
+        private void HandleGoalReached(object sender, GoalReachedEventArgs<Biker> args)
+        {
+            if (args.agent.Parent == bikerStore.GetLastPlayer())
+            {
+                isPlayMode = false;
+                routeStore.Clear();
+                routeTool.Reset();
+                bikerStore.GetAll().ForEach(player => player.Agent.GoalReached -= HandleGoalReached);
+                bikerStore.GetAll().ForEach(player => player.Agent.Active = false);
+            }
+            else
+            {
+                bikerStore.SetNextPlayer();
+                Play();
+            }
         }
 
         private void HandleBikerAdded(object sender, CourierAddedEventArgs args)

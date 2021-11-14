@@ -50,6 +50,10 @@ namespace Controls
         public void Reset()
         {
             points = new List<Vector3>();
+            lineRenderers.ForEach(lineRenderer => routeHandler.Destroy(lineRenderer));
+            lineRenderers = new List<LineRenderer>();
+            lineRenderer = null;
+            CreateLineRenderer();
         }
 
         public void Step()

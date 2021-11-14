@@ -22,5 +22,10 @@ namespace GUI
             clone.SetActive(true);
             return clone.GetComponent<LineRenderer>();
         }
+
+        public void Destroy(LineRenderer lineRenderer)
+        {
+            Destroy(lineRenderer.gameObject);
+        }
     }
 }

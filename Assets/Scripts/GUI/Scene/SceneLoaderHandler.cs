@@ -33,7 +33,7 @@ namespace GUI
 
         private void Start()
         {
-            sceneChangeHandler.InitCurrentScene();
+            //sceneChangeHandler.InitCurrentScene();
         }
     }
 }
