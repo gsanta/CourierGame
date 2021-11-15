@@ -69,6 +69,7 @@ namespace Main
             Container.Bind<ITurns>().WithId("PlayerPlayTurns").To<PlayerPlayTurns>().AsSingle();
             Container.Bind<ITurns>().WithId("PlayerCommandTurns").To<PlayerCommandTurns>().AsSingle();
             Container.Bind<ITurns>().WithId("PedestrianTurns").To<PedestrianTurns>().AsSingle();
+            Container.Bind<GameObjectStore>().AsSingle();
 
             //actions
             Container.Bind<RouteStore>().AsSingle();
