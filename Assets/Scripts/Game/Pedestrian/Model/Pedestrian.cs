@@ -21,6 +21,8 @@ namespace Pedestrians
         private OutlineGameObjectSelector gameObjectSelector;
         private SelectionStore selectionStore;
 
+        public event System.EventHandler Updated;
+
         [Inject]
         public void Construct(OutlineGameObjectSelector gameObjectSelector, SelectionStore selectionStore)
         {

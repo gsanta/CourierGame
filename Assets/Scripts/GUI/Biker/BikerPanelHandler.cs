@@ -1,5 +1,6 @@
 ﻿
 using Bikers;
+using GamePlay;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -11,20 +12,22 @@ namespace Controls
         [SerializeField]
         private BikerListItem bikerListTemplate;
         private RoleService roleService;
-        private BikerPanel bikerPanel;
+        private PlayPanel bikerPanel;
         private BikerListItem.Factory bikerListItemFactory;
+        private TurnManager turnManager;
 
         [Inject]
-        public void Construct(BikerPanel bikerPanel, RoleService roleService, BikerListItem.Factory bikerListItemFactory)
+        public void Construct(PlayPanel bikerPanel, RoleService roleService, BikerListItem.Factory bikerListItemFactory, TurnManager turnManager)
         {
             this.bikerPanel = bikerPanel;
             this.roleService = roleService;
             this.bikerListItemFactory = bikerListItemFactory;
+            this.turnManager = turnManager;
         }
 
         public void Play()
         {
-            bikerPanel.Play();
+            turnManager.Step();
         }
 
         private void Awake()

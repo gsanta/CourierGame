@@ -146,6 +146,7 @@ namespace AI
 
                 if (currentAction.Finished)
                 {
+                    currentAction.Finished = false;
                     if (!invoked)
                     {
                         parent.GetMonoBehaviour().Invoke("CompleteAction", currentAction.duration);

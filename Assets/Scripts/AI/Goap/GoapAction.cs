@@ -17,6 +17,7 @@ namespace AI
 
         public bool running = false;
         protected bool finished = false;
+        private bool paused = false;
 
         protected GoapAgent<T> agent;
 
@@ -28,6 +29,13 @@ namespace AI
             foreach (var afterEffect in afterEffects)
             {
                 afterEffectsSet.Add(afterEffect);
+            }
+        }
+
+        public bool Pause
+        {
+            set {
+                paused = true;
             }
         }
 

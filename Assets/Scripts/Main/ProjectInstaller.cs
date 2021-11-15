@@ -18,6 +18,7 @@ using Worlds;
 using Zenject;
 using Actions;
 using Routes;
+using GamePlay;
 
 namespace Main
 {
@@ -52,7 +53,7 @@ namespace Main
             Container.Bind<AgentFactory>().AsSingle().NonLazy();
             Container.Bind<ActionStore>().AsSingle().NonLazy();
             Container.Bind<SceneChangeHandler>().AsSingle().NonLazy();
-            Container.Bind<BikerPanel>().AsSingle().NonLazy();
+            Container.Bind<PlayPanel>().AsSingle().NonLazy();
             Container.Bind<DeliveryPanel>().AsSingle();
             Container.Bind<CameraController>().AsSingle().NonLazy();
             Container.Bind<BuildingStore>().AsSingle().NonLazy();
@@ -62,6 +63,12 @@ namespace Main
             Container.Bind<EnemiesConfig>().AsSingle();
             Container.Bind<BikersConfig>().AsSingle();
             Container.Bind<StoreSetup>().AsSingle();
+
+            // game play
+            Container.Bind<TurnManager>().AsSingle();
+            Container.Bind<ITurns>().WithId("PlayerPlayTurns").To<PlayerPlayTurns>().AsSingle();
+            Container.Bind<ITurns>().WithId("PlayerCommandTurns").To<PlayerCommandTurns>().AsSingle();
+            Container.Bind<ITurns>().WithId("PedestrianTurns").To<PedestrianTurns>().AsSingle();
 
             //actions
             Container.Bind<RouteStore>().AsSingle();
@@ -120,7 +127,7 @@ namespace Main
             sceneChangeHandler.AddResetable(Container.ResolveId<RoadStore>("RoadStore"));
             sceneChangeHandler.AddResetable(Container.ResolveId<RoadStore>("PavementStore"));
             sceneChangeHandler.AddResetable(Container.Resolve<ActionStore>());
-            sceneChangeHandler.AddResetable(Container.Resolve<BikerPanel>());
+            sceneChangeHandler.AddResetable(Container.Resolve<PlayPanel>());
             sceneChangeHandler.AddResetable(Container.Resolve<DeliveryPanel>());
             sceneChangeHandler.AddResetable(Container.Resolve<Timer>());
             sceneChangeHandler.AddResetable(Container.Resolve<BuildingStore>());

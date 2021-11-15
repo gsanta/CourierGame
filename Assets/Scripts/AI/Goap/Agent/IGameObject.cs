@@ -1,4 +1,5 @@
 ﻿
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,5 +11,6 @@ namespace AI
         MonoBehaviour GetMonoBehaviour();
         NavMeshAgent GetNavMeshAgent();
         IGoalProvider GetGoalProvider();
+        event EventHandler Updated;
     }
 }

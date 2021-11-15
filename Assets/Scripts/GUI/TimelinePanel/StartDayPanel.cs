@@ -1,4 +1,5 @@
 using Controls;
+using GamePlay;
 using Scenes;
 using Stats;
 using System;
@@ -15,13 +16,15 @@ public class StartDayPanel : MonoBehaviour
     private Timer timer;
     private CanvasStore panelStore;
     private SceneLoader sceneLoader;
+    private TurnManager turnManager;
 
     [Inject]
-    public void Construct(Timer timer, CanvasStore panelStore, SceneLoader sceneLoader)
+    public void Construct(Timer timer, CanvasStore panelStore, SceneLoader sceneLoader, TurnManager turnManager)
     {
         this.timer = timer;
         this.panelStore = panelStore;
         this.sceneLoader = sceneLoader;
+        this.turnManager = turnManager;
 
         timer.DayPassed += HandleDayPassed;
         timer.DayStarted += HandleDayStarted;
@@ -35,7 +38,6 @@ public class StartDayPanel : MonoBehaviour
 
     public void OnStart()
     {
-        timer.IsDayStarted = true;
         gameObject.SetActive(false);
 
         timer.IsDayStarted = true;
@@ -53,6 +55,7 @@ public class StartDayPanel : MonoBehaviour
     private void HandleDayStarted(object sender, EventArgs e)
     {
         DisplayPanels();
+        turnManager.Step();
     }
 
     private void HidePanels()

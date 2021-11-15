@@ -49,6 +49,7 @@ namespace Pedestrians
 
         public override bool PostAbort()
         {
+            agent.NavMeshAgent.isStopped = true;
             return true;
         }
 

@@ -3,6 +3,7 @@ using AI;
 using Bikers;
 using Cameras;
 using Controls;
+using GamePlay;
 using Pedestrians;
 using Routes;
 using Scenes;
@@ -12,7 +13,7 @@ using System.Collections.Generic;
 
 namespace UI
 {
-    public class BikerPanel : IResetable
+    public class PlayPanel : IResetable
     {
         private List<IBikerListItem> bikerList = new List<IBikerListItem>();
         private IBikerListItemInstantiator bikerListItemInstantiator;
@@ -25,10 +26,10 @@ namespace UI
         private BikerStore bikerStore;
         private bool isPlayMode = false;
         private PedestrianStore pedestrianStore;
-
+        private TurnManager turnManager;
         private IBikerListItem prevActiveItem;
 
-        public BikerPanel(BikerStore bikerStore, PedestrianStore pedestrianStore, BikerService bikerService, EventService eventService, RouteTool routeTool, ActionFactory actionFactory, RouteStore routeStore, CameraController cameraController)
+        public PlayPanel(TurnManager turnManager, BikerStore bikerStore, PedestrianStore pedestrianStore, BikerService bikerService, EventService eventService, RouteTool routeTool, ActionFactory actionFactory, RouteStore routeStore, CameraController cameraController)
         {
             this.bikerService = bikerService;
             this.routeTool = routeTool;
@@ -37,6 +38,7 @@ namespace UI
             this.cameraController = cameraController;
             this.bikerStore = bikerStore;
             this.pedestrianStore = pedestrianStore;
+            this.turnManager = turnManager;
 
             bikerStore.OnBikerAdded += HandleBikerAdded;
             eventService.BikerCurrentRoleChanged += HandleBikerRoleChanged;
@@ -53,29 +55,30 @@ namespace UI
 
         public void Play()
         {
-            if (!isPlayMode && bikerStore.GetActivePlayer() == bikerStore.GetLastPlayer())
-            {
-                isPlayMode = true;
-                pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.Active = true);
-                bikerStore.GetAll().ForEach(player => player.Agent.GoalReached += HandleGoalReached);
-                routeStore.AddRoute(bikerStore.GetActivePlayer(), routeTool.GetPoints());
-                SetNextPlayer();
-            }
+            turnManager.Step();
+            //if (!isPlayMode && bikerStore.GetActivePlayer() == bikerStore.GetLastPlayer())
+            //{
+            //    isPlayMode = true;
+            //    pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.Active = true);
+            //    bikerStore.GetAll().ForEach(player => player.Agent.GoalReached += HandleGoalReached);
+            //    routeStore.AddRoute(bikerStore.GetActivePlayer(), routeTool.GetPoints());
+            //    SetNextPlayer();
+            //}
 
-            if (!isPlayMode) 
-            {
-                routeStore.AddRoute(bikerStore.GetActivePlayer(), routeTool.GetPoints());
-                SetNextPlayer();
-                routeTool.Step();
-            } else
-            {
-                var player = bikerStore.GetActivePlayer();
-                player.Agent.Active = true;
-                var points = routeStore.GetRoutes()[player];
-                points.RemoveAt(0);
-                player.Agent.SetActions(actionFactory.CreatePlayerWalkAction(player.Agent, points));
-                player.Agent.SetGoals(new Goal(AIStateName.WALK_FINISHED, false), false);
-            }
+            //if (!isPlayMode) 
+            //{
+            //    routeStore.AddRoute(bikerStore.GetActivePlayer(), routeTool.GetPoints());
+            //    SetNextPlayer();
+            //    routeTool.Step();
+            //} else
+            //{
+            //    var player = bikerStore.GetActivePlayer();
+            //    player.Agent.Active = true;
+            //    var points = routeStore.GetRoutes()[player];
+            //    points.RemoveAt(0);
+            //    player.Agent.SetActions(actionFactory.CreatePlayerWalkAction(player.Agent, points));
+            //    player.Agent.SetGoals(new Goal(AIStateName.WALK_FINISHED, false), false);
+            //}
         }
 
         private void HandleGoalReached(object sender, GoalReachedEventArgs<Biker> args)
@@ -100,7 +103,7 @@ namespace UI
         private void SetNextPlayer()
         {
             bikerStore.SetNextPlayer();
-            cameraController.PanTo(bikerStore.GetActivePlayer().transform.position);
+            cameraController.PanTo(bikerStore.GetActivePlayer());
         }
 
         private void HandleBikerAdded(object sender, CourierAddedEventArgs args)

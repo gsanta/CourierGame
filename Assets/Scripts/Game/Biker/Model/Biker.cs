@@ -55,6 +55,8 @@ namespace Bikers
             {
                 agent.Update();
             }
+
+            Updated?.Invoke(this, EventArgs.Empty);
         }
 
         private void UpdatePausedState()
@@ -70,6 +72,7 @@ namespace Bikers
                 gameObject.GetComponent<NavMeshAgent>().enabled = true;
                 agent.Active = true;
             }
+
         }
 
         public GameObject GetGameObject()
@@ -166,6 +169,7 @@ namespace Bikers
         }
 
         public event EventHandler CurrentRoleChanged;
+        public event EventHandler Updated;
 
         public class Factory : PlaceholderFactory<UnityEngine.Object, Biker>
         {

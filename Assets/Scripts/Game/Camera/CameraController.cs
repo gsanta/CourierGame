@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using AI;
+using System;
+using UnityEngine;
 
 namespace Cameras
 {
@@ -13,6 +15,7 @@ namespace Cameras
         public Vector3 newPosition;
         public Quaternion newRotation;
         public Vector3 newZoom;
+        private IGameObject targetGameObject;
 
         public void SetCameraConfig(ICameraConfig cameraConfig)
         {
@@ -43,9 +46,29 @@ namespace Cameras
             newZoom += zoom;
         }
 
-        public void PanTo(Vector3 position)
+        public void PanTo(IGameObject gameObject)
         {
-            newPosition = position;
+            newPosition = gameObject.GetGameObject().transform.position;;
+        }
+
+        public void Follow(IGameObject targetGameObject)
+        {
+            if (this.targetGameObject != null)
+            {
+                this.targetGameObject.Updated -= UpdateFollow;
+                this.targetGameObject = null;
+            } 
+
+            if (targetGameObject != null)
+            {
+                this.targetGameObject = targetGameObject;
+                targetGameObject.Updated += UpdateFollow;
+            }
+        }
+
+        private void UpdateFollow(object sender, EventArgs eventArgs)
+        {
+            newPosition = targetGameObject.GetGameObject().transform.position;
         }
 
         public void Pan(CameraDirection cameraDirection)

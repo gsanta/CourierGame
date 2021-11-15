@@ -16,6 +16,7 @@ namespace Enemies {
         [SerializeField]
         private AttackRadius attackRadius;
 
+        public event System.EventHandler Updated;
 
         private void Awake()
         {
