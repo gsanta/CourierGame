@@ -1,11 +1,15 @@
 ﻿using Bikers;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace UI
 {
     public interface IBikerListItem
     {
-        void ResetToggleButtons(bool isFollow, bool isPlay);
         Biker GetBiker();
+
+        Button GetButton();
+
         void Destroy();
     }
 }

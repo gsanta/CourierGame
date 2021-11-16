@@ -7,12 +7,14 @@ namespace GUI
     public class InvokeHelper : MonoBehaviour, IInvokeHelper
     {
         private ITurns pedestrianTurns;
+        private ITurns enemyTurns;
         private GameObjectStore gameObjectStore;
 
         [Inject]
-        public void Construct([Inject(Id = "PedestrianTurns")] ITurns pedestrianTurns, GameObjectStore gameObjectStore)
+        public void Construct([Inject(Id = "PedestrianTurns")] ITurns pedestrianTurns, [Inject(Id = "EnemyTurns")] ITurns enemyTurns, GameObjectStore gameObjectStore)
         {
             this.pedestrianTurns = pedestrianTurns;
+            this.enemyTurns = enemyTurns;
             this.gameObjectStore = gameObjectStore;
         }
 
@@ -29,6 +31,11 @@ namespace GUI
         public void InvokePedestrianTurns()
         {
             (pedestrianTurns as PedestrianTurns).Invoke();
+        }
+
+        public void InvokeEnemyTurns()
+        {
+            (enemyTurns as EnemyTurns).Invoke();
         }
     }
 }

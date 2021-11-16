@@ -1,4 +1,5 @@
-﻿using RSG;
+﻿using Bikers;
+using Cameras;
 using System.Collections.Generic;
 using Zenject;
 
@@ -9,20 +10,32 @@ namespace GamePlay
         private readonly ITurns playerCommandTurns;
         private readonly ITurns playerPlayTurns;
         private readonly ITurns pedestrianTurns;
+        private readonly ITurns enemyTurns;
         private ITurns activeTurn;
         private List<ITurns> turns;
+        private BikerStore playerStore;
+        private CameraController cameraController;
 
-        public TurnManager([Inject(Id = "PlayerCommandTurns")] ITurns playerCommandTurns, [Inject(Id = "PlayerPlayTurns")] ITurns playerPlayTurns, [Inject(Id = "PedestrianTurns")] ITurns pedestrianTurns)
+        public TurnManager(BikerStore playerStore, CameraController cameraController, [Inject(Id = "PlayerCommandTurns")] ITurns playerCommandTurns, [Inject(Id = "PlayerPlayTurns")] ITurns playerPlayTurns, [Inject(Id = "PedestrianTurns")] ITurns pedestrianTurns, [Inject(Id = "EnemyTurns")] ITurns enemyTurns)
         {
+            this.playerStore = playerStore;
+            this.cameraController = cameraController;
             this.playerCommandTurns = playerCommandTurns;
             this.playerPlayTurns = playerPlayTurns;
             this.pedestrianTurns = pedestrianTurns;
+            this.enemyTurns = enemyTurns;
             turns = new List<ITurns>
             {
                 playerCommandTurns,
                 playerPlayTurns,
-                pedestrianTurns
+                pedestrianTurns,
+                enemyTurns
             };
+        }
+
+        public bool IsPlayerCommandTurn()
+        {
+            return activeTurn == playerCommandTurns;
         }
 
         public void Step()
@@ -39,6 +52,11 @@ namespace GamePlay
                     .Then(() => {
                         activeTurn = pedestrianTurns;
                         return pedestrianTurns.Execute();
+                    })
+                    .Then(() =>
+                    {
+                        activeTurn = enemyTurns;
+                        return enemyTurns.Execute();
                     })
                     .Then(() => {
                         activeTurn = null;
@@ -76,9 +94,10 @@ namespace GamePlay
             //}
         }
 
-        private IPromise NextRound()
+        public void ChangePlayer(Biker player)
         {
-            return Promise.Resolved();
+            playerStore.SetActivePlayer(player);
+            cameraController.Follow(playerStore.GetActivePlayer());
         }
 
         //private void HandleGoalReached(object sender, GoalReachedEventArgs<Biker> args)

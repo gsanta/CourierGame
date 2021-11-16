@@ -9,17 +9,10 @@ namespace UI
 {
     public class BikerListItem : MonoBehaviour, IBikerListItem, IObserver<BikerStoreInfo>
     {
+        [SerializeField]
         public TMP_Text courierNameText;
-        [SerializeField]
-        private Toggle followButton;
-        [SerializeField]
-        private Toggle playButton;
-
         private BikerStore bikerStore;
-
         private Biker player;
-        private RoleService roleService;
-        private bool isResetting = false;
 
         [Inject]
         public void Construct(BikerStore bikerStore)
@@ -28,10 +21,14 @@ namespace UI
             bikerStore.Subscribe(this);
         }
 
+        public Button GetButton()
+        {
+            return GetComponent<Button>();
+        }
+
         public void SetBiker(Biker biker)
         {
             this.player = biker;
-            biker.CurrentRoleChanged += HandleCurrentRoleChanged;
             UpdateButtonState();
         }
 
@@ -43,75 +40,6 @@ namespace UI
         public void SelectPlayer()
         {
             bikerStore.SetActivePlayer(player);
-        }
-
-        public RoleService RoleService { set => roleService = value; }
-
-        public void HandleClickFollow()
-        {
-            if (!isResetting)
-            {
-                SetBikerState(player, false, followButton.isOn);
-            }
-        }
-
-        public void HandleClickPlay()
-        {
-            if (!isResetting)
-            {
-                SetBikerState(player, playButton.isOn, false);
-            }
-        }
-
-        private void HandleCurrentRoleChanged(object sender, EventArgs args)
-        {
-            var isPlay = player.GetCurrentRole() == CurrentRole.PLAY;
-            //if (playButton.isOn != isPlay)
-            //{
-            //    playButton.isOn = isPlay;
-            //}
-
-            var isFollow = player.GetCurrentRole() == CurrentRole.FOLLOW;
-            //if (followButton.isOn != isFollow)
-            //{
-            //    followButton.isOn = isFollow;
-            //}
-        }
-
-        private void SetBikerState(Biker biker, bool isPlayer, bool isFollow)
-        {
-            // TODO maybe the role should come as a parameter and no need for the ifs
-            if (isPlayer)
-            {
-                roleService.SetCurrentRole(CurrentRole.PLAY, biker);
-            } else if (isFollow)
-            {
-                roleService.SetCurrentRole(CurrentRole.FOLLOW, biker);
-            } else
-            {
-                roleService.SetCurrentRole(CurrentRole.NONE, biker);
-            }
-        }
-
-        public void ResetToggleButtons(bool isFollow, bool isPlay)
-        {
-            try
-            {
-                isResetting = true;
-
-                if (followButton.isOn != isFollow)
-                {
-                    followButton.isOn = isFollow;
-                }
-
-                if (playButton.isOn != isPlay)
-                {
-                    playButton.isOn = isPlay;
-                }
-            } finally
-            {
-                isResetting = false;
-            }
         }
 
         public void Destroy()

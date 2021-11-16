@@ -4,7 +4,6 @@ using Zenject;
 
 namespace Controls
 {
-
     public class CameraHandler : MonoBehaviour, ICameraConfig
     {
         public Transform cameraTransform;

@@ -1,5 +1,6 @@
 ﻿using Agents;
 using AI;
+using Enemies;
 using Route;
 using Scenes;
 using System.Collections.Generic;
@@ -83,4 +84,23 @@ namespace Pedestrians
             return new WalkAction<Pedestrian>(agent, preconditions, afterEffects, routeStore, walkTargetStore, null);
         }
     }
+
+    public class EnemyWalkActionCreator
+    {
+        private readonly RoadStore routeStore;
+        private readonly WalkTargetStore walkTargetStore;
+
+        public EnemyWalkActionCreator([Inject(Id = "PavementStore")] RoadStore routeStore, WalkTargetStore walkTargetStore)
+        {
+            this.routeStore = routeStore;
+            this.walkTargetStore = walkTargetStore;
+        }
+
+        public WalkAction<Enemy> Create(GoapAgent<Enemy> agent, AIStateName[] preconditions, AIStateName[] afterEffects)
+        {
+            return new WalkAction<Enemy>(agent, preconditions, afterEffects, routeStore, walkTargetStore, null);
+        }
+    }
 }
+
+//new WalkAction<Enemy>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache),

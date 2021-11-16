@@ -13,6 +13,11 @@ namespace Enemies
             enemies.Add(enemy);
         }
 
+        public List<Enemy> GetAll()
+        {
+            return enemies;
+        }
+
         public void Reset()
         {
             enemies = new List<Enemy>();

@@ -39,6 +39,7 @@ namespace GamePlay
 
         public void Invoke()
         {
+            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.AbortAction());
             promise.Resolve();
         }
 

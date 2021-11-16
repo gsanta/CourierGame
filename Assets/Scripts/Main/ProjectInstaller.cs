@@ -69,6 +69,7 @@ namespace Main
             Container.Bind<ITurns>().WithId("PlayerPlayTurns").To<PlayerPlayTurns>().AsSingle();
             Container.Bind<ITurns>().WithId("PlayerCommandTurns").To<PlayerCommandTurns>().AsSingle();
             Container.Bind<ITurns>().WithId("PedestrianTurns").To<PedestrianTurns>().AsSingle();
+            Container.Bind<ITurns>().WithId("EnemyTurns").To<EnemyTurns>().AsSingle();
             Container.Bind<GameObjectStore>().AsSingle();
 
             //actions
@@ -76,6 +77,7 @@ namespace Main
             Container.Bind<PlayerWalkAction>().AsSingle();
             Container.Bind<PlayerWalkActionCreator>().AsSingle();
             Container.Bind<PedestrianWalkActionCreator>().AsSingle();
+            Container.Bind<EnemyWalkActionCreator>().AsSingle();
             Container.Bind<ActionFactory>().AsSingle();
             Container.Bind<ActionCreators>().AsSingle();
             SetupActionFactory();
@@ -141,6 +143,7 @@ namespace Main
             var actionFactory = Container.Resolve<ActionFactory>();
             actionFactory.actionCreators.PlayerWalkActionCreator = Container.Resolve<PlayerWalkActionCreator>();
             actionFactory.actionCreators.PedestrianWalkActionCreator = Container.Resolve<PedestrianWalkActionCreator>();
+            actionFactory.actionCreators.EnemyWalkActionCreator = Container.Resolve<EnemyWalkActionCreator>();
         }
 
         private void SetupControl()

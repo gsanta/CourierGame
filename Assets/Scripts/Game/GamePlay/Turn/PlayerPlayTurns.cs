@@ -18,10 +18,12 @@ namespace GamePlay
         private readonly RouteTool routeTool;
         private readonly ActionFactory actionFactory;
         private readonly CameraController cameraController;
+        private TurnManager turnManager;
         private Promise promise;
 
-        public PlayerPlayTurns(BikerStore playerStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
+        public PlayerPlayTurns(TurnManager turnManager, BikerStore playerStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
         {
+            this.turnManager = turnManager;
             this.playerStore = playerStore;
             this.pedestrianStore = pedestrianStore;
             this.routeStore = routeStore;

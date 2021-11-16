@@ -21986,7 +21986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0339fe661eed7fa47ad2d409642939d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCount: 0
+  enemyCount: 3
   enemyTemplate: {fileID: 1761886176335623013}
   enemyContainer: {fileID: 174765432}
   enemySpawnPointContainer: {fileID: 1704732829}

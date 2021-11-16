@@ -7,5 +7,6 @@ namespace Actions
     {
         public PlayerWalkActionCreator PlayerWalkActionCreator { get; set; }
         public PedestrianWalkActionCreator PedestrianWalkActionCreator { get; set; }
+        public EnemyWalkActionCreator EnemyWalkActionCreator { get; set; }
     }
 }

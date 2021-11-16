@@ -42,7 +42,6 @@ namespace Controls
             bikerListItem.transform.SetParent(bikerListTemplate.transform.parent);
             bikerListItem.courierNameText.text = biker.GetName();
             bikerListItem.gameObject.SetActive(true);
-            bikerListItem.RoleService = roleService;
             bikerListItem.SetBiker(biker);
 
             return bikerListItem;
