@@ -66,6 +66,7 @@ namespace Main
 
             // game play
             Container.Bind<TurnManager>().AsSingle();
+            Container.Bind<TurnHelper>().AsSingle();
             Container.Bind<ITurns>().WithId("PlayerPlayTurns").To<PlayerPlayTurns>().AsSingle();
             Container.Bind<ITurns>().WithId("PlayerCommandTurns").To<PlayerCommandTurns>().AsSingle();
             Container.Bind<ITurns>().WithId("PedestrianTurns").To<PedestrianTurns>().AsSingle();

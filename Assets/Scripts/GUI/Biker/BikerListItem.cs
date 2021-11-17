@@ -11,14 +11,21 @@ namespace UI
     {
         [SerializeField]
         public TMP_Text courierNameText;
-        private BikerStore bikerStore;
-        private Biker player;
+        private IDisposable subscription;
+        private bool isActive = false;
 
         [Inject]
         public void Construct(BikerStore bikerStore)
         {
-            this.bikerStore = bikerStore;
-            bikerStore.Subscribe(this);
+            subscription = bikerStore.Subscribe(this);
+        }
+
+        public bool IsActive {
+            get => isActive;
+            set {
+                isActive = value;
+                UpdateButtonState();
+            } 
         }
 
         public Button GetButton()
@@ -26,24 +33,9 @@ namespace UI
             return GetComponent<Button>();
         }
 
-        public void SetBiker(Biker biker)
-        {
-            this.player = biker;
-            UpdateButtonState();
-        }
-
-        public Biker GetBiker()
-        {
-            return player;
-        }
-
-        public void SelectPlayer()
-        {
-            bikerStore.SetActivePlayer(player);
-        }
-
         public void Destroy()
         {
+            subscription.Dispose();
             Destroy(gameObject);
         }
 
@@ -59,12 +51,15 @@ namespace UI
 
         public void OnNext(BikerStoreInfo value)
         {
-            UpdateButtonState();
+            if (value.type == BikerStoreInfo.Type.ACTIVE_PLAYER_CHANGED)
+            {
+                UpdateButtonState();
+            }
         }
 
         private void UpdateButtonState()
         {
-            if (player == bikerStore.GetActivePlayer())
+            if (isActive)
             {
                 var colors = GetComponent<Button>().colors;
                 colors.normalColor = Color.green;

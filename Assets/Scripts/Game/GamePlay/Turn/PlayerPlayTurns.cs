@@ -4,7 +4,6 @@ using AI;
 using Bikers;
 using Cameras;
 using Controls;
-using Pedestrians;
 using Routes;
 using RSG;
 
@@ -13,19 +12,17 @@ namespace GamePlay
     public class PlayerPlayTurns : ITurns
     {
         private readonly BikerStore playerStore;
-        private readonly PedestrianStore pedestrianStore;
         private readonly RouteStore routeStore;
         private readonly RouteTool routeTool;
         private readonly ActionFactory actionFactory;
         private readonly CameraController cameraController;
-        private TurnManager turnManager;
+        private TurnHelper turnHelper;
         private Promise promise;
 
-        public PlayerPlayTurns(TurnManager turnManager, BikerStore playerStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
+        public PlayerPlayTurns(TurnHelper turnHelper, BikerStore playerStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
         {
-            this.turnManager = turnManager;
+            this.turnHelper = turnHelper;
             this.playerStore = playerStore;
-            this.pedestrianStore = pedestrianStore;
             this.routeStore = routeStore;
             this.routeTool = routeTool;
             this.actionFactory = actionFactory;
@@ -80,15 +77,9 @@ namespace GamePlay
             }
             else
             {
-                SetNextPlayer();
+                turnHelper.ChangePlayer(playerStore.GetNextPlayer());
                 NextStep();
             }
-        }
-
-        private void SetNextPlayer()
-        {
-            playerStore.SetNextPlayer();
-            cameraController.Follow(playerStore.GetActivePlayer());
         }
     }
 }

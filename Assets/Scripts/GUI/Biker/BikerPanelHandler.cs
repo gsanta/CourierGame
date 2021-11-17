@@ -11,18 +11,16 @@ namespace Controls
     {
         [SerializeField]
         private BikerListItem bikerListTemplate;
-        private RoleService roleService;
-        private PlayPanel bikerPanel;
         private BikerListItem.Factory bikerListItemFactory;
         private TurnManager turnManager;
 
         [Inject]
-        public void Construct(PlayPanel bikerPanel, RoleService roleService, BikerListItem.Factory bikerListItemFactory, TurnManager turnManager)
+        public void Construct(BikerListItem.Factory bikerListItemFactory, TurnManager turnManager, GameObjectStore gameObjectStore)
         {
-            this.bikerPanel = bikerPanel;
-            this.roleService = roleService;
             this.bikerListItemFactory = bikerListItemFactory;
             this.turnManager = turnManager;
+
+            gameObjectStore.BikerListItemInstantiator = this;
         }
 
         public void Play()
@@ -30,19 +28,13 @@ namespace Controls
             turnManager.Step();
         }
 
-        private void Awake()
-        {
-            bikerPanel.SetBikerListItemInstantiator(this);
-        }
-
-        public IBikerListItem Instantiate(Biker biker)
+        public IBikerListItem Instantiate(string text)
         {
             BikerListItem bikerListItem = bikerListItemFactory.Create(bikerListTemplate);
             //bikerListTemplate.transform.parent
             bikerListItem.transform.SetParent(bikerListTemplate.transform.parent);
-            bikerListItem.courierNameText.text = biker.GetName();
+            bikerListItem.courierNameText.text = text;
             bikerListItem.gameObject.SetActive(true);
-            bikerListItem.SetBiker(biker);
 
             return bikerListItem;
         }

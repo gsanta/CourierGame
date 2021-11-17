@@ -1,31 +1,30 @@
 ﻿using Bikers;
 using GamePlay;
 using Scenes;
-using Service;
 using System;
 using System.Collections.Generic;
 
 namespace UI
 {
-    public class PlayPanel : IResetable
+    public class PlayPanel : IResetable, IObserver<BikerStoreInfo>
     {
         private List<IBikerListItem> itemList = new List<IBikerListItem>();
-        private IBikerListItemInstantiator listItemInstantiator;
 
-        private BikerStore bikerStore;
+        private BikerStore playerStore;
         private TurnManager turnManager;
+        private TurnHelper turnHelper;
+        private GameObjectStore gameObjectStore;
 
-        public PlayPanel(TurnManager turnManager, BikerStore bikerStore, EventService eventService)
+        public PlayPanel(TurnManager turnManager, TurnHelper turnHelper, BikerStore playerStore, GameObjectStore gameObjectStore)
         {
-            this.bikerStore = bikerStore;
+            this.playerStore = playerStore;
             this.turnManager = turnManager;
-        }
+            this.turnHelper = turnHelper;
+            this.gameObjectStore = gameObjectStore;
 
-        public void SetBikerListItemInstantiator(IBikerListItemInstantiator bikerListItemInstantiator)
-        {
-            this.listItemInstantiator = bikerListItemInstantiator;
-            ClearItems();
-            bikerStore.GetAll().ForEach(biker => CreateListItem(biker));
+            turnManager.TurnChanged += HandleTurnChanged;
+
+            playerStore.Subscribe(this);
         }
 
         public void Play()
@@ -39,10 +38,10 @@ namespace UI
             itemList.Clear();
         }
 
-        private void CreateListItem(Biker biker)
+        private void CreateListItem(string text, bool isActive)
         {
-            IBikerListItem item = listItemInstantiator.Instantiate(biker);
-
+            IBikerListItem item = gameObjectStore.BikerListItemInstantiator.Instantiate(text);
+            item.IsActive = isActive;
             itemList.Add(item);
         }
 
@@ -50,13 +49,44 @@ namespace UI
         {
             if (turnManager.IsPlayerCommandTurn())
             {
-                turnManager.ChangePlayer(player);
+                turnHelper.ChangePlayer(player);
             }
         }
 
         public void Reset()
         {
             ClearItems();
+        }
+
+        public void OnCompleted()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnError(Exception error)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNext(BikerStoreInfo value)
+        {
+            if (value.type == BikerStoreInfo.Type.PLAYER_ADDED || value.type == BikerStoreInfo.Type.ACTIVE_PLAYER_CHANGED)
+            {
+                UpdateListItems();
+            }
+        }
+
+        private void UpdateListItems()
+        {
+            ClearItems();
+            playerStore.GetAll().ForEach(player => CreateListItem(player.GetName(), playerStore.GetActivePlayer() == player && (turnManager.IsPlayerCommandTurn() || turnManager.IsPlayerPlayTurn())));
+            CreateListItem("Civilians", turnManager.IsPedestrianTurn());
+            CreateListItem("Enemies", turnManager.IsEnemyTurn());
+        }
+
+        private void HandleTurnChanged(object sender, EventArgs args)
+        {
+            UpdateListItems();
         }
     }
 }

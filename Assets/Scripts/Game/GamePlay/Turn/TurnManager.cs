@@ -1,5 +1,4 @@
-﻿using Bikers;
-using Cameras;
+﻿using System;
 using System.Collections.Generic;
 using Zenject;
 
@@ -13,13 +12,9 @@ namespace GamePlay
         private readonly ITurns enemyTurns;
         private ITurns activeTurn;
         private List<ITurns> turns;
-        private BikerStore playerStore;
-        private CameraController cameraController;
 
-        public TurnManager(BikerStore playerStore, CameraController cameraController, [Inject(Id = "PlayerCommandTurns")] ITurns playerCommandTurns, [Inject(Id = "PlayerPlayTurns")] ITurns playerPlayTurns, [Inject(Id = "PedestrianTurns")] ITurns pedestrianTurns, [Inject(Id = "EnemyTurns")] ITurns enemyTurns)
+        public TurnManager([Inject(Id = "PlayerCommandTurns")] ITurns playerCommandTurns, [Inject(Id = "PlayerPlayTurns")] ITurns playerPlayTurns, [Inject(Id = "PedestrianTurns")] ITurns pedestrianTurns, [Inject(Id = "EnemyTurns")] ITurns enemyTurns)
         {
-            this.playerStore = playerStore;
-            this.cameraController = cameraController;
             this.playerCommandTurns = playerCommandTurns;
             this.playerPlayTurns = playerPlayTurns;
             this.pedestrianTurns = pedestrianTurns;
@@ -33,9 +28,26 @@ namespace GamePlay
             };
         }
 
+        public event EventHandler TurnChanged;
+
         public bool IsPlayerCommandTurn()
         {
             return activeTurn == playerCommandTurns;
+        }
+
+        public bool IsPlayerPlayTurn()
+        {
+            return activeTurn == playerCommandTurns;
+        }
+
+        public bool IsEnemyTurn()
+        {
+            return activeTurn == enemyTurns;
+        }
+
+        public bool IsPedestrianTurn()
+        {
+            return activeTurn == pedestrianTurns;
         }
 
         public void Step()
@@ -44,85 +56,33 @@ namespace GamePlay
             {
                 turns.ForEach(turn => turn.Reset());
                 activeTurn = playerCommandTurns;
+                TurnChanged?.Invoke(this, EventArgs.Empty);
                 playerCommandTurns.Execute()
                     .Then(() => {
                         activeTurn = playerPlayTurns;
+                        TurnChanged?.Invoke(this, EventArgs.Empty);
                         return playerPlayTurns.Execute();
                     })
                     .Then(() => {
                         activeTurn = pedestrianTurns;
+                        TurnChanged?.Invoke(this, EventArgs.Empty);
                         return pedestrianTurns.Execute();
                     })
                     .Then(() =>
                     {
                         activeTurn = enemyTurns;
+                        TurnChanged?.Invoke(this, EventArgs.Empty);
                         return enemyTurns.Execute();
                     })
                     .Then(() => {
                         activeTurn = null;
+                        TurnChanged?.Invoke(this, EventArgs.Empty);
                         Step();
                     });
             } else
             {
                 activeTurn.Step();
             }
-
-
-            //if (!isPlayMode && bikerStore.GetActivePlayer() == bikerStore.GetLastPlayer())
-            //{
-            //    isPlayMode = true;
-            //    pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.Active = true);
-            //    bikerStore.GetAll().ForEach(player => player.Agent.GoalReached += HandleGoalReached);
-            //    routeStore.AddRoute(bikerStore.GetActivePlayer(), routeTool.GetPoints());
-            //    SetNextPlayer();
-            //}
-
-            //if (!isPlayMode)
-            //{
-            //    routeStore.AddRoute(bikerStore.GetActivePlayer(), routeTool.GetPoints());
-            //    SetNextPlayer();
-            //    routeTool.Step();
-            //}
-            //else
-            //{
-            //    var player = bikerStore.GetActivePlayer();
-            //    player.Agent.Active = true;
-            //    var points = routeStore.GetRoutes()[player];
-            //    points.RemoveAt(0);
-            //    player.Agent.SetActions(actionFactory.CreatePlayerWalkAction(player.Agent, points));
-            //    player.Agent.SetGoals(new Goal(AIStateName.WALK_FINISHED, false), false);
-            //}
         }
-
-        public void ChangePlayer(Biker player)
-        {
-            playerStore.SetActivePlayer(player);
-            cameraController.Follow(playerStore.GetActivePlayer());
-        }
-
-        //private void HandleGoalReached(object sender, GoalReachedEventArgs<Biker> args)
-        //{
-        //    args.agent.GoalReached -= HandleGoalReached;
-        //    args.agent.Active = false;
-
-        //    if (args.agent.Parent == bikerStore.GetLastPlayer())
-        //    {
-        //        isPlayMode = false;
-        //        routeStore.Clear();
-        //        routeTool.Reset();
-        //        SetNextPlayer();
-        //    }
-        //    else
-        //    {
-        //        SetNextPlayer();
-        //        Play();
-        //    }
-        //}
-
-        //private void SetNextPlayer()
-        //{
-        //    bikerStore.SetNextPlayer();
-        //    cameraController.PanTo(bikerStore.GetActivePlayer().transform.position);
-        //}
     }
 }

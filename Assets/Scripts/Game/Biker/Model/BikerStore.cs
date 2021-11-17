@@ -1,6 +1,7 @@
 ﻿using Scenes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Bikers
@@ -9,7 +10,8 @@ namespace Bikers
     {
         public enum Type
         {
-            ACTIVATED
+            ACTIVE_PLAYER_CHANGED,
+            PLAYER_ADDED
         }
 
         public Type type;
@@ -62,15 +64,18 @@ namespace Bikers
                 SetActivePlayer(player);
             }
             players.Add(player);
-            TriggerCourierAdded(player);
+
+            var info = new BikerStoreInfo { type = BikerStoreInfo.Type.PLAYER_ADDED };
+            foreach (var observer in observers.ToList())
+                observer.OnNext(info);
         }
 
         public void SetActivePlayer(Biker player)
         {
             this.activePlayer = player;
 
-            var info = new BikerStoreInfo { type = BikerStoreInfo.Type.ACTIVATED };
-            foreach (var observer in observers)
+            var info = new BikerStoreInfo { type = BikerStoreInfo.Type.ACTIVE_PLAYER_CHANGED };
+            foreach (var observer in observers.ToList())
                 observer.OnNext(info);
         }
 
@@ -89,26 +94,15 @@ namespace Bikers
             return players[players.Count - 1];
         }
 
-        public void SetNextPlayer()
+        public Biker GetNextPlayer()
         {
-            var newActivePlayer = activePlayer == players[players.Count - 1] ? players[0] : players[players.IndexOf(activePlayer) + 1];
-            SetActivePlayer(newActivePlayer);
+            var nextPlayer = activePlayer == players[players.Count - 1] ? players[0] : players[players.IndexOf(activePlayer) + 1];
+            return nextPlayer;
         }
 
         public List<Biker> GetAll()
         {
             return players;
-        }
-
-        public event EventHandler<CourierAddedEventArgs> OnBikerAdded;
-
-        private void TriggerCourierAdded(Biker biker)
-        {
-            EventHandler<CourierAddedEventArgs> handler = OnBikerAdded;
-            if (handler != null)
-            {
-                handler(this, new CourierAddedEventArgs(biker));
-            }
         }
 
         public void Reset()
@@ -125,19 +119,37 @@ namespace Bikers
                 observers.Add(observer);
             }
 
-            return null;
+            return new Unsubscriber<BikerStoreInfo>(observers, observer);
         }
     }
 
-    public class CourierAddedEventArgs : EventArgs
+    internal class Unsubscriber<BikerStoreInfo> : IDisposable
     {
-        private readonly Biker courier;
+        private List<IObserver<BikerStoreInfo>> observers;
+        private IObserver<BikerStoreInfo> observer;
 
-        internal CourierAddedEventArgs(Biker courier)
+        internal Unsubscriber(List<IObserver<BikerStoreInfo>> observers, IObserver<BikerStoreInfo> observer)
         {
-            this.courier = courier;
+            this.observers = observers;
+            this.observer = observer;
         }
-        public Biker Courier { get => courier; }
+
+        public void Dispose()
+        {
+            if (observers.Contains(observer))
+                observers.Remove(observer);
+        }
+    }
+
+    public class PlayerAddedEventArgs : EventArgs
+    {
+        private readonly Biker player;
+
+        internal PlayerAddedEventArgs(Biker player)
+        {
+            this.player = player;
+        }
+        public Biker Courier { get => player; }
     }
 }
 

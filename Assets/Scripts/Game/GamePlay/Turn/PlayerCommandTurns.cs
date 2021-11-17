@@ -8,14 +8,16 @@ namespace GamePlay
 {
     public class PlayerCommandTurns : ITurns
     {
+        private TurnHelper turnHelper;
         private readonly BikerStore playerStore;
         private readonly RouteStore routeStore;
         private readonly RouteTool routeTool;
         private readonly CameraController cameraController;
         private Promise promise;
 
-        public PlayerCommandTurns(BikerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController)
+        public PlayerCommandTurns(TurnHelper turnHelper, BikerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController)
         {
+            this.turnHelper = turnHelper;
             this.playerStore = playerStore;
             this.routeStore = routeStore;
             this.routeTool = routeTool;
@@ -41,7 +43,7 @@ namespace GamePlay
             else
             {
                 routeStore.AddRoute(playerStore.GetActivePlayer(), routeTool.GetPoints());
-                SetNextPlayer();
+                turnHelper.ChangePlayer(playerStore.GetNextPlayer());
                 routeTool.Step();
             }
         }
@@ -49,12 +51,6 @@ namespace GamePlay
         public void Reset()
         {
 
-        }
-
-        private void SetNextPlayer()
-        {
-            playerStore.SetNextPlayer();
-            cameraController.PanTo(playerStore.GetActivePlayer());
         }
     }
 }
