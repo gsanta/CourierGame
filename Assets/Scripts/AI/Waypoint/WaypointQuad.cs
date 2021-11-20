@@ -66,6 +66,23 @@ namespace AI
             }
         }
 
+        public void SetAllowedColor()
+        {
+            GetComponent<MeshRenderer>().enabled = true;
+            GetComponent<MeshRenderer>().material.color = Color.green;
+        }
+
+        public void SetNotAllowedColor()
+        {
+            GetComponent<MeshRenderer>().enabled = true;
+            GetComponent<MeshRenderer>().material.color = Color.red;
+        }
+
+        public void Hide()
+        {
+            GetComponent<MeshRenderer>().enabled = false;
+        }
+
         //public WaypointQuad(Waypoint waypoint, GameObject quadContainer)
         //{
         //    this.waypoint = waypoint;

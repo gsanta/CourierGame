@@ -1,7 +1,11 @@
 ﻿using AI;
 using Bikers;
+using GamePlay;
+using Route;
 using Routes;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Controls
@@ -13,13 +17,16 @@ namespace Controls
         private LineRenderer lineRenderer;
         private List<Vector3> points = new List<Vector3>();
         private readonly BikerStore playerStore;
-
+        private RoadStore roadStore;
         private GameObject activeQuad;
 
-        public RouteTool(BikerStore playerStore) : base(ToolName.ROUTE)
+        public RouteTool(BikerStore playerStore, RoadStore roadStore) : base(ToolName.ROUTE)
         {
             this.playerStore = playerStore;
+            this.roadStore = roadStore;
         }
+
+        public event EventHandler RouteFinished;
 
         public List<Vector3> GetPoints()
         {
@@ -34,24 +41,7 @@ namespace Controls
 
         public override void Click()
         {
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            LayerMask mask = LayerMask.GetMask("Route");
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
-            {
-                var gameObject = hit.transform.gameObject;
-                if (points.Count == 0)
-                {
-                    points.Insert(0, playerStore.GetActivePlayer().transform.position);
-                }
-
-                var centerPoint = gameObject.GetComponent<WaypointQuad>().CenterPoint;
-                centerPoint.y = playerStore.GetActivePlayer().transform.position.y;
-
-                points.Add(centerPoint);
-                UpdateLines();
-            }
+            RouteFinished?.Invoke(this, EventArgs.Empty);
         }
 
         public override void Move()
@@ -63,21 +53,54 @@ namespace Controls
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
             {
                 var gameObject = hit.transform.gameObject;
-                if (activeQuad != null && activeQuad != gameObject)
+                
+                if (activeQuad != gameObject)
                 {
-                    activeQuad.GetComponent<MeshRenderer>().enabled = false;
-                }
+                    if (activeQuad != null)
+                    {
+                        HandleQuadExited();
+                    }
 
-                activeQuad = gameObject;
-                activeQuad.GetComponent<MeshRenderer>().enabled = true;
-            } else
+                    HandleMovedOverNewQuad(gameObject);
+                }
+            } 
+            else
             {
                 if (activeQuad != null)
                 {
-                    activeQuad.GetComponent<MeshRenderer>().enabled = false;
-                    activeQuad = null;
+                    HandleQuadExited();
                 }
             }
+        }
+
+        private void HandleQuadExited()
+        {
+            var quad = activeQuad.GetComponent<WaypointQuad>();
+            quad.Hide();
+            activeQuad = null;
+            points.Clear();
+            UpdateLines();
+        }
+
+        private void HandleMovedOverNewQuad(GameObject gameObject)
+        {
+            activeQuad = gameObject;
+            var quad = activeQuad.GetComponent<WaypointQuad>();
+
+            var route = roadStore.BuildRoute(playerStore.GetActivePlayer().transform.position, activeQuad.GetComponent<WaypointQuad>().CenterPoint);
+
+            points = route.ToList();
+            points.Insert(0, playerStore.GetActivePlayer().transform.position);
+
+            if (points.Count > 3)
+            {
+                quad.SetNotAllowedColor();
+            } else
+            {
+                quad.SetAllowedColor();
+            }
+
+            UpdateLines();
         }
 
         public void Reset()
@@ -89,10 +112,16 @@ namespace Controls
             CreateLineRenderer();
         }
 
-        public void Step()
+        public void SaveRoute()
         {
             points = new List<Vector3>();
             lineRenderers.Add(lineRenderer);
+            CreateLineRenderer();
+        }
+
+        public void ClearRoute()
+        {
+            points = new List<Vector3>();
             CreateLineRenderer();
         }
 

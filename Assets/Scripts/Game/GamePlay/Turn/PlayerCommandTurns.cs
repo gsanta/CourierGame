@@ -3,6 +3,7 @@ using Cameras;
 using Controls;
 using Routes;
 using RSG;
+using System;
 using System.Collections.Generic;
 
 namespace GamePlay
@@ -23,6 +24,49 @@ namespace GamePlay
             this.routeStore = routeStore;
             this.routeTool = routeTool;
             this.cameraController = cameraController;
+
+            routeTool.RouteFinished += HandleRouteFinished;
+        }
+
+        private void HandleRouteFinished(object sender, EventArgs args)
+        {
+            AddPlayerRoute();
+            ChooseNextPlayer();
+        }
+
+        private void AddPlayerRoute()
+        {
+            if (routeTool.GetPoints().Count > 0)
+            {
+                routeStore.AddRoute(playerStore.GetActivePlayer(), routeTool.GetPoints());
+                routeTool.SaveRoute();
+            } else
+            {
+                routeTool.ClearRoute();
+            }
+        }
+
+        private void ChooseNextPlayer()
+        {
+            var isLastPlayer = routeStore.GetRoutes().Count == playerStore.GetAll().Count;
+
+            if (isLastPlayer)
+            {
+                promise.Resolve();
+            } else
+            {
+                var usedPlayers = new HashSet<Biker>(routeStore.GetRoutes().Keys);
+                var players = playerStore.GetAll();
+                var index = players.IndexOf(playerStore.GetActivePlayer());
+                var end = players.GetRange(index, players.Count - index);
+                var start = players.GetRange(0, index);
+                var list = new List<Biker>();
+                list.AddRange(start);
+                list.AddRange(end);
+
+                var nextPlayer = list.Find(item => usedPlayers.Contains(item) == false);
+                turnHelper.ChangePlayer(nextPlayer);
+            }
         }
 
         public Promise Execute()
@@ -36,28 +80,30 @@ namespace GamePlay
 
         public void Step()
         {
-            routeStore.AddRoute(playerStore.GetActivePlayer(), routeTool.GetPoints());
-            var isLastPlayer = routeStore.GetRoutes().Count == playerStore.GetAll().Count;
+            routeTool.ClearRoute();
+            ChooseNextPlayer();
+            //routeStore.AddRoute(playerStore.GetActivePlayer(), routeTool.GetPoints());
+            //var isLastPlayer = routeStore.GetRoutes().Count == playerStore.GetAll().Count;
 
-            if (!isLastPlayer)
-            {
-                var usedPlayers = new HashSet<Biker>(routeStore.GetRoutes().Keys);
-                var players = playerStore.GetAll();
-                var index = players.IndexOf(playerStore.GetActivePlayer());
-                var end = players.GetRange(index, players.Count - index);
-                var start = players.GetRange(0, index);
-                var list = new List<Biker>();
-                list.AddRange(start);
-                list.AddRange(end);
+            //if (!isLastPlayer)
+            //{
+            //    var usedPlayers = new HashSet<Biker>(routeStore.GetRoutes().Keys);
+            //    var players = playerStore.GetAll();
+            //    var index = players.IndexOf(playerStore.GetActivePlayer());
+            //    var end = players.GetRange(index, players.Count - index);
+            //    var start = players.GetRange(0, index);
+            //    var list = new List<Biker>();
+            //    list.AddRange(start);
+            //    list.AddRange(end);
 
-                var selectedPlayer = list.Find(item => usedPlayers.Contains(item) == false);
+            //    var selectedPlayer = list.Find(item => usedPlayers.Contains(item) == false);
 
-                turnHelper.ChangePlayer(selectedPlayer);
-                routeTool.Step();
-            } else
-            {
-                promise.Resolve();
-            }
+            //    turnHelper.ChangePlayer(selectedPlayer);
+            //    routeTool.SaveRoute();
+            //} else
+            //{
+            //    promise.Resolve();
+            //}
         }
 
         public void Reset()
