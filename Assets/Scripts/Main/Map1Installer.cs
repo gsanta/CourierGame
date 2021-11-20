@@ -87,7 +87,6 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         pathCache.SetWalkTargetStore(walkTargetStore);
         pathCache.Init();
 
-        RoadStore pavementStore = Container.ResolveId<RoadStore>("PavementStore");
         ActionStore actionStore = Container.Resolve<ActionStore>();
         BuildingStore buildingStore = Container.Resolve<BuildingStore>();
 

@@ -14,5 +14,6 @@ namespace Controls
         public virtual void RightClick() { }
         public virtual void Drag() { }
         public virtual void Up() { }
+        public virtual void Move() { }
     }
 }

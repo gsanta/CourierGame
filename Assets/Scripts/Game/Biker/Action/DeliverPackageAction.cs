@@ -12,7 +12,7 @@ namespace Bikers
     {
         private DeliveryService deliveryService;
         private RoadStore roadStore;
-        public DeliverPackageAction(DeliveryService deliveryService, [Inject(Id = "RoadStore")] RoadStore roadStore) : base(new AIStateName[] { AIStateName.PACKAGE_IS_PICKED }, new AIStateName[] { AIStateName.PACKAGE_IS_DROPPED })
+        public DeliverPackageAction(DeliveryService deliveryService, RoadStore roadStore) : base(new AIStateName[] { AIStateName.PACKAGE_IS_PICKED }, new AIStateName[] { AIStateName.PACKAGE_IS_DROPPED })
         {
             this.deliveryService = deliveryService;
             this.roadStore = roadStore;

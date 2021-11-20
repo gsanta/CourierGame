@@ -53,5 +53,10 @@ namespace Controls
         {
             activeTool.Drag();
         }
+
+        public void PointerMove()
+        {
+            activeTool.Move();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace AI
 {
@@ -24,17 +25,33 @@ namespace AI
         [Range(0f, 1f)]
         public float branchRatio = 0.5f;
 
-        private WaypointRenderer waypointRenderer;
+        public WaypointRenderer waypointRenderer;
+        public WaypointQuad waypointQuad;
 
-        private void Awake()
+        private IQuadContainer quadContainer;
+
+        [Inject]
+        public void Construct(IQuadContainer quadContainer)
+        {
+            this.quadContainer = quadContainer;
+        }
+
+        private void Start()
         {
             LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
             waypointRenderer = new WaypointRenderer(this, lineRenderer);
-            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            sphere.transform.SetParent(transform);
-            sphere.transform.position = transform.position;
-            sphere.gameObject.layer = LayerMask.NameToLayer("Route");
+            WaypointQuad quad = Instantiate(quadContainer.QuadTemplate);
+
+            //waypointQuad = new WaypointQuad(this, quadContainer.QuadContainer);
+
+            //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //sphere.transform.position = transform.position;
             //sphere.gameObject.layer = LayerMask.NameToLayer("Route");
+
+            waypointRenderer.Render();
+            quad.Setup(this, quadContainer.QuadContainer);
+
+            //waypointQuad.Start();
         }
 
         public Waypoint PrevWayPoint { get => previousWaypoint; set => previousWaypoint = (Waypoint) value; }
@@ -66,25 +83,6 @@ namespace AI
         public static float Distance(Waypoint wp1, Waypoint wp2)
         {
             return Vector3.Distance(wp1.Position, wp2.Position);
-        }
-
-        private void Start()
-        {
-            waypointRenderer.Render();
-            //if (nextWaypoint == null)
-            //{
-            //    return;
-            //}
-
-            //LineRenderer l = gameObject.AddComponent<LineRenderer>();
-
-            //List<Vector3> pos = new List<Vector3>();
-            //pos.Add(transform.position);
-            //pos.Add(NextWayPoint.transform.position);
-            //l.startWidth = 1f;
-            //l.endWidth = 1f;
-            //l.SetPositions(pos.ToArray());
-            //l.useWorldSpace = true;
         }
     }
 }

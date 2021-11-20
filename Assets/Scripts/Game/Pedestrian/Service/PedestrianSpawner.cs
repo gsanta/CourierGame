@@ -12,7 +12,7 @@ namespace Pedestrians
         private PedestrianFactory pedestrianFactory;
         private RoadStore pavementStore;
 
-        public PedestrianSpawner(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, [Inject(Id = "PavementStore")] RoadStore pavementStore)
+        public PedestrianSpawner(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, RoadStore pavementStore)
         {
             this.pedestrianStore = pedestrianStore;
             this.pedestrianFactory = pedestrianFactory;

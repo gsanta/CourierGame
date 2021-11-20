@@ -6,11 +6,19 @@ using UnityEngine;
 
 namespace Route
 {
-    public class RoadStore : IResetable
+    public class RoadStore : IResetable, IQuadContainer
     {
         private List<Waypoint> waypoints = new List<Waypoint>();
         private DirectedGraph<Waypoint, object> graph = new DirectedGraph<Waypoint, object>();
         private RouteBuilder routeBuilder;
+
+        public RoadStore()
+        {
+            Debug.Log("abcd");
+        }
+
+        public GameObject QuadContainer { set; get; }
+        public WaypointQuad QuadTemplate { set; get; }
 
         public List<Waypoint> GetWaypoints() { return waypoints; }
         public DirectedGraph<Waypoint, object> GetGraph() { return graph; }

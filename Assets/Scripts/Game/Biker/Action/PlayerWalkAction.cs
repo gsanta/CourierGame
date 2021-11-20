@@ -1,23 +1,19 @@
 ﻿using AI;
-using Route;
 using Scenes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 namespace Bikers
 {
     public class PlayerWalkAction : AbstractRouteAction<Biker>
     {
-        private RoadStore routeStore;
         private List<Vector3> points;
 
-        public PlayerWalkAction(GoapAgent<Biker> agent, List<Vector3> points, RoadStore routeStore) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
+        public PlayerWalkAction(GoapAgent<Biker> agent, List<Vector3> points) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
         {
             this.agent = agent;
             this.points = points;
-            this.routeStore = routeStore;
         }
 
         public override bool PrePerform()
@@ -49,9 +45,9 @@ namespace Bikers
 
     public class PlayerWalkActionCreator
     {
-        public PlayerWalkAction Create(GoapAgent<Biker> agent, List<Vector3> points, RoadStore routeStore)
+        public PlayerWalkAction Create(GoapAgent<Biker> agent, List<Vector3> points)
         {
-            return new PlayerWalkAction(agent, points, routeStore);
+            return new PlayerWalkAction(agent, points);
         }
     }
 }

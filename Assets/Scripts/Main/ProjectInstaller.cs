@@ -19,6 +19,7 @@ using Zenject;
 using Actions;
 using Routes;
 using GamePlay;
+using AI;
 
 namespace Main
 {
@@ -48,8 +49,8 @@ namespace Main
             Container.Bind<PedestrianGoalFactory>().AsSingle();
             Container.Bind<WalkTargetStore>().AsSingle().NonLazy();
             Container.Bind<PedestrianStore>().AsSingle().NonLazy();
-            Container.Bind<RoadStore>().WithId("RoadStore").AsCached().NonLazy();
-            Container.Bind<RoadStore>().WithId("PavementStore").AsCached().NonLazy();
+            Container.Bind(typeof(RoadStore), typeof(IQuadContainer)).To<RoadStore>().AsSingle().NonLazy();
+
             Container.Bind<AgentFactory>().AsSingle().NonLazy();
             Container.Bind<ActionStore>().AsSingle().NonLazy();
             Container.Bind<SceneChangeHandler>().AsSingle().NonLazy();
@@ -128,8 +129,8 @@ namespace Main
             sceneChangeHandler.AddResetable(Container.Resolve<PackageTargetPointStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<WalkTargetStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PedestrianStore>());
-            sceneChangeHandler.AddResetable(Container.ResolveId<RoadStore>("RoadStore"));
-            sceneChangeHandler.AddResetable(Container.ResolveId<RoadStore>("PavementStore"));
+            sceneChangeHandler.AddResetable(Container.Resolve<RoadStore>());
+
             sceneChangeHandler.AddResetable(Container.Resolve<ActionStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PlayPanel>());
             sceneChangeHandler.AddResetable(Container.Resolve<DeliveryPanel>());

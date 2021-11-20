@@ -7,6 +7,7 @@ namespace AI
     {
         private readonly Waypoint waypoint;
         private readonly LineRenderer lineRenderer;
+        private List<Vector3> points = new List<Vector3>();
 
         public WaypointRenderer(Waypoint waypoint, LineRenderer lineRenderer)
         {
@@ -16,8 +17,13 @@ namespace AI
 
         public void Render()
         {
-            List<Vector3> points = GetPoints();
+            List<Vector3> points = SetPoints();
             RenderLines(points);
+        }
+
+        public List<Vector3> GetPoints()
+        {
+            return points;
         }
 
         private void RenderLines(List<Vector3> points)
@@ -26,39 +32,41 @@ namespace AI
             lineRenderer.endWidth = 0.1f;
             lineRenderer.positionCount = points.Count;
             lineRenderer.SetPositions(points.ToArray());
-            lineRenderer.useWorldSpace = true;
+            //lineRenderer.useWorldSpace = true;
         }
 
-        private List<Vector3> GetPoints()
+        private List<Vector3> SetPoints()
         {
-            List<Vector3> points = new List<Vector3>();
-
             if (waypoint.PrevWayPoint != null)
             {
                 (Vector3, Vector3) rightBorder = GetRightBorderPoints();
                 points.Add(rightBorder.Item1);
                 points.Add(rightBorder.Item2);
-            }
-            else
-            {
-                points.Add(GetRightOffset());
-            }
-
-            if (waypoint.NextWayPoint != null)
-            {
                 (Vector3, Vector3) leftBorder = GetLeftBorderPoints();
                 points.Add(leftBorder.Item1);
                 points.Add(leftBorder.Item2);
             }
             else
             {
+                points.Add(GetRightOffset());
                 points.Add(GetLeftOffset());
             }
+
+            //if (waypoint.NextWayPoint != null)
+            //{
+            //    (Vector3, Vector3) leftBorder = GetLeftBorderPoints();
+            //    points.Add(leftBorder.Item1);
+            //    points.Add(leftBorder.Item2);
+            //}
+            //else
+            //{
+            //    points.Add(GetLeftOffset());
+            //}
 
             return points;
         }
 
-        private (Vector3, Vector3) GetRightBorderPoints()
+        public (Vector3, Vector3) GetRightBorderPoints()
         {
             Gizmos.color = Color.red;
             Vector3 offset = GetRightOffset();
@@ -77,13 +85,13 @@ namespace AI
             return waypoint.PrevWayPoint.Right * waypoint.PrevWayPoint.Width / 2f;
         }
 
-        private (Vector3, Vector3) GetLeftBorderPoints()
+        public (Vector3, Vector3) GetLeftBorderPoints()
         {
             Gizmos.color = Color.green;
             Vector3 offset = GetLeftOffset();
             Vector3 offsetTo = GetLeftOffsetTo();
 
-            return (offset, waypoint.NextWayPoint.Position + offsetTo);
+            return (offset, waypoint.PrevWayPoint.Position + offsetTo);
         }
 
         private Vector3 GetLeftOffset()
@@ -93,16 +101,7 @@ namespace AI
 
         private Vector3 GetLeftOffsetTo()
         {
-            return -waypoint.NextWayPoint.Right * waypoint.NextWayPoint.Width / 2;
-        }
-
-        private void DrawLine()
-        {
-            Gizmos.color = Color.white;
-            Gizmos.DrawLine(
-                GetRightOffset(),
-                GetLeftOffset()
-            );
+            return -waypoint.PrevWayPoint.Right * waypoint.PrevWayPoint.Width / 2f;
         }
     }
 }

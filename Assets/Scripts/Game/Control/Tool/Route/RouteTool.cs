@@ -1,4 +1,5 @@
-﻿using Bikers;
+﻿using AI;
+using Bikers;
 using Routes;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace Controls
         private LineRenderer lineRenderer;
         private List<Vector3> points = new List<Vector3>();
         private readonly BikerStore playerStore;
+
+        private GameObject activeQuad;
 
         public RouteTool(BikerStore playerStore) : base(ToolName.ROUTE)
         {
@@ -42,8 +45,38 @@ namespace Controls
                 {
                     points.Insert(0, playerStore.GetActivePlayer().transform.position);
                 }
-                points.Add(gameObject.transform.position);
+
+                var centerPoint = gameObject.GetComponent<WaypointQuad>().CenterPoint;
+                centerPoint.y = playerStore.GetActivePlayer().transform.position.y;
+
+                points.Add(centerPoint);
                 UpdateLines();
+            }
+        }
+
+        public override void Move()
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            LayerMask mask = LayerMask.GetMask("Route");
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+            {
+                var gameObject = hit.transform.gameObject;
+                if (activeQuad != null && activeQuad != gameObject)
+                {
+                    activeQuad.GetComponent<MeshRenderer>().enabled = false;
+                }
+
+                activeQuad = gameObject;
+                activeQuad.GetComponent<MeshRenderer>().enabled = true;
+            } else
+            {
+                if (activeQuad != null)
+                {
+                    activeQuad.GetComponent<MeshRenderer>().enabled = false;
+                    activeQuad = null;
+                }
             }
         }
 

@@ -13,7 +13,7 @@ namespace Bikers
         private readonly DeliveryService deliveryService;
         private RoadStore roadStore;
 
-        public PickUpPackageAction(DeliveryService deliveryService, [Inject(Id = "RoadStore")] RoadStore roadStore) : base(new AIStateName[] { AIStateName.PACKAGE_IS_RESERVED }, new AIStateName[] { AIStateName.PACKAGE_IS_PICKED })
+        public PickUpPackageAction(DeliveryService deliveryService, RoadStore roadStore) : base(new AIStateName[] { AIStateName.PACKAGE_IS_RESERVED }, new AIStateName[] { AIStateName.PACKAGE_IS_PICKED })
         {
             this.deliveryService = deliveryService;
             this.roadStore = roadStore;

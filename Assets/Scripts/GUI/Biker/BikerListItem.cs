@@ -63,12 +63,14 @@ namespace UI
             {
                 var colors = GetComponent<Button>().colors;
                 colors.normalColor = Color.green;
+                colors.highlightedColor = Color.green;
                 GetComponent<Button>().colors = colors;
             }
             else
             {
                 var colors = GetComponent<Button>().colors;
                 colors.normalColor = Color.black;
+                colors.highlightedColor = Color.black;
                 GetComponent<Button>().colors = colors;
             }
         }

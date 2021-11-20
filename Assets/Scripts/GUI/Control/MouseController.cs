@@ -41,6 +41,13 @@ namespace Controls
             {
                 HandleMouseMove();
             }
+
+            if ((Input.GetAxis("Mouse X") != 0) || (Input.GetAxis("Mouse Y") != 0)) {
+                if (!isDragging)
+                {
+                    pointerHandler.PointerMove();
+                }
+            }
         }
 
         private void HandleMouseUp()

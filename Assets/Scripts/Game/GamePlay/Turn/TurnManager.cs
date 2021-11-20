@@ -37,7 +37,7 @@ namespace GamePlay
 
         public bool IsPlayerPlayTurn()
         {
-            return activeTurn == playerCommandTurns;
+            return activeTurn == playerPlayTurns;
         }
 
         public bool IsEnemyTurn()

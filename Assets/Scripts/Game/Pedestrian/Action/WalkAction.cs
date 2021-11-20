@@ -15,7 +15,7 @@ namespace Pedestrians
         private RoadStore routeStore;
         private float hideDuration = 0;
 
-        public WalkAction(GoapAgent<T> agent, AIStateName[] preconditions, AIStateName[] afterEffects, [Inject(Id = "PavementStore")] RoadStore routeStore, WalkTargetStore walkTargetStore, PathCache pathCache) : base(preconditions, afterEffects, pathCache)
+        public WalkAction(GoapAgent<T> agent, AIStateName[] preconditions, AIStateName[] afterEffects, RoadStore routeStore, WalkTargetStore walkTargetStore, PathCache pathCache) : base(preconditions, afterEffects, pathCache)
         {
             this.agent = agent;
             this.routeStore = routeStore;
@@ -73,7 +73,7 @@ namespace Pedestrians
         private readonly RoadStore routeStore;
         private readonly WalkTargetStore walkTargetStore;
 
-        public PedestrianWalkActionCreator([Inject(Id = "PavementStore")] RoadStore routeStore, WalkTargetStore walkTargetStore)
+        public PedestrianWalkActionCreator(RoadStore routeStore, WalkTargetStore walkTargetStore)
         {
             this.routeStore = routeStore;
             this.walkTargetStore = walkTargetStore;
@@ -90,7 +90,7 @@ namespace Pedestrians
         private readonly RoadStore routeStore;
         private readonly WalkTargetStore walkTargetStore;
 
-        public EnemyWalkActionCreator([Inject(Id = "PavementStore")] RoadStore routeStore, WalkTargetStore walkTargetStore)
+        public EnemyWalkActionCreator(RoadStore routeStore, WalkTargetStore walkTargetStore)
         {
             this.routeStore = routeStore;
             this.walkTargetStore = walkTargetStore;

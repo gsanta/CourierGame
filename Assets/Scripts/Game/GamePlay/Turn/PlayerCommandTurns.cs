@@ -3,6 +3,7 @@ using Cameras;
 using Controls;
 using Routes;
 using RSG;
+using System.Collections.Generic;
 
 namespace GamePlay
 {
@@ -35,16 +36,27 @@ namespace GamePlay
 
         public void Step()
         {
-            if (playerStore.GetActivePlayer() == playerStore.GetLastPlayer())
+            routeStore.AddRoute(playerStore.GetActivePlayer(), routeTool.GetPoints());
+            var isLastPlayer = routeStore.GetRoutes().Count == playerStore.GetAll().Count;
+
+            if (!isLastPlayer)
             {
-                routeStore.AddRoute(playerStore.GetActivePlayer(), routeTool.GetPoints());
-                promise.Resolve();
-            }
-            else
-            {
-                routeStore.AddRoute(playerStore.GetActivePlayer(), routeTool.GetPoints());
-                turnHelper.ChangePlayer(playerStore.GetNextPlayer());
+                var usedPlayers = new HashSet<Biker>(routeStore.GetRoutes().Keys);
+                var players = playerStore.GetAll();
+                var index = players.IndexOf(playerStore.GetActivePlayer());
+                var end = players.GetRange(index, players.Count - index);
+                var start = players.GetRange(0, index);
+                var list = new List<Biker>();
+                list.AddRange(start);
+                list.AddRange(end);
+
+                var selectedPlayer = list.Find(item => usedPlayers.Contains(item) == false);
+
+                turnHelper.ChangePlayer(selectedPlayer);
                 routeTool.Step();
+            } else
+            {
+                promise.Resolve();
             }
         }
 

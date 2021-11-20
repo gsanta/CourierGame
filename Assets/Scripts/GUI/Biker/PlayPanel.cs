@@ -40,9 +40,9 @@ namespace UI
 
         private void CreateListItem(string text, bool isActive)
         {
-            IBikerListItem item = gameObjectStore.BikerListItemInstantiator.Instantiate(text);
-            item.IsActive = isActive;
-            itemList.Add(item);
+            //IBikerListItem item = gameObjectStore.BikerListItemInstantiator.Instantiate(text);
+            //item.IsActive = isActive;
+            //itemList.Add(item);
         }
 
         void PlayerSelected(Biker player)
