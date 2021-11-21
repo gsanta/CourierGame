@@ -18,36 +18,40 @@ namespace Attacks
         private void Awake()
         {
             sphereCollider = GetComponent<SphereCollider>();
-            sphereCollider.radius = 2;
+            //sphereCollider.radius = 2;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            IDamageable damageable = other.GetComponent<IDamageable>();
-
-            if (damageable != null)
+            if (other.gameObject.layer == LayerMask.NameToLayer("PlayerAttackRadius"))
             {
-                damageables.Add(damageable);
-
-                if (attackCoroutine == null)
-                {
-                    attackCoroutine = StartCoroutine(Attack());
-                }
+                Debug.Log("Attack");
             }
+            //IDamageable damageable = other.GetComponent<IDamageable>();
+
+            //if (damageable != null)
+            //{
+            //    damageables.Add(damageable);
+
+            //    if (attackCoroutine == null)
+            //    {
+            //        attackCoroutine = StartCoroutine(Attack());
+            //    }
+            //}
         }
 
         private void OnTriggerExit(Collider other)
         {
-            IDamageable damageable = other.GetComponent<IDamageable>();
-            if (damageable != null)
-            {
-                damageables.Remove(damageable);
-                if (damageables.Count == 0)
-                {
-                    StopCoroutine(attackCoroutine);
-                    attackCoroutine = null;
-                }
-            }
+            //IDamageable damageable = other.GetComponent<IDamageable>();
+            //if (damageable != null)
+            //{
+            //    damageables.Remove(damageable);
+            //    if (damageables.Count == 0)
+            //    {
+            //        StopCoroutine(attackCoroutine);
+            //        attackCoroutine = null;
+            //    }
+            //}
         }
 
         private IEnumerator Attack()

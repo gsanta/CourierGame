@@ -4,25 +4,32 @@ using AI;
 using Bikers;
 using Cameras;
 using Controls;
+using Enemies;
+using Pedestrians;
 using Routes;
 using RSG;
+using System.Collections.Generic;
 
 namespace GamePlay
 {
     public class PlayerPlayTurns : ITurns
     {
         private readonly BikerStore playerStore;
+        private readonly EnemyStore enemyStore;
+        private readonly PedestrianStore pedestrianStore;
         private readonly RouteStore routeStore;
         private readonly RouteTool routeTool;
         private readonly ActionFactory actionFactory;
         private readonly CameraController cameraController;
-        private TurnHelper turnHelper;
         private Promise promise;
 
-        public PlayerPlayTurns(TurnHelper turnHelper, BikerStore playerStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
+        private ISet<Biker> movingPlayers = new HashSet<Biker>();
+
+        public PlayerPlayTurns(BikerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
         {
-            this.turnHelper = turnHelper;
             this.playerStore = playerStore;
+            this.enemyStore = enemyStore;
+            this.pedestrianStore = pedestrianStore;
             this.routeStore = routeStore;
             this.routeTool = routeTool;
             this.actionFactory = actionFactory;
@@ -34,11 +41,45 @@ namespace GamePlay
         {
             promise = new Promise();
 
+            playerStore.GetAll().ForEach(player => {
+                movingPlayers.Add(player);
+                player.Agent.Active = true;
+
+                player.Agent.GoalReached += HandleGoalReached;
+                var points = routeStore.GetRoutes()[player];
+                points.RemoveAt(0);
+                player.Agent.SetActions(actionFactory.CreatePlayerWalkAction(player.Agent, points));
+                player.Agent.SetGoals(new Goal(AIStateName.WALK_FINISHED, false), false);
+            });
+
             playerStore.SetActivePlayer(playerStore.GetFirstPlayer());
             cameraController.Follow(playerStore.GetActivePlayer());
-            NextStep();
+
+            enemyStore.GetAll().ForEach(enemy => {
+                enemy.Agent.Active = true;
+                enemy.Agent.NavMeshAgent.isStopped = false;
+
+                enemy.Agent.SetActions(actionFactory.CreateEnemyWalkAction(enemy.Agent));
+                enemy.Agent.SetGoals(enemy.GetGoalProvider().CreateGoal(), false);
+            });
+
+            pedestrianStore.GetAll().ForEach(pedestrian => {
+                pedestrian.Agent.Active = true;
+                pedestrian.Agent.NavMeshAgent.isStopped = false;
+
+                pedestrian.Agent.SetActions(actionFactory.CreatePedestrianWalkAction(pedestrian.Agent));
+                pedestrian.Agent.SetGoals(pedestrian.GetGoalProvider().CreateGoal(), false);
+            });
 
             return promise;
+        }
+
+        private void Finish()
+        {
+            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.AbortAction());
+            enemyStore.GetAll().ForEach(pedestrian => pedestrian.Agent.AbortAction());
+
+            promise.Resolve();
         }
 
         public void Step()
@@ -51,34 +92,18 @@ namespace GamePlay
 
         }
 
-        private void NextStep()
-        {
-            var player = playerStore.GetActivePlayer();
-            player.Agent.GoalReached += HandleGoalReached;
-            player.Agent.Active = true;
-            var points = routeStore.GetRoutes()[player];
-            points.RemoveAt(0);
-            player.Agent.SetActions(actionFactory.CreatePlayerWalkAction(player.Agent, points));
-            player.Agent.SetGoals(new Goal(AIStateName.WALK_FINISHED, false), false);
-        }
-
         private void HandleGoalReached(object sender, GoalReachedEventArgs<Biker> args)
         {
+            movingPlayers.Remove(args.agent.Parent);
             args.agent.GoalReached -= HandleGoalReached;
             args.agent.Active = false;
 
-            if (args.agent.Parent == playerStore.GetLastPlayer())
+            if (movingPlayers.Count == 0)
             {
-                //isPlayMode = false;
                 routeStore.Clear();
                 routeTool.Reset();
-                promise.Resolve();
                 cameraController.Follow(null);
-            }
-            else
-            {
-                turnHelper.ChangePlayer(playerStore.GetNextPlayer(), true);
-                NextStep();
+                Finish();
             }
         }
     }

@@ -15,8 +15,6 @@ namespace Pedestrians
         public PedestrianInfo pedestrianInfo;
         private IGoalProvider goalProvider;
         public bool walked = false;
-        [SerializeField]
-        private AttackRadius attackRadius;
         private int health = 100;
         private OutlineGameObjectSelector gameObjectSelector;
         private SelectionStore selectionStore;
@@ -37,11 +35,6 @@ namespace Pedestrians
         {
             gameObjectSelector.SetGameObject(this);
             gameObjectSelector.SetOutlineGameObject(transform.GetChild(0).gameObject);
-            attackRadius.OnAttack += OnAttack;
-        }
-
-        private void OnAttack(IDamageable target)
-        {
         }
 
         private void Start()

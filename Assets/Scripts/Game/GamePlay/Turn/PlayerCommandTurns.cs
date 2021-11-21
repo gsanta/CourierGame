@@ -1,6 +1,8 @@
 ﻿using Bikers;
 using Cameras;
 using Controls;
+using Enemies;
+using Pedestrians;
 using Routes;
 using RSG;
 using System;
@@ -16,14 +18,18 @@ namespace GamePlay
         private readonly RouteTool routeTool;
         private readonly CameraController cameraController;
         private Promise promise;
+        private PedestrianStore pedestrianStore;
+        private EnemyStore enemyStore;
 
-        public PlayerCommandTurns(TurnHelper turnHelper, BikerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController)
+        public PlayerCommandTurns(TurnHelper turnHelper, BikerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController, PedestrianStore pedestrianStore, EnemyStore enemyStore)
         {
             this.turnHelper = turnHelper;
             this.playerStore = playerStore;
             this.routeStore = routeStore;
             this.routeTool = routeTool;
             this.cameraController = cameraController;
+            this.enemyStore = enemyStore;
+            this.pedestrianStore = pedestrianStore;
 
             routeTool.RouteFinished += HandleRouteFinished;
         }
@@ -75,6 +81,9 @@ namespace GamePlay
 
         public Promise Execute()
         {
+            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.AbortAction());
+            enemyStore.GetAll().ForEach(pedestrian => pedestrian.Agent.AbortAction());
+
             routeTool.Enabled = true;
 
             promise = new Promise();

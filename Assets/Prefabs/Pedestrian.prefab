@@ -322,7 +322,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navMeshAgent: {fileID: 0}
   walked: 0
-  attackRadius: {fileID: 5312281234193102980}
 --- !u!65 &6195329513134689117
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -12,14 +12,12 @@ namespace UI
 
         private BikerStore playerStore;
         private TurnManager turnManager;
-        private TurnHelper turnHelper;
         private GameObjectStore gameObjectStore;
 
-        public PlayPanel(TurnManager turnManager, TurnHelper turnHelper, BikerStore playerStore, GameObjectStore gameObjectStore)
+        public PlayPanel(TurnManager turnManager, BikerStore playerStore, GameObjectStore gameObjectStore)
         {
             this.playerStore = playerStore;
             this.turnManager = turnManager;
-            this.turnHelper = turnHelper;
             this.gameObjectStore = gameObjectStore;
 
             turnManager.TurnChanged += HandleTurnChanged;
@@ -75,8 +73,6 @@ namespace UI
         {
             ClearItems();
             playerStore.GetAll().ForEach(player => CreateListItem(player.GetName(), playerStore.GetActivePlayer() == player && (turnManager.IsPlayerCommandTurn() || turnManager.IsPlayerPlayTurn())));
-            CreateListItem("Civilians", turnManager.IsPedestrianTurn());
-            CreateListItem("Enemies", turnManager.IsEnemyTurn());
         }
 
         private void HandleTurnChanged(object sender, EventArgs args)
