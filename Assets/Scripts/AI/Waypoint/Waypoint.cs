@@ -54,6 +54,11 @@ namespace AI
             //waypointQuad.Start();
         }
 
+        public void SetLineColor(Color color)
+        {
+            gameObject.GetComponent<LineRenderer>().material.color = color;
+        }
+
         public Waypoint PrevWayPoint { get => previousWaypoint; set => previousWaypoint = (Waypoint) value; }
         public Waypoint NextWayPoint { get => nextWaypoint; set => nextWaypoint = (Waypoint) value; }
 

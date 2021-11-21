@@ -18,7 +18,6 @@ namespace Controls
         [Inject]
         public void Construct(CanvasStore panelStore, WorldStore worldStore, CurfewButton curfewButton)
         {
-            panelStore.AddWidgetController(this);
             this.worldStore = worldStore;
             this.curfewButton = curfewButton;
             curfewButton.SetToolbarController(this);

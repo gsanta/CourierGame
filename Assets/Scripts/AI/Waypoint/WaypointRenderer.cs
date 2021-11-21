@@ -31,6 +31,7 @@ namespace AI
             lineRenderer.startWidth = 0.1f;
             lineRenderer.endWidth = 0.1f;
             lineRenderer.positionCount = points.Count;
+            lineRenderer.material.color = Color.blue;
             lineRenderer.SetPositions(points.ToArray());
             //lineRenderer.useWorldSpace = true;
         }

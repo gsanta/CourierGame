@@ -5,6 +5,8 @@ using System;
 using Delivery;
 using AI;
 using Service;
+using Attacks;
+using UI;
 
 namespace Bikers
 {
@@ -37,6 +39,13 @@ namespace Bikers
         private void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
+            
+            
+            Transform attackRadius = transform.Find("Attack Radius");
+            if (attackRadius)
+            {
+                //attackRadius.GetComponent<AttackRadius>().SetCanvasStore()
+            }
         }
 
         public bool Paused

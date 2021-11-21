@@ -302,8 +302,8 @@ GameObject:
   - component: {fileID: 1854021417471895706}
   - component: {fileID: 6353661148229088383}
   - component: {fileID: 7973610613009090750}
-  m_Layer: 9
-  m_Name: AttackRadius
+  m_Layer: 0
+  m_Name: Attack Radius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -338,7 +338,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7746335607357181105}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -397,8 +397,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f82b1f6752fe16c4c96da0ffcc1c5cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  attackDelay: 0.5
 --- !u!54 &7973610613009090750
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -7,27 +7,33 @@ namespace UI
     public class CanvasStore
     {
         private IPanelController panelController;
-        private IToolbarController widgetController;
         private Dictionary<string, GameObject> panelMap = new Dictionary<string, GameObject>();
+        private GameObject canvasContainer;
 
-        public void SetCanvas(GameObject canvas)
+        public void SetCanvas(GameObject canvasContainer)
         {
-            panelController = canvas.GetComponent<IPanelController>();
+            this.canvasContainer = canvasContainer;
+            panelController = canvasContainer.GetComponent<IPanelController>();
 
-            foreach (Transform child in canvas.transform)
+            foreach (Transform child in canvasContainer.transform)
             {
                 panelMap.Add(child.gameObject.name, child.gameObject);
             }
         }
 
-        public void AddWidgetController(IToolbarController widgetController)
-        {
-            this.widgetController = widgetController;
-        }
-
         public T GetPanel<T>(Type type) where T : class
         {
-            return panelController.GetPanel<T>(type);
+            return canvasContainer.GetComponentsInChildren(type, true)[0] as T;
+        }
+
+        public void HidePanel(Type type)
+        {
+            GetPanel<MonoBehaviour>(type).gameObject.SetActive(false);
+        }
+
+        public void ShowPanel(Type type)
+        {
+            GetPanel<MonoBehaviour>(type).gameObject.SetActive(true);
         }
 
         public List<GameObject> GetAllPanels()
@@ -38,16 +44,6 @@ namespace UI
         public GameObject GetPanelByName(string name)
         {
             return panelMap[name];
-        }
-
-        public T GetWidget<T>(Type type) where T : class
-        {
-            return widgetController.GetWidget<T>(type);
-        }
-
-        public List<GameObject> GetAllWidgets()
-        {
-            return widgetController.GetAllWidgets();
         }
 
         public void HidePanel(GameObject panel, float delay)

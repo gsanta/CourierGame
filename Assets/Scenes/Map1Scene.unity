@@ -14938,6 +14938,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Capsule
       objectReference: {fileID: 0}
+    - target: {fileID: 3392701077931296997, guid: 5b08ae0a5f5e9f84fb18217ca40ac9af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4258238457354200427, guid: 5b08ae0a5f5e9f84fb18217ca40ac9af, type: 3}
       propertyPath: m_RootOrder
       value: 0

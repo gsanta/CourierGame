@@ -11,17 +11,19 @@ namespace GUI
         private PedestrianStore pedestrianStore;
         private PedestrianFactory pedestrianFactory;
         private Pedestrian.Factory gameObjectFactory;
+        private Biker.Factory playerInstanceFactory;
         private BikerStore bikerStore;
         private BikerFactory bikerFactory;
         private EnemiesConfig enemiesConfig;
         private EnemyFactory enemyFactory;
 
         [Inject]
-        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, Pedestrian.Factory gameObjectFactory, BikerStore bikerStore, BikerFactory bikerFactory, EnemiesConfig enemiesConfig, EnemyFactory enemyFactory)
+        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, Pedestrian.Factory gameObjectFactory, Biker.Factory playerInstanceFactory, BikerStore bikerStore, BikerFactory bikerFactory, EnemiesConfig enemiesConfig, EnemyFactory enemyFactory)
         {
             this.pedestrianStore = pedestrianStore;
             this.pedestrianFactory = pedestrianFactory;
             this.gameObjectFactory = gameObjectFactory;
+            this.playerInstanceFactory = playerInstanceFactory;
             this.bikerStore = bikerStore;
             this.bikerFactory = bikerFactory;
             this.enemiesConfig = enemiesConfig;
@@ -43,7 +45,8 @@ namespace GUI
 
         public Biker InstantiateBiker()
         {
-            return Instantiate(bikerStore.GetBikerTemplate(), bikerStore.GetBikerContainer().transform);
+            //, bikerStore.GetBikerContainer().transform
+            return playerInstanceFactory.Create(bikerStore.GetBikerTemplate());
         }
 
         public MinimapBiker InstantiateMinimapBiker()

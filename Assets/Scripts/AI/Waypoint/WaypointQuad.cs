@@ -5,9 +5,16 @@ namespace AI
     public class WaypointQuad : MonoBehaviour
     {
         public Vector3 CenterPoint { get; set; }
+        private Waypoint waypoint;
+
+        public Waypoint GetWaypoint()
+        {
+            return waypoint;
+        }
 
         public void Setup(Waypoint waypoint, GameObject quadContainer)
         {
+            this.waypoint = waypoint;
             var points = waypoint.waypointRenderer.GetPoints();
 
             if (points.Count == 4)

@@ -103,8 +103,8 @@ namespace Controls
         private void HandleQuadExited()
         {
             var quad = activeQuad.GetComponent<WaypointQuad>();
-            quad.Hide();
             activeQuad = null;
+            quad.GetWaypoint().SetLineColor(Color.blue);
             points.Clear();
             UpdateLines();
         }
@@ -121,10 +121,10 @@ namespace Controls
 
             if (points.Count > maxRouteLength)
             {
-                quad.SetNotAllowedColor();
+                quad.GetWaypoint().SetLineColor(Color.red);
             } else
             {
-                quad.SetAllowedColor();
+                quad.GetWaypoint().SetLineColor(Color.green);
             }
 
             UpdateLines();
