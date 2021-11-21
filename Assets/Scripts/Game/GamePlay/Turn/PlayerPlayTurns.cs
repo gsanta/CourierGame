@@ -77,7 +77,7 @@ namespace GamePlay
             }
             else
             {
-                turnHelper.ChangePlayer(playerStore.GetNextPlayer());
+                turnHelper.ChangePlayer(playerStore.GetNextPlayer(), true);
                 NextStep();
             }
         }

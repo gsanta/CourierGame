@@ -14,10 +14,13 @@ namespace GamePlay
             this.cameraController = cameraController;
         }
 
-        public void ChangePlayer(Biker player)
+        public void ChangePlayer(Biker player, bool follow)
         {
             playerStore.SetActivePlayer(player);
-            cameraController.Follow(playerStore.GetActivePlayer());
+            if (follow)
+            {
+                cameraController.Follow(playerStore.GetActivePlayer());
+            }
         }
     }
 }

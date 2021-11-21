@@ -30,8 +30,11 @@ namespace GamePlay
 
         private void HandleRouteFinished(object sender, EventArgs args)
         {
-            AddPlayerRoute();
-            ChooseNextPlayer();
+            if (routeTool.IsValidRoute())
+            {
+                AddPlayerRoute();
+                ChooseNextPlayer();
+            }
         }
 
         private void AddPlayerRoute()
@@ -52,6 +55,7 @@ namespace GamePlay
 
             if (isLastPlayer)
             {
+                routeTool.Enabled = false;
                 promise.Resolve();
             } else
             {
@@ -65,12 +69,14 @@ namespace GamePlay
                 list.AddRange(end);
 
                 var nextPlayer = list.Find(item => usedPlayers.Contains(item) == false);
-                turnHelper.ChangePlayer(nextPlayer);
+                turnHelper.ChangePlayer(nextPlayer, false);
             }
         }
 
         public Promise Execute()
         {
+            routeTool.Enabled = true;
+
             promise = new Promise();
             playerStore.SetActivePlayer(playerStore.GetFirstPlayer());
             cameraController.PanTo(playerStore.GetActivePlayer());
@@ -82,28 +88,6 @@ namespace GamePlay
         {
             routeTool.ClearRoute();
             ChooseNextPlayer();
-            //routeStore.AddRoute(playerStore.GetActivePlayer(), routeTool.GetPoints());
-            //var isLastPlayer = routeStore.GetRoutes().Count == playerStore.GetAll().Count;
-
-            //if (!isLastPlayer)
-            //{
-            //    var usedPlayers = new HashSet<Biker>(routeStore.GetRoutes().Keys);
-            //    var players = playerStore.GetAll();
-            //    var index = players.IndexOf(playerStore.GetActivePlayer());
-            //    var end = players.GetRange(index, players.Count - index);
-            //    var start = players.GetRange(0, index);
-            //    var list = new List<Biker>();
-            //    list.AddRange(start);
-            //    list.AddRange(end);
-
-            //    var selectedPlayer = list.Find(item => usedPlayers.Contains(item) == false);
-
-            //    turnHelper.ChangePlayer(selectedPlayer);
-            //    routeTool.SaveRoute();
-            //} else
-            //{
-            //    promise.Resolve();
-            //}
         }
 
         public void Reset()

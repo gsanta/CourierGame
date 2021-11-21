@@ -37,9 +37,9 @@ namespace AI
                 int[] tris = new int[6]
                 {
                     // lower left triangle
-                    0, 2, 1,
+                    0, 1, 2,
                     // upper right triangle
-                    2, 3, 1
+                    2, 1, 3
                 };
                 mesh.triangles = tris;
 

@@ -40,9 +40,12 @@ namespace UI
 
         private void CreateListItem(string text, bool isActive)
         {
-            IBikerListItem item = gameObjectStore.BikerListItemInstantiator.Instantiate(text);
-            item.IsActive = isActive;
-            itemList.Add(item);
+            if (gameObjectStore.BikerListItemInstantiator != null)
+            {
+                IBikerListItem item = gameObjectStore.BikerListItemInstantiator.Instantiate(text);
+                item.IsActive = isActive;
+                itemList.Add(item);
+            }
         }
 
         public void Reset()

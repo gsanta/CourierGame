@@ -20,6 +20,9 @@ namespace Controls
         private RoadStore roadStore;
         private GameObject activeQuad;
 
+        public int maxRouteLength = 5;
+        private bool enabled = true;
+
         public RouteTool(BikerStore playerStore, RoadStore roadStore) : base(ToolName.ROUTE)
         {
             this.playerStore = playerStore;
@@ -33,6 +36,24 @@ namespace Controls
             return points;
         }
 
+        public bool Enabled { 
+            set
+            {
+                enabled = value;
+
+                if (!enabled)
+                {
+                    ClearRoute();
+                }
+            }
+            get => enabled;
+        }
+
+        public bool IsValidRoute()
+        {
+            return points.Count <= maxRouteLength;
+        }
+
         public void SetRouteHandler(IRouteHandler routeHandler)
         {
             this.routeHandler = routeHandler;
@@ -41,11 +62,17 @@ namespace Controls
 
         public override void Click()
         {
+            if (!enabled)
+                return;
+
             RouteFinished?.Invoke(this, EventArgs.Empty);
         }
 
         public override void Move()
         {
+            if (!enabled)
+                return;
+
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             LayerMask mask = LayerMask.GetMask("Route");
@@ -61,7 +88,7 @@ namespace Controls
                         HandleQuadExited();
                     }
 
-                    HandleMovedOverNewQuad(gameObject);
+                    HandleQuadEntered(gameObject);
                 }
             } 
             else
@@ -82,7 +109,7 @@ namespace Controls
             UpdateLines();
         }
 
-        private void HandleMovedOverNewQuad(GameObject gameObject)
+        private void HandleQuadEntered(GameObject gameObject)
         {
             activeQuad = gameObject;
             var quad = activeQuad.GetComponent<WaypointQuad>();
@@ -92,7 +119,7 @@ namespace Controls
             points = route.ToList();
             points.Insert(0, playerStore.GetActivePlayer().transform.position);
 
-            if (points.Count > 3)
+            if (points.Count > maxRouteLength)
             {
                 quad.SetNotAllowedColor();
             } else
