@@ -19,6 +19,7 @@ using Actions;
 using Routes;
 using GamePlay;
 using AI;
+using GizmoNS;
 
 namespace Main
 {
@@ -101,6 +102,9 @@ namespace Main
 
             // State
             Container.Bind<SelectionStore>().AsSingle();
+
+            // Gizmo
+            Container.Bind<ArrowRendererProvider>().AsSingle();
         }
 
         override public void Start()

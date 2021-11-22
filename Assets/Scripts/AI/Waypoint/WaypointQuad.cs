@@ -25,7 +25,10 @@ namespace AI
                 gameObject.layer = LayerMask.NameToLayer("Route");
 
                 MeshRenderer meshRenderer = gameObject.AddComponent<MeshRenderer>();
-                meshRenderer.sharedMaterial = new Material(Shader.Find("Standard"));
+                meshRenderer.sharedMaterial = new Material(Shader.Find("Transparent/Diffuse"));
+                Color color = meshRenderer.sharedMaterial.color;
+                color.a = 0.5f;
+                meshRenderer.sharedMaterial.color = color;
                 meshRenderer.enabled = false;
 
                 MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();

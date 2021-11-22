@@ -2,6 +2,7 @@
 using Cameras;
 using Controls;
 using Enemies;
+using GizmoNS;
 using Pedestrians;
 using Routes;
 using RSG;
@@ -20,8 +21,9 @@ namespace GamePlay
         private Promise promise;
         private PedestrianStore pedestrianStore;
         private EnemyStore enemyStore;
+        private ArrowRendererProvider arrowRendererProvider;
 
-        public PlayerCommandTurns(TurnHelper turnHelper, BikerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController, PedestrianStore pedestrianStore, EnemyStore enemyStore)
+        public PlayerCommandTurns(TurnHelper turnHelper, BikerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController, PedestrianStore pedestrianStore, EnemyStore enemyStore, ArrowRendererProvider arrowRendererProvider)
         {
             this.turnHelper = turnHelper;
             this.playerStore = playerStore;
@@ -30,6 +32,7 @@ namespace GamePlay
             this.cameraController = cameraController;
             this.enemyStore = enemyStore;
             this.pedestrianStore = pedestrianStore;
+            this.arrowRendererProvider = arrowRendererProvider;
 
             routeTool.RouteFinished += HandleRouteFinished;
         }
@@ -62,6 +65,7 @@ namespace GamePlay
             if (isLastPlayer)
             {
                 routeTool.Enabled = false;
+                arrowRendererProvider.ArrowRenderer.Enabled = false;
                 promise.Resolve();
             } else
             {
@@ -81,6 +85,8 @@ namespace GamePlay
 
         public Promise Execute()
         {
+            arrowRendererProvider.ArrowRenderer.SetStart(playerStore.GetActivePlayer().transform.position);
+            arrowRendererProvider.ArrowRenderer.Enabled = true;
             pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.AbortAction());
             enemyStore.GetAll().ForEach(pedestrian => pedestrian.Agent.AbortAction());
 

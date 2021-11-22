@@ -1,7 +1,6 @@
 ﻿using Controls;
 using Routes;
 using UnityEngine;
-using Zenject;
 
 namespace GUI
 {
@@ -9,12 +8,6 @@ namespace GUI
     {
         [SerializeField]
         private GameObject routeRenderer;
-
-        [Inject]
-        public void Construct(RouteTool routeTool)
-        {
-            routeTool.SetRouteHandler(this);
-        }
 
         public LineRenderer InstantiateLinerRenderer()
         {

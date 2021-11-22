@@ -1,5 +1,6 @@
 ﻿using AI;
 using Bikers;
+using GizmoNS;
 using Route;
 using Routes;
 using System;
@@ -11,21 +12,20 @@ namespace Controls
 {
     public class RouteTool : Tool
     {
-        private IRouteHandler routeHandler;
-        private List<LineRenderer> lineRenderers = new List<LineRenderer>();
-        private LineRenderer lineRenderer;
         private List<Vector3> points = new List<Vector3>();
         private readonly BikerStore playerStore;
         private RoadStore roadStore;
-        private GameObject activeQuad;
+        private ArrowRendererProvider arrowRendererProvider;
 
+        private GameObject activeQuad;
         public int maxRouteLength = 5;
         private bool enabled = true;
 
-        public RouteTool(BikerStore playerStore, RoadStore roadStore) : base(ToolName.ROUTE)
+        public RouteTool(BikerStore playerStore, RoadStore roadStore, ArrowRendererProvider arrowRendererProvider) : base(ToolName.ROUTE)
         {
             this.playerStore = playerStore;
             this.roadStore = roadStore;
+            this.arrowRendererProvider = arrowRendererProvider;
         }
 
         public event EventHandler RouteFinished;
@@ -51,12 +51,6 @@ namespace Controls
         public bool IsValidRoute()
         {
             return points.Count <= maxRouteLength;
-        }
-
-        public void SetRouteHandler(IRouteHandler routeHandler)
-        {
-            this.routeHandler = routeHandler;
-            CreateLineRenderer();
         }
 
         public override void Click()
@@ -103,15 +97,16 @@ namespace Controls
         {
             var quad = activeQuad.GetComponent<WaypointQuad>();
             activeQuad = null;
-            quad.GetWaypoint().SetLineColor(Color.blue);
+            quad.GetComponent<Renderer>().enabled = false;
+            arrowRendererProvider.ArrowRenderer.SetColor(Color.red);
             points.Clear();
-            UpdateLines();
         }
 
         private void HandleQuadEntered(GameObject gameObject)
         {
             activeQuad = gameObject;
             var quad = activeQuad.GetComponent<WaypointQuad>();
+            quad.GetComponent<Renderer>().enabled = true;
 
             var route = roadStore.BuildRoute(playerStore.GetActivePlayer().transform.position, activeQuad.GetComponent<WaypointQuad>().CenterPoint);
 
@@ -120,50 +115,26 @@ namespace Controls
 
             if (points.Count > maxRouteLength)
             {
-                quad.GetWaypoint().SetLineColor(Color.red);
+                arrowRendererProvider.ArrowRenderer.SetColor(Color.yellow);
             } else
             {
-                quad.GetWaypoint().SetLineColor(Color.green);
+                arrowRendererProvider.ArrowRenderer.SetColor(Color.green);
             }
-
-            UpdateLines();
         }
 
         public void Reset()
         {
             points = new List<Vector3>();
-            lineRenderers.ForEach(lineRenderer => routeHandler.Destroy(lineRenderer));
-            lineRenderers = new List<LineRenderer>();
-            lineRenderer = null;
-            CreateLineRenderer();
         }
 
         public void SaveRoute()
         {
             points = new List<Vector3>();
-            lineRenderers.Add(lineRenderer);
-            CreateLineRenderer();
         }
 
         public void ClearRoute()
         {
             points = new List<Vector3>();
-            CreateLineRenderer();
-        }
-
-        private void CreateLineRenderer()
-        {
-            lineRenderer = routeHandler.InstantiateLinerRenderer();
-            lineRenderer.startWidth = 0.3f;
-            lineRenderer.endWidth = 0.3f;
-            lineRenderer.useWorldSpace = true;
-            lineRenderers.Add(lineRenderer);
-        }
-
-        private void UpdateLines()
-        {
-            lineRenderer.positionCount = points.Count;
-            lineRenderer.SetPositions(points.ToArray());
         }
     }
 }
