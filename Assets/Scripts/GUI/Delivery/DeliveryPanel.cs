@@ -13,16 +13,14 @@ namespace UI
     public class DeliveryPanel : IResetable
     {
         private PackageStore packageStore;
-        private BikerService bikerService;
         private IDeliveryPanelController deliveryListItemInstantiator;
 
         private List<IDeliveryListItem> deliveryListItems = new List<IDeliveryListItem>();
 
         [Inject]
-        public void Construct(PackageStore packageStore, BikerService bikerService, EventService eventService)
+        public void Construct(PackageStore packageStore, EventService eventService)
         {
             this.packageStore = packageStore;
-            this.bikerService = bikerService;
 
             packageStore.OnPackageAdded += HandlePackageAdded;
             eventService.BikerCurrentRoleChanged += HandleCurrentRoleChanged;
@@ -65,7 +63,6 @@ namespace UI
 
         private void HandlePackageStatusChanged(object sender, PackageStatusChangedEventArgs e)
         {
-            SetReservationEnabled();
 
             if (e.Package.Status == DeliveryStatus.DELIVERED)
             {
@@ -77,14 +74,6 @@ namespace UI
 
         private void HandleCurrentRoleChanged(object sender, EventArgs e)
         {
-            SetReservationEnabled();
-        }
-
-        private void SetReservationEnabled()
-        {
-            var courier = bikerService.FindPlayRole();
-            bool isReservationEnabled = courier != null && courier.GetPackage() == null;
-            deliveryListItems.ForEach(item => item.GetController().SetReservationEnabled(isReservationEnabled));
         }
 
         public void Reset()

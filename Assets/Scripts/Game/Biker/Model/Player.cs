@@ -4,13 +4,10 @@ using Zenject;
 using System;
 using Delivery;
 using AI;
-using Service;
-using Attacks;
-using UI;
 
 namespace Bikers
 {
-    public class Biker : MonoBehaviour, IGameObject
+    public class Player : MonoBehaviour, IGameObject
     {
         [SerializeField]
         public Transform viewPoint;
@@ -22,30 +19,19 @@ namespace Bikers
         public Package package;
         private string courierName;
 
-        private CurrentRole currentRole = CurrentRole.NONE;
         private bool isPaused = false;
 
-        private EventService eventService;
-        private AgentFactory agentFactory;
-        private GoapAgent<Biker> agent;
+        private GoapAgent<Player> agent;
         private IGoalProvider goalProvider;
 
         public NavMeshAgent navMeshAgent;
 
-        public GoapAgent<Biker> Agent { get => agent; set => agent = value; }
-        public EventService EventService { set => eventService = value; }
+        public GoapAgent<Player> Agent { get => agent; set => agent = value; }
         public IGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
 
         private void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
-            
-            
-            Transform attackRadius = transform.Find("Attack Radius");
-            if (attackRadius)
-            {
-                //attackRadius.GetComponent<AttackRadius>().SetCanvasStore()
-            }
         }
 
         public bool Paused
@@ -72,7 +58,6 @@ namespace Bikers
         {
             if (isPaused)
             {
-                SetCurrentRole(CurrentRole.NONE);
                 gameObject.GetComponent<NavMeshAgent>().enabled = false;
                 agent.Active = false;
             }
@@ -124,44 +109,6 @@ namespace Bikers
             return transform;
         }
 
-        public void SetCurrentRole(CurrentRole currentRole)
-        {
-            if (this.currentRole != currentRole)
-            {
-                this.currentRole = currentRole;
-
-                if (currentRole == CurrentRole.PLAY)
-                {
-                    InitPlayRole();
-                }
-                else
-                {
-                    FinishPlayRole();
-                }
-
-                eventService.EmitBikerCurrentRoleChanged(this);
-                CurrentRoleChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        public CurrentRole GetCurrentRole()
-        {
-            return currentRole;
-        }
-
-        private void FinishPlayRole()
-        {
-            gameObject.GetComponent<NavMeshAgent>().enabled = true;
-            agent.Active = true;
-        }
-
-        private void InitPlayRole()
-        {
-            gameObject.GetComponent<NavMeshAgent>().enabled = false;
-
-            agent.Active = false;
-        }
-
         public void CompleteAction()
         {
             agent.CompleteAction();
@@ -177,10 +124,9 @@ namespace Bikers
             return goalProvider;
         }
 
-        public event EventHandler CurrentRoleChanged;
         public event EventHandler Updated;
 
-        public class Factory : PlaceholderFactory<UnityEngine.Object, Biker>
+        public class Factory : PlaceholderFactory<UnityEngine.Object, Player>
         {
         }
     }

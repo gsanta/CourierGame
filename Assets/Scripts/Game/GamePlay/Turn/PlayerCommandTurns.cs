@@ -65,12 +65,12 @@ namespace GamePlay
                 promise.Resolve();
             } else
             {
-                var usedPlayers = new HashSet<Biker>(routeStore.GetRoutes().Keys);
+                var usedPlayers = new HashSet<Player>(routeStore.GetRoutes().Keys);
                 var players = playerStore.GetAll();
                 var index = players.IndexOf(playerStore.GetActivePlayer());
                 var end = players.GetRange(index, players.Count - index);
                 var start = players.GetRange(0, index);
-                var list = new List<Biker>();
+                var list = new List<Player>();
                 list.AddRange(start);
                 list.AddRange(end);
 

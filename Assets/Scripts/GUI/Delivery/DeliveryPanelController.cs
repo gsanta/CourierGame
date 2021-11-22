@@ -13,15 +13,13 @@ namespace Controls
         [SerializeField]
         private DeliveryListItem deliveryListItemTemplate;
 
-        private BikerService bikerService;
         private DeliveryService deliveryService;
         private DeliveryPanel deliveryPanel;
 
         [Inject]
-        public void Construct(DeliveryPanel deliveryPanel, BikerService bikerService, DeliveryService deliveryService)
+        public void Construct(DeliveryPanel deliveryPanel, DeliveryService deliveryService)
         {
             this.deliveryPanel = deliveryPanel;
-            this.bikerService = bikerService;
             this.deliveryService = deliveryService;
         }
 
@@ -32,15 +30,7 @@ namespace Controls
 
         public IDeliveryListItem Instantiate(Package package)
         {
-            DeliveryListItem deliveryListItem = Instantiate(deliveryListItemTemplate, deliveryListItemTemplate.transform.parent);
-            deliveryListItem.gameObject.SetActive(true);
-
-            var controller = new DeliveryListItemController(deliveryListItem, bikerService, deliveryService);
-            deliveryListItem.SetController(controller);
-            deliveryListItem.GetPackageName().text = package.Name;
-            controller.Package = package;
-
-            return deliveryListItem;
+            return null;
         }
 
 

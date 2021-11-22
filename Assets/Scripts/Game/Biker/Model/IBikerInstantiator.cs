@@ -4,7 +4,7 @@ namespace Bikers
 {
     public interface IBikerInstantiator
     {
-        Biker InstantiateBiker();
+        Player InstantiateBiker();
         MinimapBiker InstantiateMinimapBiker();
     }
 }

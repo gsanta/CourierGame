@@ -3,7 +3,7 @@ using Service;
 
 namespace Bikers
 {
-    public class BikerFactory : ItemFactory<BikerConfig, Biker>
+    public class BikerFactory : ItemFactory<BikerConfig, Player>
     {
         private EventService eventService;
         private DeliveryService deliveryService;
@@ -22,11 +22,10 @@ namespace Bikers
             this.bikerInstantiator = bikerInstantiator;
         }
 
-        public Biker Create(BikerConfig config)
+        public Player Create(BikerConfig config)
         {
 
-            Biker biker = bikerInstantiator.InstantiateBiker();
-            biker.EventService = eventService;
+            Player biker = bikerInstantiator.InstantiateBiker();
             biker.Agent = agentFactory.CreateBikerAgent(biker);
             biker.GoalProvider = new BikerGoalProvider(biker);
 

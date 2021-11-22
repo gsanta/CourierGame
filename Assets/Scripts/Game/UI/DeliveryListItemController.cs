@@ -6,15 +6,13 @@ namespace UI
     public class DeliveryListItemController
     {
         private readonly IDeliveryListItem deliveryListItem;
-        private readonly BikerService courierService;
         private readonly DeliveryService deliveryService;
         private Package package;
         private bool isReservationEnabled = false;
 
-        public DeliveryListItemController(IDeliveryListItem deliveryListItem, BikerService courierService, DeliveryService deliveryService)
+        public DeliveryListItemController(IDeliveryListItem deliveryListItem, DeliveryService deliveryService)
         {
             this.deliveryListItem = deliveryListItem;
-            this.courierService = courierService;
             this.deliveryService = deliveryService;
         }
 
@@ -49,15 +47,6 @@ namespace UI
             {
                 deliveryListItem.GetPackageStatus().gameObject.SetActive(true);
                 deliveryListItem.GetReservedButton().gameObject.SetActive(false);
-            }
-        }
-
-        public void HandleReserveButtonClick()
-        {
-            var biker = courierService.FindPlayRole();
-            if (biker != null && biker.GetPackage() == null)
-            {
-                deliveryService.ReservePackage(package, biker);
             }
         }
     }

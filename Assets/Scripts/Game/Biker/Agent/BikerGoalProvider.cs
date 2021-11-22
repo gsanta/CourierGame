@@ -6,10 +6,10 @@ namespace Bikers
 {
     public class BikerGoalProvider : IGoalProvider
     {
-        private readonly Biker biker;
+        private readonly Player biker;
         private Goal goal = new Goal(AIStateName.PACKAGE_IS_DROPPED, true);
 
-        public BikerGoalProvider(Biker biker)
+        public BikerGoalProvider(Player biker)
         {
             this.biker = biker;
             biker.Agent.ActionCompleted += HandleCompleteAction;

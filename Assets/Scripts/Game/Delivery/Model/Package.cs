@@ -17,7 +17,7 @@ namespace Delivery
 
         private DeliveryStatus status = DeliveryStatus.UNASSIGNED;
 
-        public Biker Biker { set; get; }
+        public Player Biker { set; get; }
 
         public DeliveryStatus Status
         {

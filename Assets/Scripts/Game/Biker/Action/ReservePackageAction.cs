@@ -4,7 +4,7 @@ using Delivery;
 
 namespace Bikers
 {
-    public class ReservePackageAction : GoapAction<Biker>
+    public class ReservePackageAction : GoapAction<Player>
     {
 
         private PackageStore packageStore;
@@ -51,7 +51,7 @@ namespace Bikers
         {
             return true;
         }
-        public override GoapAction<Biker> Clone(GoapAgent<Biker> agent = null)
+        public override GoapAction<Player> Clone(GoapAgent<Player> agent = null)
         {
             var action = new ReservePackageAction(packageStore, deliveryService);
             action.agent = agent;

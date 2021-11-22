@@ -13,7 +13,7 @@ namespace Bikers
         [SerializeField]
         private GameObject spawnPointContainer;
         [SerializeField]
-        private Biker bikerTemplate;
+        private Player bikerTemplate;
         [SerializeField]
         private GameObject bikerContainer;
 

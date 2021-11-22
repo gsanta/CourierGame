@@ -31,7 +31,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         Container.Bind<BikerSpawner>().AsSingle();
         Container.Bind<BikerSetup>().AsSingle();
-        Container.BindFactory<Object, Biker, Biker.Factory>().FromFactory<PrefabFactory<Biker>>();
+        Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();
         Container.BindFactory<Object, Pedestrian, Pedestrian.Factory>().FromFactory<PrefabFactory<Pedestrian>>();
 
         Container.Bind<ISpawner<PackageConfig>>().To<PackageSpawner>().AsSingle().NonLazy();
@@ -40,7 +40,6 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<DeliveryStore>().AsSingle();
 
         Container.Bind<MinimapStore>().AsSingle();
-        Container.Bind<MinimapPackageProvider>().AsSingle();
         Container.Bind<MinimapPackageConsumer>().AsSingle();
 
         //characters
@@ -80,7 +79,6 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         WalkTargetStore walkTargetStore = Container.Resolve<WalkTargetStore>();
 
         Container.Resolve<DayService>();
-        Container.Resolve<MinimapPackageProvider>();
         Container.Resolve<MinimapPackageConsumer>();
 
         PathCache pathCache = Container.Resolve<PathCache>();

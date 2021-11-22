@@ -13,7 +13,7 @@ namespace Actions
     {
         public ActionCreators actionCreators = new ActionCreators();
 
-        public PlayerWalkAction CreatePlayerWalkAction(GoapAgent<Biker> agent, List<Vector3> points)
+        public PlayerWalkAction CreatePlayerWalkAction(GoapAgent<Player> agent, List<Vector3> points)
         {
             return actionCreators.PlayerWalkActionCreator.Create(agent, points);
         }

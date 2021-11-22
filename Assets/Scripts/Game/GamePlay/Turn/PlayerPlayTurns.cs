@@ -23,7 +23,7 @@ namespace GamePlay
         private readonly CameraController cameraController;
         private Promise promise;
 
-        private ISet<Biker> movingPlayers = new HashSet<Biker>();
+        private ISet<Player> movingPlayers = new HashSet<Player>();
 
         public PlayerPlayTurns(BikerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
         {
@@ -92,7 +92,7 @@ namespace GamePlay
 
         }
 
-        private void HandleGoalReached(object sender, GoalReachedEventArgs<Biker> args)
+        private void HandleGoalReached(object sender, GoalReachedEventArgs<Player> args)
         {
             movingPlayers.Remove(args.agent.Parent);
             args.agent.GoalReached -= HandleGoalReached;

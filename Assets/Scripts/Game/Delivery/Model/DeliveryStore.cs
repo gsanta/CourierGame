@@ -8,8 +8,8 @@ namespace Delivery
 {
     public class DeliveryStore : IResetable
     {
-        private Dictionary<Biker, Package> packageMap = new Dictionary<Biker, Package>();
-        private Dictionary<Package, Biker> reversePackageMap = new Dictionary<Package, Biker>();
+        private Dictionary<Player, Package> packageMap = new Dictionary<Player, Package>();
+        private Dictionary<Package, Player> reversePackageMap = new Dictionary<Package, Player>();
         private PackageStore packageStore;
 
         public DeliveryStore(PackageStore packageStore)
@@ -17,7 +17,7 @@ namespace Delivery
             this.packageStore = packageStore;
         }
 
-        public void AssignPackageToPlayer(Biker courier, Package package)
+        public void AssignPackageToPlayer(Player courier, Package package)
         {
             package.Status = DeliveryStatus.ASSIGNED;
             packageMap.Add(courier, package);
@@ -28,7 +28,7 @@ namespace Delivery
 
         public void DropPackage(Package package)
         {
-            Biker courier;
+            Player courier;
             if (reversePackageMap.TryGetValue(package, out courier))
             {
                 packageMap.Remove(courier);
@@ -51,7 +51,7 @@ namespace Delivery
             OnDeliveryStatusChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public bool GetPackage(Biker courier, out Package package)
+        public bool GetPackage(Player courier, out Package package)
         {
             return packageMap.TryGetValue(courier, out package);
         }
@@ -66,9 +66,9 @@ namespace Delivery
             get => packageStore.GetAll().FindAll(package => GetPlayerForPackage(package) == null);
         }
 
-        public Biker GetPlayerForPackage(Package package)
+        public Player GetPlayerForPackage(Package package)
         {
-            Biker courier;
+            Player courier;
 
             reversePackageMap.TryGetValue(package, out courier);
 
@@ -77,8 +77,8 @@ namespace Delivery
 
         public void Reset()
         {
-            packageMap = new Dictionary<Biker, Package>();
-            reversePackageMap = new Dictionary<Package, Biker>();
+            packageMap = new Dictionary<Player, Package>();
+            reversePackageMap = new Dictionary<Package, Player>();
             packageStore = null;
         }
 

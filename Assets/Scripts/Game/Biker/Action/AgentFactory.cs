@@ -13,7 +13,7 @@ namespace Bikers
     {
 
         private Dictionary<string, int> idMap = new Dictionary<string, int>();
-        private List<GoapAction<Biker>> bikerActions = new List<GoapAction<Biker>>();
+        private List<GoapAction<Player>> bikerActions = new List<GoapAction<Player>>();
         private readonly ActionStore actionStore;
         private ActionFactory actionFactory;
 
@@ -26,7 +26,7 @@ namespace Bikers
             this.actionStore = actionStore;
         }
 
-        public void AddBikerAction(GoapAction<Biker> action)
+        public void AddBikerAction(GoapAction<Player> action)
         {
             bikerActions.Add(action);
         }   
@@ -55,19 +55,19 @@ namespace Bikers
             return agent;
         }
 
-        public GoapAgent<Biker> CreateBikerAgent(Biker biker)
+        public GoapAgent<Player> CreateBikerAgent(Player biker)
         {
-            List<GoapAction<Biker>> actions = CloneBikerActions();
+            List<GoapAction<Player>> actions = CloneBikerActions();
             string id = "biker-" + idMap["biker"];
             idMap["biker"]++;
 
-            var agent = new GoapAgent<Biker>(id, biker, new GoapPlanner<Biker>());
+            var agent = new GoapAgent<Player>(id, biker, new GoapPlanner<Player>());
             agent.SetActions(actions);
 
             return agent;
         }
 
-        private List<GoapAction<Biker>> CloneBikerActions()
+        private List<GoapAction<Player>> CloneBikerActions()
         {
             return bikerActions.Select(action => action.Clone()).ToList();
         }

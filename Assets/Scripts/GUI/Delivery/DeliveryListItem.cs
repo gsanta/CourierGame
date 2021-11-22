@@ -53,14 +53,6 @@ public class DeliveryListItem : MonoBehaviour, IDeliveryListItem
         return controller;
     }
 
-    public void HandleReserveButtonClick()
-    {
-        if (controller != null)
-        {
-            controller.HandleReserveButtonClick();
-        }
-    }
-
     public void Destroy()
     {
         Destroy(gameObject);

@@ -18,7 +18,7 @@ namespace Delivery
             this.moneyStore = moneyStore;
         }
 
-        public void ReservePackage(Package package, Biker biker)
+        public void ReservePackage(Package package, Player biker)
         {
             if (package.Status == DeliveryStatus.UNASSIGNED)
             {

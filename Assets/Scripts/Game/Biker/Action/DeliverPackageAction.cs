@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Bikers
 {
-    public class DeliverPackageAction : AbstractRouteAction<Biker>
+    public class DeliverPackageAction : AbstractRouteAction<Player>
     {
         private DeliveryService deliveryService;
         private RoadStore roadStore;
@@ -20,7 +20,7 @@ namespace Bikers
 
         public override bool PrePerform()
         {
-            Biker courierAgent = GoapAgent.Parent;
+            Player courierAgent = GoapAgent.Parent;
 
             Package package = courierAgent.GetPackage();
             package.Target.gameObject.SetActive(true);
@@ -36,7 +36,7 @@ namespace Bikers
 
         public override bool PostPerform()
         {
-            Biker courierAgent = GoapAgent.Parent;
+            Player courierAgent = GoapAgent.Parent;
 
             Package package = courierAgent.GetPackage();
 
@@ -53,7 +53,7 @@ namespace Bikers
             return true;
         }
 
-        public override GoapAction<Biker> Clone(GoapAgent<Biker> agent = null)
+        public override GoapAction<Player> Clone(GoapAgent<Player> agent = null)
         {
             var action = new DeliverPackageAction(deliveryService, roadStore);
             action.agent = agent;

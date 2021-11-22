@@ -19,11 +19,11 @@ namespace Bikers
 
     public class BikerStore : IResetable, IObservable<BikerStoreInfo>
     {
-        private List<Biker> players = new List<Biker>();
+        private List<Player> players = new List<Player>();
         private MinimapBiker minimapBiker;
-        private Biker bikerTemplate;
+        private Player bikerTemplate;
         private GameObject bikerContainer;
-        private Biker activePlayer;
+        private Player activePlayer;
 
         private List<IObserver<BikerStoreInfo>> observers = new List<IObserver<BikerStoreInfo>>();
 
@@ -37,12 +37,12 @@ namespace Bikers
             this.minimapBiker = minimapBiker;
         }
 
-        public void SetBikerTemplate(Biker bikerTemplate)
+        public void SetBikerTemplate(Player bikerTemplate)
         {
             this.bikerTemplate = bikerTemplate;
         }
 
-        public Biker GetBikerTemplate()
+        public Player GetBikerTemplate()
         {
             return bikerTemplate;
         }
@@ -57,7 +57,7 @@ namespace Bikers
             return bikerContainer;
         }
 
-        public void Add(Biker player)
+        public void Add(Player player)
         {
             if (activePlayer == null)
             {
@@ -70,7 +70,7 @@ namespace Bikers
                 observer.OnNext(info);
         }
 
-        public void SetActivePlayer(Biker player)
+        public void SetActivePlayer(Player player)
         {
             this.activePlayer = player;
 
@@ -79,35 +79,35 @@ namespace Bikers
                 observer.OnNext(info);
         }
 
-        public Biker GetActivePlayer()
+        public Player GetActivePlayer()
         {
             return activePlayer;
         }
 
-        public Biker GetFirstPlayer()
+        public Player GetFirstPlayer()
         {
             return players[0];
         }
 
-        public Biker GetLastPlayer()
+        public Player GetLastPlayer()
         {
             return players[players.Count - 1];
         }
 
-        public Biker GetNextPlayer()
+        public Player GetNextPlayer()
         {
             var nextPlayer = activePlayer == players[players.Count - 1] ? players[0] : players[players.IndexOf(activePlayer) + 1];
             return nextPlayer;
         }
 
-        public List<Biker> GetAll()
+        public List<Player> GetAll()
         {
             return players;
         }
 
         public void Reset()
         {
-            players = new List<Biker>();
+            players = new List<Player>();
             minimapBiker = null;
             bikerTemplate = null;
         }
@@ -143,13 +143,13 @@ namespace Bikers
 
     public class PlayerAddedEventArgs : EventArgs
     {
-        private readonly Biker player;
+        private readonly Player player;
 
-        internal PlayerAddedEventArgs(Biker player)
+        internal PlayerAddedEventArgs(Player player)
         {
             this.player = player;
         }
-        public Biker Courier { get => player; }
+        public Player Courier { get => player; }
     }
 }
 

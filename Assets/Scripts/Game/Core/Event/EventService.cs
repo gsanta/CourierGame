@@ -20,7 +20,7 @@ namespace Service
 
         public event EventHandler<PackageStatusChangedEventArgs> PackageStatusChanged;
 
-        public void EmitBikerCurrentRoleChanged(Biker biker)
+        public void EmitBikerCurrentRoleChanged(Player biker)
         {
             BikerCurrentRoleChanged?.Invoke(this, new BikerCurrentRoleChangedEventArgs(biker));
         }

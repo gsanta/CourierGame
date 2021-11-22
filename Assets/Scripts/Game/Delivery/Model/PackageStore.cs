@@ -87,7 +87,7 @@ namespace Delivery
             return packages.FindAll(package => statuses.Contains(package.Status));
         }
 
-        public bool GetPackageWithinPickupRange(Biker biker, out Package deliveryPackage)
+        public bool GetPackageWithinPickupRange(Player biker, out Package deliveryPackage)
         {
             foreach (var package in packages)
             {

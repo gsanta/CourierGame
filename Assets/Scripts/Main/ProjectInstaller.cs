@@ -9,7 +9,6 @@ using Enemies;
 using GameObjects;
 using Pedestrians;
 using Route;
-using Scenes;
 using Service;
 using States;
 using Stats;
@@ -31,8 +30,6 @@ namespace Main
             Container.Bind<Timer>().AsSingle().NonLazy();
             Container.Bind<CanvasStore>().AsSingle();
             Container.Bind<BikerStore>().AsSingle().NonLazy();
-            Container.Bind<BikerService>().AsSingle();
-            Container.Bind<RoleService>().AsSingle();
             Container.Bind<PackageStore>().AsSingle().NonLazy();
             Container.Bind<EventService>().AsSingle();
             Container.Bind<DeliveryService>().To<DeliveryService>().AsSingle();

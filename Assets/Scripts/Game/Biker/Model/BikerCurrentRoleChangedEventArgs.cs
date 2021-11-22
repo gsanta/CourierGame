@@ -6,11 +6,11 @@ namespace Model
     public class BikerCurrentRoleChangedEventArgs : EventArgs
     {
 
-        public BikerCurrentRoleChangedEventArgs(Biker biker)
+        public BikerCurrentRoleChangedEventArgs(Player biker)
         {
             Biker = biker;
         }
 
-        public Biker Biker { get; }
+        public Player Biker { get; }
     }
 }
