@@ -1,5 +1,6 @@
 ﻿using AI;
 using Bikers;
+using GameObjects;
 using GizmoNS;
 using Route;
 using Routes;
@@ -17,7 +18,7 @@ namespace Controls
         private RoadStore roadStore;
         private ArrowRendererProvider arrowRendererProvider;
 
-        private GameObject activeQuad;
+        private GameObject activeTarget;
         public int maxRouteLength = 5;
         private bool enabled = true;
 
@@ -74,9 +75,9 @@ namespace Controls
             {
                 var gameObject = hit.transform.gameObject;
                 
-                if (activeQuad != gameObject)
+                if (activeTarget != gameObject)
                 {
-                    if (activeQuad != null)
+                    if (activeTarget != null)
                     {
                         HandleQuadExited();
                     }
@@ -86,7 +87,7 @@ namespace Controls
             } 
             else
             {
-                if (activeQuad != null)
+                if (activeTarget != null)
                 {
                     HandleQuadExited();
                 }
@@ -95,20 +96,40 @@ namespace Controls
 
         private void HandleQuadExited()
         {
-            var quad = activeQuad.GetComponent<WaypointQuad>();
-            activeQuad = null;
-            quad.GetComponent<Renderer>().enabled = false;
+            if (activeTarget.tag == "Road Selector")
+            {
+                var quad = activeTarget.GetComponent<WaypointQuad>();
+                quad.GetComponent<Renderer>().enabled = false;
+            }
+            else if (activeTarget.tag == "Building Selector")
+            {
+                var outline = activeTarget.GetComponent<Outline>();
+                outline.RemoveOutline();
+            }
+            activeTarget = null;
             arrowRendererProvider.ArrowRenderer.SetColor(Color.red);
             points.Clear();
         }
 
         private void HandleQuadEntered(GameObject gameObject)
         {
-            activeQuad = gameObject;
-            var quad = activeQuad.GetComponent<WaypointQuad>();
-            quad.GetComponent<Renderer>().enabled = true;
+            activeTarget = gameObject;
 
-            var route = roadStore.BuildRoute(playerStore.GetActivePlayer().transform.position, activeQuad.GetComponent<WaypointQuad>().CenterPoint);
+            Vector3 end = new Vector3(0, 0, 0);
+
+            if (gameObject.tag == "Road Selector")
+            {
+                var quad = activeTarget.GetComponent<WaypointQuad>();
+                quad.GetComponent<Renderer>().enabled = true;
+                end = activeTarget.GetComponent<WaypointQuad>().CenterPoint;
+            } else if (gameObject.tag == "Building Selector")
+            {
+                var outline = activeTarget.GetComponent<Outline>();
+                outline.SetOutline();
+                end = gameObject.transform.position;
+            }
+
+            var route = roadStore.BuildRoute(playerStore.GetActivePlayer().transform.position, end);
 
             points = route.ToList();
             points.Insert(0, playerStore.GetActivePlayer().transform.position);

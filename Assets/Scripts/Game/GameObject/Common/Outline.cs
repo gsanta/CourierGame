@@ -4,7 +4,7 @@ namespace GameObjects
 {
     public class Outline : MonoBehaviour
     {
-        private float width = 1.2f;
+        private float width = 1.15f;
         private float hiddenWidth = 0.1f;
 
         [SerializeField]

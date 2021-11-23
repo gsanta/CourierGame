@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Selectable
+  - Road Selector
+  - Building Selector
   layers:
   - Default
   - TransparentFX
