@@ -242,6 +242,8 @@ MonoBehaviour:
   initialPanels:
   - Menu Panel
   - Top Panel
+  otherScenes:
+  - BuildingScene
 --- !u!4 &447189922
 Transform:
   m_ObjectHideFlags: 0

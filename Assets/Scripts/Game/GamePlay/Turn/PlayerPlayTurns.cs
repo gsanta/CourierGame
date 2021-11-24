@@ -48,7 +48,7 @@ namespace GamePlay
                 player.Agent.GoalReached += HandleGoalReached;
                 var points = routeStore.GetRoutes()[player];
                 points.RemoveAt(0);
-                player.Agent.SetActions(actionFactory.CreatePlayerWalkAction(player.Agent, points));
+                player.Agent.SetActions(actionFactory.CreatePlayerWalkIntoBuildingAction(player.Agent, points));
                 player.Agent.SetGoals(new Goal(AIStateName.WALK_FINISHED, false), false);
             });
 

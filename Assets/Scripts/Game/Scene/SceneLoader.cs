@@ -11,6 +11,7 @@ namespace Scenes
 
         private string[] initialScenes;
         private string[] mapScenes;
+        private string[] otherScenes;
 
         public SceneLoader(SceneChangeHandler sceneChangeHandler, WorldStore worldStore)
         {
@@ -18,10 +19,11 @@ namespace Scenes
             this.worldStore = worldStore;
         }
 
-        public void SetScenes(string[] initialScenes, string[] mapScenes)
+        public void SetScenes(string[] initialScenes, string[] mapScenes, string[] otherScenes)
         {
             this.initialScenes = initialScenes;
             this.mapScenes = mapScenes;
+            this.otherScenes = otherScenes;
 
             foreach (var mapScene in mapScenes)
             {
@@ -29,6 +31,11 @@ namespace Scenes
                 map.Name = $"{mapScene}Scene";
                 worldStore.AddWorld(map);
             }
+        }
+
+        public void LoadScene(string name)
+        {
+            SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
         }
 
         public void LoadInitialScenes()

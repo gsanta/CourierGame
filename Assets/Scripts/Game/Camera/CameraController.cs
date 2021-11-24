@@ -51,6 +51,11 @@ namespace Cameras
             newPosition = gameObject.GetGameObject().transform.position;;
         }
 
+        public void PanTo(GameObject gameObject)
+        {
+            newPosition = gameObject.transform.position;
+        }
+
         public void Follow(IGameObject targetGameObject)
         {
             if (this.targetGameObject != null)

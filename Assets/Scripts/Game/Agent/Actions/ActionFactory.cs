@@ -2,20 +2,30 @@
 using Bikers;
 using Enemies;
 using Pedestrians;
-using Route;
+using Scenes;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 namespace Actions
 {
     public class ActionFactory
     {
         public ActionCreators actionCreators = new ActionCreators();
+        private SceneLoader sceneLoader;
+
+        public ActionFactory(SceneLoader sceneLoader)
+        {
+            this.sceneLoader = sceneLoader;
+        }
 
         public PlayerWalkAction CreatePlayerWalkAction(GoapAgent<Player> agent, List<Vector3> points)
         {
             return actionCreators.PlayerWalkActionCreator.Create(agent, points);
+        }
+
+        public PlayerWalkIntoBuildingAction CreatePlayerWalkIntoBuildingAction(GoapAgent<Player> agent, List<Vector3> points)
+        {
+            return actionCreators.PlayerWalkIntoBuildingActionCreator.Create(agent, points, sceneLoader);
         }
 
         public WalkAction<Pedestrian> CreatePedestrianWalkAction(GoapAgent<Pedestrian> agent)

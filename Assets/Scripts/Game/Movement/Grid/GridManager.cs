@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Cameras;
+using UnityEngine;
+using Zenject;
 
 namespace Movement
 {
@@ -15,8 +17,21 @@ namespace Movement
         [SerializeField]
         private int tileSize;
 
+        private GridStore gridStore;
+        private CameraController cameraController;
+
+        [Inject]
+        public void Construct(GridStore gridStore, CameraController cameraController)
+        {
+            this.gridStore = gridStore;
+            this.cameraController = cameraController;
+        }
+
         private void Awake()
         {
+            cameraController.PanTo(gameObject);
+
+
             int startX = -Mathf.FloorToInt(width / 2f);
             int startZ = -Mathf.FloorToInt(height / 2f);
             //float start = Mathf.Floor(width / 2f);
@@ -37,10 +52,11 @@ namespace Movement
 
         private void CreateQuad(int x, int z, bool dark)
         {
+            Vector3 parentPos = transform.position;
             GameObject tile = dark ? darkTile : lightTile;
             float y = tile.transform.position.y;
             var gameObject = Instantiate(dark ? darkTile : lightTile, transform);
-            gameObject.transform.position = new Vector3(x * tile.transform.localScale.x, y, z * tile.transform.localScale.z);
+            gameObject.transform.position = new Vector3(x * tile.transform.localScale.x + parentPos.x, y, z * tile.transform.localScale.z + parentPos.z);
             gameObject.SetActive(true);
             //gameObject.GetComponent<Renderer>().material.color = dark ? Color.red : Color.green;
         }

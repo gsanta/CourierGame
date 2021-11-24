@@ -14,6 +14,8 @@ namespace GUI
         private string[] mapScenes;
         [SerializeField]
         private string[] initialPanels;
+        [SerializeField]
+        private string[] otherScenes;
         private SceneLoader sceneLoader;
         private SceneChangeHandler sceneChangeHandler;
         private CanvasInitializer canvasInitializer;
@@ -31,7 +33,7 @@ namespace GUI
         private void Awake()
         {
 
-            sceneLoader.SetScenes(initialScenes, mapScenes);
+            sceneLoader.SetScenes(initialScenes, mapScenes, otherScenes);
             canvasInitializer.SetInitialPanels(initialPanels);
         }
 

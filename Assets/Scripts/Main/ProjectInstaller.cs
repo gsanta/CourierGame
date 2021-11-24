@@ -20,6 +20,7 @@ using Routes;
 using GamePlay;
 using AI;
 using GizmoNS;
+using Movement;
 
 namespace Main
 {
@@ -76,10 +77,15 @@ namespace Main
             Container.Bind<RouteStore>().AsSingle();
             Container.Bind<PlayerWalkAction>().AsSingle();
             Container.Bind<PlayerWalkActionCreator>().AsSingle();
+            Container.Bind<PlayerWalkIntoBuildingActionCreator>().AsSingle();
             Container.Bind<PedestrianWalkActionCreator>().AsSingle();
             Container.Bind<EnemyWalkActionCreator>().AsSingle();
             Container.Bind<ActionFactory>().AsSingle();
             Container.Bind<ActionCreators>().AsSingle();
+
+            // Grid 
+            Container.Bind<GridStore>().AsSingle();
+
             SetupActionFactory();
 
             // ui
@@ -144,6 +150,7 @@ namespace Main
         private void SetupActionFactory()
         {
             var actionFactory = Container.Resolve<ActionFactory>();
+            actionFactory.actionCreators.PlayerWalkIntoBuildingActionCreator = Container.Resolve<PlayerWalkIntoBuildingActionCreator>();
             actionFactory.actionCreators.PlayerWalkActionCreator = Container.Resolve<PlayerWalkActionCreator>();
             actionFactory.actionCreators.PedestrianWalkActionCreator = Container.Resolve<PedestrianWalkActionCreator>();
             actionFactory.actionCreators.EnemyWalkActionCreator = Container.Resolve<EnemyWalkActionCreator>();
