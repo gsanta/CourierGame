@@ -5,9 +5,9 @@ namespace Stats
 {
     public class DayService
     {
-        private readonly BikerStore bikerStore;
+        private readonly PlayerStore bikerStore;
 
-        public DayService(Timer timer, BikerStore bikerStore)
+        public DayService(Timer timer, PlayerStore bikerStore)
         {
             this.bikerStore = bikerStore;
             timer.DayPassed += HandleDayPassed;

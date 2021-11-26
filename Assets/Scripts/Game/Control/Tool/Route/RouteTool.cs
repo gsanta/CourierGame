@@ -14,7 +14,7 @@ namespace Controls
     public class RouteTool : Tool
     {
         private List<Vector3> points = new List<Vector3>();
-        private readonly BikerStore playerStore;
+        private readonly PlayerStore playerStore;
         private RoadStore roadStore;
         private ArrowRendererProvider arrowRendererProvider;
 
@@ -22,7 +22,7 @@ namespace Controls
         public int maxRouteLength = 5;
         private bool enabled = true;
 
-        public RouteTool(BikerStore playerStore, RoadStore roadStore, ArrowRendererProvider arrowRendererProvider) : base(ToolName.ROUTE)
+        public RouteTool(PlayerStore playerStore, RoadStore roadStore, ArrowRendererProvider arrowRendererProvider) : base(ToolName.ROUTE)
         {
             this.playerStore = playerStore;
             this.roadStore = roadStore;

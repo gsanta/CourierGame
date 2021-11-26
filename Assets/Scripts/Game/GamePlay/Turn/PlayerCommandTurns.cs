@@ -14,7 +14,7 @@ namespace GamePlay
     public class PlayerCommandTurns : ITurns
     {
         private TurnHelper turnHelper;
-        private readonly BikerStore playerStore;
+        private readonly Bikers.PlayerStore playerStore;
         private readonly RouteStore routeStore;
         private readonly RouteTool routeTool;
         private readonly CameraController cameraController;
@@ -23,7 +23,7 @@ namespace GamePlay
         private EnemyStore enemyStore;
         private ArrowRendererProvider arrowRendererProvider;
 
-        public PlayerCommandTurns(TurnHelper turnHelper, BikerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController, PedestrianStore pedestrianStore, EnemyStore enemyStore, ArrowRendererProvider arrowRendererProvider)
+        public PlayerCommandTurns(TurnHelper turnHelper, Bikers.PlayerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController, PedestrianStore pedestrianStore, EnemyStore enemyStore, ArrowRendererProvider arrowRendererProvider)
         {
             this.turnHelper = turnHelper;
             this.playerStore = playerStore;

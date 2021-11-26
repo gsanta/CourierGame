@@ -111,6 +111,9 @@ namespace AI
                 currentAction.PostAbort();
                 prevAction = currentAction;
                 currentAction = null;
+                NavMeshAgent.isStopped = true;
+                NavMeshAgent.ResetPath();
+                NavMeshAgent.enabled = false;
             }
             actionQueue = null;
         }

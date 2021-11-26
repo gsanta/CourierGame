@@ -29,7 +29,7 @@ namespace Movement
 
         private void Awake()
         {
-            cameraController.PanTo(gameObject);
+            //cameraController.PanTo(gameObject);
 
 
             int startX = -Mathf.FloorToInt(width / 2f);

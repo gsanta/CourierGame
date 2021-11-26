@@ -33,9 +33,9 @@ namespace Bikers
             biker.SetName(config.name);
             biker.gameObject.SetActive(true);
 
-            MinimapBiker newMinimapBiker = bikerInstantiator.InstantiateMinimapBiker();
-            newMinimapBiker.Biker = biker;
-            newMinimapBiker.gameObject.SetActive(true);
+            //MinimapBiker newMinimapBiker = bikerInstantiator.InstantiateMinimapBiker();
+            //newMinimapBiker.Biker = biker;
+            //newMinimapBiker.gameObject.SetActive(true);
 
             return biker;
         }

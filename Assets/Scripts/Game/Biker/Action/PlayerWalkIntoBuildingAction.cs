@@ -32,6 +32,7 @@ namespace Bikers
         }
         public override bool PostPerform()
         {
+            agent.Active = false;
             sceneLoader.LoadScene("BuildingScene");
 
             return true;

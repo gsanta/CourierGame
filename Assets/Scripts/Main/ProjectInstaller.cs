@@ -31,7 +31,7 @@ namespace Main
             Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
             Container.Bind<Timer>().AsSingle().NonLazy();
             Container.Bind<CanvasStore>().AsSingle();
-            Container.Bind<BikerStore>().AsSingle().NonLazy();
+            Container.Bind<Bikers.PlayerStore>().AsSingle().NonLazy();
             Container.Bind<PackageStore>().AsSingle().NonLazy();
             Container.Bind<EventService>().AsSingle();
             Container.Bind<DeliveryService>().To<DeliveryService>().AsSingle();
@@ -130,7 +130,7 @@ namespace Main
             sceneLoader.LoadInitialScenes();
 
             SceneChangeHandler sceneChangeHandler = Container.Resolve<SceneChangeHandler>();
-            sceneChangeHandler.AddResetable(Container.Resolve<BikerStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<Bikers.PlayerStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PackageStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PackageSpawnPointStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PackageTargetPointStore>());

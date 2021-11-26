@@ -18,12 +18,12 @@ namespace Bikers
         private GameObject bikerContainer;
 
         private BikersConfig bikersConfig;
-        private BikerStore bikerStore;
+        private PlayerStore bikerStore;
         private StoreSetup storeSetup;
         private BikerHomeStore bikerHomeStore;
 
         [Inject]
-        public void Construct(BikersConfig bikersConfig, BikerStore bikerStore, BikerHomeStore bikerHomeStore, StoreSetup storeSetup)
+        public void Construct(BikersConfig bikersConfig, PlayerStore bikerStore, BikerHomeStore bikerHomeStore, StoreSetup storeSetup)
         {
             this.bikersConfig = bikersConfig;
             this.bikerStore = bikerStore;

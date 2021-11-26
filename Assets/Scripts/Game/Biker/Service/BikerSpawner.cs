@@ -6,12 +6,12 @@ namespace Bikers
 {
     public class BikerSpawner : BaseSpawner<BikerConfig>
     {
-        private BikerStore bikerStore;
+        private PlayerStore bikerStore;
         private BikerFactory bikerFactory;
         private BikerHomeStore bikerHomeStore;
         private BikersConfig bikersConfig;
 
-        public BikerSpawner(BikerFactory bikerFactory, BikerStore bikerStore, BikerHomeStore bikerHomeStore, BikersConfig bikersConfig)
+        public BikerSpawner(BikerFactory bikerFactory, PlayerStore bikerStore, BikerHomeStore bikerHomeStore, BikersConfig bikersConfig)
         {
             this.bikerFactory = bikerFactory;
             this.bikerStore = bikerStore;

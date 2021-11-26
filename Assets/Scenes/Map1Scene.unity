@@ -19280,7 +19280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0339fe661eed7fa47ad2d409642939d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCount: 3
+  enemyCount: 0
   enemyTemplate: {fileID: 1497964938}
   enemyContainer: {fileID: 174765432}
   enemySpawnPointContainer: {fileID: 1704732829}
@@ -19296,7 +19296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b5c9c104c89214999b2aa682e1f851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pedestrianCount: 20
+  pedestrianCount: 0
   pedestrianTemplate: {fileID: 1765049708}
   pedestrianContainer: {fileID: 429037215}
 --- !u!114 &2036532621

@@ -12,13 +12,13 @@ namespace GUI
         private PedestrianFactory pedestrianFactory;
         private Pedestrian.Factory gameObjectFactory;
         private Player.Factory playerInstanceFactory;
-        private BikerStore bikerStore;
+        private PlayerStore bikerStore;
         private BikerFactory bikerFactory;
         private EnemiesConfig enemiesConfig;
         private EnemyFactory enemyFactory;
 
         [Inject]
-        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, Pedestrian.Factory gameObjectFactory, Player.Factory playerInstanceFactory, BikerStore bikerStore, BikerFactory bikerFactory, EnemiesConfig enemiesConfig, EnemyFactory enemyFactory)
+        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, Pedestrian.Factory gameObjectFactory, Player.Factory playerInstanceFactory, PlayerStore bikerStore, BikerFactory bikerFactory, EnemiesConfig enemiesConfig, EnemyFactory enemyFactory)
         {
             this.pedestrianStore = pedestrianStore;
             this.pedestrianFactory = pedestrianFactory;

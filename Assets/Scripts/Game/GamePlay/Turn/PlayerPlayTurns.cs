@@ -14,7 +14,7 @@ namespace GamePlay
 {
     public class PlayerPlayTurns : ITurns
     {
-        private readonly BikerStore playerStore;
+        private readonly Bikers.PlayerStore playerStore;
         private readonly EnemyStore enemyStore;
         private readonly PedestrianStore pedestrianStore;
         private readonly RouteStore routeStore;
@@ -25,7 +25,7 @@ namespace GamePlay
 
         private ISet<Player> movingPlayers = new HashSet<Player>();
 
-        public PlayerPlayTurns(BikerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
+        public PlayerPlayTurns(Bikers.PlayerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
         {
             this.playerStore = playerStore;
             this.enemyStore = enemyStore;

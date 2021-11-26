@@ -6,15 +6,15 @@ using System.Collections.Generic;
 
 namespace UI
 {
-    public class PlayPanel : IResetable, IObserver<BikerStoreInfo>
+    public class PlayPanel : IResetable, IObserver<PlayerStoreInfo>
     {
         private List<IBikerListItem> itemList = new List<IBikerListItem>();
 
-        private BikerStore playerStore;
+        private Bikers.PlayerStore playerStore;
         private TurnManager turnManager;
         private GameObjectStore gameObjectStore;
 
-        public PlayPanel(TurnManager turnManager, BikerStore playerStore, GameObjectStore gameObjectStore)
+        public PlayPanel(TurnManager turnManager, Bikers.PlayerStore playerStore, GameObjectStore gameObjectStore)
         {
             this.playerStore = playerStore;
             this.turnManager = turnManager;
@@ -61,9 +61,9 @@ namespace UI
             throw new NotImplementedException();
         }
 
-        public void OnNext(BikerStoreInfo value)
+        public void OnNext(PlayerStoreInfo value)
         {
-            if (value.type == BikerStoreInfo.Type.PLAYER_ADDED || value.type == BikerStoreInfo.Type.ACTIVE_PLAYER_CHANGED)
+            if (value.type == PlayerStoreInfo.Type.PLAYER_ADDED || value.type == PlayerStoreInfo.Type.ACTIVE_PLAYER_CHANGED)
             {
                 UpdateListItems();
             }

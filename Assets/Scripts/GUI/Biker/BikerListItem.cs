@@ -7,7 +7,7 @@ using Zenject;
 
 namespace UI
 {
-    public class BikerListItem : MonoBehaviour, IBikerListItem, IObserver<BikerStoreInfo>
+    public class BikerListItem : MonoBehaviour, IBikerListItem, IObserver<PlayerStoreInfo>
     {
         [SerializeField]
         public TMP_Text courierNameText;
@@ -15,7 +15,7 @@ namespace UI
         private bool isActive = false;
 
         [Inject]
-        public void Construct(BikerStore bikerStore)
+        public void Construct(PlayerStore bikerStore)
         {
             subscription = bikerStore.Subscribe(this);
         }
@@ -49,9 +49,9 @@ namespace UI
             throw new NotImplementedException();
         }
 
-        public void OnNext(BikerStoreInfo value)
+        public void OnNext(PlayerStoreInfo value)
         {
-            if (value.type == BikerStoreInfo.Type.ACTIVE_PLAYER_CHANGED)
+            if (value.type == PlayerStoreInfo.Type.ACTIVE_PLAYER_CHANGED)
             {
                 UpdateButtonState();
             }

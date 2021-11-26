@@ -5,10 +5,10 @@ namespace GamePlay
 {
     public class TurnHelper
     {
-        private readonly BikerStore playerStore;
+        private readonly Bikers.PlayerStore playerStore;
         private readonly CameraController cameraController;
 
-        public TurnHelper(BikerStore playerStore, CameraController cameraController)
+        public TurnHelper(Bikers.PlayerStore playerStore, CameraController cameraController)
         {
             this.playerStore = playerStore;
             this.cameraController = cameraController;

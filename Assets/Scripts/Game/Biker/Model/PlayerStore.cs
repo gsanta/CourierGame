@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Bikers
 {
-    public class BikerStoreInfo
+    public class PlayerStoreInfo
     {
         public enum Type
         {
@@ -17,7 +17,7 @@ namespace Bikers
         public Type type;
     }
 
-    public class BikerStore : IResetable, IObservable<BikerStoreInfo>
+    public class PlayerStore : IResetable, IObservable<PlayerStoreInfo>
     {
         private List<Player> players = new List<Player>();
         private MinimapBiker minimapBiker;
@@ -25,7 +25,7 @@ namespace Bikers
         private GameObject bikerContainer;
         private Player activePlayer;
 
-        private List<IObserver<BikerStoreInfo>> observers = new List<IObserver<BikerStoreInfo>>();
+        private List<IObserver<PlayerStoreInfo>> observers = new List<IObserver<PlayerStoreInfo>>();
 
         public MinimapBiker GetMinimapBiker()
         {
@@ -65,7 +65,7 @@ namespace Bikers
             }
             players.Add(player);
 
-            var info = new BikerStoreInfo { type = BikerStoreInfo.Type.PLAYER_ADDED };
+            var info = new PlayerStoreInfo { type = PlayerStoreInfo.Type.PLAYER_ADDED };
             foreach (var observer in observers.ToList())
                 observer.OnNext(info);
         }
@@ -74,7 +74,7 @@ namespace Bikers
         {
             this.activePlayer = player;
 
-            var info = new BikerStoreInfo { type = BikerStoreInfo.Type.ACTIVE_PLAYER_CHANGED };
+            var info = new PlayerStoreInfo { type = PlayerStoreInfo.Type.ACTIVE_PLAYER_CHANGED };
             foreach (var observer in observers.ToList())
                 observer.OnNext(info);
         }
@@ -112,14 +112,14 @@ namespace Bikers
             bikerTemplate = null;
         }
 
-        public IDisposable Subscribe(IObserver<BikerStoreInfo> observer)
+        public IDisposable Subscribe(IObserver<PlayerStoreInfo> observer)
         {
             if (!observers.Contains(observer))
             {
                 observers.Add(observer);
             }
 
-            return new Unsubscriber<BikerStoreInfo>(observers, observer);
+            return new Unsubscriber<PlayerStoreInfo>(observers, observer);
         }
     }
 

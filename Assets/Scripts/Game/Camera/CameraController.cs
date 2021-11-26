@@ -48,7 +48,7 @@ namespace Cameras
 
         public void PanTo(IGameObject gameObject)
         {
-            newPosition = gameObject.GetGameObject().transform.position;;
+            newPosition = gameObject.GetGameObject().transform.position;
         }
 
         public void PanTo(GameObject gameObject)
