@@ -41,6 +41,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         Container.Bind<MinimapStore>().AsSingle();
         Container.Bind<MinimapPackageConsumer>().AsSingle();
+        Container.Bind<RoadConfig>().FromInstance(roadSystem.GetComponent<RoadConfig>()).AsSingle();
 
         //characters
         Container.Bind<PedestrianSetup>().AsSingle();
@@ -51,8 +52,6 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         Container.Bind<ISceneInitializer>().FromInstance(scripts.GetComponent<ISceneInitializer>()).AsSingle().NonLazy();
 
         // actions
-        Container.Bind<PickUpPackageAction>().AsSingle().NonLazy();
-        Container.Bind<DeliverPackageAction>().AsSingle().NonLazy();
         Container.Bind<ReservePackageAction>().AsSingle().NonLazy();
         //Container.Bind<WalkAction<Pedestrian>>().AsSingle().NonLazy();
         //Container.Bind<WalkAction<Enemy>>().AsSingle().NonLazy();
@@ -76,6 +75,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
     public void SetupScene()
     {
+        SetupRoad();
         WalkTargetStore walkTargetStore = Container.Resolve<WalkTargetStore>();
 
         Container.Resolve<DayService>();
@@ -86,25 +86,11 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         pathCache.Init();
 
         ActionStore actionStore = Container.Resolve<ActionStore>();
-        BuildingStore buildingStore = Container.Resolve<BuildingStore>();
 
         PedestrianActionCreator pedestrianActionCreator = Container.Resolve<PedestrianActionCreator>();
-        //pedestrianActionCreator.SetActions(new List<GoapAction<Pedestrian>>() {
-        //    new WalkAction<Pedestrian>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache),
-        //    new GoHomeAction(pavementStore, pathCache, buildingStore)
-        //});
-
         EnemyActionCreator enemyActionCreator = Container.Resolve<EnemyActionCreator>();
-        //enemyActionCreator.SetActions(new List<GoapAction<Enemy>>()
-        //{
-        //    new WalkAction<Enemy>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache),
-        //});
-
         actionStore.SetPedestrianActionCreator(pedestrianActionCreator);
         actionStore.SetEnemyActionCreator(enemyActionCreator);
-
-        //actionStore.SetEnemyWalkAction(new WalkAction<Enemy>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache));
-        //actionStore.SetPedestrianWalkAction(new WalkAction<Pedestrian>(new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED }, pavementStore, walkTargetStore, pathCache));
 
         BikerSetup bikerSetup = Container.Resolve<BikerSetup>();
         bikerSetup.Setup();
@@ -112,5 +98,20 @@ public class Map1Installer : MonoInstaller, ISceneSetup
         pedestrianSetup.Setup();
         EnemySetup enemySetup = Container.Resolve<EnemySetup>();
         enemySetup.Setup();
+
+    }
+
+    private void SetupRoad()
+    {
+        RoadConfig roadConfig = Container.Resolve<RoadConfig>();
+        RoadStore roadStore = Container.Resolve<RoadStore>();
+
+        DirectedGraph<Waypoint, object> graph = new DirectedGraph<Waypoint, object>();
+        WaypointGraphBuilder builder = new WaypointGraphBuilder();
+        builder.BuildGraph(roadConfig.Waypoints, graph);
+
+        Road<Waypoint> road = new Road<Waypoint>(graph, new WaypointScorer());
+
+        roadStore.AddRoad("Map1", road);
     }
 }

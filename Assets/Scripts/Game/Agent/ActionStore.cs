@@ -19,8 +19,6 @@ namespace Agents
         private IActionCreator<Pedestrian> pedestrianActionCreator;
         private IActionCreator<Enemy> enemyActionCreator;
 
-        public PickUpPackageAction PickUpPackageAction { get; set; }
-
         public void SetPedestrianActionCreator(IActionCreator<Pedestrian> pedestrianActionCreator)
         {
             this.pedestrianActionCreator = pedestrianActionCreator;

@@ -8,25 +8,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Worlds;
 
 namespace Controls
 {
     public class RouteTool : Tool
     {
-        private List<Vector3> points = new List<Vector3>();
         private readonly PlayerStore playerStore;
         private RoadStore roadStore;
         private ArrowRendererProvider arrowRendererProvider;
+        private WorldStore worldStore;
+
+        private List<Vector3> points = new List<Vector3>();
+        private string tag;
 
         private GameObject activeTarget;
         public int maxRouteLength = 5;
         private bool enabled = true;
 
-        public RouteTool(PlayerStore playerStore, RoadStore roadStore, ArrowRendererProvider arrowRendererProvider) : base(ToolName.ROUTE)
+        public RouteTool(PlayerStore playerStore, RoadStore roadStore, ArrowRendererProvider arrowRendererProvider, WorldStore worldStore) : base(ToolName.ROUTE)
         {
             this.playerStore = playerStore;
             this.roadStore = roadStore;
             this.arrowRendererProvider = arrowRendererProvider;
+            this.worldStore = worldStore;
         }
 
         public event EventHandler RouteFinished;
@@ -34,6 +39,11 @@ namespace Controls
         public List<Vector3> GetPoints()
         {
             return points;
+        }
+
+        public string GetTag()
+        {
+            return tag;
         }
 
         public bool Enabled { 
@@ -101,7 +111,7 @@ namespace Controls
                 var quad = activeTarget.GetComponent<WaypointQuad>();
                 quad.GetComponent<Renderer>().enabled = false;
             }
-            else if (activeTarget.tag == "Building Selector")
+            else if (TagManager.IsBuilding(activeTarget.tag))
             {
                 var outline = activeTarget.GetComponent<Outline>();
                 outline.RemoveOutline();
@@ -122,17 +132,27 @@ namespace Controls
                 var quad = activeTarget.GetComponent<WaypointQuad>();
                 quad.GetComponent<Renderer>().enabled = true;
                 end = activeTarget.GetComponent<WaypointQuad>().CenterPoint;
-            } else if (gameObject.tag == "Building Selector")
+            } else if (TagManager.IsBuilding(activeTarget.tag))
             {
                 var outline = activeTarget.GetComponent<Outline>();
                 outline.SetOutline();
                 end = gameObject.transform.position;
             } else if (gameObject.tag == "Grid")
             {
-                Debug.Log("over grid");
+                end = gameObject.transform.position;
             }
 
-            var route = roadStore.BuildRoute(playerStore.GetActivePlayer().transform.position, end);
+            tag = gameObject.tag;
+
+            Queue<Vector3> route = null;
+            if (worldStore.CurrentMap == "Building")
+            {
+                route = new Queue<Vector3>(new List<Vector3> { playerStore.GetActivePlayer().transform.position, end });
+            } else
+            {
+                route = roadStore.GetRoad(worldStore.CurrentMap).BuildRoute(playerStore.GetActivePlayer().transform.position, end);
+            }
+
 
             points = route.ToList();
             points.Insert(0, playerStore.GetActivePlayer().transform.position);

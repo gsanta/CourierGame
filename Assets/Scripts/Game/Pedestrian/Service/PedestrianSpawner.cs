@@ -1,5 +1,6 @@
 using Route;
 using UnityEngine;
+using Worlds;
 using Zenject;
 
 namespace Pedestrians
@@ -10,13 +11,15 @@ namespace Pedestrians
 
         private PedestrianStore pedestrianStore;
         private PedestrianFactory pedestrianFactory;
-        private RoadStore pavementStore;
+        private RoadStore roadStore;
+        private WorldStore worldStore;
 
-        public PedestrianSpawner(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, RoadStore pavementStore)
+        public PedestrianSpawner(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, RoadStore roadStore, WorldStore worldStore)
         {
             this.pedestrianStore = pedestrianStore;
             this.pedestrianFactory = pedestrianFactory;
-            this.pavementStore = pavementStore;
+            this.roadStore = roadStore;
+            this.worldStore = worldStore;
         }
         
         public void SetPedestrianCount(int pedestrianCount)
@@ -30,10 +33,10 @@ namespace Pedestrians
 
             while (count < pedestrianCount)
             {
+                var road = roadStore.GetRoad(worldStore.CurrentMap);
+                var node = road.GetNodes()[Random.Range(0, road.GetNodes().Count - 1)];
 
-                var waypoint = pavementStore.GetWaypoints()[Random.Range(0, pavementStore.GetWaypoints().Count - 1)];
-
-                var pedestrian = pedestrianFactory.Create(new PedestrianConfig(waypoint.gameObject));
+                var pedestrian = pedestrianFactory.Create(new PedestrianConfig(node.GetMonoBehaviour().gameObject));
                 pedestrian.gameObject.SetActive(true);
                 pedestrianStore.Add(pedestrian);
 

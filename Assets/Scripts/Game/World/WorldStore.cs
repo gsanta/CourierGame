@@ -8,6 +8,8 @@ namespace Worlds
         private IMapState activeWorld;
         private WorldHandlers worldHandlers;
 
+        public string CurrentMap { get; set; } = "Map1";
+
         // avoiding circular deps it is passed here instead of in the constructor
         public void SetWorldHandlers(WorldHandlers worldHandlers)
         {

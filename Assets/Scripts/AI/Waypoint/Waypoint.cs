@@ -4,7 +4,7 @@ using Zenject;
 
 namespace AI
 {
-    public class Waypoint : MonoBehaviour
+    public class Waypoint : MonoBehaviour, IMonoBehaviour
     {
         [SerializeField]
         private Waypoint previousWaypoint;
@@ -28,19 +28,24 @@ namespace AI
         public WaypointRenderer waypointRenderer;
         public WaypointQuad waypointQuad;
 
-        private IQuadContainer quadContainer;
+        private RoadConfig roadConfig;
 
         [Inject]
-        public void Construct(IQuadContainer quadContainer)
+        public void Construct(RoadConfig roadConfig)
         {
-            this.quadContainer = quadContainer;
+            this.roadConfig = roadConfig;
+        }
+
+        public MonoBehaviour GetMonoBehaviour()
+        {
+            return this;
         }
 
         private void Start()
         {
             LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
             waypointRenderer = new WaypointRenderer(this, lineRenderer);
-            WaypointQuad quad = Instantiate(quadContainer.QuadTemplate);
+            WaypointQuad quad = Instantiate(roadConfig.quadTemplate);
 
             //waypointQuad = new WaypointQuad(this, quadContainer.QuadContainer);
 
@@ -49,7 +54,7 @@ namespace AI
             //sphere.gameObject.layer = LayerMask.NameToLayer("Route");
 
             waypointRenderer.Render();
-            quad.Setup(this, quadContainer.QuadContainer);
+            quad.Setup(this, roadConfig.quadContainer);
 
             //waypointQuad.Start();
         }

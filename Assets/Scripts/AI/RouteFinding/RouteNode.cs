@@ -1,6 +1,7 @@
-﻿using System;
+﻿using AI;
+using System;
 
-public class RouteNode<T> : IComparable<RouteNode<T>> where T : class
+public class RouteNode<T> : IComparable<RouteNode<T>> where T : class, IMonoBehaviour
 {
     private readonly T current;
     private T previous;

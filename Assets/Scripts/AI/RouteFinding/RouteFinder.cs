@@ -1,20 +1,30 @@
 ﻿
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace AI
 {
-    public class RouteFinder<TNode, TEdge> where TNode : class
+    public class RouteFinder<TNode, TEdge> where TNode : class, IMonoBehaviour
     {
         private readonly DirectedGraph<TNode, TEdge> graph;
         private readonly Scorer<TNode> nextNodeScorer;
         private readonly Scorer<TNode> targetScorer;
+        private NearestItemCalc<TNode> nearestItemCalc = new NearestItemCalc<TNode>();
 
         public RouteFinder(DirectedGraph<TNode, TEdge> graph, Scorer<TNode> nextNodeScorer, Scorer<TNode> targetScorer)
         {
             this.graph = graph;
             this.nextNodeScorer = nextNodeScorer;
             this.targetScorer = targetScorer;
+        }
+
+        public List<TNode> FindRoute(Vector3 from, Vector3 to)
+        {
+            var nearestFrom = nearestItemCalc.GetNearest(from, graph.Nodes.ToList());
+            var nearestTo = nearestItemCalc.GetNearest(to, graph.Nodes.ToList());
+
+            return FindRoute(nearestFrom, nearestTo);
         }
 
         public List<TNode> FindRoute(TNode from, TNode to)

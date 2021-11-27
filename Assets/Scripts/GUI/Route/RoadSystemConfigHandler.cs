@@ -16,10 +16,6 @@ namespace GUI
         private GameObject pavementWaypointContainer;
         [SerializeField]
         private GameObject walkTargets;
-        [SerializeField]
-        private GameObject quadContainer;
-        [SerializeField]
-        private WaypointQuad quadTemplate;
 
         private StoreSetup storeSetup;
         private RoadStore roadStore;
@@ -35,15 +31,13 @@ namespace GUI
 
         private void Awake()
         {
-            List<Waypoint> waypoints = new List<Waypoint>();
-            foreach (Transform obj in pavementWaypointContainer.transform)
-            {
-                waypoints.Add(obj.GetComponent<Waypoint>());
-            }
+            //List<Waypoint> waypoints = new List<Waypoint>();
+            //foreach (Transform obj in pavementWaypointContainer.transform)
+            //{
+            //    waypoints.Add(obj.GetComponent<Waypoint>());
+            //}
 
-            roadStore.SetWaypoints(waypoints);
-            roadStore.QuadContainer = quadContainer;
-            roadStore.QuadTemplate = quadTemplate;
+            //roadStore.SetWaypoints(waypoints);
 
             storeSetup.SetupStore(walkTargets, walkTargetStore);
         }

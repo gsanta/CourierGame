@@ -48,7 +48,6 @@ namespace Main
             Container.Bind<PedestrianGoalFactory>().AsSingle();
             Container.Bind<WalkTargetStore>().AsSingle().NonLazy();
             Container.Bind<PedestrianStore>().AsSingle().NonLazy();
-            Container.Bind(typeof(RoadStore), typeof(IQuadContainer)).To<RoadStore>().AsSingle().NonLazy();
 
             Container.Bind<AgentFactory>().AsSingle().NonLazy();
             Container.Bind<ActionStore>().AsSingle().NonLazy();
@@ -84,6 +83,7 @@ namespace Main
             Container.Bind<ActionCreators>().AsSingle();
 
             // Grid 
+            Container.Bind<RoadStore>().AsSingle();
             Container.Bind<GridStore>().AsSingle();
 
             SetupActionFactory();

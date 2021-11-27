@@ -3398,6 +3398,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
 --- !u!1001 &294593073
@@ -4233,6 +4237,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
 --- !u!1001 &361924762
@@ -4494,6 +4502,8 @@ GameObject:
   m_Component:
   - component: {fileID: 384758018}
   - component: {fileID: 384758015}
+  - component: {fileID: 384758016}
+  - component: {fileID: 384758017}
   m_Layer: 0
   m_Name: Road System
   m_TagString: Untagged
@@ -4516,8 +4526,35 @@ MonoBehaviour:
   roadWaypointContainer: {fileID: 0}
   pavementWaypointContainer: {fileID: 144908745}
   walkTargets: {fileID: 1626424474}
+--- !u!114 &384758016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384758014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6e7133a94c6dc4ab03953dbe7a723b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  QuadContainer: {fileID: 1649126803}
+  QuadTemplate: {fileID: 652905937}
+--- !u!114 &384758017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384758014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da3333f6696c1947880ed5ce8a3cdf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   quadContainer: {fileID: 1649126803}
   quadTemplate: {fileID: 652905937}
+  waypointContainer: {fileID: 144908745}
 --- !u!4 &384758018
 Transform:
   m_ObjectHideFlags: 0
@@ -6147,6 +6184,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
@@ -7879,6 +7920,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
 --- !u!4 &749670962 stripped
@@ -8016,7 +8061,7 @@ GameObject:
   - component: {fileID: 771252590}
   - component: {fileID: 771252593}
   m_Layer: 12
-  m_Name: Cube
+  m_Name: House
   m_TagString: Building Selector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11147,6 +11192,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
 --- !u!1001 &1123320383
@@ -11219,6 +11268,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
@@ -13202,6 +13255,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
@@ -17729,6 +17786,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
 --- !u!1001 &1838845414
@@ -18244,6 +18305,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4e567580353ef4bb626decc82117c0, type: 3}

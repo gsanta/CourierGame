@@ -174,7 +174,6 @@ namespace AI
             if (actionQueue != null && actionQueue.Count == 0)
             {
                 GoalReached?.Invoke(this, new GoalReachedEventArgs<T>(this));
-
                 actionQueue = null;
             }
 

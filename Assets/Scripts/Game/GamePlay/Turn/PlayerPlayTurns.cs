@@ -44,11 +44,11 @@ namespace GamePlay
             playerStore.GetAll().ForEach(player => {
                 movingPlayers.Add(player);
                 player.Agent.Active = true;
+                player.Agent.NavMeshAgent.enabled = true;
+                player.Agent.NavMeshAgent.isStopped = false;
 
                 player.Agent.GoalReached += HandleGoalReached;
-                var points = routeStore.GetRoutes()[player];
-                points.RemoveAt(0);
-                player.Agent.SetActions(actionFactory.CreatePlayerWalkIntoBuildingAction(player.Agent, points));
+                player.Agent.SetActions(GetPlayerAction(player));
                 player.Agent.SetGoals(new Goal(AIStateName.WALK_FINISHED, false), false);
             });
 
@@ -65,6 +65,7 @@ namespace GamePlay
 
             pedestrianStore.GetAll().ForEach(pedestrian => {
                 pedestrian.Agent.Active = true;
+                pedestrian.Agent.NavMeshAgent.enabled = true;
                 pedestrian.Agent.NavMeshAgent.isStopped = false;
 
                 pedestrian.Agent.SetActions(actionFactory.CreatePedestrianWalkAction(pedestrian.Agent));
@@ -72,6 +73,19 @@ namespace GamePlay
             });
 
             return promise;
+        }
+
+        private GoapAction<Player> GetPlayerAction(Player player)
+        {
+            var points = routeStore.GetRoutes()[player];
+            points.RemoveAt(0);
+
+            if (TagManager.IsBuilding(routeTool.GetTag())) {
+                return actionFactory.CreatePlayerWalkIntoBuildingAction(player.Agent, points);
+            } else
+            {
+                return actionFactory.CreatePlayerWalkAction(player.Agent, points);
+            }
         }
 
         private void Finish()
