@@ -38,7 +38,7 @@ namespace Main
             Container.Bind<MoneyStore>().AsSingle();
 
             Container.Bind<ReconciliationService>().AsSingle();
-            Container.Bind<SceneLoader>().AsSingle().NonLazy();
+            Container.Bind<SceneManagerHolder>().AsSingle().NonLazy();
             Container.Bind<PackageSpawnPointStore>().AsSingle().NonLazy();
             Container.Bind<PackageTargetPointStore>().AsSingle().NonLazy();
             Container.Bind<PackageFactory>().AsSingle();
@@ -126,8 +126,8 @@ namespace Main
             WorldHandlers worldHandlers = Container.Resolve<WorldHandlers>();
             worldStore.SetWorldHandlers(worldHandlers);
 
-            SceneLoader sceneLoader = Container.Resolve<SceneLoader>();
-            sceneLoader.LoadInitialScenes();
+            SceneManagerHolder sceneManagerHolder = Container.Resolve<SceneManagerHolder>();
+            sceneManagerHolder.D.LoadInitialScenes();
 
             SceneChangeHandler sceneChangeHandler = Container.Resolve<SceneChangeHandler>();
             sceneChangeHandler.AddResetable(Container.Resolve<Bikers.PlayerStore>());

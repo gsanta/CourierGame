@@ -19,6 +19,7 @@ namespace GamePlay
         private void Start()
         {
             var player = playerStore.GetActivePlayer();
+            player.Agent.Active = true;
             var newPos = playerPosition.transform.position;
             player.transform.position = new Vector3(newPos.x, player.transform.position.y, newPos.z);
         }

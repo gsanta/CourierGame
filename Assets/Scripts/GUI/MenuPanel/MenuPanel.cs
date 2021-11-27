@@ -1,4 +1,5 @@
-﻿using Scenes;
+﻿using GamePlay;
+using Scenes;
 using UnityEngine;
 using Zenject;
 
@@ -6,24 +7,24 @@ namespace Controls
 {
     public class MenuPanel : MonoBehaviour
     {
-        private SceneLoader sceneLoader;
+        private SceneManagerHolder sceneManager;
 
         [Inject]
-        public void Construct(SceneLoader sceneLoader)
+        public void Construct(SceneManagerHolder sceneManager)
         {
-            this.sceneLoader = sceneLoader;
+            this.sceneManager = sceneManager;
         }
 
         public void OnLoadMap1()
         {
-            this.sceneLoader.UnLoadMapScene(1);
-            this.sceneLoader.LoadMapScene(0);
+            this.sceneManager.D.UnLoadMapScene(1);
+            this.sceneManager.D.LoadMapScene(0);
         }
 
         public void OnLoadMap2()
         {
-            this.sceneLoader.UnLoadMapScene(0);
-            this.sceneLoader.LoadMapScene(1);
+            this.sceneManager.D.UnLoadMapScene(0);
+            this.sceneManager.D.LoadMapScene(1);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AI;
 using Cameras;
+using GamePlay;
 using Movement;
 using Scenes;
 using System;
@@ -11,15 +12,15 @@ namespace Bikers
     public class PlayerWalkIntoBuildingAction : AbstractRouteAction<Player>
     {
         private List<Vector3> points;
-        private SceneLoader sceneLoader;
+        private SceneManagerHolder sceneManagerHolder;
         private GridStore gridStore;
         private CameraController cameraController;
 
-        public PlayerWalkIntoBuildingAction(GoapAgent<Player> agent, List<Vector3> points, SceneLoader sceneLoader, GridStore gridStore, CameraController cameraController) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
+        public PlayerWalkIntoBuildingAction(GoapAgent<Player> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder, GridStore gridStore, CameraController cameraController) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
         {
             this.agent = agent;
             this.points = points;
-            this.sceneLoader = sceneLoader;
+            this.sceneManagerHolder = sceneManagerHolder;
             this.gridStore = gridStore;
             this.cameraController = cameraController;
         }
@@ -33,7 +34,7 @@ namespace Bikers
         public override bool PostPerform()
         {
             agent.Active = false;
-            sceneLoader.LoadScene("BuildingScene");
+            sceneManagerHolder.D.EnterSubScene("Building");
 
             return true;
         }
@@ -65,9 +66,9 @@ namespace Bikers
             this.cameraController = cameraController;
         }
 
-        public PlayerWalkIntoBuildingAction Create(GoapAgent<Player> agent, List<Vector3> points, SceneLoader sceneLoader)
+        public PlayerWalkIntoBuildingAction Create(GoapAgent<Player> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder)
         {
-            return new PlayerWalkIntoBuildingAction(agent, points, sceneLoader, gridStore, cameraController);
+            return new PlayerWalkIntoBuildingAction(agent, points, sceneManagerHolder, gridStore, cameraController);
         }
     }
 }

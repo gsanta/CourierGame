@@ -127,6 +127,9 @@ namespace Controls
                 var outline = activeTarget.GetComponent<Outline>();
                 outline.SetOutline();
                 end = gameObject.transform.position;
+            } else if (gameObject.tag == "Grid")
+            {
+                Debug.Log("over grid");
             }
 
             var route = roadStore.BuildRoute(playerStore.GetActivePlayer().transform.position, end);

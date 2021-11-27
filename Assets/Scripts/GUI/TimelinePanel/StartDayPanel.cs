@@ -15,15 +15,13 @@ public class StartDayPanel : MonoBehaviour
 
     private Timer timer;
     private CanvasStore panelStore;
-    private SceneLoader sceneLoader;
     private TurnManager turnManager;
 
     [Inject]
-    public void Construct(Timer timer, CanvasStore panelStore, SceneLoader sceneLoader, TurnManager turnManager)
+    public void Construct(Timer timer, CanvasStore panelStore, TurnManager turnManager)
     {
         this.timer = timer;
         this.panelStore = panelStore;
-        this.sceneLoader = sceneLoader;
         this.turnManager = turnManager;
 
         timer.DayPassed += HandleDayPassed;

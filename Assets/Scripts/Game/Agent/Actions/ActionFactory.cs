@@ -1,8 +1,8 @@
 ﻿using AI;
 using Bikers;
 using Enemies;
+using GamePlay;
 using Pedestrians;
-using Scenes;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,11 +11,11 @@ namespace Actions
     public class ActionFactory
     {
         public ActionCreators actionCreators = new ActionCreators();
-        private SceneLoader sceneLoader;
+        private SceneManagerHolder sceneManagerHolder;
 
-        public ActionFactory(SceneLoader sceneLoader)
+        public ActionFactory(SceneManagerHolder sceneManagerHolder)
         {
-            this.sceneLoader = sceneLoader;
+            this.sceneManagerHolder = sceneManagerHolder;
         }
 
         public PlayerWalkAction CreatePlayerWalkAction(GoapAgent<Player> agent, List<Vector3> points)
@@ -25,7 +25,7 @@ namespace Actions
 
         public PlayerWalkIntoBuildingAction CreatePlayerWalkIntoBuildingAction(GoapAgent<Player> agent, List<Vector3> points)
         {
-            return actionCreators.PlayerWalkIntoBuildingActionCreator.Create(agent, points, sceneLoader);
+            return actionCreators.PlayerWalkIntoBuildingActionCreator.Create(agent, points, sceneManagerHolder);
         }
 
         public WalkAction<Pedestrian> CreatePedestrianWalkAction(GoapAgent<Pedestrian> agent)

@@ -1,4 +1,4 @@
-﻿using GUI;
+﻿using GamePlay;
 using UnityEngine;
 using Zenject;
 
@@ -7,11 +7,11 @@ namespace Main
     public class MainInstaller : MonoInstaller
     {
         [SerializeField]
-        SceneLoaderHandler sceneHandler;
+        private SceneManager sceneManager;
 
         public override void InstallBindings()
         {
-            Container.Bind<SceneLoaderHandler>().FromInstance(sceneHandler).AsSingle();
+            Container.Bind<SceneManager>().FromInstance(sceneManager).AsSingle();
         }
     }
 }

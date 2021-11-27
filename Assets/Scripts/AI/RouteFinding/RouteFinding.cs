@@ -28,7 +28,13 @@ namespace AI
             routeNodeMap[from] = startRouteNode;
 
             var lastRouteNode = BuildRoute(to, openSet, routeNodeMap);
-            return CreateList(lastRouteNode, routeNodeMap);
+            if (lastRouteNode == null)
+            {
+                return new List<TNode> { from, to };
+            } else
+            {
+                return CreateList(lastRouteNode, routeNodeMap);
+            }
         }
 
         private RouteNode<TNode> BuildRoute(TNode to, PriorityQueue<RouteNode<TNode>> openSet, Dictionary<TNode, RouteNode<TNode>> routeNodeMap)
@@ -44,7 +50,7 @@ namespace AI
                 UpdateNeighbours(nextRouteNode, to, openSet, routeNodeMap);
             }
 
-            throw new InvalidOperationException("No route found.");
+            return null;
         }
 
         private void UpdateNeighbours(RouteNode<TNode> currentRouteNode, TNode to, PriorityQueue<RouteNode<TNode>> openSet, Dictionary<TNode, RouteNode<TNode>> routeNodeMap)
