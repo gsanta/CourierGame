@@ -81,6 +81,9 @@ namespace Main
             Container.Bind<EnemyWalkActionCreator>().AsSingle();
             Container.Bind<ActionFactory>().AsSingle();
             Container.Bind<ActionCreators>().AsSingle();
+            Container.Bind<ExitBuildingPostAction>().AsSingle();
+            Container.Bind<EnterBuildingPostAction>().AsSingle();
+
 
             // Grid 
             Container.Bind<RoadStore>().AsSingle();
@@ -154,6 +157,8 @@ namespace Main
             actionFactory.actionCreators.PlayerWalkActionCreator = Container.Resolve<PlayerWalkActionCreator>();
             actionFactory.actionCreators.PedestrianWalkActionCreator = Container.Resolve<PedestrianWalkActionCreator>();
             actionFactory.actionCreators.EnemyWalkActionCreator = Container.Resolve<EnemyWalkActionCreator>();
+            actionFactory.actionCreators.EnterBuildingPostAction = Container.Resolve<EnterBuildingPostAction>();
+            actionFactory.actionCreators.ExitBuildingPostAction = Container.Resolve<ExitBuildingPostAction>();
         }
 
         private void SetupControl()

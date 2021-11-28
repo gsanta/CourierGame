@@ -9,6 +9,7 @@ using Pedestrians;
 using Routes;
 using RSG;
 using System.Collections.Generic;
+using Worlds;
 
 namespace GamePlay
 {
@@ -25,7 +26,7 @@ namespace GamePlay
 
         private ISet<Player> movingPlayers = new HashSet<Player>();
 
-        public PlayerPlayTurns(Bikers.PlayerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
+        public PlayerPlayTurns(PlayerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
         {
             this.playerStore = playerStore;
             this.enemyStore = enemyStore;
@@ -81,8 +82,16 @@ namespace GamePlay
             points.RemoveAt(0);
 
             if (TagManager.IsBuilding(routeTool.GetTag())) {
-                return actionFactory.CreatePlayerWalkIntoBuildingAction(player.Agent, points);
-            } else
+                var action = actionFactory.CreatePlayerWalkIntoBuildingAction(player.Agent, points);
+                action.AddPostAction(actionFactory.CreateEnterBuildingPostAction());
+                return action;
+            } else if (TagManager.IsExitBuilding(routeTool.GetTag()))
+            {
+                var action = actionFactory.CreatePlayerWalkIntoBuildingAction(player.Agent, points);
+                action.AddPostAction(actionFactory.CreateExitBuildingPostAction());
+                return action;
+            }
+            else
             {
                 return actionFactory.CreatePlayerWalkAction(player.Agent, points);
             }

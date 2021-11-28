@@ -14,5 +14,15 @@ namespace Controls
         {
             return tag == "Building Selector";
         }
+
+        public static bool IsExitBuilding(string tag)
+        {
+            return tag == "Exit Building Selector";
+        }
+
+        public static bool IsHoverable(string tag)
+        {
+            return IsBuilding(tag) || IsExitBuilding(tag);
+        }
     }
 }

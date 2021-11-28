@@ -5,7 +5,7 @@ using Zenject;
 
 namespace GamePlay
 {
-    public class BuildingSceneSetup : MonoBehaviour
+    public class BuildingSceneSetup : MonoBehaviour, ISceneEntryPoint
     {
         [SerializeField]
         GameObject playerPosition;
@@ -19,9 +19,18 @@ namespace GamePlay
             this.worldStore = worldStore;
         }
 
-        private void Start()
+        public void Exit()
+        {
+            worldStore.CurrentMap = "Map1";
+            var player = playerStore.GetActivePlayer();
+            player.Agent.Active = true;
+            player.transform.position = new Vector3(0, player.transform.position.y, 0);
+        }
+
+        public void Enter()
         {
             worldStore.CurrentMap = "Building";
+            worldStore.ActiveSceneEntryPoint = this;
             var player = playerStore.GetActivePlayer();
             player.Agent.Active = true;
             var newPos = playerPosition.transform.position;

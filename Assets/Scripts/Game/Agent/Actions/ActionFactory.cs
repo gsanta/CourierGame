@@ -37,5 +37,15 @@ namespace Actions
         {
             return actionCreators.EnemyWalkActionCreator.Create(agent, new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED });
         }
+
+        public EnterBuildingPostAction CreateEnterBuildingPostAction()
+        {
+            return (EnterBuildingPostAction) actionCreators.EnterBuildingPostAction.Clone();
+        }
+
+        public ExitBuildingPostAction CreateExitBuildingPostAction()
+        {
+            return (ExitBuildingPostAction) actionCreators.ExitBuildingPostAction.Clone();
+        }
     }
 }

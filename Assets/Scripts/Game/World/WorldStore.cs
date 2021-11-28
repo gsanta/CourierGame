@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GamePlay;
+using System.Collections.Generic;
 
 namespace Worlds
 {
@@ -9,6 +10,7 @@ namespace Worlds
         private WorldHandlers worldHandlers;
 
         public string CurrentMap { get; set; } = "Map1";
+        public ISceneEntryPoint ActiveSceneEntryPoint { get; set; }
 
         // avoiding circular deps it is passed here instead of in the constructor
         public void SetWorldHandlers(WorldHandlers worldHandlers)

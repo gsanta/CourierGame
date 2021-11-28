@@ -70,9 +70,14 @@ namespace GamePlay
             }
         }
 
-        public void ExitSubScene()
+        public void ExitSubScene(string scene)
         {
+            var sceneName = $"{scene}Scene";
 
+            if (fakeScenes.ContainsKey(sceneName))
+            {
+                fakeScenes[sceneName].Unload();
+            }
         }
 
         public void LoadScene(string name)

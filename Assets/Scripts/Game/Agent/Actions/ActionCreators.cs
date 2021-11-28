@@ -9,5 +9,7 @@ namespace Actions
         public PlayerWalkActionCreator PlayerWalkActionCreator { get; set; }
         public PedestrianWalkActionCreator PedestrianWalkActionCreator { get; set; }
         public EnemyWalkActionCreator EnemyWalkActionCreator { get; set; }
+        public ExitBuildingPostAction ExitBuildingPostAction { get; set; }
+        public EnterBuildingPostAction EnterBuildingPostAction { get; set; }
     }
 }

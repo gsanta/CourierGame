@@ -15,6 +15,7 @@ namespace Bikers
         private SceneManagerHolder sceneManagerHolder;
         private GridStore gridStore;
         private CameraController cameraController;
+        private IGPostAction postAction;
 
         public PlayerWalkIntoBuildingAction(GoapAgent<Player> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder, GridStore gridStore, CameraController cameraController) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
         {
@@ -23,6 +24,11 @@ namespace Bikers
             this.sceneManagerHolder = sceneManagerHolder;
             this.gridStore = gridStore;
             this.cameraController = cameraController;
+        }
+
+        public void AddPostAction(IGPostAction postAction)
+        {
+            this.postAction = postAction;
         }
 
         public override bool PrePerform()
@@ -34,7 +40,11 @@ namespace Bikers
         public override bool PostPerform()
         {
             agent.Active = false;
-            sceneManagerHolder.D.EnterSubScene("Building");
+
+            if (postAction != null)
+            {
+                postAction.Execute();
+            }
 
             return true;
         }

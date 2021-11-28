@@ -111,7 +111,7 @@ namespace Controls
                 var quad = activeTarget.GetComponent<WaypointQuad>();
                 quad.GetComponent<Renderer>().enabled = false;
             }
-            else if (TagManager.IsBuilding(activeTarget.tag))
+            else if (TagManager.IsHoverable(activeTarget.tag))
             {
                 var outline = activeTarget.GetComponent<Outline>();
                 outline.RemoveOutline();
@@ -132,7 +132,7 @@ namespace Controls
                 var quad = activeTarget.GetComponent<WaypointQuad>();
                 quad.GetComponent<Renderer>().enabled = true;
                 end = activeTarget.GetComponent<WaypointQuad>().CenterPoint;
-            } else if (TagManager.IsBuilding(activeTarget.tag))
+            } else if (TagManager.IsHoverable(activeTarget.tag))
             {
                 var outline = activeTarget.GetComponent<Outline>();
                 outline.SetOutline();
@@ -147,7 +147,7 @@ namespace Controls
             Queue<Vector3> route = null;
             if (worldStore.CurrentMap == "Building")
             {
-                route = new Queue<Vector3>(new List<Vector3> { playerStore.GetActivePlayer().transform.position, end });
+                route = new Queue<Vector3>(new List<Vector3> { end });
             } else
             {
                 route = roadStore.GetRoad(worldStore.CurrentMap).BuildRoute(playerStore.GetActivePlayer().transform.position, end);
