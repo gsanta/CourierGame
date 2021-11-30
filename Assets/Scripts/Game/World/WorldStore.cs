@@ -1,4 +1,6 @@
-﻿using GamePlay;
+﻿using Bikers;
+using Enemies;
+using GamePlay;
 using System.Collections.Generic;
 
 namespace Worlds
@@ -11,6 +13,8 @@ namespace Worlds
 
         public string CurrentMap { get; set; } = "Map1";
         public ISceneEntryPoint ActiveSceneEntryPoint { get; set; }
+
+        public BattleState BattleState { get; set; } = null;
 
         // avoiding circular deps it is passed here instead of in the constructor
         public void SetWorldHandlers(WorldHandlers worldHandlers)
@@ -37,6 +41,18 @@ namespace Worlds
         public IMapState GetActiveWorld()
         {
             return activeWorld;
+        }
+    }
+
+    public class BattleState
+    {
+        public Player Player { get; set; }
+        public Enemy Enemy { get; set; }
+
+        public BattleState(Player player, Enemy enemy)
+        {
+            Player = player;
+            Enemy = enemy;
         }
     }
 }

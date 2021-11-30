@@ -9,6 +9,7 @@ TagManager:
   - Building Selector
   - Grid
   - Exit Building Selector
+  - Enemy
   layers:
   - Default
   - TransparentFX

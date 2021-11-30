@@ -1,5 +1,9 @@
-﻿using UI;
+﻿using Bikers;
+using Enemies;
+using GamePlay;
+using UI;
 using UnityEngine;
+using Worlds;
 using Zenject;
 
 namespace Attacks
@@ -8,11 +12,15 @@ namespace Attacks
     public class AttackRadius : MonoBehaviour
     {
         private CanvasStore canvasStore;
+        private TurnManager turnManager;
+        private WorldStore worldStore;
 
         [Inject]
-        public void Construct(CanvasStore canvasStore)
+        public void Construct(CanvasStore canvasStore, TurnManager turnManager, WorldStore worldStore)
         {
             this.canvasStore = canvasStore;
+            this.turnManager = turnManager;
+            this.worldStore = worldStore;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -21,6 +29,8 @@ namespace Attacks
             {
                 var messagePanel = canvasStore.GetPanel<MessagePanel>(typeof(MessagePanel));
                 messagePanel.gameObject.SetActive(true);
+                turnManager.Pause();
+                worldStore.BattleState = new BattleState(transform.parent.GetComponent<Player>(), other.transform.parent.GetComponent<Enemy>());
             }
         }
     }

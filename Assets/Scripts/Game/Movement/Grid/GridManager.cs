@@ -56,7 +56,7 @@ namespace Movement
             GameObject tile = dark ? darkTile : lightTile;
             float y = tile.transform.position.y;
             var gameObject = Instantiate(dark ? darkTile : lightTile, transform);
-            gameObject.transform.position = new Vector3(x * tile.transform.localScale.x + parentPos.x, y, z * tile.transform.localScale.z + parentPos.z);
+            gameObject.transform.position = new Vector3(x * tile.transform.localScale.x + parentPos.x, y + 1, z * tile.transform.localScale.z + parentPos.z);
             gameObject.SetActive(true);
             //gameObject.GetComponent<Renderer>().material.color = dark ? Color.red : Color.green;
         }

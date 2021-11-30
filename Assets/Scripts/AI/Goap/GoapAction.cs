@@ -35,7 +35,14 @@ namespace AI
         public bool Pause
         {
             set {
-                paused = true;
+                paused = value;
+                if (paused)
+                {
+                    agent.NavMeshAgent.isStopped = true;
+                } else
+                {
+                    agent.NavMeshAgent.isStopped = false;
+                }
             }
         }
 

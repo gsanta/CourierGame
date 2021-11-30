@@ -47,5 +47,20 @@ namespace GamePlay
         {
 
         }
+
+        public void Pause()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Resume()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Abort()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

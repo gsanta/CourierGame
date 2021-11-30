@@ -72,6 +72,9 @@ namespace Main
             Container.Bind<ITurns>().WithId("EnemyTurns").To<EnemyTurns>().AsSingle();
             Container.Bind<GameObjectStore>().AsSingle();
 
+            // movement
+            Container.Bind<TileManagerProvider>().AsSingle();
+
             //actions
             Container.Bind<RouteStore>().AsSingle();
             Container.Bind<PlayerWalkAction>().AsSingle();

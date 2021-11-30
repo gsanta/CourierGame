@@ -15,7 +15,7 @@ namespace GamePlay
 {
     public class PlayerPlayTurns : ITurns
     {
-        private readonly Bikers.PlayerStore playerStore;
+        private readonly PlayerStore playerStore;
         private readonly EnemyStore enemyStore;
         private readonly PedestrianStore pedestrianStore;
         private readonly RouteStore routeStore;
@@ -37,7 +37,6 @@ namespace GamePlay
             this.cameraController = cameraController;
         }
 
-
         public Promise Execute()
         {
             promise = new Promise();
@@ -58,6 +57,7 @@ namespace GamePlay
 
             enemyStore.GetAll().ForEach(enemy => {
                 enemy.Agent.Active = true;
+                enemy.Agent.NavMeshAgent.enabled = true;
                 enemy.Agent.NavMeshAgent.isStopped = false;
 
                 enemy.Agent.SetActions(actionFactory.CreateEnemyWalkAction(enemy.Agent));
@@ -100,9 +100,23 @@ namespace GamePlay
         private void Finish()
         {
             pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.AbortAction());
-            enemyStore.GetAll().ForEach(pedestrian => pedestrian.Agent.AbortAction());
+            enemyStore.GetAll().ForEach(enemy => enemy.Agent.AbortAction());
 
             promise.Resolve();
+        }
+
+        public void Pause()
+        {
+            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.NavMeshAgent.isStopped = true);
+            enemyStore.GetAll().ForEach(enemy => enemy.Agent.NavMeshAgent.isStopped = true);
+            playerStore.GetAll().ForEach(player => player.Agent.NavMeshAgent.isStopped = true);
+        }
+
+        public void Resume()
+        {
+            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.NavMeshAgent.isStopped = false);
+            enemyStore.GetAll().ForEach(enemy => enemy.Agent.NavMeshAgent.isStopped = false);
+            playerStore.GetAll().ForEach(player => player.Agent.NavMeshAgent.isStopped = false);
         }
 
         public void Step()
@@ -113,6 +127,11 @@ namespace GamePlay
         public void Reset()
         {
 
+        }
+
+        public void Abort()
+        {
+            playerStore.GetAll().ForEach(player => player.Agent.GoalReached -= HandleGoalReached);
         }
 
         private void HandleGoalReached(object sender, GoalReachedEventArgs<Player> args)

@@ -3,6 +3,7 @@ using Cameras;
 using Controls;
 using Enemies;
 using GizmoNS;
+using Movement;
 using Pedestrians;
 using Routes;
 using RSG;
@@ -22,8 +23,9 @@ namespace GamePlay
         private PedestrianStore pedestrianStore;
         private EnemyStore enemyStore;
         private ArrowRendererProvider arrowRendererProvider;
+        private TileManagerProvider tileManagerProvider;
 
-        public PlayerCommandTurns(TurnHelper turnHelper, Bikers.PlayerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController, PedestrianStore pedestrianStore, EnemyStore enemyStore, ArrowRendererProvider arrowRendererProvider)
+        public PlayerCommandTurns(TurnHelper turnHelper, PlayerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController, PedestrianStore pedestrianStore, EnemyStore enemyStore, ArrowRendererProvider arrowRendererProvider, TileManagerProvider tileManagerProvider)
         {
             this.turnHelper = turnHelper;
             this.playerStore = playerStore;
@@ -33,6 +35,7 @@ namespace GamePlay
             this.enemyStore = enemyStore;
             this.pedestrianStore = pedestrianStore;
             this.arrowRendererProvider = arrowRendererProvider;
+            this.tileManagerProvider = tileManagerProvider;
 
             routeTool.RouteFinished += HandleRouteFinished;
         }
@@ -95,6 +98,7 @@ namespace GamePlay
             promise = new Promise();
             playerStore.SetActivePlayer(playerStore.GetFirstPlayer());
             cameraController.PanTo(playerStore.GetActivePlayer());
+            tileManagerProvider.Data.SetTilesCenter(playerStore.GetActivePlayer().transform.position);
 
             return promise;
         }
@@ -107,7 +111,22 @@ namespace GamePlay
 
         public void Reset()
         {
+            routeStore.Clear();
+        }
 
+        public void Abort()
+        {
+            routeStore.Clear();
+        }
+
+        public void Pause()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Resume()
+        {
+            throw new NotImplementedException();
         }
     }
 }

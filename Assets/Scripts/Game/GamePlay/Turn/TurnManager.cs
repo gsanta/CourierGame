@@ -57,5 +57,22 @@ namespace GamePlay
                 activeTurn.Step();
             }
         }
+
+        public void ResetTurns()
+        {
+            activeTurn = null;
+            turns.ForEach(turn => turn.Abort());
+            Step();
+        }
+
+        public void Pause()
+        {
+            playerPlayTurns.Pause();
+        }
+
+        public void Resume()
+        {
+            playerPlayTurns.Resume();
+        }
     }
 }
