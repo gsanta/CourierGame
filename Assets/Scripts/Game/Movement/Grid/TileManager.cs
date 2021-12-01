@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 using Zenject;
 
 namespace Movement
@@ -12,10 +13,13 @@ namespace Movement
         [SerializeField]
         private Vector2 dimensions;
 
+        private Vector2 positionFix = new Vector2(0.2f, 0.2f);
+
         private int x;
         private int y;
 
         private Tile[] tiles;
+        private bool visible;
 
         [Inject]
         public void Construct(TileManagerProvider tileManagerProvider)
@@ -45,6 +49,8 @@ namespace Movement
 
         public void SetTilesCenter(Vector3 vector3)
         {
+            if (!visible) return;
+
             centerPoint = vector3;
 
             for (int i = 0; i < x; i++)
@@ -55,10 +61,24 @@ namespace Movement
 
                     int halfX = Mathf.RoundToInt(x / 2);
                     int halfY = Mathf.RoundToInt(y / 2);
+                    float cX = centerPoint.x + Tile.width * (i - halfX) + positionFix.x;
+                    float cY = centerPoint.z + Tile.width * (j - halfY) + positionFix.y;
 
-                    tile.SetCenterPoint(new Vector3(centerPoint.x + Tile.width * (i - halfX), 1, centerPoint.z + Tile.width * (j - halfY)));
+                    NavMeshHit hit;
+                    bool tileVisible = NavMesh.SamplePosition(new Vector3(cX, 0, cY), out hit, 0.5f, NavMesh.AllAreas);
+                    tile.SetVisible(tileVisible);
+                    tile.SetCenterPoint(new Vector3(cX, 1, cY));
                 }
             }
+        }
+
+        public void SetVisible(bool visible)
+        {
+            foreach (var item in tiles)
+            {
+                item.SetVisible(visible);
+            }
+            this.visible = visible;
         }
     }
 

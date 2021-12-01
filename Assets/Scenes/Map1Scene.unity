@@ -3609,7 +3609,7 @@ GameObject:
   - component: {fileID: 310291515}
   m_Layer: 0
   m_Name: Tile
-  m_TagString: Untagged
+  m_TagString: Grid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10607,7 +10607,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1039729265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20841,7 +20841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   centerPoint: {x: 0, y: 0, z: 0}
   tileTemplate: {fileID: 310291515}
-  dimensions: {x: 5, y: 5}
+  dimensions: {x: 10, y: 10}
 --- !u!1 &2108516759
 GameObject:
   m_ObjectHideFlags: 0

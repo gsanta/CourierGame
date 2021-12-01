@@ -43,9 +43,9 @@ namespace AI
 
         private void Start()
         {
-            LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
-            waypointRenderer = new WaypointRenderer(this, lineRenderer);
-            WaypointQuad quad = Instantiate(roadConfig.quadTemplate);
+            //LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
+            //waypointRenderer = new WaypointRenderer(this, lineRenderer);
+            //WaypointQuad quad = Instantiate(roadConfig.quadTemplate);
 
             //waypointQuad = new WaypointQuad(this, quadContainer.QuadContainer);
 
@@ -53,15 +53,15 @@ namespace AI
             //sphere.transform.position = transform.position;
             //sphere.gameObject.layer = LayerMask.NameToLayer("Route");
 
-            waypointRenderer.Render();
-            quad.Setup(this, roadConfig.quadContainer);
+            //waypointRenderer.Render();
+            //quad.Setup(this, roadConfig.quadContainer);
 
             //waypointQuad.Start();
         }
 
         public void SetLineColor(Color color)
         {
-            gameObject.GetComponent<LineRenderer>().material.color = color;
+            //gameObject.GetComponent<LineRenderer>().material.color = color;
         }
 
         public Waypoint PrevWayPoint { get => previousWaypoint; set => previousWaypoint = (Waypoint) value; }

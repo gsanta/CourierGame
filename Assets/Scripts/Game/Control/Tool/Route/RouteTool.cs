@@ -2,6 +2,7 @@
 using Bikers;
 using GameObjects;
 using GizmoNS;
+using Movement;
 using Route;
 using Routes;
 using System;
@@ -18,6 +19,7 @@ namespace Controls
         private RoadStore roadStore;
         private ArrowRendererProvider arrowRendererProvider;
         private WorldStore worldStore;
+        private TileManagerProvider tileManager;
 
         private List<Vector3> points = new List<Vector3>();
         private string tag;
@@ -26,12 +28,13 @@ namespace Controls
         public int maxRouteLength = 5;
         private bool enabled = true;
 
-        public RouteTool(PlayerStore playerStore, RoadStore roadStore, ArrowRendererProvider arrowRendererProvider, WorldStore worldStore) : base(ToolName.ROUTE)
+        public RouteTool(PlayerStore playerStore, RoadStore roadStore, ArrowRendererProvider arrowRendererProvider, WorldStore worldStore, TileManagerProvider tileManager) : base(ToolName.ROUTE)
         {
             this.playerStore = playerStore;
             this.roadStore = roadStore;
             this.arrowRendererProvider = arrowRendererProvider;
             this.worldStore = worldStore;
+            this.tileManager = tileManager;
         }
 
         public event EventHandler RouteFinished;
@@ -54,6 +57,10 @@ namespace Controls
                 if (!enabled)
                 {
                     ClearRoute();
+                    tileManager.Data.SetVisible(false);
+                } else
+                {
+                    tileManager.Data.SetVisible(true);
                 }
             }
             get => enabled;
@@ -115,6 +122,10 @@ namespace Controls
             {
                 var outline = activeTarget.GetComponent<Outline>();
                 outline.RemoveOutline();
+            } else if (TagManager.IsGrid(activeTarget.tag))
+            {
+                Tile tile = activeTarget.GetComponent<Tile>();
+                tile.UnHover();
             }
             activeTarget = null;
             arrowRendererProvider.ArrowRenderer.SetColor(Color.red);
@@ -127,31 +138,34 @@ namespace Controls
 
             Vector3 end = new Vector3(0, 0, 0);
 
-            if (gameObject.tag == "Road Selector")
-            {
-                var quad = activeTarget.GetComponent<WaypointQuad>();
-                quad.GetComponent<Renderer>().enabled = true;
-                end = activeTarget.GetComponent<WaypointQuad>().CenterPoint;
-            } else if (TagManager.IsHoverable(activeTarget.tag))
+            //if (gameObject.tag == "Road Selector")
+            //{
+            //    var quad = activeTarget.GetComponent<WaypointQuad>();
+            //    quad.GetComponent<Renderer>().enabled = true;
+            //    end = activeTarget.GetComponent<WaypointQuad>().CenterPoint;
+            //} else 
+            if (TagManager.IsHoverable(activeTarget.tag))
             {
                 var outline = activeTarget.GetComponent<Outline>();
                 outline.SetOutline();
                 end = gameObject.transform.position;
             } else if (gameObject.tag == "Grid")
             {
-                end = gameObject.transform.position;
+                Tile tile = gameObject.GetComponent<Tile>();
+                end = tile.GetCenterPoint();
+                tile.Hover();
             }
 
             tag = gameObject.tag;
 
             Queue<Vector3> route = null;
-            if (worldStore.CurrentMap == "Building")
-            {
-                route = new Queue<Vector3>(new List<Vector3> { end });
-            } else
-            {
-                route = roadStore.GetRoad(worldStore.CurrentMap).BuildRoute(playerStore.GetActivePlayer().transform.position, end);
-            }
+            route = new Queue<Vector3>(new List<Vector3> { end });
+            //if (worldStore.CurrentMap == "Building")
+            //{
+            //} else
+            //{
+            //    route = roadStore.GetRoad(worldStore.CurrentMap).BuildRoute(playerStore.GetActivePlayer().transform.position, end);
+            //}
 
 
             points = route.ToList();

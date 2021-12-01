@@ -24,5 +24,10 @@ namespace Controls
         {
             return IsBuilding(tag) || IsExitBuilding(tag);
         }
+
+        public static bool IsGrid(string tag)
+        {
+            return tag == "Grid";
+        }
     }
 }
