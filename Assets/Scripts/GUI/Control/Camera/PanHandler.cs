@@ -7,7 +7,7 @@ using Zenject;
 
 namespace GUI
 {
-    public class PanHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class PanHandler : MonoBehaviour
     {
         [SerializeField]
         private string directionStr;
@@ -34,14 +34,19 @@ namespace GUI
             }
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            isActive = true;
-        }
+        //public void OnPointerEnter(PointerEventData eventData)
+        //{
+        //    isActive = true;
+        //}
 
-        public void OnPointerExit(PointerEventData eventData)
+        //public void OnPointerExit(PointerEventData eventData)
+        //{
+        //    isActive = false;
+        //}
+
+        public void OnClick()
         {
-            isActive = false;
+            cameraController.PanToDirection(GetDirection());
         }
 
         private CameraDirection GetDirection()

@@ -15,6 +15,13 @@ namespace Controls
         private Vector3 rotateStartPosition;
         private Vector3 rotateCurrentPosition;
 
+        [SerializeField]
+        private GameObject[] cameraPositions;
+        [SerializeField]
+        private int xCamPos;
+        [SerializeField]
+        private int yCamPos;
+
         [Inject]
         public void Construct(CameraController cameraController)
         {
@@ -32,6 +39,7 @@ namespace Controls
         private void Awake()
         {
             cameraController.SetCameraConfig(this);
+            cameraController.SetCameraPositions(cameraPositions, xCamPos, yCamPos);
         }
 
         private void Update()
