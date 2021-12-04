@@ -53,7 +53,7 @@ namespace GamePlay
             });
 
             playerStore.SetActivePlayer(playerStore.GetFirstPlayer());
-            cameraController.Follow(playerStore.GetActivePlayer());
+            //cameraController.Follow(playerStore.GetActivePlayer());
 
             enemyStore.GetAll().ForEach(enemy => {
                 enemy.Agent.Active = true;

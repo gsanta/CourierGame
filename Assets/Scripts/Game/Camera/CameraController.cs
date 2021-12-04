@@ -96,17 +96,17 @@ namespace Cameras
 
         public void Follow(IGameObject targetGameObject)
         {
-            if (this.targetGameObject != null)
-            {
-                this.targetGameObject.Updated -= UpdateFollow;
-                this.targetGameObject = null;
-            } 
+            //if (this.targetGameObject != null)
+            //{
+            //    this.targetGameObject.Updated -= UpdateFollow;
+            //    this.targetGameObject = null;
+            //} 
 
-            if (targetGameObject != null)
-            {
-                this.targetGameObject = targetGameObject;
-                targetGameObject.Updated += UpdateFollow;
-            }
+            //if (targetGameObject != null)
+            //{
+            //    this.targetGameObject = targetGameObject;
+            //    targetGameObject.Updated += UpdateFollow;
+            //}
         }
 
         private void UpdateFollow(object sender, EventArgs eventArgs)

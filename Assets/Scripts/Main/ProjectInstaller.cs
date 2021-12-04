@@ -72,10 +72,13 @@ namespace Main
             Container.Bind<ITurns>().WithId("EnemyTurns").To<EnemyTurns>().AsSingle();
             Container.Bind<GameObjectStore>().AsSingle();
 
-            // movement
+            // Movement
             Container.Bind<TileManagerProvider>().AsSingle();
+            Container.Bind<RoadStore>().AsSingle();
+            Container.Bind<GridStore>().AsSingle();
+            Container.Bind<GridConfigProvider>().AsSingle();
 
-            //actions
+            // Actions
             Container.Bind<RouteStore>().AsSingle();
             Container.Bind<PlayerWalkAction>().AsSingle();
             Container.Bind<PlayerWalkActionCreator>().AsSingle();
@@ -86,11 +89,6 @@ namespace Main
             Container.Bind<ActionCreators>().AsSingle();
             Container.Bind<ExitBuildingPostAction>().AsSingle();
             Container.Bind<EnterBuildingPostAction>().AsSingle();
-
-
-            // Grid 
-            Container.Bind<RoadStore>().AsSingle();
-            Container.Bind<GridStore>().AsSingle();
 
             SetupActionFactory();
 

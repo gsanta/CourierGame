@@ -1,5 +1,6 @@
 ﻿
 using Cameras;
+using Movement;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,11 +15,15 @@ namespace GUI
         private CameraController cameraController;
         private bool isActive = false;
         private CameraDirection direction;
+        private TileManagerProvider tileManagerProvider;
+        private GridConfigProvider gridConfigProvider;
 
         [Inject]
-        public void Construct(CameraController cameraController)
+        public void Construct(CameraController cameraController, TileManagerProvider tileManagerProvider, GridConfigProvider gridConfigProvider)
         {
             this.cameraController = cameraController;
+            this.tileManagerProvider = tileManagerProvider;
+            this.gridConfigProvider = gridConfigProvider;
         }
 
         private void Awake()
@@ -30,19 +35,30 @@ namespace GUI
         {
             if (isActive)
             {
+                TileManager tileManager = tileManagerProvider.Data;
+                GridConfig gridConfig = gridConfigProvider.Data;
+
                 cameraController.Pan(direction);
+                IntPos topLeft = tileManager.TopLeft;
+
+                switch(direction)
+                {
+                    case CameraDirection.UP:
+                        topLeft.y += gridConfig.tileRows;
+                        break;
+                    case CameraDirection.RIGHT:
+                        topLeft.x += gridConfig.tileCols;
+                        break;
+                    case CameraDirection.DOWN:
+                        topLeft.y -= gridConfig.tileCols;
+                        break;
+                    case CameraDirection.LEFT:
+                        topLeft.x -= gridConfig.tileCols;
+                        break;
+                }
+                tileManager.UpdateTilePositions(topLeft);
             }
         }
-
-        //public void OnPointerEnter(PointerEventData eventData)
-        //{
-        //    isActive = true;
-        //}
-
-        //public void OnPointerExit(PointerEventData eventData)
-        //{
-        //    isActive = false;
-        //}
 
         public void OnClick()
         {

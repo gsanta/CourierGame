@@ -13,16 +13,14 @@ namespace Bikers
     {
         private List<Vector3> points;
         private SceneManagerHolder sceneManagerHolder;
-        private GridStore gridStore;
         private CameraController cameraController;
         private IGPostAction postAction;
 
-        public PlayerWalkIntoBuildingAction(GoapAgent<Player> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder, GridStore gridStore, CameraController cameraController) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
+        public PlayerWalkIntoBuildingAction(GoapAgent<Player> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder, CameraController cameraController) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
         {
             this.agent = agent;
             this.points = points;
             this.sceneManagerHolder = sceneManagerHolder;
-            this.gridStore = gridStore;
             this.cameraController = cameraController;
         }
 
@@ -68,17 +66,15 @@ namespace Bikers
 
     public class PlayerWalkIntoBuildingActionCreator
     {
-        private GridStore gridStore;
         private CameraController cameraController;
-        public PlayerWalkIntoBuildingActionCreator(GridStore gridStore, CameraController cameraController)
+        public PlayerWalkIntoBuildingActionCreator(CameraController cameraController)
         {
-            this.gridStore = gridStore;
             this.cameraController = cameraController;
         }
 
         public PlayerWalkIntoBuildingAction Create(GoapAgent<Player> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder)
         {
-            return new PlayerWalkIntoBuildingAction(agent, points, sceneManagerHolder, gridStore, cameraController);
+            return new PlayerWalkIntoBuildingAction(agent, points, sceneManagerHolder, cameraController);
         }
     }
 }

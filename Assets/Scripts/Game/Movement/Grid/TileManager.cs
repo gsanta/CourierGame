@@ -6,68 +6,75 @@ namespace Movement
 {
     public class TileManager : MonoBehaviour
     {
-        [SerializeField]
-        private Vector3 centerPoint;
-        [SerializeField]
-        private Tile tileTemplate;
-        [SerializeField]
-        private Vector2 dimensions;
-
-        private Vector2 positionFix = new Vector2(0.2f, 0.2f);
-
-        private int x;
-        private int y;
-
-        private Tile[] tiles;
+        private Tile[,] tiles;
         private bool visible;
+        private GridConfigProvider gridConfigProvider;
+        private GridStore gridStore;
+
+        public IntPos TopLeft { get; private set; }
 
         [Inject]
-        public void Construct(TileManagerProvider tileManagerProvider)
+        public void Construct(TileManagerProvider tileManagerProvider, GridConfigProvider gridConfigProvider, GridStore gridStore)
         {
             tileManagerProvider.Data = this;
-        }
-
-        private void Awake()
-        {
-            x = Mathf.RoundToInt(dimensions.x);
-            y = Mathf.RoundToInt(dimensions.y);
+            this.gridConfigProvider = gridConfigProvider;
+            this.gridStore = gridStore;
         }
 
         private void Start()
         {
-            tiles = new Tile[x * y];
-            for (int i = 0; i < x; i++)
+            GridConfig gridConfig = gridConfigProvider.Data;
+
+            tiles = new Tile[gridConfig.tileRows, gridConfig.tileCols];
+            for (int z = 0; z < gridConfig.tileRows; z++)
             {
-                for (int j = 0; j < y; j++)
+                for (int x = 0; x < gridConfig.tileCols; x++)
                 {
-                    Tile tile = Instantiate(tileTemplate, transform);
-                    tiles[i * y + j] = tile;
+                    Tile tile = Instantiate(gridConfig.tileTemplate, transform);
+                    tiles[z, x] = tile;
                     tile.InitMesh();
+                }
+            }
+
+            UpdateTilePositions(new IntPos(gridConfig.xSectionStart, gridConfig.zSectionStart));
+        }
+
+        public void UpdateTilePositions(IntPos from)
+        {
+            TopLeft = from;
+
+            for (int z = 0; z < tiles.GetLength(0); z++)
+            {
+                for (int x = 0; x < tiles.GetLength(1); x++)
+                {
+                    Tile tile = tiles[z, x];
+
+                    int gridX = x + from.x;
+                    int gridY = z + from.y;
+                    GridNode gridNode = gridStore.GetNodeAt(gridX, gridY);
+
+                    tile.SetCenterPoint(new Vector3(gridNode.Position.x, 1, gridNode.Position.z));
                 }
             }
         }
 
-        public void SetTilesCenter(Vector3 vector3)
+        public void UpdateTileVisibility()
         {
             if (!visible) return;
 
-            centerPoint = vector3;
-
-            for (int i = 0; i < x; i++)
+            for (int z = 0; z < tiles.GetLength(0); z++)
             {
-                for (int j = 0; j < y; j++)
+                for (int x = 0; x < tiles.GetLength(1); x++)
                 {
-                    Tile tile = tiles[i * y + j];
+                    Tile tile = tiles[z, x];
 
-                    int halfX = Mathf.RoundToInt(x / 2);
-                    int halfY = Mathf.RoundToInt(y / 2);
-                    float cX = centerPoint.x + Tile.width * (i - halfX) + positionFix.x;
-                    float cY = centerPoint.z + Tile.width * (j - halfY) + positionFix.y;
+                    int gridX = x + TopLeft.x;
+                    int gridY = z + TopLeft.y;
+                    GridNode gridNode = gridStore.GetNodeAt(gridX, gridY);
 
                     NavMeshHit hit;
-                    bool tileVisible = NavMesh.SamplePosition(new Vector3(cX, 0, cY), out hit, 0.5f, NavMesh.AllAreas);
+                    bool tileVisible = NavMesh.SamplePosition(new Vector3(gridNode.Position.x, 0, gridNode.Position.z), out hit, 0.5f, NavMesh.AllAreas);
                     tile.SetVisible(tileVisible);
-                    tile.SetCenterPoint(new Vector3(cX, 1, cY));
                 }
             }
         }

@@ -97,8 +97,7 @@ namespace GamePlay
 
             promise = new Promise();
             playerStore.SetActivePlayer(playerStore.GetFirstPlayer());
-            cameraController.PanTo(playerStore.GetActivePlayer());
-            tileManagerProvider.Data.SetTilesCenter(playerStore.GetActivePlayer().transform.position);
+            tileManagerProvider.Data.UpdateTileVisibility();
 
             return promise;
         }
