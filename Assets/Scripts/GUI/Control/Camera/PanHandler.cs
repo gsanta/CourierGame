@@ -3,7 +3,6 @@ using Cameras;
 using Movement;
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
 
 namespace GUI
@@ -15,15 +14,13 @@ namespace GUI
         private CameraController cameraController;
         private bool isActive = false;
         private CameraDirection direction;
-        private TileManagerProvider tileManagerProvider;
-        private GridConfigProvider gridConfigProvider;
+        private GridSystem gridSystem;
 
         [Inject]
-        public void Construct(CameraController cameraController, TileManagerProvider tileManagerProvider, GridConfigProvider gridConfigProvider)
+        public void Construct(CameraController cameraController, GridSystem gridSystem)
         {
             this.cameraController = cameraController;
-            this.tileManagerProvider = tileManagerProvider;
-            this.gridConfigProvider = gridConfigProvider;
+            this.gridSystem = gridSystem;
         }
 
         private void Awake()
@@ -35,28 +32,25 @@ namespace GUI
         {
             if (isActive)
             {
-                TileManager tileManager = tileManagerProvider.Data;
-                GridConfig gridConfig = gridConfigProvider.Data;
-
                 cameraController.Pan(direction);
-                IntPos topLeft = tileManager.TopLeft;
+                IntPos topLeft = gridSystem.TileManager.TopLeft;
 
                 switch(direction)
                 {
                     case CameraDirection.UP:
-                        topLeft.y += gridConfig.tileRows;
+                        topLeft.y += gridSystem.GridConfig.tileRows;
                         break;
                     case CameraDirection.RIGHT:
-                        topLeft.x += gridConfig.tileCols;
+                        topLeft.x += gridSystem.GridConfig.tileCols;
                         break;
                     case CameraDirection.DOWN:
-                        topLeft.y -= gridConfig.tileCols;
+                        topLeft.y -= gridSystem.GridConfig.tileCols;
                         break;
                     case CameraDirection.LEFT:
-                        topLeft.x -= gridConfig.tileCols;
+                        topLeft.x -= gridSystem.GridConfig.tileCols;
                         break;
                 }
-                tileManager.UpdateTilePositions(topLeft);
+                gridSystem.TileManager.UpdateTilePositions(topLeft);
             }
         }
 

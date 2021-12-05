@@ -8,22 +8,20 @@ namespace Movement
     {
         private Tile[,] tiles;
         private bool visible;
-        private GridConfigProvider gridConfigProvider;
-        private GridStore gridStore;
+        private GridSystem gridSystem;
 
         public IntPos TopLeft { get; private set; }
 
         [Inject]
-        public void Construct(TileManagerProvider tileManagerProvider, GridConfigProvider gridConfigProvider, GridStore gridStore)
+        public void Construct(GridSystem gridSystem)
         {
-            tileManagerProvider.Data = this;
-            this.gridConfigProvider = gridConfigProvider;
-            this.gridStore = gridStore;
+            this.gridSystem = gridSystem;
+            gridSystem.TileManager = this;
         }
 
         private void Start()
         {
-            GridConfig gridConfig = gridConfigProvider.Data;
+            GridConfig gridConfig = gridSystem.GridConfig;
 
             tiles = new Tile[gridConfig.tileRows, gridConfig.tileCols];
             for (int z = 0; z < gridConfig.tileRows; z++)
@@ -51,7 +49,7 @@ namespace Movement
 
                     int gridX = x + from.x;
                     int gridY = z + from.y;
-                    GridNode gridNode = gridStore.GetNodeAt(gridX, gridY);
+                    GridNode gridNode = gridSystem.GetNodeAt(gridX, gridY);
 
                     tile.SetCenterPoint(new Vector3(gridNode.Position.x, 1, gridNode.Position.z));
                 }
@@ -70,7 +68,7 @@ namespace Movement
 
                     int gridX = x + TopLeft.x;
                     int gridY = z + TopLeft.y;
-                    GridNode gridNode = gridStore.GetNodeAt(gridX, gridY);
+                    GridNode gridNode = gridSystem.GetNodeAt(gridX, gridY);
 
                     NavMeshHit hit;
                     bool tileVisible = NavMesh.SamplePosition(new Vector3(gridNode.Position.x, 0, gridNode.Position.z), out hit, 0.5f, NavMesh.AllAreas);
@@ -87,10 +85,5 @@ namespace Movement
             }
             this.visible = visible;
         }
-    }
-
-    public class TileManagerProvider
-    {
-        public TileManager Data { get; set; }
     }
 }

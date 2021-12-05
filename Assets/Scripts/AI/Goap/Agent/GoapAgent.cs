@@ -77,8 +77,17 @@ namespace AI
                 if (isActive != value)
                 {
                     isActive = value;
-                    if (!isActive)
+                    if (isActive)
                     {
+                        NavMeshAgent.enabled = true;
+                        NavMeshAgent.isStopped = false;
+
+                    }
+                    else
+                    {
+                        NavMeshAgent.isStopped = true;
+                        NavMeshAgent.ResetPath();
+                        NavMeshAgent.enabled = false;
                         AbortAction();
                     }
                 }
@@ -111,10 +120,8 @@ namespace AI
                 currentAction.PostAbort();
                 prevAction = currentAction;
                 currentAction = null;
-                NavMeshAgent.isStopped = true;
-                NavMeshAgent.ResetPath();
-                NavMeshAgent.enabled = false;
             }
+
             actionQueue = null;
         }
 

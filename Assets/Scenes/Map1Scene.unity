@@ -4616,7 +4616,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 391f18098246100489a828e7c1f25862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topLeftPoint: {fileID: 619662921}
+  bottomLeft: {fileID: 619662921}
+  bottomLeftSubScene: {fileID: 0}
   gridSize: 1.5
   gridRows: 49
   gridCols: 71

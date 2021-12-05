@@ -9,7 +9,7 @@ using Pedestrians;
 using Routes;
 using RSG;
 using System.Collections.Generic;
-using Worlds;
+using UnityEngine;
 
 namespace GamePlay
 {
@@ -22,11 +22,12 @@ namespace GamePlay
         private readonly RouteTool routeTool;
         private readonly ActionFactory actionFactory;
         private readonly CameraController cameraController;
+        private readonly SceneManagerHolder sceneManager;
         private Promise promise;
 
         private ISet<Player> movingPlayers = new HashSet<Player>();
 
-        public PlayerPlayTurns(PlayerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController)
+        public PlayerPlayTurns(PlayerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController, SceneManagerHolder sceneManager)
         {
             this.playerStore = playerStore;
             this.enemyStore = enemyStore;
@@ -35,6 +36,7 @@ namespace GamePlay
             this.routeTool = routeTool;
             this.actionFactory = actionFactory;
             this.cameraController = cameraController;
+            this.sceneManager = sceneManager;
         }
 
         public Promise Execute()
@@ -101,8 +103,35 @@ namespace GamePlay
         {
             pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.AbortAction());
             enemyStore.GetAll().ForEach(enemy => enemy.Agent.AbortAction());
+            playerStore.GetAll().ForEach(player => player.Agent.AbortAction());
+
+            var tuple = FindClosestEnemy();
+            
+            if (tuple.Item2 < 2)
+            {
+                sceneManager.D.EnterSubScene("Building");
+            }
 
             promise.Resolve();
+        }
+
+        private (Enemy, float) FindClosestEnemy()
+        {
+            Enemy closestEnemy = null;
+            float distance = float.MaxValue;
+            Player player = playerStore.GetActivePlayer();
+
+            foreach (var enemy in enemyStore.GetAll())
+            {
+                float dist = Vector3.Distance(enemy.transform.position, player.transform.position);
+                if (dist < distance)
+                {
+                    distance = dist;
+                    closestEnemy = enemy;
+                }
+            }
+
+            return (closestEnemy, distance);
         }
 
         public void Pause()

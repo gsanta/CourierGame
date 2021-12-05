@@ -23,9 +23,9 @@ namespace GamePlay
         private PedestrianStore pedestrianStore;
         private EnemyStore enemyStore;
         private ArrowRendererProvider arrowRendererProvider;
-        private TileManagerProvider tileManagerProvider;
+        private GridSystem gridSystem;
 
-        public PlayerCommandTurns(TurnHelper turnHelper, PlayerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController, PedestrianStore pedestrianStore, EnemyStore enemyStore, ArrowRendererProvider arrowRendererProvider, TileManagerProvider tileManagerProvider)
+        public PlayerCommandTurns(TurnHelper turnHelper, PlayerStore playerStore, RouteStore routeStore, RouteTool routeTool, CameraController cameraController, PedestrianStore pedestrianStore, EnemyStore enemyStore, ArrowRendererProvider arrowRendererProvider, GridSystem gridSystem)
         {
             this.turnHelper = turnHelper;
             this.playerStore = playerStore;
@@ -35,7 +35,7 @@ namespace GamePlay
             this.enemyStore = enemyStore;
             this.pedestrianStore = pedestrianStore;
             this.arrowRendererProvider = arrowRendererProvider;
-            this.tileManagerProvider = tileManagerProvider;
+            this.gridSystem = gridSystem;
 
             routeTool.RouteFinished += HandleRouteFinished;
         }
@@ -97,7 +97,7 @@ namespace GamePlay
 
             promise = new Promise();
             playerStore.SetActivePlayer(playerStore.GetFirstPlayer());
-            tileManagerProvider.Data.UpdateTileVisibility();
+            gridSystem.TileManager.UpdateTileVisibility();
 
             return promise;
         }

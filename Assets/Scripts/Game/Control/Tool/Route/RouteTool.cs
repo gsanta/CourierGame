@@ -19,8 +19,7 @@ namespace Controls
         private RoadStore roadStore;
         private ArrowRendererProvider arrowRendererProvider;
         private WorldStore worldStore;
-        private TileManagerProvider tileManager;
-
+        private GridSystem gridSystem;
         private List<Vector3> points = new List<Vector3>();
         private string tag;
 
@@ -28,13 +27,14 @@ namespace Controls
         public int maxRouteLength = 5;
         private bool enabled = true;
 
-        public RouteTool(PlayerStore playerStore, RoadStore roadStore, ArrowRendererProvider arrowRendererProvider, WorldStore worldStore, TileManagerProvider tileManager) : base(ToolName.ROUTE)
+
+        public RouteTool(PlayerStore playerStore, RoadStore roadStore, ArrowRendererProvider arrowRendererProvider, WorldStore worldStore, GridSystem gridSystem) : base(ToolName.ROUTE)
         {
             this.playerStore = playerStore;
             this.roadStore = roadStore;
             this.arrowRendererProvider = arrowRendererProvider;
             this.worldStore = worldStore;
-            this.tileManager = tileManager;
+            this.gridSystem = gridSystem;
         }
 
         public event EventHandler RouteFinished;
@@ -57,10 +57,10 @@ namespace Controls
                 if (!enabled)
                 {
                     ClearRoute();
-                    tileManager.Data.SetVisible(false);
+                    gridSystem.TileManager.SetVisible(false);
                 } else
                 {
-                    tileManager.Data.SetVisible(true);
+                    gridSystem.TileManager.SetVisible(true);
                 }
             }
             get => enabled;

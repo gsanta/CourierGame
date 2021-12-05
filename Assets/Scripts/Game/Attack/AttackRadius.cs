@@ -25,13 +25,13 @@ namespace Attacks
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.name == "Attack Radius")
-            {
-                var messagePanel = canvasStore.GetPanel<MessagePanel>(typeof(MessagePanel));
-                messagePanel.gameObject.SetActive(true);
-                turnManager.Pause();
-                worldStore.BattleState = new BattleState(transform.parent.GetComponent<Player>(), other.transform.parent.GetComponent<Enemy>());
-            }
+            //if (other.gameObject.name == "Attack Radius")
+            //{
+            //    var messagePanel = canvasStore.GetPanel<MessagePanel>(typeof(MessagePanel));
+            //    messagePanel.gameObject.SetActive(true);
+            //    turnManager.Pause();
+            //    worldStore.BattleState = new BattleState(transform.parent.GetComponent<Player>(), other.transform.parent.GetComponent<Enemy>());
+            //}
         }
     }
 }

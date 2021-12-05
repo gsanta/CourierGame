@@ -73,10 +73,8 @@ namespace Main
             Container.Bind<GameObjectStore>().AsSingle();
 
             // Movement
-            Container.Bind<TileManagerProvider>().AsSingle();
             Container.Bind<RoadStore>().AsSingle();
-            Container.Bind<GridStore>().AsSingle();
-            Container.Bind<GridConfigProvider>().AsSingle();
+            Container.Bind<GridSystem>().AsSingle();
 
             // Actions
             Container.Bind<RouteStore>().AsSingle();

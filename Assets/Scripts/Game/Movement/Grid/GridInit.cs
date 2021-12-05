@@ -6,20 +6,20 @@ namespace Movement
 {
     public class GridInit : MonoBehaviour
     {
-        private GridStore gridStore;
+        private GridSystem gridSystem;
         private CameraController cameraController;
 
         [Inject]
-        public void Construct(GridStore gridStore, CameraController cameraController)
+        public void Construct(GridSystem gridSystem, CameraController cameraController)
         {
-            this.gridStore = gridStore;
+            this.gridSystem = gridSystem;
             this.cameraController = cameraController;
         }
 
         private void Awake()
         {
             cameraController.Pan(CameraDirection.LEFT);
-            gridStore.GridInit();
+            gridSystem.SetBottomLeft(gridSystem.GridConfig.bottomLeft);
         }
     }
 }

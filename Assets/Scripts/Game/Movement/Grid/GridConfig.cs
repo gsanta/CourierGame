@@ -6,7 +6,9 @@ namespace Movement
     public class GridConfig : MonoBehaviour
     {
         [SerializeField]
-        public GameObject topLeftPoint;
+        public GameObject bottomLeft;
+        [SerializeField]
+        public GameObject bottomLeftSubScene;
         [SerializeField]
         public float gridSize;
         [SerializeField]
@@ -25,14 +27,9 @@ namespace Movement
         public int zSectionStart;
 
         [Inject]
-        public void Construct(GridConfigProvider gridConfigProvider)
+        public void Construct(GridSystem gridSystem)
         {
-            gridConfigProvider.Data = this;
+            gridSystem.GridConfig = this;
         }
-    }
-
-    public class GridConfigProvider
-    {
-        public GridConfig Data;
     }
 }

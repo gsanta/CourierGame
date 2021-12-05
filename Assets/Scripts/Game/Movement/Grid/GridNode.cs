@@ -17,12 +17,12 @@ namespace Movement
 
     public struct GridNode
     {
-        public Vector3 Position { get; private set; }
+        public Vector3 Position { get; set; }
         public IntPos GridPos { get; private set; }
 
-        public GridNode(Vector3 position, IntPos gridPos)
+        public GridNode(IntPos gridPos)
         {
-            Position = position;
+            Position = new Vector3(0, 0, 0);
             GridPos = gridPos;
         }
     }
