@@ -2,31 +2,19 @@
 using UnityEngine.AI;
 using Zenject;
 using System;
-using Delivery;
 using AI;
+using GameObjects;
 
-namespace Bikers
+namespace GameObjects
 {
-    public class Player : MonoBehaviour, IGameObject
+    public class GameCharacter : MonoBehaviour, IGameObject
     {
-        [SerializeField]
-        public Transform viewPoint;
-        [SerializeField]
-        private CharacterController charController;
-        [SerializeField]
-        public Transform packageHolder;
-
-        public Package package;
-        private string courierName;
-
+        private string characterName;
         private bool isPaused = false;
-
-        private GoapAgent<Player> agent;
-        private IGoalProvider goalProvider;
-
+        private GoapAgent<GameCharacter> agent;
         public NavMeshAgent navMeshAgent;
-
-        public GoapAgent<Player> Agent { get => agent; set => agent = value; }
+        private IGoalProvider goalProvider;
+        public GoapAgent<GameCharacter> Agent { get => agent; set => agent = value; }
         public IGoalProvider GoalProvider { get => goalProvider; set => goalProvider = value; }
 
         private void Awake()
@@ -86,22 +74,12 @@ namespace Bikers
 
         public string GetName()
         {
-            return courierName;
+            return characterName;
         }
 
-        public void SetName(string name)
+        public void SetName(string characterName)
         {
-            this.courierName = name;
-        }
-
-        public void SetPackage(Package package)
-        {
-            this.package = package;
-        }
-
-        public Package GetPackage()
-        {
-            return package;
+            this.characterName = characterName;
         }
 
         public Transform GetTransform()
@@ -126,7 +104,7 @@ namespace Bikers
 
         public event EventHandler Updated;
 
-        public class Factory : PlaceholderFactory<UnityEngine.Object, Player>
+        public class Factory : PlaceholderFactory<UnityEngine.Object, GameCharacter>
         {
         }
     }

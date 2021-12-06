@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Bikers;
+using GameObjects;
 using Scenes;
 
 namespace Delivery
@@ -87,7 +87,7 @@ namespace Delivery
             return packages.FindAll(package => statuses.Contains(package.Status));
         }
 
-        public bool GetPackageWithinPickupRange(Player biker, out Package deliveryPackage)
+        public bool GetPackageWithinPickupRange(GameCharacter biker, out Package deliveryPackage)
         {
             foreach (var package in packages)
             {

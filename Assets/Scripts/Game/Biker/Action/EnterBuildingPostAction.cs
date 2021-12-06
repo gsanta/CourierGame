@@ -1,7 +1,7 @@
 ﻿using AI;
 using GamePlay;
 
-namespace Bikers
+namespace GameObjects
 {
     public class EnterBuildingPostAction : IGPostAction
     {

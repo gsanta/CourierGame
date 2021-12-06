@@ -1,5 +1,6 @@
 ﻿using Agents;
 using AI;
+using GameObjects;
 using Enemies;
 using Route;
 using Scenes;
@@ -96,9 +97,9 @@ namespace Pedestrians
             this.walkTargetStore = walkTargetStore;
         }
 
-        public WalkAction<Enemy> Create(GoapAgent<Enemy> agent, AIStateName[] preconditions, AIStateName[] afterEffects)
+        public WalkAction<GameCharacter> Create(GoapAgent<GameCharacter> agent, AIStateName[] preconditions, AIStateName[] afterEffects)
         {
-            return new WalkAction<Enemy>(agent, preconditions, afterEffects, routeStore, walkTargetStore, null);
+            return new WalkAction<GameCharacter>(agent, preconditions, afterEffects, routeStore, walkTargetStore, null);
         }
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Delivery;
 
-namespace Bikers
+namespace GameObjects
 {
-    public class ReservePackageAction : GoapAction<Player>
+    public class ReservePackageAction : GoapAction<GameCharacter>
     {
 
         private PackageStore packageStore;
@@ -51,7 +51,7 @@ namespace Bikers
         {
             return true;
         }
-        public override GoapAction<Player> Clone(GoapAgent<Player> agent = null)
+        public override GoapAction<GameCharacter> Clone(GoapAgent<GameCharacter> agent = null)
         {
             var action = new ReservePackageAction(packageStore, deliveryService);
             action.agent = agent;

@@ -1,9 +1,9 @@
 ﻿using Delivery;
 using Service;
 
-namespace Bikers
+namespace GameObjects
 {
-    public class BikerFactory : ItemFactory<BikerConfig, Player>
+    public class BikerFactory : ItemFactory<BikerConfig, GameCharacter>
     {
         private EventService eventService;
         private DeliveryService deliveryService;
@@ -22,10 +22,10 @@ namespace Bikers
             this.bikerInstantiator = bikerInstantiator;
         }
 
-        public Player Create(BikerConfig config)
+        public GameCharacter Create(BikerConfig config)
         {
 
-            Player biker = bikerInstantiator.InstantiateBiker();
+            GameCharacter biker = bikerInstantiator.InstantiateBiker();
             biker.Agent = agentFactory.CreateBikerAgent(biker);
             biker.GoalProvider = new BikerGoalProvider(biker);
 

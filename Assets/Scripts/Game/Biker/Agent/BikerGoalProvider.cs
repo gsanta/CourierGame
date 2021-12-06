@@ -2,14 +2,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace Bikers
+namespace GameObjects
 {
     public class BikerGoalProvider : IGoalProvider
     {
-        private readonly Player biker;
+        private readonly GameCharacter biker;
         private Goal goal = new Goal(AIStateName.PACKAGE_IS_DROPPED, true);
 
-        public BikerGoalProvider(Player biker)
+        public BikerGoalProvider(GameCharacter biker)
         {
             this.biker = biker;
             biker.Agent.ActionCompleted += HandleCompleteAction;

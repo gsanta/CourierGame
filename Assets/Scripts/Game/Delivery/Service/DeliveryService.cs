@@ -1,4 +1,4 @@
-﻿using Bikers;
+﻿using GameObjects;
 using Service;
 using Stats;
 using UnityEngine;
@@ -18,12 +18,11 @@ namespace Delivery
             this.moneyStore = moneyStore;
         }
 
-        public void ReservePackage(Package package, Player biker)
+        public void ReservePackage(Package package, GameCharacter biker)
         {
             if (package.Status == DeliveryStatus.UNASSIGNED)
             {
                 package.Status = DeliveryStatus.RESERVED;
-                biker.SetPackage(package);
                 package.Biker = biker;
 
                 eventService.EmitPackageStatusChanged(package);
@@ -39,9 +38,6 @@ namespace Delivery
 
             var biker = package.Biker;
 
-            package.gameObject.transform.position = biker.packageHolder.position;
-            package.gameObject.transform.rotation = biker.packageHolder.rotation;
-            package.gameObject.transform.parent = biker.packageHolder;
             package.Status = DeliveryStatus.ASSIGNED;
             package.Target.gameObject.SetActive(true);
             eventService.EmitPackageStatusChanged(package);
@@ -65,7 +61,6 @@ namespace Delivery
             {
                 package.Target.gameObject.SetActive(true);
                 packageStore.Remove(package);
-                biker.SetPackage(null);
                 biker = null;
                 moneyStore.AddMoney(package.Price);
 

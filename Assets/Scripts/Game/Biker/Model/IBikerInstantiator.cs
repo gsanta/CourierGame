@@ -1,10 +1,10 @@
 ﻿
 
-namespace Bikers
+namespace GameObjects
 {
     public interface IBikerInstantiator
     {
-        Player InstantiateBiker();
+        GameCharacter InstantiateBiker();
         MinimapBiker InstantiateMinimapBiker();
     }
 }

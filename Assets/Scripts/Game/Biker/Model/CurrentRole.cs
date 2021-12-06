@@ -1,6 +1,6 @@
 ﻿
 
-namespace Bikers
+namespace GameObjects
 {
     public enum CurrentRole
     {

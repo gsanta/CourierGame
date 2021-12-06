@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Bikers
+namespace GameObjects
 {
-    public class PlayerWalkAction : AbstractRouteAction<Player>
+    public class PlayerWalkAction : AbstractRouteAction<GameCharacter>
     {
         private List<Vector3> points;
 
-        public PlayerWalkAction(GoapAgent<Player> agent, List<Vector3> points) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
+        public PlayerWalkAction(GoapAgent<GameCharacter> agent, List<Vector3> points) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
         {
             this.agent = agent;
             this.points = points;
@@ -32,7 +32,7 @@ namespace Bikers
             return true;
         }
 
-        public override GoapAction<Player> Clone(GoapAgent<Player> agent = null)
+        public override GoapAction<GameCharacter> Clone(GoapAgent<GameCharacter> agent = null)
         {
             throw new Exception("Unimplemented method");
         }
@@ -45,7 +45,7 @@ namespace Bikers
 
     public class PlayerWalkActionCreator
     {
-        public PlayerWalkAction Create(GoapAgent<Player> agent, List<Vector3> points)
+        public PlayerWalkAction Create(GoapAgent<GameCharacter> agent, List<Vector3> points)
         {
             return new PlayerWalkAction(agent, points);
         }

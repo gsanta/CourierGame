@@ -1,5 +1,5 @@
 ﻿using AI;
-using Bikers;
+using GameObjects;
 using Enemies;
 using GamePlay;
 using Pedestrians;
@@ -18,12 +18,12 @@ namespace Actions
             this.sceneManagerHolder = sceneManagerHolder;
         }
 
-        public PlayerWalkAction CreatePlayerWalkAction(GoapAgent<Player> agent, List<Vector3> points)
+        public PlayerWalkAction CreatePlayerWalkAction(GoapAgent<GameCharacter> agent, List<Vector3> points)
         {
             return actionCreators.PlayerWalkActionCreator.Create(agent, points);
         }
 
-        public PlayerWalkIntoBuildingAction CreatePlayerWalkIntoBuildingAction(GoapAgent<Player> agent, List<Vector3> points)
+        public PlayerWalkIntoBuildingAction CreatePlayerWalkIntoBuildingAction(GoapAgent<GameCharacter> agent, List<Vector3> points)
         {
             return actionCreators.PlayerWalkIntoBuildingActionCreator.Create(agent, points, sceneManagerHolder);
         }
@@ -33,7 +33,7 @@ namespace Actions
             return actionCreators.PedestrianWalkActionCreator.Create(agent, new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED });
         }
 
-        public WalkAction<Enemy> CreateEnemyWalkAction(GoapAgent<Enemy> agent)
+        public WalkAction<GameCharacter> CreateEnemyWalkAction(GoapAgent<GameCharacter> agent)
         {
             return actionCreators.EnemyWalkActionCreator.Create(agent, new AIStateName[] { }, new AIStateName[] { AIStateName.DESTINATION_REACHED });
         }

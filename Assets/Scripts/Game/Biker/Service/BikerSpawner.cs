@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Bikers
+namespace GameObjects
 {
     public class BikerSpawner : BaseSpawner<BikerConfig>
     {
@@ -30,7 +30,7 @@ namespace Bikers
             for (int i = 0; i < bikersConfig.BikerCount; i++)
             {
                 BikerConfig config = new BikerConfig(spawnPoints[i], new Goal(AIStateName.PACKAGE_IS_DROPPED, false), $"Player-{i}");
-                Player courier = bikerFactory.Create(config);
+                GameCharacter courier = bikerFactory.Create(config);
                 bikerStore.Add(courier);
             }
         }

@@ -1,4 +1,5 @@
 ﻿
+using GameObjects;
 using UnityEngine;
 
 namespace Enemies
@@ -6,7 +7,7 @@ namespace Enemies
 
     public class EnemiesConfig
     {
-        public Enemy enemyTemplate;
+        public GameCharacter enemyTemplate;
         public GameObject enemyContainer;
         public int EnemyCount { get; set; }
     }

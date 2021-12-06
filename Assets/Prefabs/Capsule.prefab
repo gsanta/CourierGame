@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7272728330084098153}
   - component: {fileID: 633099936254050188}
   - component: {fileID: 3520509976035230269}
-  - component: {fileID: 4323603268262166710}
+  - component: {fileID: 4825923722907039863}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -122,7 +122,7 @@ NavMeshAgent:
   m_BaseOffset: 0.14
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4323603268262166710
+--- !u!114 &4825923722907039863
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,11 +131,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3392701077931296997}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f4bc4caaefc47c4981eb189783d9822, type: 3}
+  m_Script: {fileID: 11500000, guid: 05b2eb21959f73848be96d5fe8ddf4bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navMeshAgent: {fileID: 3520509976035230269}
-  attackRadius: {fileID: 0}
+  navMeshAgent: {fileID: 0}
 --- !u!1 &5639864942269141825
 GameObject:
   m_ObjectHideFlags: 0

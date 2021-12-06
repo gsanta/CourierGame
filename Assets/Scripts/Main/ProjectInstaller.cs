@@ -1,12 +1,11 @@
 ﻿using Agents;
-using Bikers;
+using GameObjects;
 using Buildings;
 using Cameras;
 using Controls;
 using Scenes;
 using Delivery;
 using Enemies;
-using GameObjects;
 using Pedestrians;
 using Route;
 using Service;
@@ -31,7 +30,8 @@ namespace Main
             Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
             Container.Bind<Timer>().AsSingle().NonLazy();
             Container.Bind<CanvasStore>().AsSingle();
-            Container.Bind<Bikers.PlayerStore>().AsSingle().NonLazy();
+            Container.Bind<PlayerStore>().AsSingle().NonLazy();
+            Container.Bind<CharacterStore>().AsSingle();
             Container.Bind<PackageStore>().AsSingle().NonLazy();
             Container.Bind<EventService>().AsSingle();
             Container.Bind<DeliveryService>().To<DeliveryService>().AsSingle();
@@ -107,6 +107,7 @@ namespace Main
 
             // Game object
             Container.Bind<OutlineGameObjectSelector>().AsTransient();
+            Container.Bind<SubsceneCharacterStore>().AsSingle();
 
             // State
             Container.Bind<SelectionStore>().AsSingle();
@@ -132,7 +133,7 @@ namespace Main
             sceneManagerHolder.D.LoadInitialScenes();
 
             SceneChangeHandler sceneChangeHandler = Container.Resolve<SceneChangeHandler>();
-            sceneChangeHandler.AddResetable(Container.Resolve<Bikers.PlayerStore>());
+            sceneChangeHandler.AddResetable(Container.Resolve<GameObjects.PlayerStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PackageStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PackageSpawnPointStore>());
             sceneChangeHandler.AddResetable(Container.Resolve<PackageTargetPointStore>());

@@ -1,18 +1,27 @@
-﻿using Bikers;
-using Enemies;
-using Pedestrians;
+﻿using Enemies;
 using System.Collections.Generic;
 
 namespace GameObjects
 {
     public class CharacterStore
     {
-        List<Player> players = new List<Player>();
-        List<Pedestrian> pedestrians = new List<Pedestrian>();
-        List<Enemy> enemies = new List<Enemy>();
+        private PlayerStore playerStore;
+        private EnemyStore enemyStore;
 
-        public List<Player> Players { get => players; set => players = value; }
-        public List<Pedestrian> Pedestrians { get => pedestrians; set => pedestrians = value; }
-        public List<Enemy> Enemies { get => enemies; set => enemies = value; }
+        public CharacterStore(PlayerStore playerStore, EnemyStore enemyStore)
+        {
+            this.playerStore = playerStore;
+            this.enemyStore = enemyStore;
+        }
+
+        public List<GameCharacter> GetPlayers()
+        {
+            return playerStore.GetAll();
+        }
+
+        public List<GameCharacter> GetEnemies()
+        {
+            return enemyStore.GetAll();
+        }
     }
 }

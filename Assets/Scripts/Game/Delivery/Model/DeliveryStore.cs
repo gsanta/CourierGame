@@ -1,4 +1,4 @@
-using Bikers;
+using GameObjects;
 using Scenes;
 using System;
 using System.Collections.Generic;
@@ -8,8 +8,8 @@ namespace Delivery
 {
     public class DeliveryStore : IResetable
     {
-        private Dictionary<Player, Package> packageMap = new Dictionary<Player, Package>();
-        private Dictionary<Package, Player> reversePackageMap = new Dictionary<Package, Player>();
+        private Dictionary<GameCharacter, Package> packageMap = new Dictionary<GameCharacter, Package>();
+        private Dictionary<Package, GameCharacter> reversePackageMap = new Dictionary<Package, GameCharacter>();
         private PackageStore packageStore;
 
         public DeliveryStore(PackageStore packageStore)
@@ -17,7 +17,7 @@ namespace Delivery
             this.packageStore = packageStore;
         }
 
-        public void AssignPackageToPlayer(Player courier, Package package)
+        public void AssignPackageToPlayer(GameCharacter courier, Package package)
         {
             package.Status = DeliveryStatus.ASSIGNED;
             packageMap.Add(courier, package);
@@ -28,7 +28,7 @@ namespace Delivery
 
         public void DropPackage(Package package)
         {
-            Player courier;
+            GameCharacter courier;
             if (reversePackageMap.TryGetValue(package, out courier))
             {
                 packageMap.Remove(courier);
@@ -51,7 +51,7 @@ namespace Delivery
             OnDeliveryStatusChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public bool GetPackage(Player courier, out Package package)
+        public bool GetPackage(GameCharacter courier, out Package package)
         {
             return packageMap.TryGetValue(courier, out package);
         }
@@ -66,9 +66,9 @@ namespace Delivery
             get => packageStore.GetAll().FindAll(package => GetPlayerForPackage(package) == null);
         }
 
-        public Player GetPlayerForPackage(Package package)
+        public GameCharacter GetPlayerForPackage(Package package)
         {
-            Player courier;
+            GameCharacter courier;
 
             reversePackageMap.TryGetValue(package, out courier);
 
@@ -77,8 +77,8 @@ namespace Delivery
 
         public void Reset()
         {
-            packageMap = new Dictionary<Player, Package>();
-            reversePackageMap = new Dictionary<Package, Player>();
+            packageMap = new Dictionary<GameCharacter, Package>();
+            reversePackageMap = new Dictionary<Package, GameCharacter>();
             packageStore = null;
         }
 

@@ -1,4 +1,4 @@
-﻿using Bikers;
+﻿using GameObjects;
 using Enemies;
 using Pedestrians;
 using UnityEngine;
@@ -11,14 +11,14 @@ namespace GUI
         private PedestrianStore pedestrianStore;
         private PedestrianFactory pedestrianFactory;
         private Pedestrian.Factory gameObjectFactory;
-        private Player.Factory playerInstanceFactory;
+        private GameCharacter.Factory playerInstanceFactory;
         private PlayerStore bikerStore;
         private BikerFactory bikerFactory;
         private EnemiesConfig enemiesConfig;
         private EnemyFactory enemyFactory;
 
         [Inject]
-        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, Pedestrian.Factory gameObjectFactory, Player.Factory playerInstanceFactory, PlayerStore bikerStore, BikerFactory bikerFactory, EnemiesConfig enemiesConfig, EnemyFactory enemyFactory)
+        public void Construct(PedestrianStore pedestrianStore, PedestrianFactory pedestrianFactory, Pedestrian.Factory gameObjectFactory, GameCharacter.Factory playerInstanceFactory, PlayerStore bikerStore, BikerFactory bikerFactory, EnemiesConfig enemiesConfig, EnemyFactory enemyFactory)
         {
             this.pedestrianStore = pedestrianStore;
             this.pedestrianFactory = pedestrianFactory;
@@ -43,7 +43,7 @@ namespace GUI
             return gameObjectFactory.Create(pedestrianStore.GetPedestrianTemplate());
         }
 
-        public Player InstantiateBiker()
+        public GameCharacter InstantiateBiker()
         {
             //, bikerStore.GetBikerContainer().transform
             return playerInstanceFactory.Create(bikerStore.GetBikerTemplate());
@@ -55,7 +55,7 @@ namespace GUI
             return Instantiate(minimapBiker, minimapBiker.transform.parent);
         }
 
-        public Enemy InstantiateEnemy()
+        public GameCharacter InstantiateEnemy()
         {
             return Instantiate(enemiesConfig.enemyTemplate, enemiesConfig.enemyContainer.transform);
         }

@@ -1,4 +1,4 @@
-﻿using Bikers;
+﻿using GameObjects;
 using Enemies;
 using GamePlay;
 using System.Collections.Generic;
@@ -46,10 +46,10 @@ namespace Worlds
 
     public class BattleState
     {
-        public Player Player { get; set; }
-        public Enemy Enemy { get; set; }
+        public GameCharacter Player { get; set; }
+        public GameCharacter Enemy { get; set; }
 
-        public BattleState(Player player, Enemy enemy)
+        public BattleState(GameCharacter player, GameCharacter enemy)
         {
             Player = player;
             Enemy = enemy;

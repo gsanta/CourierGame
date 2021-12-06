@@ -1,5 +1,5 @@
 ﻿using AI;
-using Enemies;
+using GameObjects;
 using Pedestrians;
 using System.Collections.Generic;
 
@@ -9,9 +9,9 @@ namespace Agents
     {
         private readonly WalkTargetStore walkTargetStore;
         private List<Goal> goals = new List<Goal>();
-        private Enemy enemy;
+        private GameCharacter enemy;
 
-        public EnemyGoalProvider(Enemy enemy, WalkTargetStore walkTargetStore)
+        public EnemyGoalProvider(GameCharacter enemy, WalkTargetStore walkTargetStore)
         {
             this.enemy = enemy;
             this.walkTargetStore = walkTargetStore;

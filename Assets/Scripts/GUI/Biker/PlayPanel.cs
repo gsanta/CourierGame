@@ -1,4 +1,4 @@
-﻿using Bikers;
+﻿using GameObjects;
 using GamePlay;
 using Scenes;
 using System;
@@ -10,11 +10,11 @@ namespace UI
     {
         private List<IBikerListItem> itemList = new List<IBikerListItem>();
 
-        private Bikers.PlayerStore playerStore;
+        private GameObjects.PlayerStore playerStore;
         private TurnManager turnManager;
         private GameObjectStore gameObjectStore;
 
-        public PlayPanel(TurnManager turnManager, Bikers.PlayerStore playerStore, GameObjectStore gameObjectStore)
+        public PlayPanel(TurnManager turnManager, GameObjects.PlayerStore playerStore, GameObjectStore gameObjectStore)
         {
             this.playerStore = playerStore;
             this.turnManager = turnManager;

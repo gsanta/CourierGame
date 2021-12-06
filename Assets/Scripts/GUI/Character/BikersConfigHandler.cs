@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Bikers
+namespace GameObjects
 {
     public class BikersConfigHandler : MonoBehaviour
     {
@@ -13,7 +13,7 @@ namespace Bikers
         [SerializeField]
         private GameObject spawnPointContainer;
         [SerializeField]
-        private Player bikerTemplate;
+        private GameCharacter bikerTemplate;
         [SerializeField]
         private GameObject bikerContainer;
 

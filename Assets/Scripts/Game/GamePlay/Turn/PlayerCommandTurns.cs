@@ -1,4 +1,4 @@
-﻿using Bikers;
+﻿using GameObjects;
 using Cameras;
 using Controls;
 using Enemies;
@@ -15,7 +15,7 @@ namespace GamePlay
     public class PlayerCommandTurns : ITurns
     {
         private TurnHelper turnHelper;
-        private readonly Bikers.PlayerStore playerStore;
+        private readonly GameObjects.PlayerStore playerStore;
         private readonly RouteStore routeStore;
         private readonly RouteTool routeTool;
         private readonly CameraController cameraController;
@@ -72,12 +72,12 @@ namespace GamePlay
                 promise.Resolve();
             } else
             {
-                var usedPlayers = new HashSet<Player>(routeStore.GetRoutes().Keys);
+                var usedPlayers = new HashSet<GameCharacter>(routeStore.GetRoutes().Keys);
                 var players = playerStore.GetAll();
                 var index = players.IndexOf(playerStore.GetActivePlayer());
                 var end = players.GetRange(index, players.Count - index);
                 var start = players.GetRange(0, index);
-                var list = new List<Player>();
+                var list = new List<GameCharacter>();
                 list.AddRange(start);
                 list.AddRange(end);
 

@@ -7,16 +7,16 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Bikers
+namespace GameObjects
 {
-    public class PlayerWalkIntoBuildingAction : AbstractRouteAction<Player>
+    public class PlayerWalkIntoBuildingAction : AbstractRouteAction<GameCharacter>
     {
         private List<Vector3> points;
         private SceneManagerHolder sceneManagerHolder;
         private CameraController cameraController;
         private IGPostAction postAction;
 
-        public PlayerWalkIntoBuildingAction(GoapAgent<Player> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder, CameraController cameraController) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
+        public PlayerWalkIntoBuildingAction(GoapAgent<GameCharacter> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder, CameraController cameraController) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
         {
             this.agent = agent;
             this.points = points;
@@ -52,7 +52,7 @@ namespace Bikers
             return true;
         }
 
-        public override GoapAction<Player> Clone(GoapAgent<Player> agent = null)
+        public override GoapAction<GameCharacter> Clone(GoapAgent<GameCharacter> agent = null)
         {
             throw new Exception("Unimplemented method");
         }
@@ -72,7 +72,7 @@ namespace Bikers
             this.cameraController = cameraController;
         }
 
-        public PlayerWalkIntoBuildingAction Create(GoapAgent<Player> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder)
+        public PlayerWalkIntoBuildingAction Create(GoapAgent<GameCharacter> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder)
         {
             return new PlayerWalkIntoBuildingAction(agent, points, sceneManagerHolder, cameraController);
         }

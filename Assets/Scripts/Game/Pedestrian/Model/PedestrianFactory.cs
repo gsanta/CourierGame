@@ -1,6 +1,6 @@
 ﻿using Agents;
 using AI;
-using Bikers;
+using GameObjects;
 using UnityEngine;
 
 namespace Pedestrians

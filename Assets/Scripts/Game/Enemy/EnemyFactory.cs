@@ -1,12 +1,12 @@
 ﻿using Agents;
 using AI;
-using Bikers;
+using GameObjects;
 using Pedestrians;
 using UnityEngine;
 
 namespace Enemies
 {
-    public class EnemyFactory : ItemFactory<EnemyData, Enemy>
+    public class EnemyFactory : ItemFactory<EnemyData, GameCharacter>
     {
         private AgentFactory agentFactory;
         private IEnemyInstantiator enemyInstantiator;
@@ -23,9 +23,9 @@ namespace Enemies
             this.enemyInstantiator = enemyInstantiator;
         }
 
-        public Enemy Create(EnemyData config)
+        public GameCharacter Create(EnemyData config)
         {
-            Enemy enemy = enemyInstantiator.InstantiateEnemy();
+            GameCharacter enemy = enemyInstantiator.InstantiateEnemy();
             enemy.Agent = agentFactory.CreateEnemyAgent(enemy);
             enemy.GoalProvider = new EnemyGoalProvider(enemy, walkTargetStore);
             enemy.Agent.SetGoals(enemy.GoalProvider.CreateGoal(), false);
@@ -36,7 +36,7 @@ namespace Enemies
             return enemy;
         }
 
-        public void InitializeObj(Enemy enemy)
+        public void InitializeObj(GameCharacter enemy)
         {
             enemy.transform.position = enemy.GetComponent<WaypointNavigator>().currentWaypoint.transform.position;
         }

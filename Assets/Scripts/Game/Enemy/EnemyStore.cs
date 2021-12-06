@@ -1,4 +1,5 @@
 ﻿
+using GameObjects;
 using Scenes;
 using System.Collections.Generic;
 
@@ -6,21 +7,21 @@ namespace Enemies
 {
     public class EnemyStore : IResetable
     {
-        private List<Enemy> enemies = new List<Enemy>();
+        private List<GameCharacter> enemies = new List<GameCharacter>();
 
-        public void Add(Enemy enemy)
+        public void Add(GameCharacter enemy)
         {
             enemies.Add(enemy);
         }
 
-        public List<Enemy> GetAll()
+        public List<GameCharacter> GetAll()
         {
             return enemies;
         }
 
         public void Reset()
         {
-            enemies = new List<Enemy>();
+            enemies = new List<GameCharacter>();
         }
     }
 }

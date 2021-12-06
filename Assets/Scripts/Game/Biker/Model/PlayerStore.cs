@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Bikers
+namespace GameObjects
 {
     public class PlayerStoreInfo
     {
@@ -19,11 +19,11 @@ namespace Bikers
 
     public class PlayerStore : IResetable, IObservable<PlayerStoreInfo>
     {
-        private List<Player> players = new List<Player>();
+        private List<GameCharacter> players = new List<GameCharacter>();
         private MinimapBiker minimapBiker;
-        private Player bikerTemplate;
+        private GameCharacter bikerTemplate;
         private GameObject bikerContainer;
-        private Player activePlayer;
+        private GameCharacter activePlayer;
 
         private List<IObserver<PlayerStoreInfo>> observers = new List<IObserver<PlayerStoreInfo>>();
 
@@ -37,12 +37,12 @@ namespace Bikers
             this.minimapBiker = minimapBiker;
         }
 
-        public void SetBikerTemplate(Player bikerTemplate)
+        public void SetBikerTemplate(GameCharacter bikerTemplate)
         {
             this.bikerTemplate = bikerTemplate;
         }
 
-        public Player GetBikerTemplate()
+        public GameCharacter GetBikerTemplate()
         {
             return bikerTemplate;
         }
@@ -57,7 +57,7 @@ namespace Bikers
             return bikerContainer;
         }
 
-        public void Add(Player player)
+        public void Add(GameCharacter player)
         {
             if (activePlayer == null)
             {
@@ -70,7 +70,7 @@ namespace Bikers
                 observer.OnNext(info);
         }
 
-        public void SetActivePlayer(Player player)
+        public void SetActivePlayer(GameCharacter player)
         {
             this.activePlayer = player;
 
@@ -79,35 +79,35 @@ namespace Bikers
                 observer.OnNext(info);
         }
 
-        public Player GetActivePlayer()
+        public GameCharacter GetActivePlayer()
         {
             return activePlayer;
         }
 
-        public Player GetFirstPlayer()
+        public GameCharacter GetFirstPlayer()
         {
             return players[0];
         }
 
-        public Player GetLastPlayer()
+        public GameCharacter GetLastPlayer()
         {
             return players[players.Count - 1];
         }
 
-        public Player GetNextPlayer()
+        public GameCharacter GetNextPlayer()
         {
             var nextPlayer = activePlayer == players[players.Count - 1] ? players[0] : players[players.IndexOf(activePlayer) + 1];
             return nextPlayer;
         }
 
-        public List<Player> GetAll()
+        public List<GameCharacter> GetAll()
         {
             return players;
         }
 
         public void Reset()
         {
-            players = new List<Player>();
+            players = new List<GameCharacter>();
             minimapBiker = null;
             bikerTemplate = null;
         }
@@ -143,13 +143,13 @@ namespace Bikers
 
     public class PlayerAddedEventArgs : EventArgs
     {
-        private readonly Player player;
+        private readonly GameCharacter player;
 
-        internal PlayerAddedEventArgs(Player player)
+        internal PlayerAddedEventArgs(GameCharacter player)
         {
             this.player = player;
         }
-        public Player Courier { get => player; }
+        public GameCharacter Courier { get => player; }
     }
 }
 

@@ -1,4 +1,4 @@
-using Bikers;
+using GameObjects;
 using UnityEngine;
 using Zenject;
 
@@ -17,7 +17,7 @@ namespace Delivery
 
         private DeliveryStatus status = DeliveryStatus.UNASSIGNED;
 
-        public Player Biker { set; get; }
+        public GameCharacter Biker { set; get; }
 
         public DeliveryStatus Status
         {

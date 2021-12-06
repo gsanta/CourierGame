@@ -1,4 +1,4 @@
-﻿using Bikers;
+﻿using GameObjects;
 using System;
 
 namespace Model
@@ -6,11 +6,11 @@ namespace Model
     public class BikerCurrentRoleChangedEventArgs : EventArgs
     {
 
-        public BikerCurrentRoleChangedEventArgs(Player biker)
+        public BikerCurrentRoleChangedEventArgs(GameCharacter biker)
         {
             Biker = biker;
         }
 
-        public Player Biker { get; }
+        public GameCharacter Biker { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using GameObjects;
 using Enemies;
 using UnityEngine;
 using Zenject;
@@ -10,7 +11,7 @@ namespace Controls
         [SerializeField]
         private int enemyCount;
         [SerializeField]
-        private Enemy enemyTemplate;
+        private GameCharacter enemyTemplate;
         [SerializeField]
         private GameObject enemyContainer;
         [SerializeField]

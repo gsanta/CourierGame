@@ -1,21 +1,21 @@
 ﻿using Agents;
 using AI;
-using Pedestrians;
+using GameObjects;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Enemies
 {
-    public class EnemyActionCreator : IActionCreator<Enemy>
+    public class EnemyActionCreator : IActionCreator<GameCharacter>
     {
-        private List<GoapAction<Enemy>> actions = new List<GoapAction<Enemy>>();
+        private List<GoapAction<GameCharacter>> actions = new List<GoapAction<GameCharacter>>();
 
-        public void SetActions(List<GoapAction<Enemy>> actions)
+        public void SetActions(List<GoapAction<GameCharacter>> actions)
         {
             this.actions = actions;
         }
 
-        public List<GoapAction<Enemy>> GetActions()
+        public List<GoapAction<GameCharacter>> GetActions()
         {
             return actions.Select(action => action.Clone()).ToList();
         }

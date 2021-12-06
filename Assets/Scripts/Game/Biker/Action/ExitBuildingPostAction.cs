@@ -2,7 +2,7 @@
 using GamePlay;
 using Worlds;
 
-namespace Bikers
+namespace GameObjects
 {
     public class ExitBuildingPostAction : IGPostAction
     {

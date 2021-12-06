@@ -1,5 +1,5 @@
 using Agents;
-using Bikers;
+using GameObjects;
 using Buildings;
 using Delivery;
 using Enemies;
@@ -31,7 +31,7 @@ public class Map1Installer : MonoInstaller, ISceneSetup
 
         Container.Bind<BikerSpawner>().AsSingle();
         Container.Bind<BikerSetup>().AsSingle();
-        Container.BindFactory<Object, Player, Player.Factory>().FromFactory<PrefabFactory<Player>>();
+        Container.BindFactory<Object, GameCharacter, GameCharacter.Factory>().FromFactory<PrefabFactory<GameCharacter>>();
         Container.BindFactory<Object, Pedestrian, Pedestrian.Factory>().FromFactory<PrefabFactory<Pedestrian>>();
 
         Container.Bind<ISpawner<PackageConfig>>().To<PackageSpawner>().AsSingle().NonLazy();

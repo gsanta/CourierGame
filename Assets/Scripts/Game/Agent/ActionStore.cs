@@ -1,6 +1,6 @@
 ﻿
 using AI;
-using Bikers;
+using GameObjects;
 using Scenes;
 using Enemies;
 using Pedestrians;
@@ -12,12 +12,12 @@ namespace Agents
     public class ActionStore : IResetable
     {
         private List<GoapAction<Pedestrian>> pedestrianActions = new List<GoapAction<Pedestrian>>();
-        private WalkAction<Enemy> enemyWalkAction;
+        private WalkAction<GameCharacter> enemyWalkAction;
         private WalkAction<Pedestrian> pedestrianWalkAction;
         private GoHomeAction goHomeAction;
         private Dictionary<Type, IActionCreator<IGameObject>> actionCreators = new Dictionary<Type, IActionCreator<IGameObject>>();
         private IActionCreator<Pedestrian> pedestrianActionCreator;
-        private IActionCreator<Enemy> enemyActionCreator;
+        private IActionCreator<GameCharacter> enemyActionCreator;
 
         public void SetPedestrianActionCreator(IActionCreator<Pedestrian> pedestrianActionCreator)
         {
@@ -29,22 +29,22 @@ namespace Agents
             return pedestrianActionCreator.GetActions();
         }
 
-        public void SetEnemyActionCreator(IActionCreator<Enemy> enemyActionCreator)
+        public void SetEnemyActionCreator(IActionCreator<GameCharacter> enemyActionCreator)
         {
             this.enemyActionCreator = enemyActionCreator;
         }
 
-        public List<GoapAction<Enemy>> GetEnemyActions()
+        public List<GoapAction<GameCharacter>> GetEnemyActions()
         {
             return enemyActionCreator.GetActions();
         }
 
-        public void SetEnemyWalkAction(WalkAction<Enemy> walkAction)
+        public void SetEnemyWalkAction(WalkAction<GameCharacter> walkAction)
         {
             enemyWalkAction = walkAction;
         }
 
-        public WalkAction<Enemy> GetEnemyWalkAction()
+        public WalkAction<GameCharacter> GetEnemyWalkAction()
         {
             return enemyWalkAction;
         }

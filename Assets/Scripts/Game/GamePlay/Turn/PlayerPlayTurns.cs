@@ -1,10 +1,11 @@
 ﻿
 using Actions;
 using AI;
-using Bikers;
+using GameObjects;
 using Cameras;
 using Controls;
 using Enemies;
+using GameObjects;
 using Pedestrians;
 using Routes;
 using RSG;
@@ -23,11 +24,12 @@ namespace GamePlay
         private readonly ActionFactory actionFactory;
         private readonly CameraController cameraController;
         private readonly SceneManagerHolder sceneManager;
+        private readonly SubsceneCharacterStore subsceneCharacterStore;
         private Promise promise;
 
-        private ISet<Player> movingPlayers = new HashSet<Player>();
+        private ISet<GameCharacter> movingPlayers = new HashSet<GameCharacter>();
 
-        public PlayerPlayTurns(PlayerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController, SceneManagerHolder sceneManager)
+        public PlayerPlayTurns(PlayerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController, SceneManagerHolder sceneManager, SubsceneCharacterStore subsceneCharacterStore)
         {
             this.playerStore = playerStore;
             this.enemyStore = enemyStore;
@@ -37,6 +39,7 @@ namespace GamePlay
             this.actionFactory = actionFactory;
             this.cameraController = cameraController;
             this.sceneManager = sceneManager;
+            this.subsceneCharacterStore = subsceneCharacterStore;
         }
 
         public Promise Execute()
@@ -78,7 +81,7 @@ namespace GamePlay
             return promise;
         }
 
-        private GoapAction<Player> GetPlayerAction(Player player)
+        private GoapAction<GameCharacter> GetPlayerAction(GameCharacter player)
         {
             var points = routeStore.GetRoutes()[player];
             points.RemoveAt(0);
@@ -109,17 +112,19 @@ namespace GamePlay
             
             if (tuple.Item2 < 2)
             {
+                subsceneCharacterStore.Players = new List<GameCharacter> { playerStore.GetActivePlayer() };
+                subsceneCharacterStore.Enemies = new List<GameCharacter> { tuple.Item1 };
                 sceneManager.D.EnterSubScene("Building");
             }
 
             promise.Resolve();
         }
 
-        private (Enemy, float) FindClosestEnemy()
+        private (GameCharacter, float) FindClosestEnemy()
         {
-            Enemy closestEnemy = null;
+            GameCharacter closestEnemy = null;
             float distance = float.MaxValue;
-            Player player = playerStore.GetActivePlayer();
+            GameCharacter player = playerStore.GetActivePlayer();
 
             foreach (var enemy in enemyStore.GetAll())
             {
@@ -163,7 +168,7 @@ namespace GamePlay
             playerStore.GetAll().ForEach(player => player.Agent.GoalReached -= HandleGoalReached);
         }
 
-        private void HandleGoalReached(object sender, GoalReachedEventArgs<Player> args)
+        private void HandleGoalReached(object sender, GoalReachedEventArgs<GameCharacter> args)
         {
             movingPlayers.Remove(args.agent.Parent);
             args.agent.GoalReached -= HandleGoalReached;

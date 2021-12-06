@@ -1,4 +1,4 @@
-﻿namespace Bikers
+﻿namespace GameObjects
 {
     public class BikersConfig
     {

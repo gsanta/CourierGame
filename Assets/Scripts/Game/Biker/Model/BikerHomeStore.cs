@@ -3,7 +3,7 @@ using Scenes;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Bikers
+namespace GameObjects
 {
     public class BikerHomeStore : IResetable, ITargetStore<GameObject>
     {

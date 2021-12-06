@@ -7,13 +7,13 @@ using Pedestrians;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bikers
+namespace GameObjects
 {
     public class AgentFactory
     {
 
         private Dictionary<string, int> idMap = new Dictionary<string, int>();
-        private List<GoapAction<Player>> bikerActions = new List<GoapAction<Player>>();
+        private List<GoapAction<GameCharacter>> bikerActions = new List<GoapAction<GameCharacter>>();
         private readonly ActionStore actionStore;
         private ActionFactory actionFactory;
 
@@ -26,18 +26,18 @@ namespace Bikers
             this.actionStore = actionStore;
         }
 
-        public void AddBikerAction(GoapAction<Player> action)
+        public void AddBikerAction(GoapAction<GameCharacter> action)
         {
             bikerActions.Add(action);
         }   
 
-        public GoapAgent<Enemy> CreateEnemyAgent(Enemy enemy)
+        public GoapAgent<GameCharacter> CreateEnemyAgent(GameCharacter enemy)
         {
             string id = "enemy-" + idMap["enemy"];
             idMap["enemy"]++;
 
 
-            var agent = new GoapAgent<Enemy>(id, enemy, new SimplePlanner<Enemy>());
+            var agent = new GoapAgent<GameCharacter>(id, enemy, new SimplePlanner<GameCharacter>());
             agent.SetActions(actionStore.GetEnemyActions());
 
             return agent;
@@ -55,19 +55,19 @@ namespace Bikers
             return agent;
         }
 
-        public GoapAgent<Player> CreateBikerAgent(Player biker)
+        public GoapAgent<GameCharacter> CreateBikerAgent(GameCharacter biker)
         {
-            List<GoapAction<Player>> actions = CloneBikerActions();
+            List<GoapAction<GameCharacter>> actions = CloneBikerActions();
             string id = "biker-" + idMap["biker"];
             idMap["biker"]++;
 
-            var agent = new GoapAgent<Player>(id, biker, new GoapPlanner<Player>());
+            var agent = new GoapAgent<GameCharacter>(id, biker, new GoapPlanner<GameCharacter>());
             agent.SetActions(actions);
 
             return agent;
         }
 
-        private List<GoapAction<Player>> CloneBikerActions()
+        private List<GoapAction<GameCharacter>> CloneBikerActions()
         {
             return bikerActions.Select(action => action.Clone()).ToList();
         }

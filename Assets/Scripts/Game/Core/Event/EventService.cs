@@ -1,4 +1,4 @@
-﻿using Bikers;
+﻿using GameObjects;
 using Delivery;
 using Model;
 using System;
@@ -20,7 +20,7 @@ namespace Service
 
         public event EventHandler<PackageStatusChangedEventArgs> PackageStatusChanged;
 
-        public void EmitBikerCurrentRoleChanged(Player biker)
+        public void EmitBikerCurrentRoleChanged(GameCharacter biker)
         {
             BikerCurrentRoleChanged?.Invoke(this, new BikerCurrentRoleChangedEventArgs(biker));
         }

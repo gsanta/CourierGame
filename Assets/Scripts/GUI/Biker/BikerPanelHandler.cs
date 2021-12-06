@@ -1,5 +1,5 @@
 ﻿
-using Bikers;
+using GameObjects;
 using GamePlay;
 using UI;
 using UnityEngine;

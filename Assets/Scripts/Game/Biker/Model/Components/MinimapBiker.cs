@@ -1,13 +1,13 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Bikers
+namespace GameObjects
 {
     public class MinimapBiker : MonoBehaviour
     {
-        private Player biker;
+        private GameCharacter biker;
 
-        public Player Biker { set => biker = value; }
+        public GameCharacter Biker { set => biker = value; }
 
         private void Update()
         {

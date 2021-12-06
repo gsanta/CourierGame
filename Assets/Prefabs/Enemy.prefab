@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4739331799290298989}
   - component: {fileID: 8532815770783469000}
   - component: {fileID: 5876724680726329602}
-  - component: {fileID: 6940942865131466546}
+  - component: {fileID: 4042824318688270532}
   - component: {fileID: 690227411818023129}
   m_Layer: 10
   m_Name: Enemy
@@ -83,7 +83,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6940942865131466546
+--- !u!114 &4042824318688270532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,11 +92,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5372422195661838551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f4bc4caaefc47c4981eb189783d9822, type: 3}
+  m_Script: {fileID: 11500000, guid: 05b2eb21959f73848be96d5fe8ddf4bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navMeshAgent: {fileID: 690227411818023129}
-  attackRadius: {fileID: 0}
+  navMeshAgent: {fileID: 0}
 --- !u!195 &690227411818023129
 NavMeshAgent:
   m_ObjectHideFlags: 0

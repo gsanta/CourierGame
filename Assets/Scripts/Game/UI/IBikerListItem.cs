@@ -1,4 +1,4 @@
-﻿using Bikers;
+﻿using GameObjects;
 using UnityEngine.UI;
 
 namespace UI
