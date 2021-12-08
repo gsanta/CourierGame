@@ -38,7 +38,6 @@ namespace Main
             Container.Bind<MoneyStore>().AsSingle();
 
             Container.Bind<ReconciliationService>().AsSingle();
-            Container.Bind<SceneManagerHolder>().AsSingle().NonLazy();
             Container.Bind<PackageSpawnPointStore>().AsSingle().NonLazy();
             Container.Bind<PackageTargetPointStore>().AsSingle().NonLazy();
             Container.Bind<PackageFactory>().AsSingle();
@@ -88,8 +87,6 @@ namespace Main
             Container.Bind<ExitBuildingPostAction>().AsSingle();
             Container.Bind<EnterBuildingPostAction>().AsSingle();
 
-            SetupActionFactory();
-
             // ui
             Container.Bind<CurfewButton>().AsSingle();
             Container.Bind<BikerHomeStore>().AsSingle();
@@ -107,13 +104,17 @@ namespace Main
 
             // Game object
             Container.Bind<OutlineGameObjectSelector>().AsTransient();
-            Container.Bind<SubsceneCharacterStore>().AsSingle();
+            Container.Bind<SubsceneStore>().AsSingle().NonLazy();
+            Container.Bind<SceneManager>().AsSingle().NonLazy();
+
 
             // State
             Container.Bind<SelectionStore>().AsSingle();
 
             // Gizmo
             Container.Bind<ArrowRendererProvider>().AsSingle();
+
+            SetupActionFactory();
         }
 
         override public void Start()
@@ -129,8 +130,8 @@ namespace Main
             WorldHandlers worldHandlers = Container.Resolve<WorldHandlers>();
             worldStore.SetWorldHandlers(worldHandlers);
 
-            SceneManagerHolder sceneManagerHolder = Container.Resolve<SceneManagerHolder>();
-            sceneManagerHolder.D.LoadInitialScenes();
+            SceneManager sceneManager = Container.Resolve<SceneManager>();
+            sceneManager.LoadInitialScenes();
 
             SceneChangeHandler sceneChangeHandler = Container.Resolve<SceneChangeHandler>();
             sceneChangeHandler.AddResetable(Container.Resolve<GameObjects.PlayerStore>());

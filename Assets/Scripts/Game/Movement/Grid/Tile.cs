@@ -118,5 +118,10 @@ namespace Movement
         {
             GetComponent<MeshRenderer>().enabled = visible;
         }
+
+        public bool IsVisible()
+        {
+            return GetComponent<MeshRenderer>().enabled;
+        }
     }
 }

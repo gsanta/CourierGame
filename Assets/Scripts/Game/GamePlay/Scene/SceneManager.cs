@@ -1,82 +1,48 @@
-﻿using Scenes;
+﻿using GameObjects;
+using Scenes;
 using System.Collections.Generic;
-using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Worlds;
-using Zenject;
 
 namespace GamePlay
 {
-    public class SceneManager : MonoBehaviour
+    public class SceneManager
     {
-        [SerializeField]
-        private string[] initialScenes;
-        [SerializeField]
-        private string[] mapScenes;
-        [SerializeField]
-        private string[] initialPanels;
-        [SerializeField]
-        private string[] otherScenes;
-
         private string activeMapScene;
         private SceneChangeHandler sceneChangeHandler;
         private WorldStore worldStore;
-        private CanvasInitializer canvasInitializer;
+        private SubsceneStore subsceneStore;
 
-
-        private Dictionary<string, FakeSceneLoader> fakeScenes = new Dictionary<string, FakeSceneLoader>();
-
-        private string currentSubScene = null;
-
-        [Inject]
-        public void Construct(SceneManagerHolder sceneManagerHolder, CanvasInitializer canvasInitializer, SceneChangeHandler sceneChangeHandler, WorldStore worldStore)
+        public SceneManager(SceneChangeHandler sceneChangeHandler, WorldStore worldStore, SubsceneStore subsceneStore)
         {
-            this.canvasInitializer = canvasInitializer;
             this.sceneChangeHandler = sceneChangeHandler;
             this.worldStore = worldStore;
-
-            sceneManagerHolder.D = this;
+            this.subsceneStore = subsceneStore;
         }
 
-        private void Awake()
+        public SceneManagerData Data { get; set; }
+
+        public void EnterSubScene()
         {
-            canvasInitializer.SetInitialPanels(initialPanels);
+            var sceneName = $"{subsceneStore.SubSceneId}Scene";
 
-            foreach (var item in GetComponents<FakeSceneLoader>())
+            if (Data.fakeScenes.ContainsKey(sceneName))
             {
-                fakeScenes.Add($"{item.sceneName}Scene", item);
-            }
-
-            foreach (var mapScene in mapScenes)
-            {
-                var map = new MapState();
-                map.Name = $"{mapScene}Scene";
-                worldStore.AddWorld(map);
-            }
-        }
-
-        public void EnterSubScene(string scene)
-        {
-            var sceneName = $"{scene}Scene";
-
-            if (fakeScenes.ContainsKey(sceneName))
-            {
-                fakeScenes[sceneName].Load();
+                Data.fakeScenes[sceneName].Load();
             } else
             {
                 UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-                currentSubScene = sceneName;
             }
         }
 
-        public void ExitSubScene(string scene)
+        public void ExitSubScene()
         {
-            var sceneName = $"{scene}Scene";
+            var sceneName = $"{subsceneStore.SubSceneId}Scene";
 
-            if (fakeScenes.ContainsKey(sceneName))
+            if (Data.fakeScenes.ContainsKey(sceneName))
             {
-                fakeScenes[sceneName].Unload();
+                Data.fakeScenes[sceneName].Unload();
             }
         }
 
@@ -87,7 +53,7 @@ namespace GamePlay
 
         public void LoadInitialScenes()
         {
-            foreach (var scene in initialScenes)
+            foreach (var scene in Data.initialScenes)
             {
                 UnityEngine.SceneManagement.SceneManager.LoadSceneAsync($"{scene}Scene", LoadSceneMode.Additive);
             }
@@ -95,7 +61,7 @@ namespace GamePlay
 
         public void LoadMapScene(int index)
         {
-            string sceneName = $"{mapScenes[index]}Scene";
+            string sceneName = $"{Data.mapScenes[index]}Scene";
             worldStore.SetActiveWorld(sceneName);
             activeMapScene = sceneName;
             sceneChangeHandler.ClearPrevScene();
@@ -104,7 +70,7 @@ namespace GamePlay
 
         public void UnLoadMapScene(int index)
         {
-            string sceneName = $"{mapScenes[index]}Scene";
+            string sceneName = $"{Data.mapScenes[index]}Scene";
             if (activeMapScene == sceneName)
             {
                 UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);

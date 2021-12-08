@@ -15,10 +15,11 @@ namespace Movement
         }
     }
 
-    public struct GridNode
+    public class GridNode
     {
         public Vector3 Position { get; set; }
         public IntPos GridPos { get; private set; }
+        public Tile Tile { get; set; }
 
         public GridNode(IntPos gridPos)
         {

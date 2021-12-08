@@ -22,15 +22,17 @@ namespace GamePlay
         private TurnManager turnManager;
         private CameraController cameraController;
         private GridSystem gridSystem;
+        private SubsceneStore subsceneCharacterStore;
 
         [Inject]
-        public void Construct(PlayerStore playerStore, WorldStore worldStore, TurnManager turnManager, CameraController cameraController, GridSystem gridStore)
+        public void Construct(PlayerStore playerStore, WorldStore worldStore, TurnManager turnManager, CameraController cameraController, GridSystem gridSystem, SubsceneStore subsceneCharacterStore)
         {
             this.playerStore = playerStore;
             this.worldStore = worldStore;
             this.turnManager = turnManager;
             this.cameraController = cameraController;
-            this.gridSystem = gridStore;
+            this.gridSystem = gridSystem;
+            this.subsceneCharacterStore = subsceneCharacterStore;
         }
 
         public void Exit()
@@ -41,35 +43,58 @@ namespace GamePlay
             player.transform.position = new Vector3(0, player.transform.position.y, 0);
         }
 
+        void OnEnable()
+        {
+            turnManager.ResetTurns();
+            cameraController.PanTo(buildingGameObject);
+            gridSystem.SetBottomLeft(bottomLeftPoint);
+            gridSystem.TileManager.UpdateTileVisibility();
+            subsceneCharacterStore.GetCharacters().ForEach(character =>
+            {
+                character.Agent.Active = false;
+                var newPos = playerPosition.transform.position;
+                var tile = gridSystem.TileManager.GetRandomTile();
+                character.transform.position = new Vector3(tile.CenterPoint.x, character.transform.position.y, tile.CenterPoint.z);
+
+            });
+
+        }
+
         public void Enter()
         {
-            worldStore.CurrentMap = "Building";
-            worldStore.ActiveSceneEntryPoint = this;
+            //worldStore.CurrentMap = "Building";
+            //worldStore.ActiveSceneEntryPoint = this;
 
-            if (worldStore.BattleState != null)
-            {
-                var player = worldStore.BattleState.Player;
-                player.Agent.Active = true;
-                var newPos = playerPosition.transform.position;
-                player.transform.position = new Vector3(newPos.x, player.transform.position.y, newPos.z);
+            //if (worldStore.BattleState != null)
+            //{
+            //    var player = worldStore.BattleState.Player;
+            //    player.Agent.Active = true;
+            //    var newPos = playerPosition.transform.position;
+            //    player.transform.position = new Vector3(newPos.x, player.transform.position.y, newPos.z);
 
-                var enemy = worldStore.BattleState.Enemy;
-                enemy.Agent.Active = true;
-                var enemyNewPos = enemyPosition.transform.position;
-                enemy.transform.position = new Vector3(enemyNewPos.x, enemy.transform.position.y, enemyNewPos.z);
+            //    var enemy = worldStore.BattleState.Enemy;
+            //    enemy.Agent.Active = true;
+            //    var enemyNewPos = enemyPosition.transform.position;
+            //    enemy.transform.position = new Vector3(enemyNewPos.x, enemy.transform.position.y, enemyNewPos.z);
 
-                turnManager.ResetTurns();
-            } else
-            {
-                var player = playerStore.GetActivePlayer();
-                player.Agent.Active = false;
-                var newPos = playerPosition.transform.position;
-                player.transform.position = new Vector3(newPos.x, player.transform.position.y, newPos.z);
-                turnManager.ResetTurns();
-                cameraController.PanTo(buildingGameObject);
-                gridSystem.SetBottomLeft(bottomLeftPoint);
-                gridSystem.TileManager.UpdateTilePositions(new IntPos(0, 0));
-            }
+            //    turnManager.ResetTurns();
+            //} else
+            //{
+            //    gridSystem.TileManager.UpdateTilePositions(new IntPos(0, 0));
+            //    gridSystem.TileManager.UpdateTileVisibility();
+
+            //    subsceneCharacterStore.GetAll().ForEach(character =>
+            //    {
+            //        character.Agent.Active = false;
+            //        var newPos = playerPosition.transform.position;
+            //        var tile = gridSystem.TileManager.GetRandomTile();
+            //        character.transform.position = new Vector3(tile.CenterPoint.x, character.transform.position.y, tile.CenterPoint.z);
+
+            //    });
+            //    turnManager.ResetTurns();
+            //    cameraController.PanTo(buildingGameObject);
+            //    gridSystem.SetBottomLeft(bottomLeftPoint);
+            //}
         }
     }
 }

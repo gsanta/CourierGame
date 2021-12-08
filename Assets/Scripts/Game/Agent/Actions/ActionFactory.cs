@@ -11,11 +11,11 @@ namespace Actions
     public class ActionFactory
     {
         public ActionCreators actionCreators = new ActionCreators();
-        private SceneManagerHolder sceneManagerHolder;
+        private SceneManager sceneManager;
 
-        public ActionFactory(SceneManagerHolder sceneManagerHolder)
+        public ActionFactory(SceneManager sceneManager)
         {
-            this.sceneManagerHolder = sceneManagerHolder;
+            this.sceneManager = sceneManager;
         }
 
         public PlayerWalkAction CreatePlayerWalkAction(GoapAgent<GameCharacter> agent, List<Vector3> points)
@@ -25,7 +25,7 @@ namespace Actions
 
         public PlayerWalkIntoBuildingAction CreatePlayerWalkIntoBuildingAction(GoapAgent<GameCharacter> agent, List<Vector3> points)
         {
-            return actionCreators.PlayerWalkIntoBuildingActionCreator.Create(agent, points, sceneManagerHolder);
+            return actionCreators.PlayerWalkIntoBuildingActionCreator.Create(agent, points);
         }
 
         public WalkAction<Pedestrian> CreatePedestrianWalkAction(GoapAgent<Pedestrian> agent)

@@ -16,24 +16,20 @@ namespace GamePlay
 {
     public class PlayerPlayTurns : ITurns
     {
-        private readonly PlayerStore playerStore;
-        private readonly EnemyStore enemyStore;
-        private readonly PedestrianStore pedestrianStore;
         private readonly RouteStore routeStore;
         private readonly RouteTool routeTool;
         private readonly ActionFactory actionFactory;
         private readonly CameraController cameraController;
-        private readonly SceneManagerHolder sceneManager;
-        private readonly SubsceneCharacterStore subsceneCharacterStore;
+        private readonly SceneManager sceneManager;
+        private readonly SubsceneStore subsceneCharacterStore;
+        private readonly CharacterStore characterStore;
         private Promise promise;
 
         private ISet<GameCharacter> movingPlayers = new HashSet<GameCharacter>();
 
-        public PlayerPlayTurns(PlayerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController, SceneManagerHolder sceneManager, SubsceneCharacterStore subsceneCharacterStore)
+        public PlayerPlayTurns(CharacterStore characterStore, RouteStore routeStore, RouteTool routeTool, ActionFactory actionFactory, CameraController cameraController, SceneManager sceneManager, SubsceneStore subsceneCharacterStore)
         {
-            this.playerStore = playerStore;
-            this.enemyStore = enemyStore;
-            this.pedestrianStore = pedestrianStore;
+            this.characterStore = characterStore;
             this.routeStore = routeStore;
             this.routeTool = routeTool;
             this.actionFactory = actionFactory;
@@ -46,7 +42,7 @@ namespace GamePlay
         {
             promise = new Promise();
 
-            playerStore.GetAll().ForEach(player => {
+            characterStore.GetPlayers().ForEach(player => {
                 movingPlayers.Add(player);
                 player.Agent.Active = true;
                 player.Agent.NavMeshAgent.enabled = true;
@@ -57,10 +53,10 @@ namespace GamePlay
                 player.Agent.SetGoals(new Goal(AIStateName.WALK_FINISHED, false), false);
             });
 
-            playerStore.SetActivePlayer(playerStore.GetFirstPlayer());
+            characterStore.SetActivePlayer(characterStore.GetPlayers()[0]);
             //cameraController.Follow(playerStore.GetActivePlayer());
 
-            enemyStore.GetAll().ForEach(enemy => {
+            characterStore.GetEnemies().ForEach(enemy => {
                 enemy.Agent.Active = true;
                 enemy.Agent.NavMeshAgent.enabled = true;
                 enemy.Agent.NavMeshAgent.isStopped = false;
@@ -69,7 +65,7 @@ namespace GamePlay
                 enemy.Agent.SetGoals(enemy.GetGoalProvider().CreateGoal(), false);
             });
 
-            pedestrianStore.GetAll().ForEach(pedestrian => {
+            characterStore.GetPedestrians().ForEach(pedestrian => {
                 pedestrian.Agent.Active = true;
                 pedestrian.Agent.NavMeshAgent.enabled = true;
                 pedestrian.Agent.NavMeshAgent.isStopped = false;
@@ -104,17 +100,17 @@ namespace GamePlay
 
         private void Finish()
         {
-            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.AbortAction());
-            enemyStore.GetAll().ForEach(enemy => enemy.Agent.AbortAction());
-            playerStore.GetAll().ForEach(player => player.Agent.AbortAction());
+            characterStore.GetPedestrians().ForEach(pedestrian => pedestrian.Agent.AbortAction());
+            characterStore.GetEnemies().ForEach(enemy => enemy.Agent.AbortAction());
+            characterStore.GetPlayers().ForEach(player => player.Agent.AbortAction());
 
             var tuple = FindClosestEnemy();
             
             if (tuple.Item2 < 2)
             {
-                subsceneCharacterStore.Players = new List<GameCharacter> { playerStore.GetActivePlayer() };
+                subsceneCharacterStore.Players = new List<GameCharacter> { characterStore.GetActivePlayer() };
                 subsceneCharacterStore.Enemies = new List<GameCharacter> { tuple.Item1 };
-                sceneManager.D.EnterSubScene("Building");
+                sceneManager.EnterSubScene();
             }
 
             promise.Resolve();
@@ -124,9 +120,9 @@ namespace GamePlay
         {
             GameCharacter closestEnemy = null;
             float distance = float.MaxValue;
-            GameCharacter player = playerStore.GetActivePlayer();
+            GameCharacter player = characterStore.GetActivePlayer();
 
-            foreach (var enemy in enemyStore.GetAll())
+            foreach (var enemy in characterStore.GetEnemies())
             {
                 float dist = Vector3.Distance(enemy.transform.position, player.transform.position);
                 if (dist < distance)
@@ -141,16 +137,16 @@ namespace GamePlay
 
         public void Pause()
         {
-            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.NavMeshAgent.isStopped = true);
-            enemyStore.GetAll().ForEach(enemy => enemy.Agent.NavMeshAgent.isStopped = true);
-            playerStore.GetAll().ForEach(player => player.Agent.NavMeshAgent.isStopped = true);
+            characterStore.GetPedestrians().ForEach(pedestrian => pedestrian.Agent.NavMeshAgent.isStopped = true);
+            characterStore.GetEnemies().ForEach(enemy => enemy.Agent.NavMeshAgent.isStopped = true);
+            characterStore.GetPlayers().ForEach(player => player.Agent.NavMeshAgent.isStopped = true);
         }
 
         public void Resume()
         {
-            pedestrianStore.GetAll().ForEach(pedestrian => pedestrian.Agent.NavMeshAgent.isStopped = false);
-            enemyStore.GetAll().ForEach(enemy => enemy.Agent.NavMeshAgent.isStopped = false);
-            playerStore.GetAll().ForEach(player => player.Agent.NavMeshAgent.isStopped = false);
+            characterStore.GetPedestrians().ForEach(pedestrian => pedestrian.Agent.NavMeshAgent.isStopped = false);
+            characterStore.GetEnemies().ForEach(enemy => enemy.Agent.NavMeshAgent.isStopped = false);
+            characterStore.GetPlayers().ForEach(player => player.Agent.NavMeshAgent.isStopped = false);
         }
 
         public void Step()
@@ -165,7 +161,7 @@ namespace GamePlay
 
         public void Abort()
         {
-            playerStore.GetAll().ForEach(player => player.Agent.GoalReached -= HandleGoalReached);
+            characterStore.GetPlayers().ForEach(player => player.Agent.GoalReached -= HandleGoalReached);
         }
 
         private void HandleGoalReached(object sender, GoalReachedEventArgs<GameCharacter> args)

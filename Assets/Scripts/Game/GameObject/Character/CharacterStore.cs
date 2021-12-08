@@ -1,4 +1,5 @@
 ﻿using Enemies;
+using Pedestrians;
 using System.Collections.Generic;
 
 namespace GameObjects
@@ -7,11 +8,13 @@ namespace GameObjects
     {
         private PlayerStore playerStore;
         private EnemyStore enemyStore;
+        private PedestrianStore pedestrianStore;
 
-        public CharacterStore(PlayerStore playerStore, EnemyStore enemyStore)
+        public CharacterStore(PlayerStore playerStore, EnemyStore enemyStore, PedestrianStore pedestrianStore)
         {
             this.playerStore = playerStore;
             this.enemyStore = enemyStore;
+            this.pedestrianStore = pedestrianStore;
         }
 
         public List<GameCharacter> GetPlayers()
@@ -23,5 +26,21 @@ namespace GameObjects
         {
             return enemyStore.GetAll();
         }
+
+        public List<Pedestrian> GetPedestrians()
+        {
+            return pedestrianStore.GetAll();
+        }
+
+        public void SetActivePlayer(GameCharacter player)
+        {
+            playerStore.SetActivePlayer(player);
+        }
+
+        public GameCharacter GetActivePlayer()
+        {
+            return playerStore.GetActivePlayer();
+        }
+
     }
 }

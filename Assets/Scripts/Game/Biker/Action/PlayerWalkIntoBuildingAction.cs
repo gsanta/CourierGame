@@ -12,15 +12,13 @@ namespace GameObjects
     public class PlayerWalkIntoBuildingAction : AbstractRouteAction<GameCharacter>
     {
         private List<Vector3> points;
-        private SceneManagerHolder sceneManagerHolder;
         private CameraController cameraController;
         private IGPostAction postAction;
 
-        public PlayerWalkIntoBuildingAction(GoapAgent<GameCharacter> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder, CameraController cameraController) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
+        public PlayerWalkIntoBuildingAction(GoapAgent<GameCharacter> agent, List<Vector3> points, CameraController cameraController) : base(new AIStateName[] { }, new AIStateName[] { AIStateName.WALK_FINISHED })
         {
             this.agent = agent;
             this.points = points;
-            this.sceneManagerHolder = sceneManagerHolder;
             this.cameraController = cameraController;
         }
 
@@ -72,9 +70,9 @@ namespace GameObjects
             this.cameraController = cameraController;
         }
 
-        public PlayerWalkIntoBuildingAction Create(GoapAgent<GameCharacter> agent, List<Vector3> points, SceneManagerHolder sceneManagerHolder)
+        public PlayerWalkIntoBuildingAction Create(GoapAgent<GameCharacter> agent, List<Vector3> points)
         {
-            return new PlayerWalkIntoBuildingAction(agent, points, sceneManagerHolder, cameraController);
+            return new PlayerWalkIntoBuildingAction(agent, points, cameraController);
         }
     }
 }

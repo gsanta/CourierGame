@@ -19,7 +19,6 @@ namespace Movement
         private void Awake()
         {
             cameraController.Pan(CameraDirection.LEFT);
-            gridSystem.SetBottomLeft(gridSystem.GridConfig.bottomLeft);
         }
     }
 }

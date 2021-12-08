@@ -50,7 +50,6 @@ namespace GUI
                         topLeft.x -= gridSystem.GridConfig.tileCols;
                         break;
                 }
-                gridSystem.TileManager.UpdateTilePositions(topLeft);
             }
         }
 

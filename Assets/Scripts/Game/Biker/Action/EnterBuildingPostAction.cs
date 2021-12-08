@@ -5,21 +5,25 @@ namespace GameObjects
 {
     public class EnterBuildingPostAction : IGPostAction
     {
-        private SceneManagerHolder sceneManagerHolder;
+        private SceneManager sceneManager;
+        private SubsceneStore subsceneStore;
 
-        public EnterBuildingPostAction(SceneManagerHolder sceneManagerHolder)
+        public EnterBuildingPostAction(SceneManager sceneManager, SubsceneStore subsceneStore)
         {
-            this.sceneManagerHolder = sceneManagerHolder;
+            this.sceneManager = sceneManager;
+            this.subsceneStore = subsceneStore;
         }
 
         public IGPostAction Clone()
         {
-            return new EnterBuildingPostAction(sceneManagerHolder);
+            return new EnterBuildingPostAction(sceneManager, subsceneStore);
         }
 
         public void Execute()
         {
-            sceneManagerHolder.D.EnterSubScene("Building");
+
+            subsceneStore.Type = SubsceneType.BUILDING;
+            sceneManager.EnterSubScene();
         }
     }
 }

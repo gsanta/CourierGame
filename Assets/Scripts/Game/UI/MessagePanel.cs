@@ -14,10 +14,10 @@ namespace UI
         private CanvasStore canvasStore;
         private TurnManager turnManager;
         private WorldStore worldStore;
-        private SceneManagerHolder sceneManager;
+        private SceneManager sceneManager;
 
         [Inject]
-        public void Construct(CanvasStore canvasStore, TurnManager turnManager, WorldStore worldStore, SceneManagerHolder sceneManager)
+        public void Construct(CanvasStore canvasStore, TurnManager turnManager, WorldStore worldStore, SceneManager sceneManager)
         {
             this.canvasStore = canvasStore;
             this.turnManager = turnManager;
@@ -35,7 +35,7 @@ namespace UI
             canvasStore.HidePanel(typeof(MessagePanel));
             worldStore.BattleState.Player.Agent.AbortAction();
             worldStore.BattleState.Enemy.Agent.AbortAction();
-            sceneManager.D.EnterSubScene("Building");
+            sceneManager.EnterSubScene();
         }
 
         public void SkipAction()

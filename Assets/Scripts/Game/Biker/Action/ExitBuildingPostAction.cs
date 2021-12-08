@@ -6,10 +6,10 @@ namespace GameObjects
 {
     public class ExitBuildingPostAction : IGPostAction
     {
-        private SceneManagerHolder sceneManager;
+        private SceneManager sceneManager;
         private WorldStore worldStore;
 
-        public ExitBuildingPostAction(SceneManagerHolder sceneManager, WorldStore worldStore)
+        public ExitBuildingPostAction(SceneManager sceneManager, WorldStore worldStore)
         {
             this.sceneManager = sceneManager;
             this.worldStore = worldStore;
@@ -22,7 +22,7 @@ namespace GameObjects
 
         public void Execute()
         {
-            sceneManager.D.ExitSubScene(worldStore.CurrentMap);
+            sceneManager.ExitSubScene();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Movement
             set;
         }
 
-        private GridNode[,] gridNodes;
+        public GridNode[,] gridNodes;
 
         public GridNode GetNodeAt(int x, int y)
         {
@@ -33,7 +33,7 @@ namespace Movement
             UpdateGridPos(bottomLeft);
         }
 
-        private void GridInit()
+        public void GridInit()
         {
             GridConfig gridConfig = GridConfig;
 
@@ -44,17 +44,21 @@ namespace Movement
             {
                 for (int z = 0; z < gridConfig.gridRows; z++)
                 {
-                    gridNodes[z, x] = new GridNode(new IntPos(x, z));
+                    var gridNode = new GridNode(new IntPos(x, z));
+                    Tile tile = TileManager.CreateTile(gridConfig.tileTemplate);
+                    tile.SetCenterPoint(new Vector3(gridNode.Position.x, 1, gridNode.Position.z));
+                    gridNode.Tile = tile;
+                    gridNodes[z, x] = gridNode;
                 }
             }
+
+            UpdateGridPos(GridConfig.bottomLeft);
         }
 
         private void UpdateGridPos(GameObject bottomLeftObj)
         {
             GridConfig gridConfig = GridConfig;
             Vector3 bottomLeft = bottomLeftObj.transform.position;
-
-            gridNodes = new GridNode[gridConfig.gridRows, gridConfig.gridCols];
 
             for (int x = 0; x < gridConfig.gridCols; x++)
             {
@@ -63,7 +67,9 @@ namespace Movement
                     float xPos = x * gridConfig.gridSize + bottomLeft.x;
                     float zPos = z * gridConfig.gridSize + bottomLeft.z;
 
-                    gridNodes[z, x].Position = new Vector3(xPos, bottomLeft.y, zPos);
+                    var gridNode = gridNodes[z, x];
+                    gridNode.Position = new Vector3(xPos, bottomLeft.y, zPos);
+                    gridNode.Tile.SetCenterPoint(new Vector3(gridNode.Position.x, 1, gridNode.Position.z));
                 }
             }
         }
