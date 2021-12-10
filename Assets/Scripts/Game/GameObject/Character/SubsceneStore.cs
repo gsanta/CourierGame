@@ -1,5 +1,6 @@
 ﻿using GameObjects;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameObjects
 {
@@ -14,16 +15,30 @@ namespace GameObjects
     {
         public SubsceneType Type { get; set; }
         public string SubSceneId { get; set; }
-        public List<GameCharacter> Enemies { get; set; }
-        public List<GameCharacter> Players { get; set; }
+        private List<GameCharacter> characters = new List<GameCharacter>();
+
+        private Dictionary<GameCharacter, Vector3> origPositions = new Dictionary<GameCharacter, Vector3>();
+
+        public void AddCharacter(GameCharacter character)
+        {
+            characters.Add(character);
+            origPositions.Add(character, character.transform.position);
+        }
+
+        public void Clear()
+        {
+            characters.Clear();
+            origPositions.Clear();
+        }
+
+        public Vector3 GetOrigPosition(GameCharacter character)
+        {
+            return origPositions[character];
+        }
 
         public List<GameCharacter> GetCharacters()
         {
-            var all = new List<GameCharacter>();
-            all.AddRange(Players);
-            all.AddRange(Enemies);
-
-            return all;
+            return characters;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Main
         {
             Container.Bind<ITimeProvider>().To<DefaultTimeProvider>().AsSingle();
             Container.Bind<Timer>().AsSingle().NonLazy();
+            Container.Bind<SceneManager>().AsSingle().NonLazy();
             Container.Bind<CanvasStore>().AsSingle();
             Container.Bind<PlayerStore>().AsSingle().NonLazy();
             Container.Bind<CharacterStore>().AsSingle();
@@ -42,6 +43,7 @@ namespace Main
             Container.Bind<PackageTargetPointStore>().AsSingle().NonLazy();
             Container.Bind<PackageFactory>().AsSingle();
             Container.Bind<BikerFactory>().AsSingle();
+
             Container.Bind<PedestrianFactory>().AsSingle();
             Container.Bind<PedestrianSpawner>().AsSingle();
             Container.Bind<PedestrianGoalFactory>().AsSingle();
@@ -105,8 +107,6 @@ namespace Main
             // Game object
             Container.Bind<OutlineGameObjectSelector>().AsTransient();
             Container.Bind<SubsceneStore>().AsSingle().NonLazy();
-            Container.Bind<SceneManager>().AsSingle().NonLazy();
-
 
             // State
             Container.Bind<SelectionStore>().AsSingle();

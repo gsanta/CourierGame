@@ -21,7 +21,7 @@ namespace GamePlay
         private readonly ActionFactory actionFactory;
         private readonly CameraController cameraController;
         private readonly SceneManager sceneManager;
-        private readonly SubsceneStore subsceneCharacterStore;
+        private readonly SubsceneStore subsceneStore;
         private readonly CharacterStore characterStore;
         private Promise promise;
 
@@ -35,7 +35,7 @@ namespace GamePlay
             this.actionFactory = actionFactory;
             this.cameraController = cameraController;
             this.sceneManager = sceneManager;
-            this.subsceneCharacterStore = subsceneCharacterStore;
+            this.subsceneStore = subsceneCharacterStore;
         }
 
         public Promise Execute()
@@ -108,8 +108,8 @@ namespace GamePlay
             
             if (tuple.Item2 < 2)
             {
-                subsceneCharacterStore.Players = new List<GameCharacter> { characterStore.GetActivePlayer() };
-                subsceneCharacterStore.Enemies = new List<GameCharacter> { tuple.Item1 };
+                subsceneStore.AddCharacter(characterStore.GetActivePlayer());
+                subsceneStore.AddCharacter(tuple.Item1);
                 sceneManager.EnterSubScene();
             }
 

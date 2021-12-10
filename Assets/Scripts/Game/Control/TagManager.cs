@@ -20,9 +20,14 @@ namespace Controls
             return tag == "Exit Building Selector";
         }
 
+        public static bool IsCharacter(string tag)
+        {
+            return tag == "Character";
+        }
+
         public static bool IsHoverable(string tag)
         {
-            return IsBuilding(tag) || IsExitBuilding(tag);
+            return IsBuilding(tag) || IsExitBuilding(tag) || IsCharacter(tag);
         }
 
         public static bool IsGrid(string tag)

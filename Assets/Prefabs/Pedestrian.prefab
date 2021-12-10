@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2999028377016310345}
   - component: {fileID: 6918250958538940885}
   - component: {fileID: 9149555230014406725}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,9 +111,9 @@ GameObject:
   - component: {fileID: 2902610570975193907}
   - component: {fileID: 6195329513134689117}
   - component: {fileID: 8772476996781926769}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Pedestrian
-  m_TagString: Selectable
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -219,7 +219,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8575618206237545019}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.8895867, y: 1.7740897, z: 0.73310655}
@@ -307,7 +307,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dd9d1e3738887b444a7c7a5f9ac3a678, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dd9d1e3738887b444a7c7a5f9ac3a678, type: 3}
       propertyPath: m_IsActive

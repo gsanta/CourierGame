@@ -294,7 +294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613305ac179d232489e9c032ef29819e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneManager: {fileID: 447189927}
 --- !u!1 &447189920
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +405,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 447189920}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6faa07c3ddc81d43aa813558bcebc01, type: 3}
+  m_Script: {fileID: 11500000, guid: e638fa8d05dbc9e47a786966f5d0b89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   initialScenes:
@@ -414,12 +413,9 @@ MonoBehaviour:
   - Control
   mapScenes:
   - Map1
-  - Map2
   initialPanels:
   - Menu Panel
-  - Top Panel
-  otherScenes:
-  - Building
+  otherScenes: []
 --- !u!1 &696117881
 GameObject:
   m_ObjectHideFlags: 0

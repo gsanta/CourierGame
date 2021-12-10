@@ -144,6 +144,7 @@ namespace Controls
             //    quad.GetComponent<Renderer>().enabled = true;
             //    end = activeTarget.GetComponent<WaypointQuad>().CenterPoint;
             //} else 
+            Debug.Log(activeTarget.tag);
             if (TagManager.IsHoverable(activeTarget.tag))
             {
                 var outline = activeTarget.GetComponent<Outline>();

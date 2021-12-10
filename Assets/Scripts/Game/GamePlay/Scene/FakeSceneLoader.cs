@@ -17,13 +17,11 @@ namespace GamePlay
         public void Load()
         {
             rootGameObject.SetActive(true);
-            rootGameObject.GetComponent<ISceneEntryPoint>().Enter();
         }
 
         public void Unload()
         {
-            rootGameObject.GetComponent<ISceneEntryPoint>().Exit();
-            rootGameObject.SetActive(false);    
+            rootGameObject.SetActive(false);
         }
     }
 }
